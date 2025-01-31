@@ -1,0 +1,49 @@
+<div *ngIf="loaded">
+  <!-- carousel -->
+  <div class="carousel">
+    <!-- list item -->
+    <div class="list">
+      <div *ngFor="let image of images; let i = index" class="item">
+        <picture>
+          <!-- WebP format -->
+          <source [srcset]="image.webp" type="image/webp">
+          <!-- Fallback for non-WebP browsers (JPG or PNG) -->
+          <img [src]="image.jpg" alt="Imagen carrera {{ i + 1 }}">
+        </picture>
+        <div class="content">
+          <div class="author">ESCOM</div>
+          <div class="title">{{ topics[i].title === 'Ciencia de Datos' ? 'Licenciatura en' : 'Ingeniería en' }}</div>
+          <div class="topic">{{ topics[i].title }}</div>
+          <div class="des">{{ topics[i].description }}</div>
+          <div class="buttons">
+            <button>Ver más</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- list thumbnail -->
+    <div class="thumbnail">
+      <div *ngFor="let image of images; let i = index" class="item">
+        <picture>
+          <!-- WebP format -->
+          <source [srcset]="image.webp" type="image/webp">
+          <!-- Fallback for non-WebP browsers (JPG or PNG) -->
+          <img [src]="image.jpg" alt="Imagen carrera {{ i + 1 }}">
+        </picture>
+        <div class="content">
+          <div class="title">{{ topics[i].title }}</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- next prev -->
+    <div class="arrows">
+      <button id="prev"><</button>
+      <button id="next">></button>
+    </div>
+
+    <!-- time running -->
+    <div class="time"></div>
+  </div>
+</div>

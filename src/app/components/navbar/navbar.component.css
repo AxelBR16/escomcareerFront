@@ -1,6 +1,13 @@
 
 .header {
-  background-color: #001E62;
+ background-color: #001E62;
+}
+
+.custom-header{
+  background-color: transparent;
+  position: absolute ;
+  z-index: 100000;
+  width: 100vw;
 }
 
 img {
