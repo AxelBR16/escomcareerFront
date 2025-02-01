@@ -1,24 +1,18 @@
-import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
-import { DOCUMENT, isPlatformBrowser } from '@angular/common';
+import { Injectable } from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CargarScriptsService {
-
-  constructor(
-    @Inject(DOCUMENT) private document: Document,
-    @Inject(PLATFORM_ID) private platformId: Object
-  ) {}
+  constructor() {}
 
   Carga(scripts: string[]): void {
-    if (isPlatformBrowser(this.platformId)) {
-      for (let script of scripts) {
-        const node = this.document.createElement('script');
-        node.src = script;
-        const body = this.document.getElementsByTagName('body')[0];
-        body.appendChild(node);
-      }
-    }
+    scripts.forEach(script => {
+      const scriptElement = document.createElement('script');
+      scriptElement.src = script;
+      scriptElement.type = 'text/javascript';
+      scriptElement.async = true;
+      document.body.appendChild(scriptElement);
+    });
   }
 }

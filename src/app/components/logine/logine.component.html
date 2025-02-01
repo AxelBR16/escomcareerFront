@@ -1,0 +1,51 @@
+<div class="body">
+<div class="container">
+    <div class="steps">
+      <div id="step1Status" class="step" [class.completed]="currentStep > 1" [class.current]="currentStep === 1">
+        <ion-icon name="person-add-outline"></ion-icon>
+        <p>Registro</p>
+      </div>
+      <div id="step2Status" class="step" [class.completed]="currentStep > 2" [class.current]="currentStep === 2">
+        <ion-icon name="shield-checkmark-outline"></ion-icon>
+        <p>Verificación</p>
+      </div>
+      <div id="step3Status" class="step" [class.completed]="currentStep > 3" [class.current]="currentStep === 3">
+        <ion-icon name="checkmark-circle-outline"></ion-icon>
+        <p>Cuenta creada</p>
+      </div>
+    </div>
+  
+    <!-- Paso 1 -->
+    <div id="step1" *ngIf="currentStep === 1" class="step active">
+      <form id="registerForm" (submit)="goNext($event)">
+        <h1>Crea tu cuenta</h1>
+        <input type="text" name="firstName" [(ngModel)]="firstName" placeholder="Nombres" required>
+        <input type="text" name="lastName" [(ngModel)]="lastName" placeholder="Apellidos" required>
+        <select class="form-select" [(ngModel)]="carrera" name="carrera" required>
+          <option value="" disabled>Selecciona tu carrera</option>
+          <option value="1">Ingeniería en Sistemas Computacionales</option>
+          <option value="2">Licenciatura en Ciencia de Datos</option>
+          <option value="3">Ingeniería en Inteligencia Artificial</option>
+        </select>
+        <input type="email" name="correo" [(ngModel)]="email" placeholder="Email" required>
+        <input type="password" name="password" [(ngModel)]="password" placeholder="Password" required>
+        <button type="submit">Registrar</button>
+      </form>
+      <div class="btn-wrapper">
+        <a class="btn" href="index.html"><button>Regresar</button></a>
+      </div>
+    </div>
+  
+    <!-- Paso 2 -->
+    <div id="step2" *ngIf="currentStep === 2" class="step active">
+      <form (submit)="scanQr()">
+        <h1>Verificación de Identidad ESCOM</h1>
+        <input type="text" name="qr" [(ngModel)]="qrLink" placeholder="Pega el enlace de tu código QR" required>
+        <button type="submit">Verificar</button>
+      </form>
+      <div class="btn-wrapper">
+        <a class="btn" href="loginEgresado.html"><button>Regresar</button></a>
+      </div>
+    </div>
+  </div>
+</div>

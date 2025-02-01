@@ -13,7 +13,7 @@
 
   <div class="form-contenedor sign-in">
       <form method="POST" id="loginform">
-           <img src="./assets/logoN.png" alt="Logo escomcareer">
+           <img src="./site/logoN.png" alt="Logo escomcareer">
            <br>
            <br>
           <h1>Inicia Sesión</h1>
@@ -38,12 +38,13 @@
               <h1>¡Bienvenido!</h1>
               <p>Únete a nuestra comunidad y accede a contenido exclusivo para aspirantes y egresados. ¡No pierdas la oportunidad!</p>
              <div class="items">
-              <a class="btn" href="loginEgresado.html"> <button class="hidden" id="" >
-                  <img src="./assets/images/Egresado.png" alt="Egresado" />
+               <button class="hidden"  [routerLink]="['/logine']"id="" >
+                  <img src="./site/Egresado.png" alt="Egresado" />
                   Egresado/
-                  Estudiante</button></a>
-                  <button class="hidden" id="register">
-                      Aspirante</button>
+                  Estudiante</button>
+                 <!-- Botón Aspirante -->
+                    <button class="hidden" (click)="toggleLogin()">Aspirante</button>
+
               </div>
           </div>
       </div>
