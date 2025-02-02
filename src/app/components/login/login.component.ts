@@ -1,92 +1,91 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';  // Importa FormsModule
+import { FormsModule } from '@angular/forms';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login',
-  imports: [RouterModule, CommonModule,FormsModule],
+  standalone: true,
+  imports: [RouterModule, CommonModule, FormsModule],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  @ViewChild('registerBtn') registerBtn: ElementRef | undefined;
-  @ViewChild('signupForm') signupForm: ElementRef | undefined;
-  @ViewChild('loginForm') loginForm: ElementRef | undefined;
+  // Referencia al contenedor principal para activar las transiciones
+  @ViewChild('contenedor') contenedor!: ElementRef;
 
-  // Propiedades para el registro
+  // Campos para el registro (sign-up)
   firstName: string = '';
   lastName: string = '';
   email: string = '';
   password: string = '';
 
-  // Propiedades para el inicio de sesión
+  // Campos para el inicio de sesión (sign-in)
   loginEmail: string = '';
   loginPassword: string = '';
 
-  // Paso actual (1 = Registro, 2 = Verificación)
-  currentStep: number = 1;
-
   ngOnInit(): void {
-    // Agregar animación al botón de registro
-    if (this.registerBtn) {
-      this.registerBtn.nativeElement.addEventListener('click', () => {
-        console.log('Animación de transición iniciada');
-        if (this.signupForm) {
-          this.signupForm.nativeElement.classList.add('hidden');
-          this.signupForm.nativeElement.classList.remove('visible');
-        }
-        if (this.loginForm) {
-          this.loginForm.nativeElement.classList.remove('hidden');
-          this.loginForm.nativeElement.classList.add('visible');
-        }
+    // Puedes inicializar alguna lógica aquí si es necesario.
+  }
+
+  // Al presionar "Aspirante", se agrega la clase "active" al contenedor para mostrar el formulario de registro.
+  toggleAspirante(): void {
+    if (this.contenedor) {
+      this.contenedor.nativeElement.classList.add('active');
+    }
+  }
+
+  // (Opcional) Al presionar "Iniciar sesión" en el panel izquierdo, se quita la clase "active" para volver a la vista de login.
+  toggleIniciarSesion(): void {
+    if (this.contenedor) {
+      this.contenedor.nativeElement.classList.remove('active');
+    }
+  }
+
+  // Manejador del formulario de registro
+  onRegisterSubmit(event: Event): void {
+    event.preventDefault();
+    if (this.firstName && this.lastName && this.email && this.password) {
+      // Aquí puedes realizar la lógica de registro y luego mostrar un mensaje de éxito
+      Swal.fire({
+        icon: 'success',
+        title: 'Registro exitoso',
+        text: '¡Tu cuenta ha sido creada correctamente!',
+        confirmButtonText: 'Aceptar'
+      });
+      console.log('Registro completado');
+      // Aquí podrías redireccionar o realizar otra acción.
+    } else {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error en el registro',
+        text: 'Por favor, completa todos los campos',
+        confirmButtonText: 'Aceptar'
       });
     }
   }
 
-  // Manejador para el registro
-  onRegisterSubmit(event: Event): void {
-    event.preventDefault();
-    if (this.firstName && this.lastName && this.email && this.password) {
-      this.currentStep = 2; // Avanza al siguiente paso
-      console.log('Registro completado');
-    } else {
-      alert('Por favor completa todos los campos');
-    }
-  }
-
-  // Manejador para el inicio de sesión
+  // Manejador del formulario de inicio de sesión
   onLoginSubmit(event: Event): void {
     event.preventDefault();
     if (this.loginEmail && this.loginPassword) {
+      // Aquí puedes realizar la lógica de inicio de sesión y luego mostrar un mensaje de éxito
+      Swal.fire({
+        icon: 'success',
+        title: 'Inicio de sesión exitoso',
+        text: 'Bienvenido de nuevo',
+        confirmButtonText: 'Aceptar'
+      });
       console.log('Iniciando sesión...');
+      // Aquí podrías redireccionar o realizar otra acción.
     } else {
-      alert('Por favor ingresa tus credenciales');
-    }
-  }
-
-  // Función para alternar entre vistas de inicio de sesión y registro
-  toggleLogin(): void {
-    if (this.signupForm) {
-      this.signupForm.nativeElement.classList.add('hidden');
-      this.signupForm.nativeElement.classList.remove('visible');
-    }
-    if (this.loginForm) {
-      this.loginForm.nativeElement.classList.remove('hidden');
-      this.loginForm.nativeElement.classList.add('visible');
-    }
-  }
-  
-  
-
-  toggleRegister(): void {
-    if (this.loginForm) {
-      this.loginForm.nativeElement.classList.add('hidden');
-      this.loginForm.nativeElement.classList.remove('visible');
-    }
-    if (this.signupForm) {
-      this.signupForm.nativeElement.classList.remove('hidden');
-      this.signupForm.nativeElement.classList.add('visible');
+      Swal.fire({
+        icon: 'error',
+        title: 'Error en el inicio de sesión',
+        text: 'Por favor, ingresa tus credenciales',
+        confirmButtonText: 'Aceptar'
+      });
     }
   }
 }

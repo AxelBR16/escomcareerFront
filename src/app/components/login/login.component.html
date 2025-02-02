@@ -1,53 +1,57 @@
 <div class="body">
-<div class="contenedor" id="contenedor">
-  <div class="form-contenedor sign-up">
-      <form id="signupForm" method="POST">
+    <div class="contenedor" id="contenedor" #contenedor>
+      <!-- Formulario de Registro (sign-up) -->
+      <div class="form-contenedor sign-up">
+        <form id="signupForm" (submit)="onRegisterSubmit($event)" method="POST">
           <h1>Crea tu cuenta</h1>
-          <input type="text" id="firstName" name="firstName" placeholder="Nombre" required>
-          <input type="text" id="lastName" name="lastName" placeholder="Apellidos" required>
-          <input type="email" id="correo" name="correo" placeholder="Email" required>
-          <input type="password" id="signup-password" name="password" placeholder="Password" required>
+          <input type="text" id="firstName" name="firstName" [(ngModel)]="firstName" placeholder="Nombre" required>
+          <input type="text" id="lastName" name="lastName" [(ngModel)]="lastName" placeholder="Apellidos" required>
+          <input type="email" id="correo" name="correo" [(ngModel)]="email" placeholder="Email" required>
+          <input type="password" id="signup-password" name="password" [(ngModel)]="password" placeholder="Password" required>
           <button type="submit">Crear tu cuenta</button>
-      </form>
-  </div>
-
-  <div class="form-contenedor sign-in">
-      <form method="POST" id="loginform">
-           <img src="./site/logoN.png" alt="Logo escomcareer">
-           <br>
-           <br>
-          <h1>Inicia Sesión</h1>
-          <input id="email" name="email" type="email" placeholder="Email">
-          <input id="password" name="password" type="password" placeholder="Password">
-          <a href="#">¿Olvidaste la contraseña?</a>
-          <a class="btn" href="Cuestionarios.html">Iniciar sesión</a>
-      </form>
-  </div>
-
-  <div class="toggle-contenedor">
-      <div class="toggle">
-          <div class="toggle-panel toggle-left">
-              <h1>¡Bienvenido de nuevo!</h1>
-              <p>Ingresa tus datos personales para usar todas las funciones del sitio</p>
-              <button class="hidden" id="login">Iniciar sesión</button>
-          </div>
-
-
-
-          <div class="toggle-panel toggle-right">
-              <h1>¡Bienvenido!</h1>
-              <p>Únete a nuestra comunidad y accede a contenido exclusivo para aspirantes y egresados. ¡No pierdas la oportunidad!</p>
-             <div class="items">
-               <button class="hidden"  [routerLink]="['/logine']"id="" >
-                  <img src="./site/Egresado.png" alt="Egresado" />
-                  Egresado/
-                  Estudiante</button>
-                 <!-- Botón Aspirante -->
-                    <button class="hidden" (click)="toggleLogin()">Aspirante</button>
-
-              </div>
-          </div>
+        </form>
       </div>
+  
+      <!-- Formulario de Inicio de Sesión (sign-in) -->
+      <div class="form-contenedor sign-in">
+        <form id="loginform" (submit)="onLoginSubmit($event)" method="POST">
+          <img src="./site/logoN.png" alt="Logo escomcareer">
+          <br><br>
+          <h1>Inicia Sesión</h1>
+          <input id="email" name="email" type="email" [(ngModel)]="loginEmail" placeholder="Email" required>
+          <input id="password" name="password" type="password" [(ngModel)]="loginPassword" placeholder="Password" required>
+          <a href="#">¿Olvidaste la contraseña?</a>
+          <button type="submit">Iniciar sesión</button>
+        </form>
+      </div>
+  
+      <!-- Contenedor para la zona de alternancia -->
+      <div class="toggle-contenedor">
+        <div class="toggle">
+          <!-- Panel izquierdo: vista de Iniciar Sesión -->
+          <div class="toggle-panel toggle-left">
+            <h1>¡Bienvenido de nuevo!</h1>
+            <p>Ingresa tus datos personales para usar todas las funciones del sitio</p>
+            <button class="hidden" (click)="toggleIniciarSesion()">Iniciar sesión</button>
+          </div>
+  
+          <!-- Panel derecho: vista para Aspirante -->
+          <div class="toggle-panel toggle-right">
+            <h1>¡Bienvenido!</h1>
+            <p>Únete a nuestra comunidad y accede a contenido exclusivo para aspirantes y egresados. ¡No pierdas la oportunidad!</p>
+            <div class="items">
+              <button class="hidden" [routerLink]="['/logine']">
+                <img src="./site/Egresado.png" alt="Egresado" />
+                Egresado/
+                Estudiante
+              </button>
+              <!-- Botón Aspirante que activa la transición -->
+              <button class="hidden" (click)="toggleAspirante()">
+                <img src="./site/Aspirante.png" alt="Egresado" />Aspirante</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-</div>
-</div>
+  
