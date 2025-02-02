@@ -1,15 +1,38 @@
-<header class="header d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3" [ngClass]="{'custom-header': isCarrerasRoute}">
+<header class="header d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3"
+        [ngClass]="{'custom-header': isCarrerasRoute}">
+  <!-- Logo -->
   <div class="col-md-3 mb-2 mb-md-0">
     <a href="/" class="d-inline-flex link-body-emphasis text-decoration-none">
       <img class="logo" src="site/logo.png" alt="logo">
     </a>
   </div>
 
-  <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0 nav-links">
-    <li><a [routerLink]="['/carreras']" routerLinkActive="active"  class="nav-link px-2 text-warning">Carreras</a></li>
-  </ul>
+  <!-- Navegación -->
+  <nav class="col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+    <!-- Botón para activar el menú en pantallas pequeñas -->
+    <div class="menu-toggle" (click)="toggleMenu()">Menú</div>
+    <!-- Lista de navegación; se le agrega la clase 'show' cuando showMenu es true -->
+    <ul class="nav nav-links" [ngClass]="{'show': showMenu}" id="nav-links">
+      <li>
+        <a [routerLink]="['/carreras']" routerLinkActive="active" class="nav-link px-2 text-warning">
+          Carreras
+        </a>
+      </li>
+      <li>
+        <a [routerLink]="['/cuestionarios']" routerLinkActive="active" class="nav-link px-2 text-warning">
+          Pruebas
+        </a>
+      </li>
+      <li>
+        <a [routerLink]="['/valora']" routerLinkActive="active" class="nav-link px-2 text-warning">
+          Valora
+        </a>
+      </li>
+    </ul>
+  </nav>
 
+  <!-- Botón de Iniciar sesión -->
   <div class="col-md-3 text-center">
     <button [routerLink]="['/login']" type="button" class="boton">Iniciar sesión</button>
-  </div>
+  </div>  
 </header>

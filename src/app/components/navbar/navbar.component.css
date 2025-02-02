@@ -1,26 +1,39 @@
-
+/* ============================= */
+/* Estilos Base del Navbar       */
+/* ============================= */
 .header {
- background-color: #001E62;
+  background-color: #001E62;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
+  position: relative;
+  z-index: 10;
 }
 
-.custom-header{
+.custom-header {
   background-color: transparent;
-  position: absolute ;
+  position: absolute;
   z-index: 100000;
   width: 100vw;
 }
 
+/* Logo */
 img {
   height: 60px;
   width: auto;
   transition: all 0.3s ease;
 }
 
+/* Lista de navegación */
 .header .nav-links {
   list-style: none;
   display: flex;
   gap: 20px;
   align-items: center;
+  margin: 0;
+  padding: 0;
 }
 
 .header .nav-links li a {
@@ -36,12 +49,19 @@ img {
   transform: scale(1.1);
 }
 
+/* Contenedor para el botón u otros elementos */
 .header .btn-wrapper {
   display: flex;
   align-items: center;
   gap: 15px;
+
 }
 
+
+
+
+
+/* Botón "Iniciar sesión" */
 .boton {
   font-weight: bold;
   color: #001E62;
@@ -51,6 +71,11 @@ img {
   border-radius: 30px;
   cursor: pointer;
   transition: all 0.3s ease;
+  
+}
+
+.boton-container {
+  margin-left: auto; /* Empuja el botón a la derecha */
 }
 
 .boton:hover {
@@ -58,3 +83,62 @@ img {
   color: #001E62;
 }
 
+/* ============================= */
+/* Reglas para el menú responsive*/
+/* ============================= */
+
+/* Botón para activar el menú en dispositivos pequeños */
+.menu-toggle {
+  display: none; /* Se oculta en pantallas grandes */
+  cursor: pointer;
+  font-weight: bold;
+  color: #FDFCFC;
+  font-size: 18px;
+  padding: 10px;
+  border: 1px solid #FDFCFC;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+  margin-right: 15px;
+}
+
+.menu-toggle:hover {
+  background-color: #FFD700;
+  color: #001E62;
+}
+
+/* ============================= */
+/* Estilos responsive           */
+/* ============================= */
+@media (max-width: 768px) {
+  /* Ocultar la imagen (logo) en pantallas pequeñas */
+  .logo,
+  .col-md-3.mb-2.mb-md-0 {
+    display: none;
+  }
+  
+  /* Mostrar el botón de menú */
+  .menu-toggle {
+    display: block;
+  }
+  
+  /* La lista de navegación se adapta a columna y se oculta por defecto.
+     Se establece un ancho menor al 100% (por ejemplo, 70%) y se centra. */
+  .header .nav-links {
+    flex-direction: column;
+    width: 60%;
+    margin: 0 auto;
+    display: none;
+    gap: 10px;
+    background-color: #ffffff;
+    position: absolute;
+    top: 70px;
+    left: 15%; /* Para centrar: (100% - 70%) / 2 = 15% */
+    padding: 10px 0;
+    border-radius: 5px;
+  }
+  
+  /* Cuando se añade la clase 'show', se muestra la lista */
+  .header .nav-links.show {
+    display: flex;
+  }
+}
