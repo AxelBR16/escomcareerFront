@@ -34,10 +34,11 @@ img {
   align-items: center;
   margin: 0;
   padding: 0;
+  
 }
 
 .header .nav-links li a {
-  color: #FDFCFC;
+  color: #ffffff;
   text-decoration: none;
   font-size: 18px;
   font-weight: bold;
@@ -130,6 +131,7 @@ img {
     display: none;
     gap: 10px;
     background-color: #ffffff;
+  
     position: absolute;
     top: 70px;
     left: 15%; /* Para centrar: (100% - 70%) / 2 = 15% */
@@ -142,3 +144,5 @@ img {
     display: flex;
   }
 }
+
+

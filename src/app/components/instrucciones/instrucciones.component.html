@@ -1,29 +1,28 @@
-<section class="test-section">
-    <section class="hero-section">
-        <div class="hero-container">
-            <h1>Inventario de autoevaluación de aptitudes</h1>
-            <p>A continuación se enumeran una serie de actividades que tienen como propósito medir tu grado de habilidad para la ejecución de las mismas. Al contestar los reactivos, ten presente que no se busca que te gusten esas actividades, ni pienses si deberías tener determinada habilidad. Solo se te pide que contestes qué tan hábilmente crees poder realizar la actividad citada, más allá de tus gustos o valores.</p>
-
-            <p>Esta prueba no exige un tiempo determinado, por lo que puedes meditar y reflexionar tus respuestas. Para tener información precisa en la elección de tu carrera es necesario que contestes este inventario de manera honesta, sin menospreciarte o sobreestimarte. Si en alguna actividad no has tenido alguna experiencia, piensa qué tan bien la realizarías si fuera necesario.</p>
-        </div>
-    </section>
-    <h2>Lee con atención</h2>
-    <p>Para poder hacerlo de forma correcta sigue las siguientes instrucciones</p>
+    
+  <section class="hero-section">
+    <div class="hero-container">
+        <h1>{{ contenido.titulo }}</h1>
+ </div>
+  </section>   
+  <br><br>
     <div class="test-cards">
-        <div class="card" >
+        <div class="card">
             <h3>INSTRUCCIONES</h3>
-            <p><strong>A continuación te presentamos una serie de actividades. Califícalas de acuerdo con tu grado de habilidad; guíate con la siguiente escala: </strong>   
-            </p>
-            <p class="opt1">5. Mucho muy hábil.</p>
-            <p class="opt2">4. Muy hábil.</p>
-            <p class="opt3">3. Medianamente hábil.</p>
-            <p class="opt4">2. Poco hábil.</p>
-            <p class="opt5">1. Nada hábil.</p>
        
-        </div>
-   
+         <p><strong>{{ contenido.descripcion }}</strong></p>
+          <p *ngFor="let inst of instruccionesArray">
+            {{ inst }}
+          </p>
+          <br>
+             <!-- Enlace al siguiente paso -->
+        <button class="btn results-btn" routerLink="/preguntas">Iniciar</button> 
+          
+      </div> 
     </div>
-    <a href="preguntas.html"><button class="btn results-btn">Comenzar</button></a>
-    <br>
-    <br>
-</section>
+    <section class="test-section"> 
+    <button class="btn results-btn" [routerLink]="['/cuestionario']">Regresar</button> 
+    </section>
+    <br><br>
+   
+
+  

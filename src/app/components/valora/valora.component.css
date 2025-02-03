@@ -13,16 +13,17 @@ main {
     
 }
 
+
 .hero-section {
     position: relative; /* Habilita el posicionamiento de elementos hijos */
     width: 100%; /* Asegura que ocupe todo el ancho de la página */
     height: 100%; /* Asegura que ocupe toda la altura del contenedor */
-    min-height: 200px; /* Establece una altura mínima */
-    background-image:linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/site/Cuestionario.jpg'); /* Agrega la imagen como fondo */
+    min-height: 100px; /* Establece una altura mínima */
+    background-image:linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/site/valora.webp'); /* Agrega la imagen como fondo */
     background-size:cover; /* La imagen cubre todo el contenedor */
     background-position: center; /* Centra la imagen */
     background-repeat: no-repeat; /* Evita que la imagen se repita */
-    margin-top: 20px;
+    margin-top: 2px;
     border-radius: 10px;
     
 }
@@ -60,7 +61,7 @@ main {
     transform: translate(-50%, -50%); /* Ajusta el centro exacto */
     color: white; /* Asegura que el texto sea visible sobre la imagen */
     text-align: center; /* Centra el texto */
-    font-size: 1.1rem; /* Ajusta el tamaño del texto */
+    font-size: 1.0rem; /* Ajusta el tamaño del texto */
     font-weight: bold; /* Haz el texto más llamativo */
     text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7); /* Sombra para mejorar la visibilidad */
     width: 80%;
@@ -72,6 +73,12 @@ main {
     margin-bottom: 20px; /* Añade espacio debajo del encabezado */
 
 }
+.hero-container p{
+    font-size: 20px; /* Ajusta el tamaño del texto */
+    margin-bottom: 20px; /* Añade espacio debajo del encabezado */
+
+}
+
 
 @media (max-width: 768px) {
     .hero-section {
@@ -128,7 +135,7 @@ main {
 
 .card {
     position: relative; /* Permite posicionar elementos hijos de manera específica */
-    background-color: #001E62;
+    background-color: #0641cc;
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.6);
     padding: 20px;
@@ -139,7 +146,7 @@ main {
     background-position: center; /* Centra la imagen en la tarjeta */
     background-repeat: no-repeat; /* Evita que la imagen se repita */
     min-height: 250px; /* Altura mínima aumentada */
-    width: 90%;
+    width: 80%;
     
     
 }

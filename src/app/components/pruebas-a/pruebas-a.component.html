@@ -16,18 +16,24 @@
         <P>Paso 2: Encuentra tus aptitudes para una carrera en la ESCOM. Este inventario te permitirá evaluar si cuentas con las aptitudes necesarias para estudiar alguna de las tres carreras que ofrece ESCOM, relacionadas con el área de Ciencias Físico-Matemáticas.
         </P>
 
-        <div class="card" style=" background-image:linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/site/t1.webp')">
-            <h3>Inventario de autoevaluación de aptitudes</h3>
-            <p>Este inventario tiene como objetivo evaluar tus aptitudes de acuerdo con tus intereses personales y habilidades destacadas.</p>
-            <a href="InstruAptitudes.html"><button class="btn">comenzar</button></a>
-        </div>
-     
-        <div class="card" style=" background-image:linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/site/T4.webp')">
-            <h3>Económico</h3>
-            <p>Evalúa tu situación económica para encontrar opciones de carreras accesibles.</p>
-            <a href="instruEconomico.html"><button class="btn">comenzar</button></a>
-        </div>
-      
+   <!-- Tarjeta para Aptitudes -->
+<div class="card" style="background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('/site/t1.webp')">
+    <h3>Inventario de autoevaluación de aptitudes</h3>
+    <p>Este inventario tiene como objetivo evaluar tus aptitudes de acuerdo con tus intereses personales y habilidades destacadas.</p>
+    <a [routerLink]="['/instrucciones', 'aptitudes']">
+      <button class="btn">comenzar</button>
+    </a>
+  </div>
+  
+  <!-- Tarjeta para Económico -->
+  <div class="card" style="background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('/site/T4.webp')">
+    <h3>Económico</h3>
+    <p>Evalúa tu situación económica para encontrar opciones de carreras accesibles.</p>
+    <a [routerLink]="['/instrucciones', 'economico']">
+      <button class="btn">comenzar</button>
+    </a>
+  </div>
+  
     </div>
     <a href="instrUniversitarias.html"><button class="btn results-btn">siguiente</button></a>
     <br>

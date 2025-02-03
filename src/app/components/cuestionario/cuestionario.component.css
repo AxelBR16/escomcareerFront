@@ -18,7 +18,7 @@ main {
     width: 100%; /* Asegura que ocupe todo el ancho de la página */
     height: 100%; /* Asegura que ocupe toda la altura del contenedor */
     min-height: 200px; /* Establece una altura mínima */
-    background-image:linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/site/t1.webp'); /* Agrega la imagen como fondo */
+    background-image:linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/site/Cuestionario.jpg'); /* Agrega la imagen como fondo */
     background-size:cover; /* La imagen cubre todo el contenedor */
     background-position: center; /* Centra la imagen */
     background-repeat: no-repeat; /* Evita que la imagen se repita */
@@ -27,79 +27,7 @@ main {
     
 }
 
-/* Segundo fondo */
-.hero-section2 {
-    position: relative; /* Habilita el posicionamiento de elementos hijos */
-    width: 100%; /* Asegura que ocupe todo el ancho de la página */
-    height: 100%; /* Asegura que ocupe toda la altura del contenedor */
-    min-height: 400px; /* Establece una altura mínima */
-  /*  background-image:linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../images/t2.webp');; /* Agrega la imagen como fondo */
-    background-size:cover; /* La imagen cubre todo el contenedor */
-    background-position: center; /* Centra la imagen */
-    background-repeat: no-repeat; /* Evita que la imagen se repita */
-    margin-top: 60px;
-    border-radius: 10px;
-    
-}
 
-/* tercer fondo universidad */
-.hero-section5 {
-    position: relative; /* Habilita el posicionamiento de elementos hijos */
-    width: 100%; /* Asegura que ocupe todo el ancho de la página */
-    height: 100%; /* Asegura que ocupe toda la altura del contenedor */
-    min-height: 300px; /* Establece una altura mínima */
-   /* background-image:linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../images/t3.webp');
-    background-size:cover; /* La imagen cubre todo el contenedor */
-    background-position: center; /* Centra la imagen */
-    background-repeat: no-repeat; /* Evita que la imagen se repita */
-    margin-top: 60px;
-    border-radius: 10px;
-    
-}
-
-/* cuarto fondo */
-.hero-section3 {
-    position: relative; /* Habilita el posicionamiento de elementos hijos */
-    width: 100%; /* Asegura que ocupe todo el ancho de la página */
-    height: 100%; /* Asegura que ocupe toda la altura del contenedor */
-    min-height: 200px; /* Establece una altura mínima */
-   /* background-image:linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../images/T4.webp'); /* Agrega la imagen como fondo */
-    background-size:cover; /* La imagen cubre todo el contenedor */
-    background-position: center; /* Centra la imagen */
-    background-repeat: no-repeat; /* Evita que la imagen se repita */
-    margin-top: 60px;
-    border-radius: 10px;
-    
-}
-
-/* fondo de valora*/
-.hero-section4 {
-    position: relative; /* Habilita el posicionamiento de elementos hijos */
-    width: 100%; /* Asegura que ocupe todo el ancho de la página */
-    height: 100%; /* Asegura que ocupe toda la altura del contenedor */
-    min-height: 100px; /* Establece una altura mínima */
-   /* background-image:linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../images/valora.webp'); /* Agrega la imagen como fondo */
-    background-size:cover; /* La imagen cubre todo el contenedor */
-    background-position: center; /* Centra la imagen */
-    background-repeat: no-repeat; /* Evita que la imagen se repita */
-    margin-top: 60px;
-    border-radius: 10px;
-    
-}
-
-.hero-section6 {
-    position: relative; /* Habilita el posicionamiento de elementos hijos */
-    width: 100%; /* Asegura que ocupe todo el ancho de la página */
-    height: 100%; /* Asegura que ocupe toda la altura del contenedor */
-    min-height: 300px; /* Establece una altura mínima */
-   /* background-image:linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../images/rFinales.webp'); /* Agrega la imagen como fondo */
-    background-size:cover; /* La imagen cubre todo el contenedor */
-    background-position: center; /* Centra la imagen */
-    background-repeat: no-repeat; /* Evita que la imagen se repita */
-    margin-top: 60px;
-    border-radius: 10px;
-    
-}
 
 /* Main Section */
 .test-section {
@@ -132,7 +60,7 @@ main {
     transform: translate(-50%, -50%); /* Ajusta el centro exacto */
     color: white; /* Asegura que el texto sea visible sobre la imagen */
     text-align: center; /* Centra el texto */
-    font-size: 1.1rem; /* Ajusta el tamaño del texto */
+    font-size: 1.0rem; /* Ajusta el tamaño del texto */
     font-weight: bold; /* Haz el texto más llamativo */
     text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7); /* Sombra para mejorar la visibilidad */
     width: 80%;
@@ -144,6 +72,12 @@ main {
     margin-bottom: 20px; /* Añade espacio debajo del encabezado */
 
 }
+.hero-container p{
+    font-size: 20px; /* Ajusta el tamaño del texto */
+    margin-bottom: 20px; /* Añade espacio debajo del encabezado */
+
+}
+
 
 @media (max-width: 768px) {
     .hero-section {

@@ -6,13 +6,15 @@ import { LogineComponent } from './components/logine/logine.component';
 import { InstruccionesComponent } from './components/instrucciones/instrucciones.component';
 import { CuestionarioComponent } from './components/cuestionario/cuestionario.component';
 import { PruebasAComponent } from './components/pruebas-a/pruebas-a.component';
+import { ValoraComponent } from './components/valora/valora.component';
 export const routes: Routes = [
   {path: '', component: InicioComponent},
   {path: 'carreras', component: CarrerasComponent},
   {path: 'logine', component: LogineComponent},
   {path: 'login', component: LoginComponent},
-  {path: 'instrucciones', component: InstruccionesComponent},
+  { path: 'instrucciones/:tipo', component: InstruccionesComponent },
   {path: 'cuestionario', component: CuestionarioComponent},
   {path: 'pruebasA', component: PruebasAComponent},
+  {path: 'valora', component: ValoraComponent},
   { path: '**', redirectTo: '', pathMatch:'full'},
 ];
