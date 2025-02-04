@@ -1,5 +1,5 @@
 
-<section class="cuadro">
+<div class="cuadro">
     <div class="question">
         <p id="question-text">Ser comentarista de temas diversos en un programa de televisión.</p>
         <p>Elige una de las Siguientes respuestas:</p>
@@ -21,18 +21,18 @@
                 <input type="radio" name="answer" class="answer-option" value="5"> 5. Me gusta mucho.
             </label>
         </div>
-        <br>
+       
         <div class="navigation">
             <button id="prev">Anterior</button>
             <button id="next">Siguiente</button>
         </div>
         <p>Progreso</p>
-        <div class="progress-container">
-            <div class="progress-bar" id="progress-bar"></div>
-        </div>
+        <div class="progress" role="progressbar" aria-label="Success example" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+            <div class="progress-bar bg-success" style="width: 25%">25%</div>
+          </div>
     </div>
     <div class="image">
         <img id="question-image" src="/assets/images/q1.webp" alt="Imagen relacionada">
     </div>
     
-</section>
+</div>
