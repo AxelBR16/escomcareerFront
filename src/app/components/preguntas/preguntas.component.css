@@ -1,0 +1,248 @@
+
+
+.opciones label {
+    display: block;
+    width: 100%;
+    max-width: 400px; /* Ajusta el tamaño según necesites */
+    margin: 10px auto;
+    padding: 14px;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: bold;
+    text-align: center;
+    cursor: pointer;
+    color: black;
+    transition: transform 0.2s, background-color 0.3s;
+    max-height: 100px;
+
+}
+
+.opciones input[type="radio"] {
+    display: none; /* Oculta los botones de radio */
+}
+
+.opciones label:nth-child(1) {
+    background-color: #f25252; /* Rojo */
+}
+
+.opciones label:nth-child(2) {
+    background-color: #f5a623; /* Naranja */
+}
+
+.opciones label:nth-child(3) {
+    background-color: #ffd700; /* Amarillo */
+    color: black;
+}
+
+.opciones label:nth-child(4) {
+    background-color: #8bc34a; /* Verde Claro */
+}
+
+.opciones label:nth-child(5) {
+    background-color: #4caf50; /* Verde Oscuro */
+}
+
+.opciones input[type="radio"]:checked + label {
+    transform: scale(1.05);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+
+.opciones label:hover {
+    background-color: #2196f3; /* Azul */
+    color: white; /* Asegúrate de que el texto sea legible */
+    transition: background-color 0.3s;
+}
+
+.cuadro {
+    display: flex; /* Alinea los elementos en fila */
+    background-color: #001f3f;
+    width: 100%; /* Ocupa todo el ancho de la pantalla */
+    height: 100vh; /* Ocupa todo el alto de la pantalla */
+    border-radius: 0; /* Elimina bordes redondeados */
+    overflow: hidden;
+    margin-top: 0px;
+   
+}
+
+.image {
+    flex: 0 0 35%; /* La imagen ocupa el 30% del contenedor */
+    display: flex;  
+    justify-content: center;
+    align-items: center;
+    background-color: #000; /* Fondo negro para destacar la imagen */
+    padding: 0; /* Elimina el espacio interno */
+    height: 80%; /* La imagen ocupa todo el alto del contenedor */
+    border-radius: 10px; /* Elimina esquinas redondeadas */
+    margin-top: 50px;
+}
+
+.image img {
+    width: 100%; /* La imagen ocupa todo el ancho del contenedor */
+    height: 100%; /* La imagen ocupa todo el alto del contenedor */
+    object-fit: cover; /* Cubre todo el espacio asignado */
+    border: none; /* Elimina el borde */
+    border-radius: 10px; /* Elimina esquinas redondeadas */
+}
+
+
+
+/* Consultas de medios para pantallas más pequeñas */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column; /* Cambia a diseño vertical para pantallas pequeñas */
+        height: auto;
+    }
+
+    .image {
+        flex: 0 0 auto; /* Permite que la imagen ocupe su espacio necesario */
+        width: 100%; /* La imagen ocupa todo el ancho de la pantalla */
+        margin-top: 20px;
+        
+    }
+
+    .question {
+        flex: 0 0 auto; /* Permite que las preguntas ocupen su espacio necesario */
+        width: 100%; /* Las preguntas ocupan todo el ancho */
+    }
+}
+
+.question {
+    flex: 0 0 60%; /* Ocupa el 60% del contenedor */
+    color: white;
+    padding: 10px;
+    overflow-y: auto; /* Permite el desplazamiento vertical si el contenido es extenso */
+    margin-top: 40px;
+ 
+}
+
+.question h3 {
+    margin-top: 0;
+    font-size: 1.5em;
+}
+
+.options {
+    margin-top: 20px;
+    width: 70%; /* Ocupa todo el ancho de la pantalla */
+    margin: 0 auto; /* Centra horizontalmente */
+    text-align: center; /* Centra el contenido dentro del contenedor */
+}
+
+.options button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: none;
+    border-radius: 4px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    
+}
+.options button:hover{
+    transform: scale(1.05); /* Efecto de agrandamiento */
+}
+
+.options button:nth-child(1) {
+    background-color: #ff4d4d;
+    color: white;
+}
+
+.options button:nth-child(1):hover {
+    background-color: #e63939;
+}
+
+.options button:nth-child(2) {
+    background-color: #ff9900;
+    color: white;
+}
+
+.options button:nth-child(2):hover {
+    background-color: #e68a00;
+}
+
+.options button:nth-child(3) {
+    background-color: #ffcc00;
+    color: black;
+}
+
+.options button:nth-child(3):hover {
+    background-color: #e6b800;
+}
+
+.options button:nth-child(4) {
+    background-color: #5cd65c;
+    color: white;
+}
+
+.options button:nth-child(4):hover {
+    background-color: #47a447;
+}
+
+.options button:nth-child(5) {
+    background-color: #33cc33;
+    color: white;
+}
+
+.options button:nth-child(5):hover {
+    background-color: #29a329;
+}
+
+.navigation {
+    display: flex;
+    justify-content: center;
+    gap: 10px; /* Espacio entre botones */
+    margin-top: 20px;
+}
+
+.navigation button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s ease;
+}
+
+.navigation button:hover {
+    background-color: #0056b3;
+}   
+
+
+.progress-container {
+    width: 100%;
+    height: 20px;
+    background-color: #e42323;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-top: 20px;
+}
+
+.progress-bar {
+    width: 0%;
+    height: 100%;
+    background-color: #39e223;
+    transition: width 0.3s ease;
+}
+
+
+/* Responsividad para pantallas pequeñas */
+@media (max-width: 768px) {
+    .navigation {
+        flex-direction: column; /* Coloca los botones uno debajo del otro */
+        justify-content: center; /* Centra los botones verticalmente */
+        align-items: center; /* Centra los botones horizontalmente */
+        gap: 10px; /* Espacio entre botones */
+    }
+    .progress-container {
+        width: 97%;
+    }
+
+    .navigation button {
+        width: 80%; /* Los botones ocupan el 80% del ancho en pantallas pequeñas */
+        font-size: 1em; /* Ajusta el tamaño del texto */
+    }
+}

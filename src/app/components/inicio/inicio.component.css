@@ -6,8 +6,158 @@
 
 body {
   font-family: Arial, sans-serif;
-
+  background-color: #f4f4f4;
+  color: #333;
 }
+
+
+
+
+.motivational-phrase {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: bold;
+  color: #000000;
+
+  padding: 20px;
+  margin: 30px auto;
+  border-radius: 10px;
+
+  width: 80%;
+}
+
+
+/* Sección hero */
+.hero {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background: linear-gradient(to right, #0A1733, #002F6C); /* Azul oscuro como la navbar */
+  color: white;
+  padding: 50px 20px;
+  border-radius: 0 0 50px 50px;
+}
+
+.hero-content {
+  display: flex;
+  align-items: center;
+  gap: 20px; /* Es  paciado entre elementos */
+}
+
+.hero-text {
+  max-width: 500px;
+}
+
+.hero-img {
+  width: 130px; /* Ajusta el tamaño de las imágenes */
+  height: auto;
+  border-radius: 10px;
+ 
+}
+
+.hero-img.left {
+  margin-right: 10px;
+}
+
+.hero-img.right {
+  margin-left: 10px;
+}
+
+
+
+ /* Estilo de burbujas flotantes */
+ .bubble {
+  position: absolute;
+  background: rgba(0, 150, 255, 0.2);
+  border-radius: 50%;
+  animation: float 6s infinite ease-in-out;
+}
+
+.bubble-1 { width: 80px; height: 80px; top: 10%; left: 5%; animation-duration: 6s; }
+.bubble-2 { width: 60px; height: 60px; top: 20%; right: 10%; animation-duration: 8s; }
+.bubble-3 { width: 50px; height: 50px; bottom: 15%; left: 20%; animation-duration: 7s; }
+.bubble-4 { width: 100px; height: 100px; bottom: 10%; right: 15%; animation-duration: 9s; }
+
+
+/* Burbujas en la parte inferior */
+.bubble-5 { width: 70px; height: 70px; top: 5%; right: 20%; animation-duration: 6s; }
+.bubble-6 { width: 90px; height: 90px; bottom: 5%; left: 10%; animation-duration: 7s; }
+.bubble-7 { width: 120px; height: 120px; bottom: -10%; left: 30%; animation-duration: 9s; }
+.bubble-8 { width: 80px; height: 80px; bottom: -5%; right: 25%; animation-duration: 8s; }
+.bubble-9 { width: 50px; height: 50px; bottom: -15%; left: 50%; animation-duration: 10s; }
+
+/* Animación de las burbujas */
+@keyframes float {
+  0% { transform: translateY(0); opacity: 0.5; }
+  50% { transform: translateY(-20px); opacity: 0.8; }
+  100% { transform: translateY(0); opacity: 0.5; }
+}
+
+
+/* Hacerlo responsivo */
+@media (max-width: 768px) {
+  .hero-content {
+      flex-direction: column;
+      text-align: center;
+  }
+
+  .hero-img {
+      width: 100px;
+      margin: 10px 0;
+  }
+}
+
+/* Sección de test con carrusel */
+.test-section { 
+  text-align: center;
+  padding: 15px 10px;
+  background: linear-gradient(to right, rgba(1, 15, 43, 0.8), rgba(53, 90, 124, 0.8)); /* Degradado azul con transparencia */
+  border-radius: 5px;
+  margin: 40px auto;
+  width: 50%;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  color: white;
+  backdrop-filter: blur(10px); /* Efecto difuminado */
+}
+
+
+.carousel-container {
+  width: 70%;
+  max-width: 500px;
+  margin: auto;
+}
+
+.img-custom {
+  height: 250px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+
+.carousel-container {
+  width: 90%; /* Ajusta el ancho del carrusel */
+  max-width: 600px; /* Máximo ancho */
+}
+
+.img-custom {
+  height: 300px; /* Ajusta la altura de las imágenes */
+  object-fit: cover; /* Recorta la imagen sin deformarla */
+}
+
+.carousel-inner img {
+  height: 300px; /* Ajusta a la altura deseada */
+  object-fit: cover;
+  width: 100%;
+}
+.carousel-inner {
+  overflow: hidden;
+}
+.carousel-item {
+  transition: transform 0.5s ease-in-out;
+}
+
+
 
 .hero {
   position: relative;

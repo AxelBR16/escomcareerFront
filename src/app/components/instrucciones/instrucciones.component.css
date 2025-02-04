@@ -18,7 +18,7 @@ main {
     width: 100%; /* Asegura que ocupe todo el ancho de la página */
     height: 100%; /* Asegura que ocupe toda la altura del contenedor */
     min-height: 180px; /* Establece una altura mínima */
-    background-image:linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/site/instruccion.jpg'); /* Agrega la imagen como fondo */
+    background-image:linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/site/instruccion.webp'); /* Agrega la imagen como fondo */
     background-size:cover; /* La imagen cubre todo el contenedor */
     background-position: center; /* Centra la imagen */
     background-repeat: no-repeat; /* Evita que la imagen se repita */

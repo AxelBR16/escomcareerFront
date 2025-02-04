@@ -7,6 +7,7 @@ import { InstruccionesComponent } from './components/instrucciones/instrucciones
 import { CuestionarioComponent } from './components/cuestionario/cuestionario.component';
 import { PruebasAComponent } from './components/pruebas-a/pruebas-a.component';
 import { ValoraComponent } from './components/valora/valora.component';
+import { PreguntasComponent } from './components/preguntas/preguntas.component';
 export const routes: Routes = [
   {path: '', component: InicioComponent},
   {path: 'carreras', component: CarrerasComponent},
@@ -16,5 +17,6 @@ export const routes: Routes = [
   {path: 'cuestionario', component: CuestionarioComponent},
   {path: 'pruebasA', component: PruebasAComponent},
   {path: 'valora', component: ValoraComponent},
+  {path: 'preguntas', component: PreguntasComponent},
   { path: '**', redirectTo: '', pathMatch:'full'},
 ];
