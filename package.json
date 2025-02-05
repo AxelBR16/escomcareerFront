@@ -22,6 +22,7 @@
     "@angular/router": "^19.0.0",
     "@angular/ssr": "^19.0.4",
     "@ionic/angular": "^8.4.3",
+    "@zxing/browser": "^0.1.5",
     "bootstrap": "^5.3.3",
     "express": "^4.18.2",
     "rxjs": "~7.8.0",

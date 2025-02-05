@@ -22,7 +22,7 @@
         <input type="text" name="firstName" [(ngModel)]="firstName" placeholder="Nombres" required>
         <input type="text" name="lastName" [(ngModel)]="lastName" placeholder="Apellidos" required>
         <select class="form-select" [(ngModel)]="carrera" name="carrera" required>
-          <option value="" disabled>Selecciona tu carrera</option>
+          <option value="" disabled>Selecciona tu carrera en la ESCOM</option>
           <option value="1">Ingeniería en Sistemas Computacionales</option>
           <option value="2">Licenciatura en Ciencia de Datos</option>
           <option value="3">Ingeniería en Inteligencia Artificial</option>
@@ -39,11 +39,25 @@
   
     <!-- Paso 2 -->
     <div id="step2" *ngIf="currentStep === 2" class="step active">
-      <form (submit)="scanQr()">
+      <form>
         <h1>Verificación de Identidad ESCOM</h1>
-        <input type="text" name="qr" [(ngModel)]="qrLink" placeholder="Pega el enlace de tu código QR" required>
-        <button type="submit">Verificar</button>
+        <input type="text" name="qr" [(ngModel)]="qrLink" placeholder="Pega el enlace de tu código QR" >
+        
+        <!-- Botón para verificar el QR -->
+        <button type="button" (click)="scanQr()">Verificar</button>
+        
+      
+       <!-- Botón para escanear QR (solo abre la cámara) -->
+ <!-- <button type="button" (click)="startScan()">Escanear QR</button>-->
+
+
+  <!-- Opción para importar una imagen con QR -->
+  <input type="file" (change)="scanQrFromImage($event)" accept="image/*">
+
+  <!-- Botón para verificar y comprar -->
+  <button type="button" (click)="scanQr()">Verificar y Comprar</button>
       </form>
+      
       <div class="btn-wrapper">
         <a class="btn" href="loginEgresado.html"><button>Regresar</button></a>
       </div>
