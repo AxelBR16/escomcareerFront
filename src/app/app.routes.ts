@@ -17,6 +17,6 @@ export const routes: Routes = [
   {path: 'cuestionario', component: CuestionarioComponent},
   {path: 'pruebasA', component: PruebasAComponent},
   {path: 'valora', component: ValoraComponent},
-  {path: 'preguntas', component: PreguntasComponent},
+  { path: 'preguntas/:tipo', component: PreguntasComponent },
   { path: '**', redirectTo: '', pathMatch:'full'},
 ];

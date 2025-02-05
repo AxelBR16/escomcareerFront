@@ -11,7 +11,7 @@
     font-weight: bold;
     text-align: center;
     cursor: pointer;
-    color: black;
+    color: rgb(255, 255, 255);
     transition: transform 0.2s, background-color 0.3s;
     max-height: 100px;
 
@@ -22,24 +22,24 @@
 }
 
 .opciones label:nth-child(1) {
-    background-color: #f25252; /* Rojo */
+    background-color: #e22525; /* Rojo */
 }
 
 .opciones label:nth-child(2) {
-    background-color: #f5a623; /* Naranja */
+    background-color: #eb960e; /* Naranja */
 }
 
 .opciones label:nth-child(3) {
-    background-color: #ffd700; /* Amarillo */
-    color: black;
+    background-color: #8a077f; /* Amarillo */
+   
 }
 
 .opciones label:nth-child(4) {
-    background-color: #8bc34a; /* Verde Claro */
+    background-color: #b80d62; /* Verde Claro */
 }
 
 .opciones label:nth-child(5) {
-    background-color: #4caf50; /* Verde Oscuro */
+    background-color: #2b6e2d; /* Verde Oscuro */
 }
 
 .opciones input[type="radio"]:checked + label {
@@ -54,6 +54,13 @@
     transition: background-color 0.3s;
 }
 
+.salir {
+    display: flex;
+    justify-content: center; /* Centra horizontalmente */
+    align-items: center;     /* Centra verticalmente, si el div tiene una altura definida */
+    /* Si no requieres centrar verticalmente, puedes omitir align-items */
+  }
+
 .cuadro {
     display: flex; /* Alinea los elementos en fila */
     background-color: #001f3f;
@@ -65,6 +72,14 @@
    
 }
 
+.selected-option {
+    background-color: rgba(0, 123, 255, 0.2); /* Fondo azul claro */
+    border: 5px solid #d1f311;              /* Borde azul */
+    border-radius: 5px;
+    padding: 5px;
+  } 
+  
+
 .image {
     flex: 0 0 35%; /* La imagen ocupa el 30% del contenedor */
     display: flex;  
@@ -74,7 +89,8 @@
     padding: 0; /* Elimina el espacio interno */
     height: 80%; /* La imagen ocupa todo el alto del contenedor */
     border-radius: 10px; /* Elimina esquinas redondeadas */
-    margin-top: 50px;
+    margin-top: 20px;
+    margin-left: 20px;
 }
 
 .image img {

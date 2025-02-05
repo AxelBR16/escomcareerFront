@@ -1,28 +1,22 @@
-    
-  <section class="hero-section">
-    <div class="hero-container">
-        <h1>{{ contenido.titulo }}</h1>
- </div>
-  </section>   
-  <br><br>
-    <div class="test-cards">
-        <div class="card">
-            <h3>INSTRUCCIONES</h3>
-       
-         <p><strong>{{ contenido.descripcion }}</strong></p>
-          <p *ngFor="let inst of instruccionesArray">
-            {{ inst }}
-          </p>
-          <br>
-             <!-- Enlace al siguiente paso -->
-        <button class="btn results-btn" routerLink="/preguntas">Iniciar</button> 
-          
-      </div> 
-    </div>
-    <section class="test-section"> 
-    <button class="btn results-btn" [routerLink]="['/cuestionario']">Regresar</button> 
-    </section>
-    <br><br>
-   
-
-  
+<section class="hero-section">
+  <div class="hero-container">
+    <h1>{{ contenido.titulo }}</h1>
+  </div>
+</section>
+<br><br>
+<div class="test-cards">
+  <div class="card">
+    <h3>INSTRUCCIONES</h3>
+    <p><strong>{{ contenido.descripcion }}</strong></p>
+    <p *ngFor="let inst of instruccionesArray">
+      {{ inst }}
+    </p>
+    <br>
+    <!-- Botón Iniciar dinámico según el tipo (por ejemplo, aptitudes, economico, universitario) -->
+    <button class="btn results-btn" [routerLink]="iniciarLink">Iniciar</button>
+  </div> 
+</div>
+<section class="test-section"> 
+  <button class="btn results-btn" [routerLink]="['/cuestionario']">Regresar</button> 
+</section>
+<br><br>
