@@ -8,6 +8,9 @@ import { CuestionarioComponent } from './components/cuestionario/cuestionario.co
 import { PruebasAComponent } from './components/pruebas-a/pruebas-a.component';
 import { ValoraComponent } from './components/valora/valora.component';
 import { PreguntasComponent } from './components/preguntas/preguntas.component';
+import { AdminDashboardComponent } from './components/admin-dashboard/admin-dashboard.component';
+import { EgresadoDashboardComponent } from './components/egresado-dashboard/egresado-dashboard.component';
+import { AspiranteDashboardComponent } from './components/aspirante-dashboard/aspirante-dashboard.component';
 export const routes: Routes = [
   {path: '', component: InicioComponent},
   {path: 'carreras', component: CarrerasComponent},
@@ -18,5 +21,8 @@ export const routes: Routes = [
   {path: 'pruebasA', component: PruebasAComponent},
   {path: 'valora', component: ValoraComponent},
   { path: 'preguntas/:tipo', component: PreguntasComponent },
+  {path: 'admin-dashboard', component: AdminDashboardComponent},
+  {path: 'egresado-dashboard', component: EgresadoDashboardComponent},
+  {path: 'aspirante-dashboard', component: AspiranteDashboardComponent},
   { path: '**', redirectTo: '', pathMatch:'full'},
 ];
