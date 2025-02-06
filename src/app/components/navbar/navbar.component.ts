@@ -12,15 +12,19 @@ import { Router, RouterModule, NavigationEnd } from '@angular/router';
 export class NavbarComponent implements OnInit {
 
   isCarrerasRoute: boolean = false;
+  isForgotRoute: boolean = false;
+  isLoginRoute: boolean = false;
+
   showMenu: boolean = false;
 
   constructor(private router: Router) {}
 
   ngOnInit(): void {
-    // Se suscribe a los cambios de ruta para actualizar isCarrerasRoute
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         this.isCarrerasRoute = this.router.url.includes('/carreras');
+        this.isForgotRoute = this.router.url.includes('/forgot-password');
+        this.isLoginRoute = this.router.url.includes('/login');
       }
     });
   }

@@ -11,7 +11,7 @@
           <button type="submit">Crear tu cuenta</button>
         </form>
       </div>
-  
+
       <!-- Formulario de Inicio de Sesión (sign-in) -->
       <div class="form-contenedor sign-in">
         <form id="loginform" (submit)="onLoginSubmit($event)" method="POST">
@@ -20,11 +20,11 @@
           <h1>Inicia Sesión</h1>
           <input id="email" name="email" type="email" [(ngModel)]="loginEmail" placeholder="Email" required>
           <input id="password" name="password" type="password" [(ngModel)]="loginPassword" placeholder="Password" required>
-          <a href="#">¿Olvidaste la contraseña?</a>
+          <a [routerLink]="['/forgot-password']">¿Olvidaste la contraseña?</a>
           <button type="submit">Iniciar sesión</button>
         </form>
       </div>
-  
+
       <!-- Contenedor para la zona de alternancia -->
       <div class="toggle-contenedor">
         <div class="toggle">
@@ -34,7 +34,7 @@
             <p>Ingresa tus datos personales para usar todas las funciones del sitio</p>
             <button class="hidden" (click)="toggleIniciarSesion()">Iniciar sesión</button>
           </div>
-  
+
           <!-- Panel derecho: vista para Aspirante -->
           <div class="toggle-panel toggle-right">
             <h1>¡Bienvenido!</h1>
@@ -54,4 +54,3 @@
       </div>
     </div>
   </div>
-  
