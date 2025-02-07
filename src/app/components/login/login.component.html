@@ -30,14 +30,14 @@
         <div class="toggle">
           <!-- Panel izquierdo: vista de Iniciar Sesión -->
           <div class="toggle-panel toggle-left">
-            <h1>¡Bienvenido de nuevo!</h1>
+            <h1 class="fontMarca">¡Bienvenido de nuevo!</h1>
             <p>Ingresa tus datos personales para usar todas las funciones del sitio</p>
             <button class="hidden" (click)="toggleIniciarSesion()">Iniciar sesión</button>
           </div>
 
           <!-- Panel derecho: vista para Aspirante -->
           <div class="toggle-panel toggle-right">
-            <h1>¡Bienvenido!</h1>
+            <h1 class="fontMarca">¡Bienvenido!</h1>
             <p>Únete a nuestra comunidad y accede a contenido exclusivo para aspirantes y egresados. ¡No pierdas la oportunidad!</p>
             <div class="items">
               <button class="hidden" [routerLink]="['/logine']">

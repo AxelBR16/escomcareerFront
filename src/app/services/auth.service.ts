@@ -22,6 +22,11 @@ register(registerData: SignUp): Observable<ResponseMessageDto> {
     return this.httpClient.post<any>(`${environment.apiUrls.auth}/auth/sign-up`, registerData);
 }
 
+signOut(accessToken: string): Observable<any> {
+  const headers = new HttpHeaders().set('Authorization', accessToken);
+  return this.httpClient.post(`${environment.apiUrls.auth}/auth/sign-out`, null, { headers });
+}
+
 getUserDetails(): Observable<Usuario> {
     let token = localStorage.getItem('token');
     const header = new HttpHeaders({
