@@ -1,3 +1,5 @@
+import { AdminGuard } from './shared/guards/admin.guard';
+import { AspiranteGuard } from './shared/guards/aspirante.guard';
 import { Routes } from '@angular/router';
 import { InicioComponent } from './components/inicio/inicio.component';
 import { CarrerasComponent } from './components/carreras/carreras.component';
@@ -12,19 +14,21 @@ import { AdminDashboardComponent } from './components/admin-dashboard/admin-dash
 import { EgresadoDashboardComponent } from './components/egresado-dashboard/egresado-dashboard.component';
 import { AspiranteDashboardComponent } from './components/aspirante-dashboard/aspirante-dashboard.component';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
+import { EgresadoGuard } from './shared/guards/egresado.guard';
+
 export const routes: Routes = [
   {path: '', component: InicioComponent},
   {path: 'carreras', component: CarrerasComponent},
   {path: 'logine', component: LogineComponent},
   {path: 'login', component: LoginComponent},
-  { path: 'instrucciones/:tipo', component: InstruccionesComponent },
-  {path: 'cuestionario', component: CuestionarioComponent},
-  {path: 'pruebasA', component: PruebasAComponent},
-  {path: 'valora', component: ValoraComponent},
-  { path: 'preguntas/:tipo', component: PreguntasComponent },
-  {path: 'admin-dashboard', component: AdminDashboardComponent},
-  {path: 'egresado-dashboard', component: EgresadoDashboardComponent},
-  {path: 'aspirante-dashboard', component: AspiranteDashboardComponent},
+  { path: 'instrucciones/:tipo', component: InstruccionesComponent, canActivate: [AspiranteGuard]},
+  {path: 'cuestionario', component: CuestionarioComponent, canActivate: [AspiranteGuard]},
+  {path: 'pruebasA', component: PruebasAComponent, canActivate: [AspiranteGuard]},
+  {path: 'valora', component: ValoraComponent, canActivate: [AspiranteGuard]},
+  { path: 'preguntas/:tipo', component: PreguntasComponent, canActivate: [AspiranteGuard]},
+  {path: 'admin-dashboard', component: AdminDashboardComponent, canActivate: [AdminGuard]},
+  {path: 'egresado-dashboard', component: EgresadoDashboardComponent, canActivate: [EgresadoGuard]},
+  {path: 'aspirante-dashboard', component: AspiranteDashboardComponent, canActivate: [AspiranteGuard]},
   { path: 'forgot-password', component: ForgotPasswordComponent },
   { path: '**', redirectTo: '', pathMatch:'full'},
 ];

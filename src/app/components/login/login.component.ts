@@ -1,11 +1,13 @@
 import { AuthService } from './../../services/auth.service';
+
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import Swal from 'sweetalert2';
-import { SignUp } from '../../models/sign-up';
 import { SignIn } from '../../models/sign-in';
+import { SignUpAspirante } from '../../models/sign-up-aspirante';
+import { LoaderService } from '../../services/loader.service';
 
 @Component({
   selector: 'app-login',
@@ -19,7 +21,7 @@ export class LoginComponent implements OnInit {
   // Referencia al contenedor principal para activar las transiciones
   @ViewChild('contenedor') contenedor!: ElementRef;
 
-  constructor(private authService: AuthService, private router: Router){ }
+  constructor(private authService: AuthService, private router: Router, private loader: LoaderService){ }
 
   // Campos para el registro (sign-up)
   firstName: string = '';
@@ -48,27 +50,31 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  // Manejador del formulario de registro
   onRegisterSubmit(event: Event): void {
     event.preventDefault();
     if (this.firstName && this.lastName && this.email && this.password) {
-      const signUpData: SignUp = {
+      this.loader.mostrarCargando('Verificando credenciales...');
+      const signUpData: SignUpAspirante = {
         nombre: this.firstName,
         apellido: this.lastName,
         email: this.email,
-        password: this.password
+        password: this.password,
+        role: 'ROLE_ASPIRANTE'
       };
-      this.authService.register(signUpData).subscribe({
+      this.authService.registerAspirante(signUpData).subscribe({
         next: (response) => {
+          this.loader.ocultarCargando();
           console.log('Registro completado:', response);
+          this.toggleIniciarSesion();
           Swal.fire({
             icon: 'success',
             title: 'Registro exitoso',
             text: '¡Tu cuenta ha sido creada correctamente!',
             confirmButtonText: 'Aceptar'
           });
-          this.router.navigate(['/login']);      },
+        },
         error: (error) => {
+          this.loader.ocultarCargando();
           Swal.fire({
             icon: 'error',
             title: 'Error en el registro',
@@ -106,9 +112,9 @@ export class LoginComponent implements OnInit {
             text: 'Bienvenido de nuevo',
             confirmButtonText: 'Aceptar'
           });
-          localStorage.setItem('token', response.token);
-          localStorage.setItem('role', response.role);
-          // Redirigir según el rol del usuario
+          this.authService.storeUserSession(response.token, response.role);
+
+          console.log(sessionStorage.getItem('role'))
           if (response.role === 'ROLE_ADMIN') {
             this.router.navigate(['/admin-dashboard']);
           } else if (response.role === 'ROLE_EGRESADO') {

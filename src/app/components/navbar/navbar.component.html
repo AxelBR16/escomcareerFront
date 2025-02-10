@@ -33,7 +33,7 @@
 
   <!-- Botón de iniciar sesión o cerrar sesión -->
   <div class="col-md-3 text-center">
-    <button *ngIf="!isAuthenticated" [routerLink]="['/login']" type="button" class="boton">Iniciar sesión</button>
-    <button *ngIf="isAuthenticated" (click)="signOut()" type="button" class="boton">Cerrar sesión</button>
+    <button *ngIf="!isLoggedIn" [routerLink]="['/login']" type="button" class="boton">Iniciar sesión</button>
+    <button *ngIf="isLoggedIn" (click)="signOut()" type="button" class="boton">Cerrar sesión</button>
   </div>
 </header>

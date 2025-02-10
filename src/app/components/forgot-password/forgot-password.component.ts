@@ -1,44 +1,78 @@
 import { NgIf } from '@angular/common';
 import { Component } from '@angular/core';
-import { ForgotPasswordService } from '../../services/forgot-password.service';
 import { FormsModule } from '@angular/forms';
+import { AuthService } from '../../services/auth.service';
+import { ConfirmForgotPassword } from '../../models/confirm-forgot-password';
+import Swal from 'sweetalert2';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-forgot-password',
-  imports: [NgIf, FormsModule],
+  imports: [RouterModule,NgIf, FormsModule],
   templateUrl: './forgot-password.component.html',
   styleUrl: './forgot-password.component.css'
 })
 export class ForgotPasswordComponent {
-  email: string = '';
+
+  constructor(private authService: AuthService, private router: Router) {}
+
   code: string = '';
+  email: string = '';
   newPassword: string = '';
-  step = 1; // 1: Enviar código, 2: Ingresar código y nueva contraseña
   message: string = '';
+  step: number = 1;
 
-  constructor(private authService: ForgotPasswordService) {}
+  requestCode() {
+    this.authService.forgotPassword(this.email).subscribe({
+      next: (response) => {
+        this.step = 2;
+        this.message = response;
+      },
+      error: (error) => {
+        const errorMessage = error?.error?.message
+        ? error.error.message
+        : 'Ocurrió un error desconocido.';
 
-  async requestCode() {
-    try {
-      await this.authService.ResetPassword(this.email);
-      this.step = 2;
-      this.message = 'Código enviado. Verifica tu correo.';
-    } catch (error) {
-      this.message = 'Error al enviar el código. Intenta nuevamente.';
-    }
-  }
-
-
-  async resetPassword() {
-    const response = await this.authService.confirmResetPassword(this.email, this.code, this.newPassword);
-    if (response) { // ✅ Verificar que response no sea undefined
-      this.message = response.message;
-      if (response.success) {
-        this.step = 1;
+        Swal.fire({
+          icon: 'error',
+          title: 'Error en el registro',
+          text: errorMessage,
+          confirmButtonText: 'Aceptar'
+        });
       }
-    } else {
-      this.message = "Ocurrió un error inesperado.";
-    }
+  })
+}
+
+
+  resetPassword() {
+    const forgotData: ConfirmForgotPassword = {
+            email: this.email,
+            password: this.newPassword,
+            ConfirmationCode: this.code
+          };
+          this.authService.confirmPassword(forgotData).subscribe({
+            next: (response) => {
+                Swal.fire({
+                icon: 'success',
+                title: 'Contraseña actualizada',
+                text: 'Tu contraseña ha sido actualizada correctamente',
+                confirmButtonText: 'Aceptar'
+              });
+              this.router.navigate(['/login']);
+            },
+            error: (error) => {
+              const errorMessage = error.error && error.error.message
+              ? error.error.message
+              : 'Ocurrió un error desconocido.';
+
+              Swal.fire({
+                icon: 'error',
+                title: 'Error en el registro',
+                text: errorMessage,
+                confirmButtonText: 'Aceptar'
+              });
+            }
+        })
   }
 
 }
