@@ -1,6 +1,6 @@
 <div class="cuadro">
     <div class="question">
-      <p id="question-text">{{ currentQuestionObj.text }}</p>
+      <p id="question-text">{{ currentQuestionObj?.texto }}</p>
       <p>Elige una de las siguientes respuestas:</p>
       <br>
       <div class="opciones">
@@ -12,7 +12,9 @@
           <input type="radio" name="answer" class="answer-option" value="2"
                  [(ngModel)]="selectedAnswer" (change)="onOptionChange()"> 2. Me desagrada.
         </label>
-        <label [ngClass]="{'selected-option': selectedAnswer === '3'}">
+        <label [ngClass]="{'selected-option': selectedAnswer === '3'}"><
+
+
           <input type="radio" name="answer" class="answer-option" value="3"
                  [(ngModel)]="selectedAnswer" (change)="onOptionChange()"> 3. Me es indiferente.
         </label>
@@ -25,29 +27,31 @@
                  [(ngModel)]="selectedAnswer" (change)="onOptionChange()"> 5. Me gusta mucho.
         </label>
       </div>
-      
+
       <div class="navigation">
         <button id="prev" (click)="prev()">Anterior</button>
         <button id="next" (click)="next()">Siguiente</button>
       </div>
-      
+
       <p>Progreso</p>
-      <div class="progress" role="progressbar" 
-           aria-label="Progreso" 
-           [attr.aria-valuenow]="progress" 
-           aria-valuemin="0" 
-           aria-valuemax="100">
-        <div class="progress-bar bg-success" [style.width.%]="progress">
-          {{ progress | number:'1.0-0' }}%
-        </div>
-      </div>
+
         <div class="navigation">
-            <button  [routerLink]="['/cuestionario']">Salir</button> 
+            <button  [routerLink]="['/cuestionario']">Salir</button>
         </div>
       </div>
-    
+      <div class="seccion">
+        <div class="progress" role="progressbar"
+             aria-label="Progreso"
+             [attr.aria-valuenow]="progress"
+             aria-valuemin="0"
+             aria-valuemax="100">
+          <div class="progress-bar bg-success" [style.height.%]="progress">
+            {{ progress | number:'1.0-0' }}%
+          </div>
+        </div>
+      </div>
     <div class="image">
-      <img id="question-image" [src]="currentQuestionObj.image" alt="Imagen relacionada">
+      <img id="question-image" [src]="currentQuestionObj?.imagen_url" alt="Imagen relacionada">
     </div>
+
   </div>
-  
