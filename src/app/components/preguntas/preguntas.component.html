@@ -51,7 +51,7 @@
         </div>
       </div>
     <div class="image">
-      <img id="question-image" [src]="currentQuestionObj?.imagen_url" alt="Imagen relacionada">
+      <img id="question-image" [src]="getSanitizedUrl(currentQuestionObj?.imagen_url)" alt="Imagen relacionada">
     </div>
 
   </div>

@@ -6,6 +6,7 @@ import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { PreguntasService } from '../../services/preguntas.service';
 import { LoaderService } from '../../services/loader.service';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
 interface Question {
   texto: string;
@@ -62,7 +63,9 @@ export class PreguntasComponent implements OnInit {
   progress: number = 0;
   tipo: string | null = null;
 
-  constructor(private route: ActivatedRoute, private preguntasService: PreguntasService, private loader: LoaderService) { }
+
+  constructor(private route: ActivatedRoute, private preguntasService: PreguntasService, private loader: LoaderService,   private sanitizer: DomSanitizer
+  ) { }
 
   ngOnInit(): void {
     this.obtenerPreguntas();
@@ -94,7 +97,18 @@ export class PreguntasComponent implements OnInit {
       },
       (error) => {
         this.loader.ocultarCargando();
-        console.error('Error al obtener las preguntas:', error);
+        let errorMessage = 'Error desconocido';  // Mensaje por defecto
+        if (error.status === 0) {
+          errorMessage = 'El servidor no está disponible. Por favor, intente más tarde.';
+        } else {
+          errorMessage = `Error: ${error.status} - ${error.message}`;
+        }
+         Swal.fire({
+                icon: 'error',
+                title: `Error al obtener las preguntas`,
+                text: errorMessage,
+                confirmButtonText: 'Aceptar'
+              });
       }
     );
   }
@@ -147,5 +161,11 @@ export class PreguntasComponent implements OnInit {
   get currentQuestionObj(): Question | null {
   return this.questions.length > 0 ? this.questions[this.currentQuestion] : null;
 }
+
+getSanitizedUrl(url: string | undefined): SafeUrl {
+  return this.sanitizer.bypassSecurityTrustResourceUrl(url ?? '');
+}
+
+
 
 }
