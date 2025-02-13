@@ -81,13 +81,17 @@ export class PreguntasComponent implements OnInit {
     this.updateQuestion();
   }
 
+  loading: boolean = false;
+
   obtenerPreguntas() {
+    if (this.loading) return;  // Evita solicitudes simultáneas
+    this.loading = true;
     this.loader.mostrarCargando('Cargando preguntas...');
     this.preguntasService.getPreguntasAptitudes().subscribe(
       (response) => {
         this.questionsMap['aptitudes'] = response;
         this.loader.ocultarCargando();
-
+        this.loading = false;  // Reinicia el flag
         if (this.tipo === 'aptitudes') {
           this.questions = this.questionsMap['aptitudes'];
           this.userAnswers = this.questions.map(() => null);
@@ -97,21 +101,23 @@ export class PreguntasComponent implements OnInit {
       },
       (error) => {
         this.loader.ocultarCargando();
+        this.loading = false;  // Reinicia el flag
         let errorMessage = 'Error desconocido';  // Mensaje por defecto
         if (error.status === 0) {
           errorMessage = 'El servidor no está disponible. Por favor, intente más tarde.';
         } else {
           errorMessage = `Error: ${error.status} - ${error.message}`;
         }
-         Swal.fire({
-                icon: 'error',
-                title: `Error al obtener las preguntas`,
-                text: errorMessage,
-                confirmButtonText: 'Aceptar'
-              });
+        Swal.fire({
+          icon: 'error',
+          title: `Error al obtener las preguntas`,
+          text: errorMessage,
+          confirmButtonText: 'Aceptar'
+        });
       }
     );
   }
+
 
 
   // Calcula y actualiza el progreso en porcentaje
