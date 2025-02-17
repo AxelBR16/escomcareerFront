@@ -74,10 +74,8 @@ export class PreguntasComponent implements OnInit {
       this.questions = this.questionsMap[this.tipo];
     }
 
-    // Inicializamos el arreglo de respuestas con null para cada pregunta
     this.userAnswers = this.questions.map(() => null);
 
-    // Mostramos la primera pregunta
     this.updateQuestion();
   }
 
