@@ -25,10 +25,10 @@ export const routes: Routes = [
   {path: 'cuestionario', component: CuestionarioComponent},
   {path: 'pruebasA', component: PruebasAComponent},
   {path: 'valora', component: ValoraComponent, canActivate: [AspiranteGuard]},
-  { path: 'preguntas/:tipo', component: PreguntasComponent},
+  { path: ':tipo/preguntas/:id', component: PreguntasComponent},
   {path: 'admin-dashboard', component: AdminDashboardComponent, canActivate: [AdminGuard]},
   {path: 'egresado-dashboard', component: EgresadoDashboardComponent, canActivate: [EgresadoGuard]},
   {path: 'aspirante-dashboard', component: AspiranteDashboardComponent, canActivate: [AspiranteGuard]},
   { path: 'forgot-password', component: ForgotPasswordComponent },
-  { path: '**', redirectTo: '', pathMatch:'full'},
+  // { path: '**', redirectTo: '', pathMatch:'full'},
 ];

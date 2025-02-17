@@ -20,15 +20,17 @@ interface Instruccion {
 export class InstruccionesComponent implements OnInit {
   tipo: string | null = null;
   contenido!: Instruccion;
+  type: string = '';
+  preguntaN: string = '1';
 
   instruccionesMap: { [key: string]: Instruccion } = {
     'aptitudes': {
       titulo: 'Inventario de autoevaluación de aptitudes',
-      descripcion: `A continuación se enumeran una serie de actividades que tienen como propósito medir tu grado de habilidad para la ejecución de las mismas. 
+      descripcion: `A continuación se enumeran una serie de actividades que tienen como propósito medir tu grado de habilidad para la ejecución de las mismas.
                     Al contestar los reactivos, ten presente que no se busca que te gusten esas actividades, ni pienses si deberías tener determinada habilidad.
                     Solo se te pide que contestes qué tan hábilmente crees poder realizar la actividad citada, más allá de tus gustos o valores.
-                    
-                    Esta prueba no exige un tiempo determinado, por lo que puedes meditar y reflexionar tus respuestas. Para tener información precisa en la elección 
+
+                    Esta prueba no exige un tiempo determinado, por lo que puedes meditar y reflexionar tus respuestas. Para tener información precisa en la elección
                     de tu carrera es necesario que contestes este inventario de manera honesta, sin menospreciarte o sobreestimarte. Si en alguna actividad no has tenido alguna experiencia,
                     piensa qué tan bien la realizarías si fuera necesario.`,
       instrucciones: [
@@ -49,8 +51,8 @@ export class InstruccionesComponent implements OnInit {
     },
     'universitario': {
       titulo: 'Inventario de preferencias universitarias',
-      descripcion: `El propósito de este inventario es servir como informador al estudiante preparatoriano que requiere 
-                    del servicio de orientación vocacional, ya que por la forma en que está diseñado, el alumno lee y observa los 
+      descripcion: `El propósito de este inventario es servir como informador al estudiante preparatoriano que requiere
+                    del servicio de orientación vocacional, ya que por la forma en que está diseñado, el alumno lee y observa los
                     patrones de actividad de las diversas profesiones a través de los reactivos, lo cual lo obliga a procesar información a la vez que compara,
                     agrupa, evalúa y selecciona actividades diversas.`,
       instrucciones: [
@@ -65,7 +67,6 @@ export class InstruccionesComponent implements OnInit {
   ngOnInit(): void {
     // Obtenemos el parámetro "tipo" de la URL
     this.tipo = this.route.snapshot.paramMap.get('tipo');
-    
     // Establecemos el contenido a mostrar basado en el tipo recibido
     if (this.tipo && this.instruccionesMap[this.tipo]) {
       this.contenido = this.instruccionesMap[this.tipo];
@@ -77,18 +78,19 @@ export class InstruccionesComponent implements OnInit {
         instrucciones: []
       };
     }
-  
-    // Verifica si el contenido está correctamente asignado
-    console.log(this.contenido);
   }
-  
+
   get instruccionesArray(): string[] {
     return this.contenido && this.contenido.instrucciones ? this.contenido.instrucciones : [];
   }
-  
-  // Este getter devuelve el routerLink dinámico para el botón "Iniciar"
-  get iniciarLink(): any[] {
-    // Se asume que la ruta a la sección de preguntas es '/preguntas/:tipo'
-    return this.tipo ? ['/preguntas', this.tipo] : ['/preguntas'];
+
+  get iniciarLink(): string {
+    if (this.tipo === 'aptitudes') {
+      this.preguntaN = 'inv1-001'
+    }
+
+    return `/${this.tipo}/preguntas/${this.preguntaN}`
   }
+
+
 }

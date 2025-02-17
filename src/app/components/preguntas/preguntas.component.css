@@ -69,7 +69,7 @@
     border-radius: 0; /* Elimina bordes redondeados */
     overflow: hidden;
     margin-top: 0px;
-    max-height: 670px;
+    max-height: 100vb;
 
 }
 
