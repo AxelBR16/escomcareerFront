@@ -1,7 +1,9 @@
 
-
-
 .body {
+    min-height: 100vh; 
+    width: 100%;     
+    margin: 0;       
+    padding: 0;  
     display: flex;
     align-items: center;
     justify-content: center;
@@ -299,3 +301,72 @@
 }
 
 
+.btn-wrapper {
+    display: flex;
+    justify-content: space-between; /* Distribuye los botones a extremos opuestos */
+    align-items: center;
+    width: 100%;
+    padding: 20px 40px;
+  }
+
+.btn-camera {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background-color: #001E62;
+    color: white;
+    font-size: 12px;
+    padding: 10px 25px;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-camera ion-icon {
+    font-size: 20px;
+}
+
+.btn-camera:hover {
+    background-color: #002a8f;
+    transform: scale(1.05);
+}
+
+
+/*Estilo para la camara*/
+
+.camera-container {
+    position: relative;
+    width: 100%;
+    max-width: 400px;
+    margin: 20px auto;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  }
+  
+  .camera-feed {
+    width: 100%;
+    height: auto;
+    border-radius: 12px;
+  }
+  
+  .btn-stop {
+    background-color: #d9534f;
+    color: white;
+    padding: 10px;
+    font-size: 14px;
+    border: none;
+    border-radius: 8px;
+    margin-top: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .btn-stop:hover {
+    background-color: #c9302c;
+  }
+  

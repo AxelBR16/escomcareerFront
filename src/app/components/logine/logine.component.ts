@@ -1,4 +1,4 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, ViewChild, ElementRef } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
@@ -16,6 +16,9 @@ import { BrowserQRCodeReader } from '@zxing/browser';
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class LogineComponent {
+
+  @ViewChild('videoElement', {static: false}) videoElement!:ElementRef<HTMLVideoElement>
+
   currentStep: number = 1;
   firstName: string = '';
   lastName: string = '';
@@ -24,6 +27,9 @@ export class LogineComponent {
   carrera: string = '';
   qrLink: string = '';
   showCamera: boolean = false;
+
+  codeReader= new BrowserQRCodeReader();
+  mediaStream!: MediaStream;
 
   carrerasMap: any = {
     "1": "INGENIERÍA EN SISTEMAS COMPUTACIONALES",
@@ -103,11 +109,55 @@ export class LogineComponent {
   }
   
 
-  startScan() {
+  async startScan() {
     this.showCamera = true;
     // Aquí puedes agregar la lógica para iniciar el escaneo del QR con la cámara.
     // Esto se puede hacer con una librería como ZXing o similar.
+
+    try{
+      this.mediaStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } });
+      const video = this.videoElement.nativeElement;
+      video.srcObject = this.mediaStream;
+      video.play();
+
+      // Inicia la detección continua
+      this.scanQrContinuously();
+    } catch (error) {
+      console.error('Error al acceder a la cámara:', error);
+      Swal.fire('Error', 'No se pudo acceder a la cámara.', 'error');
+    }
   }
+
+   /** Escanea QR continuamente desde el video **/
+   async scanQrContinuously() {
+    this.codeReader.decodeFromVideoElement(
+      this.videoElement.nativeElement,
+      (result, error) => {
+        if (result) {
+          this.qrLink = result.getText();
+          Swal.fire('Código QR detectado', `Contenido: ${this.qrLink}`, 'success');
+          this.verifyQrLink(this.qrLink);
+          this.stopScan(); // Detiene la cámara después de escanear
+        }
+  
+        if (error) {
+          console.warn('Esperando código QR...', error);
+        }
+      }
+    ).catch(err => {
+      console.error('Error al iniciar escaneo:', err);
+    });
+  }
+
+   /** Detiene el escaneo y cierra la cámara **/
+   stopScan() {
+    if (this.mediaStream) {
+      this.mediaStream.getTracks().forEach(track => track.stop());
+    }
+    this.showCamera = false;
+  }
+
+
   
   scanQrFromImage(event: Event) {
     const input = event.target as HTMLInputElement;
