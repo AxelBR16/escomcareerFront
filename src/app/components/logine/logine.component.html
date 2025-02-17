@@ -47,20 +47,31 @@
         <button type="button" (click)="scanQr()">Verificar</button>
         
       
-       <!-- Botón para escanear QR (solo abre la cámara) -->
- <!-- <button type="button" (click)="startScan()">Escanear QR</button>-->
+            <!-- Botón para escanear QR (solo abre la cámara) -->
+      <!-- <button type="button" (click)="startScan()">Escanear QR</button>-->
 
 
-  <!-- Opción para importar una imagen con QR -->
-  <input type="file" (change)="scanQrFromImage($event)" accept="image/*">
+        <!-- Opción para importar una imagen con QR -->
+        <input type="file" (change)="scanQrFromImage($event)" accept="image/*">
 
-  <!-- Botón para verificar y comprar -->
-  <button type="button" (click)="scanQr()">Verificar y Comprar</button>
+        <!-- Botón para verificar y comprar -->
+        <button type="button" (click)="scanQr()">Verificar y Comprar</button>
       </form>
       
       <div class="btn-wrapper">
         <a class="btn" href="loginEgresado.html"><button>Regresar</button></a>
+
+        <button class="btn-camera" (click)="startScan()">
+          <ion-icon name="camera-outline"></ion-icon>Escanear
+        </button>
       </div>
+
+            <!-- Área para mostrar la cámara -->
+      <div class="camera-container" *ngIf="showCamera">
+        <video #videoElement class="camera-feed"></video>
+        <button class="btn-stop" (click)="stopScan()">Detener</button>
+      </div>
+
     </div>
   </div>
 </div>
