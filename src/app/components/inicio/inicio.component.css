@@ -122,10 +122,35 @@ body {
 }
 
 
-.carousel-container {
-  width: 70%;
-  max-width: 500px;
-  margin: auto;
+
+
+carrusel {
+  width: 300px;
+  height: 200px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.carrusel-inner {
+  display: flex;
+  width: 500%;
+  height: 100%;
+  transition: transform 0.5s ease-in-out;
+}
+
+.carrusel-item {
+  flex: 1 0 20%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.carrusel-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .img-custom {
@@ -136,27 +161,6 @@ body {
 }
 
 
-.carousel-container {
-  width: 90%; /* Ajusta el ancho del carrusel */
-  max-width: 600px; /* Máximo ancho */
-}
-
-.img-custom {
-  height: 300px; /* Ajusta la altura de las imágenes */
-  object-fit: cover; /* Recorta la imagen sin deformarla */
-}
-
-.carousel-inner img {
-  height: 300px; /* Ajusta a la altura deseada */
-  object-fit: cover;
-  width: 100%;
-}
-.carousel-inner {
-  overflow: hidden;
-}
-.carousel-item {
-  transition: transform 0.5s ease-in-out;
-}
 
 
 

@@ -5,7 +5,15 @@
   padding: 0;
   box-sizing: border-box;
   font-family: 'Montserrat', sans-serif;
+  
 }
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  overflow-x: hidden; /* Evita el scroll horizontal */
+}
+
 
 .body {
   display: flex;
@@ -13,6 +21,7 @@
   justify-content: center;
   flex-direction: column;
   height: 100vh;
+  width: 100vw; /* Evita que crezca más del tamaño de la pantalla */
   background-image: url('/site/fondo.svg');
   background-size: cover;
   background-position: center;
@@ -52,7 +61,7 @@
 }
 
 .contenedor {
-  margin-top: 10px;
+  margin-top: 75px;
   background-color: #fff;
   border-radius: 30px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.35);
@@ -60,7 +69,7 @@
   overflow: hidden;
   width: 768px;
   max-width: 100%;
-  min-height: 480px;
+  min-height: 455px;
 }
 
 .fontMarca{
