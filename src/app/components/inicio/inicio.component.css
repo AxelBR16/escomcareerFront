@@ -112,7 +112,7 @@ body {
 .test-section { 
   text-align: center;
   padding: 15px 10px;
-  background: linear-gradient(to right, rgba(2, 8, 65, 0.8), rgba(164, 198, 233, 0.8)); /* Degradado azul con transparencia */
+  background: linear-gradient(to right, #0A1733, #002F6C);  /* Degradado azul con transparencia */
   border-radius: 5px;
   margin: 40px auto;
   width: 50%;

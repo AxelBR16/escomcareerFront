@@ -27,8 +27,11 @@ export const routes: Routes = [
   {path: 'pruebasA', component: PruebasAComponent},
   {path: 'valora', component: ValoraComponent, canActivate: [AspiranteGuard]},
   { path: ':tipo/preguntas/:id', component: PreguntasComponent},
-  {path: 'admin-dashboard', component: AdminDashboardComponent, canActivate: [AdminGuard]},
-  {path: 'egresado-dashboard', component: EgresadoDashboardComponent, canActivate: [EgresadoGuard]},
+  //{path: 'admin-dashboard', component: AdminDashboardComponent, canActivate: [AdminGuard]},
+  //{path: 'egresado-dashboard', component: EgresadoDashboardComponent, canActivate: [EgresadoGuard]},
+  {path: 'admin-dashboard', component: AdminDashboardComponent},
+  {path: 'egresado-dashboard', component: EgresadoDashboardComponent},
+
   {path: 'aspirante-dashboard', component: AspiranteDashboardComponent, canActivate: [AspiranteGuard]},
   { path: 'forgot-password', component: ForgotPasswordComponent },
   // { path: '**', redirectTo: '', pathMatch:'full'},
