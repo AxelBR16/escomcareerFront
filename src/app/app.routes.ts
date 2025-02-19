@@ -15,6 +15,7 @@ import { EgresadoDashboardComponent } from './components/egresado-dashboard/egre
 import { AspiranteDashboardComponent } from './components/aspirante-dashboard/aspirante-dashboard.component';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 import { EgresadoGuard } from './shared/guards/egresado.guard';
+import { FooterComponent } from './components/footer/footer.component';
 
 export const routes: Routes = [
   {path: '', component: InicioComponent},

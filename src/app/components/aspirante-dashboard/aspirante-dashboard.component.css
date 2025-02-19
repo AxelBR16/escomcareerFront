@@ -1,0 +1,433 @@
+/* Estilos generales */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+
+
+a {
+    text-decoration: none;
+    color: #3498db;
+}
+
+a:hover {
+    color: #2980b9;
+}
+
+/* Sección de bienvenida */
+.hero {
+    position: relative;
+    background: linear-gradient(to right, #0A1733, #002F6C); /* Azul oscuro como la navbar */
+    color: white;
+    padding: 60px 20px;
+    text-align: center;
+    overflow: hidden;
+}
+
+.hero-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.hero-img {
+    max-width: 150px;
+    margin: 20px;
+}
+
+.hero-text {
+    max-width: 600px;
+}
+
+.hero-text h1 {
+    font-size: 2.5em;
+    margin-bottom: 20px;
+}
+
+.hero-text p {
+    font-size: 1.2em;
+}
+
+/* Burbujas decorativas */
+.bubble {
+    position: absolute;
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    animation: float 6s infinite ease-in-out;
+}
+
+.bubble-1 {
+    width: 100px;
+    height: 100px;
+    top: 10%;
+    left: 5%;
+    animation-duration: 8s;
+}
+
+.bubble-2 {
+    width: 150px;
+    height: 150px;
+    top: 20%;
+    right: 10%;
+    animation-duration: 10s;
+}
+
+.bubble-3 {
+    width: 80px;
+    height: 80px;
+    top: 50%;
+    left: 20%;
+    animation-duration: 7s;
+}
+
+.bubble-4 {
+    width: 120px;
+    height: 120px;
+    top: 60%;
+    right: 15%;
+    animation-duration: 9s;
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-20px);
+    }
+}
+
+/* Frase llamativa */
+.motivational-phrase {
+    background-color: #555a60;
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+.motivational-phrase h2 {
+    margin: 0;
+    font-size: 1.8em;
+}
+
+/* Sección de servicios */
+.services-section {
+    padding: 40px 20px;
+    text-align: center;
+}
+
+.services-container {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.service-block {
+    background-color: white;
+    padding: 20px;
+    margin: 10px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 300px;
+}
+
+.service-icon {
+    max-width: 100px;
+    margin-bottom: 15px;
+}
+
+.service-title {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+}
+
+/* Sección de equipo */
+.team-section {
+    padding: 40px 20px;
+    text-align: center;
+}
+
+.team-container {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.team-block {
+    background-color: white;
+    padding: 20px;
+    margin: 10px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 300px;
+}
+
+.team-icon {
+    max-width: 100px;
+    margin-bottom: 15px;
+    border-radius: 50%;
+}
+
+.team-title {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+}
+
+/* Footer */
+
+footer {
+    position: relative;
+    background: #002F6C; /* Color de fondo */
+    color: white;
+    padding: 100px 10% 50px;
+    text-align: center;
+  }
+  
+  
+  
+  
+  .footer-container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    max-width: 1100px;
+    margin: auto;
+  }
+  
+  .footer-column {
+    flex: 1;
+    min-width: 200px;
+    margin-bottom: 20px;
+  }
+  
+  .footer-column h3 {
+    margin-bottom: 15px;
+    font-size: 18px;
+  }
+  
+  .footer-column p, .footer-column a {
+    color: white;
+    text-decoration: none;
+    display: block;
+    margin: 5px 0;
+  }
+  
+  .social-icons {
+    margin-top: 10px;
+  }
+  
+  .social-icons a {
+    display: inline-block;
+    margin: 0 10px;
+    font-size: 20px;
+    color: white;
+  }
+  
+  .footer-bottom {
+    margin-top: 20px;
+    font-size: 14px;
+  }
+  
+  .back-to-top {
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #fdfdfd;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+
+
+  .academic-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 50px;
+    gap: 50px;
+}
+
+.image-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.image-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.small-image {
+    width: 120px;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.main-image {
+    width: 300px;
+    height: auto;
+    border-radius: 10px;
+    margin-left: 20px;
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
+
+.text-container {
+    max-width: 450px;
+}
+
+.subtitle {
+    color: #0073ff;
+    font-weight: bold;
+}
+
+.title {
+    font-size: 32px;
+    font-weight: bold;
+    color: #222;
+    margin: 10px 0;
+}
+
+.description {
+    color: #555;
+    font-size: 16px;
+}
+
+.benefits {
+    list-style: none;
+    padding: 0;
+    margin: 10px 0;
+}
+
+.benefits li {
+    color: #333;
+    font-size: 16px;
+    margin: 5px 0;
+}
+
+.read-more {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 10px 20px;
+    background-color: #0073ff;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.read-more:hover {
+    background-color: #0057cc;
+}
+
+
+
+
+/* 📱 Responsive Design */
+@media (max-width: 1024px) {
+    .academic-section {
+        flex-direction: column;
+        text-align: center;
+        padding: 30px;
+    }
+
+    .image-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .image-stack {
+        flex-direction: row;
+        justify-content: center;
+        gap: 10px;
+    }
+
+    .small-image {
+        width: 100px;
+    }
+
+    .main-image {
+        width: 250px;
+        margin-left: 0;
+        margin-top: 10px;
+    }
+
+    .text-container {
+        max-width: 90%;
+        text-align: center;
+    }
+
+    .title {
+        font-size: 28px;
+    }
+}
+
+@media (max-width: 600px) {
+    .academic-section {
+        padding: 20px;
+    }
+
+    .image-stack {
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .small-image {
+        width: 80px;
+    }
+
+    .main-image {
+        width: 200px;
+    }
+
+    .title {
+        font-size: 24px;
+    }
+
+    .benefits li {
+        font-size: 14px;
+    }
+
+    .read-more {
+        font-size: 14px;
+        padding: 8px 16px;
+    }
+}
+
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .hero-content {
+        flex-direction: column;
+    }
+
+    .hero-img {
+        max-width: 100px;
+    }
+
+    .hero-text h1 {
+        font-size: 2em;
+    }
+
+    .hero-text p {
+        font-size: 1em;
+    }
+
+    .services-container, .team-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .service-block, .team-block {
+        max-width: 100%;
+    }
+}
