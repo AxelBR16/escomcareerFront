@@ -198,7 +198,6 @@ export class PreguntasComponent implements OnInit {
   // Método para enviar todas las respuestas al finalizar el cuestionario
 
 
-  // Mostrar diálogo de finalización
   mostrarDialogoFinal() {
     Swal.fire({
       title: '¡Cuestionario completado!',
@@ -213,7 +212,6 @@ export class PreguntasComponent implements OnInit {
       if (result.isConfirmed) {
 
       } else {
-        // Opción para revisar respuestas: navegar a la primera pregunta o mostrar resumen
         Swal.fire({
           title: 'Revisión',
           text: 'Puedes navegar entre las preguntas para revisar tus respuestas antes de enviar',
