@@ -71,7 +71,6 @@ export class PreguntasComponent implements OnInit {
     const respuestasGuardadas = sessionStorage.getItem('respuestasUsuario');
 
     if (respuestasGuardadas) {
-      // Si hay respuestas guardadas en sessionStorage, usarlas directamente
       this.respuestasUsuario = JSON.parse(respuestasGuardadas);
       this.getPregunta(this.id);
     } else {
