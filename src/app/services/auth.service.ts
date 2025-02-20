@@ -63,10 +63,11 @@ getLoggedInStatus(): Observable<boolean> {
 }
 
 // Almacenar el token y el rol
-storeUserSession(token: string, role: string): void {
+storeUserSession(email: string, token: string, role: string): void {
   if (this.isBrowser()) {
     sessionStorage.setItem('token', token);
     sessionStorage.setItem('role', role);
+    sessionStorage.setItem('email', email);
   }
   this.token = token;
   this.setLoggedIn(true); // Marca que el usuario está logueado
@@ -77,6 +78,8 @@ clearUserSession(): void {
   if (this.isBrowser()) {
     sessionStorage.removeItem('token');
     sessionStorage.removeItem('role');
+    sessionStorage.removeItem('email');
+
   }
   this.token = null;
   this.setLoggedIn(false); // Marca que el usuario ha cerrado sesión

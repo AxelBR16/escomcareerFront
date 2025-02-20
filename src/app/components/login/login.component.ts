@@ -18,7 +18,6 @@ import { LoaderService } from '../../services/loader.service';
 })
 export class LoginComponent implements OnInit {
 
-  // Referencia al contenedor principal para activar las transiciones
   @ViewChild('contenedor') contenedor!: ElementRef;
 
   constructor(private authService: AuthService, private router: Router, private loader: LoaderService){ }
@@ -59,7 +58,7 @@ export class LoginComponent implements OnInit {
         apellido: this.lastName,
         email: this.email,
         password: this.password,
-        role: 'ROLE_ASPIRANTE'
+        role: 'ROLE_ASPIRANTE' /* ROLE_EGRESADO */
       };
       this.authService.registerAspirante(signUpData).subscribe({
         next: (response) => {
@@ -112,7 +111,7 @@ export class LoginComponent implements OnInit {
             text: 'Bienvenido de nuevo',
             confirmButtonText: 'Aceptar'
           });
-          this.authService.storeUserSession(response.token, response.role);
+          this.authService.storeUserSession(this.loginEmail, response.token, response.role);
 
           console.log(sessionStorage.getItem('role'))
           if (response.role === 'ROLE_ADMIN') {
