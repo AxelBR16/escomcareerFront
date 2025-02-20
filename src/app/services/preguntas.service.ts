@@ -23,4 +23,8 @@ export class PreguntasService {
     return this.httpClient.get<Pregunta>(`${environment.apiUrls.auth}/preguntas/${id}`);
   }
 
+  obtenerRespuestasUsuario(email: string) {
+    return this.httpClient.get<any>(`${environment.apiUrls.auth}/respuestas/obtenerPorAspirante/${email}`);
+  }
+
 }

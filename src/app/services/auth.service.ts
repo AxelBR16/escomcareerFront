@@ -23,7 +23,6 @@ private isBrowser(): boolean {
   return typeof window !== 'undefined';
 }
 
-// Verifica si el usuario está logueado
 isLoggedIn(): boolean {
   return this.isBrowser() && !!sessionStorage.getItem('token');
 }
@@ -52,17 +51,14 @@ confirmPassword(resetPassword: ConfirmForgotPassword): Observable<any> {
   return this.httpClient.post<any>(`${environment.apiUrls.auth}/auth/confirm-forgotpassword`, resetPassword);
 }
 
- // Método para actualizar el estado de inicio de sesión
  setLoggedIn(status: boolean): void {
   this.loggedInSubject.next(status);
 }
 
-// Obtener el estado de login
 getLoggedInStatus(): Observable<boolean> {
   return this.loggedInSubject.asObservable();
 }
 
-// Almacenar el token y el rol
 storeUserSession(email: string, token: string, role: string): void {
   if (this.isBrowser()) {
     sessionStorage.setItem('token', token);
@@ -70,10 +66,9 @@ storeUserSession(email: string, token: string, role: string): void {
     sessionStorage.setItem('email', email);
   }
   this.token = token;
-  this.setLoggedIn(true); // Marca que el usuario está logueado
+  this.setLoggedIn(true);
 }
 
-// Eliminar el token y el rol
 clearUserSession(): void {
   if (this.isBrowser()) {
     sessionStorage.removeItem('token');
@@ -82,7 +77,7 @@ clearUserSession(): void {
 
   }
   this.token = null;
-  this.setLoggedIn(false); // Marca que el usuario ha cerrado sesión
+  this.setLoggedIn(false);
 }
 
 
