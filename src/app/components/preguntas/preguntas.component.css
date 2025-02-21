@@ -71,7 +71,7 @@
     border-radius: 0; /* Elimina bordes redondeados */
     overflow: hidden;
     margin-top: 0px;
-    max-height: 100vh;
+    height: 100vh;
 
 }
 
