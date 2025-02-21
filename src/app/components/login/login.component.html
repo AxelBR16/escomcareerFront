@@ -4,10 +4,30 @@
       <div class="form-contenedor sign-up">
         <form id="signupForm" (submit)="onRegisterSubmit($event)" method="POST">
           <h1>Crea tu cuenta</h1>
-          <input type="text" id="firstName" name="firstName" [(ngModel)]="firstName" placeholder="Nombre" required>
-          <input type="text" id="lastName" name="lastName" [(ngModel)]="lastName" placeholder="Apellidos" required>
-          <input type="email" id="correo" name="correo" [(ngModel)]="email" placeholder="Email" required>
-          <input type="password" id="signup-password" name="password" [(ngModel)]="password" placeholder="Password" required>
+          <input required maxlength="30" type="text" id="firstName" name="firstName" [(ngModel)]="firstName" placeholder="Nombre" required>
+          <input required maxlength="30" type="text" id="lastName" name="lastName" [(ngModel)]="lastName" placeholder="Apellidos" required>
+          <input type="email" id="correo" name="correo" [(ngModel)]="email" placeholder="TuEmail@example.com"  (blur)="validateEmail()" required>
+
+           <!-- Mensaje de error del email -->
+          <div class="error-message" *ngIf="emailError">
+            {{ emailError }}
+          </div>
+
+
+          <div class="password-container">
+            <input type="password" id="signup-password" name="password" [(ngModel)]="password" required minlength="8" maxlength="20" placeholder="Password" 
+            (focus)="showPasswordHint = true" (blur)="showPasswordHint = false" required>
+             <!--Mensaje de ayuda-->
+             <div class="password-hint" *ngIf="showPasswordHint">
+              Debe contener al menos 1 mayúscula, 1 número y 1 carácter especial.
+            </div>
+
+             <!-- Mensaje de error de la contraseña -->
+            <div class="error-message" *ngIf="passwordError">
+              {{ passwordError }}
+            </div>
+          </div>
+
           <button type="submit">Crear tu cuenta</button>
         </form>
       </div>
