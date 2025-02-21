@@ -69,7 +69,7 @@
     border-radius: 0; /* Elimina bordes redondeados */
     overflow: hidden;
     margin-top: 0px;
-    max-height: 100vb;
+    max-height: 100vh;
 
 }
 
@@ -126,8 +126,7 @@ img {
     color: white;
     padding: 10px;
     overflow-y: auto; /* Permite el desplazamiento vertical si el contenido es extenso */
-    margin-top: 40px;
-
+    height: 100vh;
 }
 
 .question h3 {
@@ -224,7 +223,9 @@ img {
 .navigation button:hover {
     background-color: #0056b3;
 }
-
+.seccionp{
+  height: 100vh;
+}
 .progress {
   width: 100%; /* Ajusta el ancho de la barra */
   height: 100%; /* Ocupa toda la altura de la sección */
