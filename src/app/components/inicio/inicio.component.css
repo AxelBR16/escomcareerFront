@@ -124,45 +124,123 @@ body {
 
 
 
-carrusel {
-  width: 300px;
-  height: 200px;
-  position: relative;
-  overflow: hidden;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-.carrusel-inner {
+.carousel-inner {
   display: flex;
-  width: 500%;
+  transition: transform 0.5s ease;
   height: 100%;
-  transition: transform 0.5s ease-in-out;
 }
 
-.carrusel-item {
-  flex: 1 0 20%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.carousel-item {
+  min-width: 100%;
+  box-sizing: border-box;
+  height: 100%;
 }
 
-.carrusel-item img {
+.carousel-item img {
   width: 100%;
-  height: 100%;
-  object-fit: cover;
+  height: 380px; /* Tamaño fijo en altura */
+  object-fit: cover; /* Recorta la imagen sin deformarla */
+  border-radius: 10px;
+}
+
+.carousel-controls {
+  position: absolute;
+  top: 50%;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  transform: translateY(-50%);
+}
+
+.carousel-controls button {
+  background: rgba(0, 0, 0, 0.5);
+  border: none;
+  color: #fff;
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 50%;
+  font-size: 20px;
+}
+
+.carousel-controls button:hover {
+  background: rgba(0, 0, 0, 0.7);
 }
 
 .img-custom {
-  height: 250px;
+  max-height: 250px;
   object-fit: cover;
   border-radius: 10px;
   
 }
 
+/* Frase llamativa */
+.Experiencias {
+  background-color: #555a60;
+  color: white;
+  padding: 20px;
+  text-align: center;
+}
+
+.Experiencias h2 {
+  margin: 0;
+  font-size: 1.8em;
+}
 
 
+.contenedor-testimonios {
+  display: flex;
+  justify-content: space-around; /* Distribuye el espacio uniformemente */
+  align-items: center; /* Centra verticalmente los testimonios */
+  gap: 20px; /* Espacio entre los testimonios */
+  width: 100%; /* Ocupa todo el ancho disponible */
 
+  padding: 20px;
+}
+.testimonio {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 8px 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  width: calc(33.33% - 20px); /* Ancho de cada testimonio */
+  text-align: left; /* Alineación del texto a la izquierda */
+  flex: 1; /* Asegura que todos los testimonios tengan el mismo ancho */
+}
+.testimonio .foto-nombre {
+  display: flex;
+  align-items: center; /* Alinea la foto y el nombre verticalmente */
+  margin-bottom: 15px;
+}
+.testimonio img {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  margin-right: 15px; /* Espacio entre la foto y el nombre */
+}
+.testimonio h2 {
+  margin: 0;
+  font-size: 1.2em;
+  color: #426EA4;
+}
+.testimonio p {
+  font-size: 1em;
+  color: #666;
+  line-height: 1.5;
+}
+.testimonio .autor {
+  font-weight: bold;
+  margin-top: 15px;
+  color: #333;
+}
+
+@media (max-width: 768px) {
+  .contenedor-testimonios {
+      flex-direction: column; /* Cambia a una columna en pantallas pequeñas */
+  }
+  .testimonio {
+      width: 100%; /* Ocupa todo el ancho en pantallas pequeñas */
+    
+  }
+}
 
 .hero {
   position: relative;

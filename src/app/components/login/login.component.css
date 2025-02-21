@@ -199,6 +199,7 @@ html, body {
   .contenedor .items {
     flex-direction: column;
     gap: 10px;
+    
   }
 
   .contenedor .items button {
@@ -223,6 +224,8 @@ html, body {
     line-height: 20px;
     letter-spacing: 0.3px;
   }
+  
+
 }
 
 .contenedor .image-button img {
