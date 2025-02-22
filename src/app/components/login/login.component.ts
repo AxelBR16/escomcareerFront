@@ -32,8 +32,39 @@ export class LoginComponent implements OnInit {
   loginEmail: string = '';
   loginPassword: string = '';
 
+  /**/
+  showPasswordHint: boolean = false;
+  passwordError: string = '';
+  emailError: string = '';
+
+  // Expresión regular para validar la contraseña (mínimo 8 caracteres, 1 mayúscula, 1 número y 1 caracter especial)
+  passwordPattern = /^(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
+
+  // Expresión regular para validar el email
+  emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
   ngOnInit(): void {
   }
+
+  // Valida la contraseña en tiempo real
+  validatePassword() {
+    if (!this.passwordPattern.test(this.password)) {
+      this.passwordError = 'Debe contener al menos 1 mayúscula, 1 número y 1 carácter especial.';
+    } else {
+      this.passwordError = '';
+    }
+  }
+
+  // Valida el formato del email en tiempo real
+  validateEmail() {
+    if (!this.emailPattern.test(this.email)) {
+      this.emailError = 'El formato del correo electrónico no es válido.';
+    } else {
+      this.emailError = '';
+    }
+  }
+
+
 
   // Al presionar "Aspirante", se agrega la clase "active" al contenedor para mostrar el formulario de registro.
   toggleAspirante(): void {
@@ -51,6 +82,10 @@ export class LoginComponent implements OnInit {
 
   onRegisterSubmit(event: Event): void {
     event.preventDefault();
+
+    this.validatePassword();
+    this.validateEmail();
+
     if (this.firstName && this.lastName && this.email && this.password) {
       this.loader.mostrarCargando('Verificando credenciales...');
       const signUpData: SignUpAspirante = {

@@ -3,7 +3,7 @@ import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 import Swal from 'sweetalert2';
-import { FormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, Validators } from '@angular/forms';
 import { BrowserQRCodeReader } from '@zxing/browser';
 import { ApiService } from '../../services/api.service';
 
@@ -30,8 +30,37 @@ export class LogineComponent {
   qrLink: string = '';
   showCamera: boolean = false;
 
+  showPasswordHint: boolean = false;
+  passwordError: string = '';
+  emailError: string = '';
+
   codeReader= new BrowserQRCodeReader();
   mediaStream!: MediaStream;
+
+  // Expresión regular para validar la contraseña
+  passwordPattern = /^(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
+
+  // Expresión regular para validar el email
+  emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+   /** Valida la contraseña en tiempo real **/
+   validatePassword() {
+    if (!this.passwordPattern.test(this.password)) {
+      this.passwordError = 'El formato de la contraseña no es válido.';
+    } else {
+      this.passwordError = '';
+    }
+  }
+
+  /** Valida el formato del email en tiempo real **/
+  validateEmail() {
+    if (!this.emailPattern.test(this.email)) {
+      this.emailError = 'El formato del correo electrónico no es válido.';
+    } else {
+      this.emailError = '';
+    }
+  }
+
 
   carrerasMap: any = {
     "1": "INGENIERÍA EN SISTEMAS COMPUTACIONALES",
@@ -52,10 +81,20 @@ export class LogineComponent {
   }
 
   validateStep1(): boolean {
+
+    this.validatePassword();
+    this.validateEmail();
+
     if (!this.firstName || !this.lastName || !this.email || !this.password || this.carrera === 'Selecciona tu carrera') {
       Swal.fire('Error', 'Por favor, completa todos los campos.', 'error');
       return false;  // Si algún campo está vacío, no avanzamos al siguiente paso
     }
+
+    if (this.passwordError || this.emailError) {
+      Swal.fire('Error', 'Corrige los errores antes de continuar.', 'error');
+      return false;
+    }
+
     return true;  // Si todos los campos están completos, avanzamos al siguiente paso
   }
 

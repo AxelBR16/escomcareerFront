@@ -8,6 +8,7 @@ import { PreguntasService } from '../../services/preguntas.service';
 import { LoaderService } from '../../services/loader.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Pregunta } from '../../models/pregunta';
+import { Respuesta } from '../../models/respuesta';
 
 @Component({
   selector: 'app-preguntas',
@@ -148,9 +149,37 @@ export class PreguntasComponent implements OnInit {
     this.guardarRespuesta();
   }
 
+  enviarRespuestas(valorR: number, id: string){
+      const respuesta: Respuesta = {
+        valor: valorR,
+        id_Pregunta: id,
+        emailAspirante: sessionStorage.getItem('email')!
+      }
+      this.preguntasService.saveRespuesta(respuesta).subscribe(
+        (response: any) => {
+          Swal.fire({
+            icon: 'success',
+            title: 'Respuesta guardada',
+            text: response.message,
+            confirmButtonText: 'Aceptar'
+          });
+        },
+        (error) => {
+          Swal.fire({
+            icon: 'error',
+            title: 'Error al guardar la respuesta',
+            text: error.error?.message || 'Ocurrió un error desconocido.',
+            confirmButtonText: 'Aceptar'
+          });
+        }
+      );
+  }
+
   next() {
     if (this.selectedAnswer) {
+      this.enviarRespuestas(parseInt(this.selectedAnswer), this.id);
       const currentIdNumber = parseInt(this.id.split('-')[1]);
+      console.log(this.selectedAnswer);
       if (!isNaN(currentIdNumber)) {
         const nextIdNumber = currentIdNumber + 1;
         const currentIdinventario = this.id.split('-')[0];

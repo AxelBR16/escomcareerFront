@@ -19,16 +19,37 @@
     <div id="step1" *ngIf="currentStep === 1" class="step active">
       <form id="registerForm" (submit)="goNext($event)">
         <h1>Crea tu cuenta</h1>
-        <input type="text" name="firstName" [(ngModel)]="firstName" placeholder="Nombres" required>
-        <input type="text" name="lastName" [(ngModel)]="lastName" placeholder="Apellidos" required>
+        <input type="text" required maxlength="30" name="firstName" [(ngModel)]="firstName" placeholder="Nombres" required>
+        <input type="text" required maxlength="30" name="lastName" [(ngModel)]="lastName" placeholder="Apellidos" required>
         <select class="form-select" [(ngModel)]="carrera" name="carrera" required>
           <option value="" disabled>Selecciona tu carrera en la ESCOM</option>
           <option value="1">Ingeniería en Sistemas Computacionales</option>
           <option value="2">Licenciatura en Ciencia de Datos</option>
           <option value="3">Ingeniería en Inteligencia Artificial</option>
         </select>
-        <input type="email" name="correo" [(ngModel)]="email" placeholder="Email" required>
-        <input type="password" name="password" [(ngModel)]="password" placeholder="Password" required>
+        <input type="email" name="correo" [(ngModel)]="email" placeholder="TuEmail@example.com" required>
+
+        <!-- Mensaje de error del email -->
+        <div class="error-message" *ngIf="emailError">
+          {{ emailError }}
+        </div>
+
+        <div class="password-container">
+          <input type="password" name="password" [(ngModel)]="password" required minlength="8" maxlength="20" placeholder="Password" 
+          (focus)="showPasswordHint = true" (blur)="showPasswordHint = false"  required>
+
+            <!--Mensaje de ayuda-->
+            <div class="password-hint" *ngIf="showPasswordHint">
+              Debe contener al menos 1 mayúscula, 1 número y 1 carácter especial.
+            </div>
+        </div>
+        
+          <!-- Mensaje de error de la contraseña -->
+          <div class="error-message" *ngIf="passwordError">
+            {{ passwordError }}
+          </div>
+
+
         <button type="submit">Registrar</button>
       
       </form>
