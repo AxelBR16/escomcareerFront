@@ -59,7 +59,7 @@
       </form>
       
       <div class="btn-wrapper">
-        <a class="btn" href="loginEgresado.html"><button>Regresar</button></a>
+        <button (click)="goToStep(1)">Regresar</button>
 
         <button class="btn-camera" (click)="startScan()">
           <ion-icon name="camera-outline"></ion-icon>Escanear
@@ -73,5 +73,29 @@
       </div>
 
     </div>
+
+  <!-- Paso 3 - Mostrar los datos ingresados -->
+<div id="step3" *ngIf="currentStep === 3" class="step active">
+  <h1>Cuenta Creada</h1>
+  <p>Revisa los datos que ingresaste:</p>
+
+  <div class="user-data">
+    <p><strong>Nombres:</strong> {{ firstName || 'No ingresado' }}</p>
+    <p><strong>Apellidos:</strong> {{ lastName || 'No ingresado' }}</p>
+    <p><strong>Carrera:</strong> 
+      <span *ngIf="carrera === '1'">Ingeniería en Sistemas Computacionales</span>
+      <span *ngIf="carrera === '2'">Licenciatura en Ciencia de Datos</span>
+      <span *ngIf="carrera === '3'">Ingeniería en Inteligencia Artificial</span>
+      <span *ngIf="!carrera">No ingresada</span>
+    </p>
+    <p><strong>Email:</strong> {{ email || 'No ingresado' }}</p>
+  </div>
+
+  <div class="btn-wrapper">
+    <button (click)="goToStep(1)">Editar</button>
+    <button (click)="finalizeAccount()">Finalizar</button>
+  </div>
+</div>
+
   </div>
 </div>

@@ -194,40 +194,6 @@ html, body {
   transform: scale(1.05);
 }
 
-/* Responsividad */
-@media (max-width: 768px) {
-  .contenedor .items {
-    flex-direction: column;
-    gap: 10px;
-    
-  }
-
-  .contenedor .items button {
-    font-size: 14px;
-    padding: 5px 50px;
-  }
-}
-
-@media (max-width: 480px) {
-  .contenedor .items button {
-    font-size: 8px;
-    padding: 2px 5px;
-  }
-  .form-contenedor img {
-    max-width: 120px; /* Asegura que la imagen sea aún más pequeña en pantallas muy pequeñas */
-  }
-  .toggle-panel h1 {
-    font-size: 1.3em; /* Reduce aún más el tamaño del h1 en pantallas muy pequeñas */
-  }
-  .contenedor p {
-    font-size: 10px;
-    line-height: 20px;
-    letter-spacing: 0.3px;
-  }
-  
-
-}
-
 .contenedor .image-button img {
   display: block;
   width: 100%;
@@ -235,6 +201,7 @@ html, body {
 }
 
 /* Toggle container y paneles */
+
 .toggle-contenedor {
   position: absolute;
   top: 0;
@@ -313,4 +280,118 @@ html, body {
   margin: 0 3px;
   width: 40px;
   height: 40px;
+}
+
+.itemsL {
+  display: none; /* 🔥 Oculta los botones en pantallas grandes */
+}
+
+
+@media (max-width: 578px) {
+  .contenedor {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: auto;
+      min-height: 500px;
+  }
+
+  .form-contenedor {
+      width: 100%;
+      height: auto;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      transition: all 0.6s ease-in-out;
+  }
+
+  .sign-in, .sign-up {
+      width: 100%;
+      opacity: 1;
+      z-index: 2;
+      position: absolute;
+      transition: all 0.6s ease-in-out;
+  }
+
+  .contenedor.active .sign-in {
+      transform: translateY(100%);
+      opacity: 0;
+  }
+
+  .contenedor.active .sign-up {
+      transform: translateY(0);
+      opacity: 1;
+      z-index: 5;
+  }
+
+  .contenedor.active .sign-up {
+      transform: translateY(-40%);
+      opacity: 1;
+      z-index: 5;
+  }
+
+  .sign-up {
+      opacity: 0;
+      visibility: hidden;
+  }
+
+  .contenedor.active .sign-up {
+      opacity: 1;
+      visibility: visible;
+  }
+
+  .contenedor.active .sign-in {
+      opacity: 0;
+      visibility: hidden;
+  }
+
+ 
+  .toggle-contenedor {
+      display: none;
+  }
+
+  /*  Mostramos los botones debajo del botón "Iniciar Sesión" */
+  .itemsL {
+    display: flex !important;
+    flex-direction: row;  
+    justify-content: center;
+    gap: 10px; 
+    margin-top: 15px; 
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+
+  /*Ajustammos los botones */
+  .itemsL button {
+      width: 80px;
+      height: 80px;
+      font-size: 12px;
+      padding: 5px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      border: none;
+      background-color: #001E62;
+      color: white;
+      border-radius: 10px;
+      cursor: pointer;
+  }
+
+  /* Ajustar los íconos dentro de los botones */
+  .itemsL button img {
+      width: 40px;
+      height: 40px;
+  }
+
+  /*  Centrar el div  Iniciar sesión */
+.div-centro {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;  
+  margin-top: 20px; 
+}
+
 }

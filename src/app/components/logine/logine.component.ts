@@ -5,6 +5,8 @@ import { IonicModule } from '@ionic/angular';
 import Swal from 'sweetalert2';
 import { FormsModule } from '@angular/forms';
 import { BrowserQRCodeReader } from '@zxing/browser';
+import { ApiService } from '../../services/api.service';
+
 
 
 @Component({
@@ -37,7 +39,7 @@ export class LogineComponent {
     "3": "Ingeniería en Inteligencia Artificial",
   };
 
-  constructor() {}
+  constructor(private apiService: ApiService) {}
 
   goNext(event: Event) {
     event.preventDefault();  // Evita la recarga de la página
@@ -63,48 +65,40 @@ export class LogineComponent {
       return;
     }
   
-    try {
-      const response = await fetch("https://zr8f0150c8.execute-api.us-east-2.amazonaws.com/Dev", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ url: this.qrLink })
-      });
+    console.log("🔹 Enviando QR a la API:", this.qrLink);
   
-      const responseText = await response.text(); // 🔍 Capturamos la respuesta como texto
+    this.apiService.verifyQr(this.qrLink).subscribe({
+      next: (data) => {
+        console.log("✅ Respuesta de la API:", data);
   
-      if (!response.ok) {
-        throw new Error(`Error en la API: ${response.status} - ${responseText}`);
-      }
+        const carreraApi = data.carrera?.trim().toUpperCase();
+        const carreraSeleccionada = this.carrerasMap[this.carrera]?.trim().toUpperCase();
   
-      const data = JSON.parse(responseText); // Intentamos parsear JSON
+        console.log("📌 Carrera en API:", carreraApi);
+        console.log("📌 Carrera seleccionada por el usuario:", carreraSeleccionada);
   
-      console.log("Respuesta de la API:", data); // 📌 Verifica qué devuelve la API
+        if (!carreraApi) {
+          console.error("❌ Error: La API no devolvió información de carrera.");
+          Swal.fire('Error', 'No se pudo obtener la carrera del QR.', 'error');
+          return;
+        }
   
-      // Comparar carreras
-      const carreraApi = data.carrera?.trim().toUpperCase();
-      const carreraSeleccionada = this.carrerasMap[this.carrera]?.trim().toUpperCase();
+        if (carreraApi !== carreraSeleccionada) {
+          console.warn("⚠️ Carrera no coincide. No se permite avanzar.");
+          Swal.fire('Error', `La información no coincide. Carrera en API: ${data.carrera}`, 'error');
+          return;
+        }
   
-      if (carreraApi === carreraSeleccionada) {
+        console.log("✅ Carrera validada correctamente. Avanzando al Paso 3.");
         Swal.fire('Éxito', 'Verificación completada correctamente.', 'success').then(() => {
           this.currentStep = 3;
         });
-      } else {
-        Swal.fire('Error', `La información no coincide. Carrera en API: ${data.carrera}`, 'error');
+      },
+      error: (error) => {
+        console.error("⚠️ Error en la verificación:", error);
+        Swal.fire('Error', 'Hubo un problema al comunicarse con la API.', 'error');
       }
-    }  catch (error: unknown) {
-      console.error("Error al comunicarse con la API:", error);
-    
-      // Convertimos error a tipo Error para acceder a `.message`
-      let errorMessage = "Error desconocido";
-    
-      if (error instanceof Error) {
-        errorMessage = error.message;
-      } else if (typeof error === "string") {
-        errorMessage = error; // Si el error es un string, lo usamos directamente
-      }
-    
-      Swal.fire('Error', `Hubo un problema al comunicarse con la API: ${errorMessage}`, 'error');
-    }
+    });
     
   }
   
@@ -174,41 +168,72 @@ export class LogineComponent {
       Swal.fire('Error', 'Por favor, ingresa el enlace de tu código QR.', 'error');
       return;
     }
-  
-    // Si se ha ingresado un enlace de QR, realiza la verificación
-    this.verifyQrLink(this.qrLink);
-  }
-  
-  async verifyQrLink(qrLink: string) {
-    try {
-      const response = await fetch("https://zr8f0150c8.execute-api.us-east-2.amazonaws.com/Dev", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ url: qrLink })
+
+    console.log("🔹 Verificando QR...");
+    console.log("📌 Datos antes de cambiar al paso 3:", {
+      firstName: this.firstName,
+      lastName: this.lastName,
+      carrera: this.carrera,
+      email: this.email,
+    });
+
+    if (!this.firstName || !this.lastName || !this.carrera || !this.email) {
+      Swal.fire('Error', 'Los datos del usuario están vacíos. Por favor, regresa y completa el formulario.', 'error');
+      console.error("⚠️ Datos vacíos:", {
+        firstName: this.firstName,
+        lastName: this.lastName,
+        carrera: this.carrera,
+        email: this.email
       });
-  
-      if (!response.ok) {
-        throw new Error("Error al comunicarse con la API.");
-      }
-  
-      const data = await response.json();
-      
-      // Comparar la carrera y hacer la verificación
-      const carreraApi = data.carrera.trim().toUpperCase();
-      const carreraSeleccionada = this.carrerasMap[this.carrera].trim().toUpperCase();
-  
-      if (carreraApi === carreraSeleccionada) {
-        Swal.fire('Éxito', 'Verificación completada correctamente.', 'success').then(() => {
-          this.currentStep = 3;
-        });
-      } else {
-        Swal.fire('Error', `La información no coincide. Carrera: ${data.carrera}`, 'error');
-      }
-    } catch (error) {
-      Swal.fire('Error', 'Hubo un problema al comunicarse con la API.', 'error');
-      console.error(error);
+      return;
     }
-  }
+    
+    this.verifyQrLink(this.qrLink);
+
+    
+}
+
+verifyQrLink(qrLink: string) {
+  console.log("🔹 Verificando QR con la API:", qrLink);
+
+  this.apiService.verifyQr(qrLink).subscribe({
+    next: (data) => {
+      console.log("✅ Respuesta de la API:", data);
+
+      const carreraApi = data.carrera?.trim().toUpperCase();
+      const carreraSeleccionada = this.carrerasMap[this.carrera]?.trim().toUpperCase();
+
+      console.log("📌 Carrera en API:", carreraApi);
+      console.log("📌 Carrera seleccionada por el usuario:", carreraSeleccionada);
+
+      if (!carreraApi) {
+        console.error("❌ Error: La API no devolvió información de carrera.");
+        Swal.fire('Error', 'No se pudo obtener la carrera del QR.', 'error');
+        return;
+      }
+
+      if (carreraApi !== carreraSeleccionada) {
+        console.warn("⚠️ Carrera no coincide. No se permite avanzar.");
+        Swal.fire('Error', `La información no coincide. Carrera en API: ${data.carrera}`, 'error');
+        return;
+      }
+
+      console.log("✅ Carrera validada correctamente. Avanzando al Paso 3.");
+      Swal.fire('Éxito', 'Verificación completada correctamente.', 'success').then(() => {
+        this.currentStep = 3;
+      });
+    },
+    error: (error) => {
+      console.error("⚠️ Error en la verificación:", error);
+      Swal.fire('Error', 'Hubo un problema al comunicarse con la API.', 'error');
+    }
+  });
+}
+
+
+
+
+
   
   processQrImage(file: File) {
     const reader = new FileReader();
@@ -233,5 +258,14 @@ export class LogineComponent {
   
     reader.readAsDataURL(file);
   }
+  goToStep(step: number) {
+    this.currentStep = step;
+  }
+
+  finalizeAccount() {
+    Swal.fire('Cuenta creada con éxito', 'Tu cuenta ha sido registrada correctamente.', 'success');
+    // Aquí podrías redirigir a otra página o realizar alguna acción adicional
+  }
+
   
 }
