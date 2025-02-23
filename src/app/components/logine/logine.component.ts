@@ -6,7 +6,9 @@ import Swal from 'sweetalert2';
 import { FormBuilder, FormGroup, FormsModule, Validators } from '@angular/forms';
 import { BrowserQRCodeReader } from '@zxing/browser';
 import { ApiService } from '../../services/api.service';
-
+import { AuthService } from '../../services/auth.service';
+import { LoaderService } from '../../services/loader.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -68,17 +70,44 @@ export class LogineComponent {
     "3": "Ingeniería en Inteligencia Artificial",
   };
 
-  constructor(private apiService: ApiService) {}
+  constructor(private apiService: ApiService,  private authService: AuthService,private loader: LoaderService,private router: Router ) {}
 
   goNext(event: Event) {
     event.preventDefault();  // Evita la recarga de la página
-    
+  
     if (this.currentStep === 1 && this.validateStep1()) {
-      this.currentStep++;  // Avanza al siguiente paso
+      this.loader.mostrarCargando('Registrando cuenta...');
+  
+      const signUpData = {
+        nombre: this.firstName,
+        apellido: this.lastName,
+        email: this.email,
+        password: this.password,
+        role: 'ROLE_EGRESADO',  // 🔥 Especificamos el rol
+        carrera: parseInt(this.carrera) // 🔥 Convertimos a número
+      };
+  
+      console.log("📡 Enviando datos de registro:", signUpData);
+  
+      this.authService.registerEgresado(signUpData).subscribe({
+        next: () => {
+          this.loader.ocultarCargando();
+          Swal.fire('Éxito', 'Cuenta registrada correctamente.', 'success').then(() => {
+            this.currentStep++;
+          });
+        },
+        error: (error) => {
+          this.loader.ocultarCargando();
+          console.error("❌ Error en el registro:", error);
+          Swal.fire('Error', `No se pudo registrar la cuenta: ${error.message}`, 'error');
+        }
+      });
     } else if (this.currentStep === 2) {
       this.validateStep2();
     }
   }
+  
+  
 
   validateStep1(): boolean {
 
@@ -105,9 +134,14 @@ export class LogineComponent {
     }
   
     console.log("🔹 Enviando QR a la API:", this.qrLink);
+    
+    // 🔥 Mostramos pantalla de carga mientras se verifica el QR
+    this.loader.mostrarCargando('Verificando QR...');
   
     this.apiService.verifyQr(this.qrLink).subscribe({
       next: (data) => {
+        this.loader.ocultarCargando();
+  
         console.log("✅ Respuesta de la API:", data);
   
         const carreraApi = data.carrera?.trim().toUpperCase();
@@ -134,12 +168,13 @@ export class LogineComponent {
         });
       },
       error: (error) => {
+        this.loader.ocultarCargando();
         console.error("⚠️ Error en la verificación:", error);
         Swal.fire('Error', 'Hubo un problema al comunicarse con la API.', 'error');
       }
     });
-    
   }
+  
   
 
   async startScan() {
@@ -302,9 +337,12 @@ verifyQrLink(qrLink: string) {
   }
 
   finalizeAccount() {
-    Swal.fire('Cuenta creada con éxito', 'Tu cuenta ha sido registrada correctamente.', 'success');
-    // Aquí podrías redirigir a otra página o realizar alguna acción adicional
+    this.authService.storeUserSession(this.email, 'FAKE_TOKEN', 'ROLE_EGRESADO'); // Simulamos un token
+    Swal.fire('Cuenta creada con éxito', 'Tu cuenta ha sido registrada correctamente.', 'success').then(() => {
+      this.router.navigate(['/confirmacion-egresado']);
+    });
   }
+  
 
   
 }

@@ -7,6 +7,9 @@ import { Usuario } from '../models/usuario';
 import { ResponseMessageDto } from '../models/response-message-dto';
 import { SignUpAspirante } from '../models/sign-up-aspirante';
 import { ConfirmForgotPassword } from '../models/confirm-forgot-password';
+import { catchError } from 'rxjs/operators';
+import { throwError } from 'rxjs'; // ✅ Ahora importado correctamente
+
 
 @Injectable({
   providedIn: 'root'
@@ -23,6 +26,20 @@ private isBrowser(): boolean {
   return typeof window !== 'undefined';
 }
 
+registerEgresado(registerData: any): Observable<ResponseMessageDto> {
+  console.log("📡 Enviando solicitud de registro de egresado:", registerData);
+
+  const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+
+  return this.httpClient.post<ResponseMessageDto>(`${environment.apiUrls.auth}/auth/sign-up`, registerData, { headers }).pipe(
+      catchError(error => {
+          console.error("❌ Error en el registro de egresado:", error);
+          return throwError(() => new Error(error.error?.message || 'Error al comunicarse con la API.'));
+      })
+  );
+}
+
+
 isLoggedIn(): boolean {
   return this.isBrowser() && !!sessionStorage.getItem('token');
 }
@@ -34,6 +51,8 @@ login(loginData: SignIn): Observable<any> {
 registerAspirante(registerData: SignUpAspirante): Observable<ResponseMessageDto> {
     return this.httpClient.post<any>(`${environment.apiUrls.auth}/auth/sign-up`, registerData);
 }
+
+
 
 signOut(accessToken: string): Observable<any> {
   const headers = new HttpHeaders().set('Authorization', accessToken);

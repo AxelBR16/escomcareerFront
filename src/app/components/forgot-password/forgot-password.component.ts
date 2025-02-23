@@ -10,7 +10,8 @@ import { Router, RouterModule } from '@angular/router';
   selector: 'app-forgot-password',
   imports: [RouterModule,NgIf, FormsModule],
   templateUrl: './forgot-password.component.html',
-  styleUrl: './forgot-password.component.css'
+  styleUrls: ['./forgot-password.component.css']
+  
 })
 export class ForgotPasswordComponent {
 
