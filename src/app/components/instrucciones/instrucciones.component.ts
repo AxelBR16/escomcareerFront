@@ -59,7 +59,18 @@ export class InstruccionesComponent implements OnInit {
         '1(1) 2(2) 3(3) 4(4) 5(5) 6(6)',
         'Si observas que alguna actividad se repite, no pienses en lo que contestaste anteriormente. Además, si al jerarquizar notas que ninguna actividad te satisface, entonces piensa cuál sería la que menos te disgustaría.'
       ]
-    }
+    },
+    'intereses': {
+      titulo: 'Inventario intereses ocupacionales',
+      descripcion: 'A continuación se presentan una serie de actividades. Clasifícalas de acuerdo con tu gusto. Esto tiene como finalidad medir tu propio interés por realizarlas. Para esto, tus ponderaciones se ajustarán a las siguientes claves:',
+      instrucciones: [
+        '5. Me gusta mucho.', 
+        '4. Me gusta. ',
+        '3. Me es indiferente.', 
+        '2. Me desagrada.',
+        '1. Me desagrada totalmente.'
+      ]
+    },
   };
 
   constructor(private route: ActivatedRoute) { }
@@ -87,6 +98,9 @@ export class InstruccionesComponent implements OnInit {
   get iniciarLink(): string {
     if (this.tipo === 'aptitudes') {
       this.preguntaN = 'inv1-001'
+    }
+    if (this.tipo === 'intereses') {
+      this.preguntaN = 'inv2-001'
     }
 
     return `/${this.tipo}/preguntas/${this.preguntaN}`

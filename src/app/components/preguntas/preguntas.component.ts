@@ -69,27 +69,29 @@ export class PreguntasComponent implements OnInit {
   }
 
   cargarRespuestasAPI() {
-    const respuestasGuardadas = sessionStorage.getItem('respuestasUsuario');
-
+    let tipoInventario = this.id.startsWith('inv2') ? 'intereses' : 'aptitudes';
+    const respuestasGuardadas = sessionStorage.getItem(`respuestasUsuario_${tipoInventario}`);
+  
     if (respuestasGuardadas) {
       this.respuestasUsuario = JSON.parse(respuestasGuardadas);
       this.getPregunta(this.id);
     } else {
-      // Si no hay respuestas en sessionStorage, hacer la petición a la API y guardarlas
       this.preguntasService.obtenerRespuestasUsuario(sessionStorage.getItem('email')!).subscribe(
         (respuestas: { id_pregunta: string; valor: number }[]) => {
           this.respuestasUsuario = respuestas.reduce((acc, curr) => {
             acc[curr.id_pregunta] = curr.valor.toString();
             return acc;
           }, {} as { [key: string]: string });
-
-          sessionStorage.setItem(this.storageKey, JSON.stringify(this.respuestasUsuario));
+  
+          // Guardar respuestas separadas en sessionStorage para evitar sobrescribir inventarios
+          sessionStorage.setItem(`respuestasUsuario_${tipoInventario}`, JSON.stringify(this.respuestasUsuario));
           this.getPregunta(this.id);
         },
         () => this.getPregunta(this.id)
       );
     }
   }
+  
 
 
   getPregunta(id: string) {
@@ -131,49 +133,77 @@ export class PreguntasComponent implements OnInit {
   }
 
   obtenerRespuestasGuardadas(): { [key: string]: string } {
-    const respuestasJSON = localStorage.getItem(this.storageKey);
+    let tipoInventario = this.id.startsWith('inv2') ? 'intereses' : 'aptitudes';
+    const respuestasJSON = sessionStorage.getItem(`respuestasUsuario_${tipoInventario}`);
     return respuestasJSON ? JSON.parse(respuestasJSON) : {};
   }
+  
 
   guardarRespuesta() {
     if (this.selectedAnswer) {
+      let tipoInventario = this.id.startsWith('inv2') ? 'intereses' : 'aptitudes';
+      
+      // Obtener respuestas guardadas
       const respuestasGuardadas = this.obtenerRespuestasGuardadas();
+      
+      // Guardar la nueva respuesta en localStorage
       respuestasGuardadas[this.id] = this.selectedAnswer;
-      localStorage.setItem(this.storageKey, JSON.stringify(respuestasGuardadas));
+      localStorage.setItem(`respuestasUsuario_${tipoInventario}`, JSON.stringify(respuestasGuardadas));
+  
+      // Enviar a la API
+      this.enviarRespuestas(parseInt(this.selectedAnswer), this.id);
+  
+      // Actualizar el progreso en localStorage
+      this.actualizarProgresoEnLocalStorage(tipoInventario, respuestasGuardadas);
+  
       this.isAnswered = true;
     }
   }
+  actualizarProgresoEnLocalStorage(tipoInventario: string, respuestas: { [key: string]: string }) {
+    let totalPreguntas = tipoInventario === 'inv1' ? 120 : 130;
+    let idsPreguntas = Object.keys(respuestas)
+      .map(id => parseInt(id.replace(`${tipoInventario}-`, '')))
+      .filter(num => !isNaN(num));
+  
+    if (idsPreguntas.length > 0) {
+      let maxPregunta = Math.max(...idsPreguntas);
+      let progresoCalculado = (maxPregunta / totalPreguntas) * 100;
+  
+      if (tipoInventario === 'inv1') {
+        localStorage.setItem('progreso_inv1', progresoCalculado.toString());
+      } else {
+        localStorage.setItem('progreso_inv2', progresoCalculado.toString());
+      }
+    }
+  }
+  
+  
+  
 
   onOptionChange(event: Event): void {
     this.selectedAnswer = (event.target as HTMLInputElement).value;
     this.guardarRespuesta();
   }
+  
 
   enviarRespuestas(valorR: number, id: string){
-      const respuesta: Respuesta = {
-        valor: valorR,
-        id_Pregunta: id,
-        emailAspirante: sessionStorage.getItem('email')!
+    const respuesta: Respuesta = {
+      valor: valorR,
+      id_Pregunta: id,
+      emailAspirante: sessionStorage.getItem('email')!
+    };
+  
+    this.preguntasService.saveRespuesta(respuesta).subscribe(
+      (response: any) => {
+        console.log("Respuesta guardada en la API:", response);
+      },
+      (error) => {
+        console.error("Error al guardar la respuesta en la API", error);
       }
-      this.preguntasService.saveRespuesta(respuesta).subscribe(
-        (response: any) => {
-          Swal.fire({
-            icon: 'success',
-            title: 'Respuesta guardada',
-            text: response.message,
-            confirmButtonText: 'Aceptar'
-          });
-        },
-        (error) => {
-          Swal.fire({
-            icon: 'error',
-            title: 'Error al guardar la respuesta',
-            text: error.error?.message || 'Ocurrió un error desconocido.',
-            confirmButtonText: 'Aceptar'
-          });
-        }
-      );
+    );
   }
+  
+  
 
   next() {
     if (this.selectedAnswer) {
