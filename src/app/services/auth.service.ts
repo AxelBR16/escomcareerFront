@@ -8,7 +8,7 @@ import { ResponseMessageDto } from '../models/response-message-dto';
 import { SignUpAspirante } from '../models/sign-up-aspirante';
 import { ConfirmForgotPassword } from '../models/confirm-forgot-password';
 import { catchError } from 'rxjs/operators';
-import { throwError } from 'rxjs'; // ✅ Ahora importado correctamente
+import { throwError } from 'rxjs'; 
 
 
 @Injectable({
@@ -33,7 +33,7 @@ registerEgresado(registerData: any): Observable<ResponseMessageDto> {
 
   return this.httpClient.post<ResponseMessageDto>(`${environment.apiUrls.auth}/auth/sign-up`, registerData, { headers }).pipe(
       catchError(error => {
-          console.error("❌ Error en el registro de egresado:", error);
+          console.error(" Error en el registro de egresado:", error);
           return throwError(() => new Error(error.error?.message || 'Error al comunicarse con la API.'));
       })
   );
