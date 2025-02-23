@@ -28,10 +28,9 @@ export const routes: Routes = [
   {path: 'valora', component: ValoraComponent, canActivate: [AspiranteGuard]},
   { path: ':tipo/preguntas/:id', component: PreguntasComponent, canActivate: [AspiranteGuard]},
   //{path: 'admin-dashboard', component: AdminDashboardComponent, canActivate: [AdminGuard]},
-  //{path: 'egresado-dashboard', component: EgresadoDashboardComponent, canActivate: [EgresadoGuard]},
+  {path: 'egresado-dashboard', component: EgresadoDashboardComponent, canActivate: [EgresadoGuard]},
   {path: 'admin-dashboard', component: AdminDashboardComponent},
-  {path: 'egresado-dashboard', component: EgresadoDashboardComponent},
   {path: 'aspirante-dashboard', component: AspiranteDashboardComponent, canActivate: [AspiranteGuard]},
   { path: 'forgot-password', component: ForgotPasswordComponent },
   { path: '**', redirectTo: '', pathMatch:'full'},
-];
+];  
