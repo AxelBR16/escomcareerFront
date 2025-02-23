@@ -1,5 +1,6 @@
 <header class="header d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3"
-[ngClass]="{'custom-header': isCarrerasRoute || isForgotRoute || isLoginRoute}">
+  [ngClass]="{'custom-header': isCarrerasRoute || isForgotRoute || isLoginRoute}">
+
   <!-- Logo -->
   <div class="col-md-3 mb-2 mb-md-0">
     <a href="/" class="d-inline-flex link-body-emphasis text-decoration-none">
@@ -9,25 +10,51 @@
 
   <!-- Navegación -->
   <nav class="col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-    <!-- Botón para activar el menú en pantallas pequeñas -->
     <div class="menu-toggle" (click)="toggleMenu()">Menú</div>
-    <!-- Lista de navegación; se le agrega la clase 'show' cuando showMenu es true -->
     <ul class="nav nav-links" [ngClass]="{'show': showMenu}" id="nav-links">
-      <li>
-        <a [routerLink]="['/carreras']" routerLinkActive="active" class="nav-link px-2 text-warning">
-          Carreras
+
+        <!--Admin-->
+      <li *ngIf="userRole === 'ROLE_ADMIN'">
+        <a [routerLink]="['/admin-dashboard']" routerLinkActive="active" class="nav-link px-2 text-warning">
+          Dashboard Admin
         </a>
       </li>
-      <li>
+      <!--Aspirante-->
+
+      <li *ngIf="userRole === 'ROLE_ASPIRANTE'">
+        <a [routerLink]="['/aspirante-dashboard']" routerLinkActive="active" class="nav-link px-2 text-warning">
+          Inicio
+        </a>
+      </li>
+
+      <li *ngIf="userRole === 'ROLE_ASPIRANTE'">
         <a [routerLink]="['/cuestionario']" routerLinkActive="active" class="nav-link px-2 text-warning">
           Pruebas
         </a>
       </li>
-      <li>
+
+      <li *ngIf="userRole === 'ROLE_ASPIRANTE'">
         <a [routerLink]="['/valora']" routerLinkActive="active" class="nav-link px-2 text-warning">
           Valora
         </a>
       </li>
+
+      <!--Role egresado-->
+      <li *ngIf="userRole === 'ROLE_EGRESADO'">
+        <a [routerLink]="['/bolsa-trabajo']" routerLinkActive="active" class="nav-link px-2 text-warning">
+          Bolsa de Trabajo
+        </a>
+        
+      </li>
+
+    <!--Default-->
+      <li *ngIf="!userRole">
+        <a [routerLink]="['/carreras']" routerLinkActive="active" class="nav-link px-2 text-warning">
+          Carreras
+        </a>
+      </li>
+
+
     </ul>
   </nav>
 
@@ -37,3 +64,7 @@
     <button *ngIf="isLoggedIn" (click)="signOut()" type="button" class="boton">Cerrar sesión</button>
   </div>
 </header>
+
+
+
+<!---->

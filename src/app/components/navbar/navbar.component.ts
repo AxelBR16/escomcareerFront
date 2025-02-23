@@ -10,6 +10,49 @@ import { AuthService } from '../../services/auth.service';
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css']
 })
+
+export class NavbarComponent implements OnInit {
+  isCarrerasRoute: boolean = false;
+  isForgotRoute: boolean = false;
+  isLoginRoute: boolean = false;
+
+  showMenu: boolean = false;
+  isLoggedIn: boolean = false;
+  userRole: string | null = null;
+
+  constructor(private router: Router, private authService: AuthService) {}
+
+  ngOnInit(): void {
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        this.isCarrerasRoute = this.router.url.includes('/carreras');
+        this.isForgotRoute = this.router.url.includes('/forgot-password');
+        this.isLoginRoute = this.router.url.includes('/login');
+      }
+    });
+
+    this.authService.getLoggedInStatus().subscribe(status => {
+      this.isLoggedIn = status;
+    });
+
+    this.authService.getUserRole().subscribe(role => {
+      this.userRole = role;
+      console.log("🟢 Nuevo rol recibido en Navbar:", this.userRole);
+    });
+  }
+
+  toggleMenu(): void {
+    this.showMenu = !this.showMenu;
+  }
+
+  signOut() {
+    this.authService.clearUserSession();
+    this.router.navigate(['/login']);
+  }
+}
+
+
+/* ya no sirve uwu
 export class NavbarComponent implements OnInit {
   isCarrerasRoute: boolean = false;
   isForgotRoute: boolean = false;
@@ -57,4 +100,4 @@ export class NavbarComponent implements OnInit {
       );
     }
   }
-}
+}*/
