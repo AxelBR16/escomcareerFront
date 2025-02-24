@@ -44,7 +44,11 @@
         <a [routerLink]="['/bolsa-trabajo']" routerLinkActive="active" class="nav-link px-2 text-warning">
           Bolsa de Trabajo
         </a>
-        
+      </li>
+      <li *ngIf="userRole === 'ROLE_EGRESADO'">
+        <a [routerLink]="['/proyectInicio']" routerLinkActive="active" class="nav-link px-2 text-warning">
+          Proyectos
+        </a>
       </li>
 
     <!--Default-->

@@ -1,0 +1,407 @@
+
+.hero-section {
+    position: relative; /* Habilita el posicionamiento de elementos hijos */
+    width: 100%; /* Asegura que ocupe todo el ancho de la página */
+    height: 100%; /* Asegura que ocupe toda la altura del contenedor */
+    min-height: 200px; /* Establece una altura mínima */
+    background-image:linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/site/proyectosi.png'); /* Agrega la imagen como fondo */
+    background-size:cover; /* La imagen cubre todo el contenedor */
+    background-position: center; /* Centra la imagen */
+    background-repeat: no-repeat; /* Evita que la imagen se repita */
+    margin-top: 20px;
+    border-radius: 10px;
+    
+}
+
+.hero-container {
+    position: absolute; /* Permite colocar el texto sobre la imagen */
+    top: 50%; /* Centra verticalmente el texto */
+    left: 50%; /* Centra horizontalmente el texto */
+    transform: translate(-50%, -50%); /* Ajusta el centro exacto */
+    color: white; /* Asegura que el texto sea visible sobre la imagen */
+    text-align: center; /* Centra el texto */
+    font-size: 1.0rem; /* Ajusta el tamaño del texto */
+    font-weight: bold; /* Haz el texto más llamativo */
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7); /* Sombra para mejorar la visibilidad */
+    width: 80%;
+    
+    
+}
+.hero-container h1{
+    font-size: 35px; /* Ajusta el tamaño del texto */
+    margin-bottom: 20px; /* Añade espacio debajo del encabezado */
+
+}
+.hero-container p{
+    font-size: 20px; /* Ajusta el tamaño del texto */
+    margin-bottom: 20px; /* Añade espacio debajo del encabezado */
+
+}
+
+@media (max-width: 768px) {
+    .hero-section {
+        height: 200px; /* Ajusta la altura para pantallas más pequeñas */
+        margin-top: 60px;
+    }
+
+    .hero-container {
+        font-size: 8px !important; /* Reduce el tamaño del texto */
+        width: 90%; /* Asegura que el ancho no exceda el contenedor */
+        overflow-wrap: break-word; /* Permite romper líneas si es necesario */
+        text-align: center; /* Centra el texto */
+        margin: 0 auto; /* Centra horizontalmente el contenedor */
+    }
+
+    .hero-container h1 {
+        font-size: 36px !important; /* Ajusta el tamaño del encabezado h1 */
+    }
+
+    .hero-container p {
+        font-size: 12px !important; /* Ajusta el tamaño de los párrafos */
+        line-height: 1.2; /* Reduce el espaciado entre líneas */
+    }
+}
+
+
+
+@media (max-width: 480px) {
+    .hero-container p {
+        display: none !important; /* Asegura que las etiquetas <p> sean ocultadas */
+    }
+
+    .hero-container h1 {
+        display: block; /* Asegura que los encabezados <h1> sigan visibles */
+    }
+}
+
+
+
+
+/* Estilos generales */
+.tabs {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .tabs button {
+    padding: 10px 15px;
+    border: none;
+    cursor: pointer;
+    background-color: #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+  }
+  
+  .tabs button.active {
+    background-color: #002288;
+    color: white;
+  }
+  
+
+
+/* Contenedor principal */
+.details-container {
+    max-width: 900px;
+    margin: auto;
+    padding: 20px;
+    background: #f8f8f8;
+    border-radius: 10px;
+  }
+  
+  /* Encabezado */
+  .header {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .header h2 {
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  .header p {
+    color: #666;
+  }
+  
+  /* Contenido principal (distribución de columnas) */
+  .content {
+    display: flex;
+    gap: 20px;
+    justify-content: space-between;
+  }
+  
+  /* Panel izquierdo: Formulario */
+  .left-panel {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  /* Panel derecho: Subida de video */
+  .right-panel {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+  }
+  
+  /* Campos de entrada */
+  .form-group {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .form-group label {
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  
+  .form-group input,
+  .form-group textarea,
+  .form-group select {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background: #e0e0e0;
+  }
+  
+  /* Contador de caracteres */
+  .char-count {
+    font-size: 12px;
+    text-align: right;
+    color: #666;
+  }
+  
+  /* Vista previa de video */
+  .video-preview {
+    width: 250px;
+    height: 150px;
+    background: #ddd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    position: relative;
+  }
+  
+  .video-preview .play-icon {
+    font-size: 40px;
+    color: #666;
+  }
+  
+  /* Botón de subida */
+  .upload-btn {
+    background-color: #0044cc;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+  }
+  
+  .upload-btn:hover {
+    background-color: #002288;
+  }
+  
+
+
+
+
+
+
+  /*pendiente */
+
+/* Estilos generales */
+.pending-container {
+    max-width: 900px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  /* Tarjetas */
+  .card {
+    display: flex;
+    align-items: center; /* Centrar verticalmente */
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    background: rgb(175, 181, 176);
+    overflow: hidden;
+    flex-direction: row; /* Asegura que la imagen y el contenido estén en línea */
+  }
+  
+  /* Tarjeta de Video Pendiente */
+  .pending {
+    background: linear-gradient(to right, #FFD700, #FFC107);
+  }
+
+
+  /* Imagen dentro de la tarjeta */
+  .card-image {
+    width: 30%;  /* La imagen ocupa el 30% del ancho de la tarjeta */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .card-image img {
+    width: 100%;
+    max-width: 250px;
+    border-radius: 10px;
+  }
+  
+  /* Contenido de la tarjeta */
+  .card-content {
+    width: 70%;
+    padding: 0 20px;
+  }
+  
+  .card-content h2 {
+    font-size: 22px;
+    font-weight: bold;
+  }
+  
+  .card-content p {
+    margin-top: 5px;
+    font-size: 14px;
+  }
+  
+  /* Tabla de videos */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #f5f5f5;
+    border-radius: 10px;
+    margin-top: 10px;
+  }
+  
+  th, td {
+    padding: 10px;
+    text-align: left;
+  }
+  
+  th {
+    background: #0044cc;
+    color: white;
+  }
+  
+  td {
+    background: #ddd;
+  }
+
+
+
+
+
+  /*Admin c*/
+
+/* Contenedor Principal */
+.admin-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    padding: 20px;
+  }
+  
+  /* Tarjeta del Video */
+  .video-card {
+    width: 350px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    text-align: center;
+    border: 1px solid #ddd;
+    position: relative;
+  }
+  
+  /* Miniatura del Video */
+  .video-thumbnail {
+    position: relative;
+    width: 100%;
+    height: 180px;
+    overflow: hidden;
+    border-radius: 10px 10px 0 0;
+  }
+  
+  .video-thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .play-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 40px;
+    color: white;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 50%;
+    padding: 10px;
+  }
+  
+  /* Reacciones (Likes & Dislikes) */
+  .video-reactions {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 15px;
+    border-top: 1px solid #ddd;
+  }
+  
+  .likes, .dislikes {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  
+  .like-icon {
+    color: green;
+    font-size: 20px;
+  }
+  
+  .dislike-icon {
+    color: red;
+    font-size: 20px;
+  }
+  
+  /* Información del Video */
+  .video-info {
+    padding: 15px;
+  }
+  
+  .video-info h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+  
+  .video-info p {
+    font-size: 14px;
+    color: #666;
+  }
+  
+  /* Botón de Eliminar */
+  .delete-btn {
+    background: transparent;
+    border: none;
+    font-size: 20px;
+    color: #444;
+    cursor: pointer;
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+  }
+  
+  .delete-btn:hover {
+    color: red;
+  }
+  

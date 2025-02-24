@@ -15,11 +15,16 @@ import { EgresadoDashboardComponent } from './components/egresado-dashboard/egre
 import { AspiranteDashboardComponent } from './components/aspirante-dashboard/aspirante-dashboard.component';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 import { EgresadoGuard } from './shared/guards/egresado.guard';
-import { FooterComponent } from './components/footer/footer.component';
+import { ProyectEgresadoComponent } from './components/proyect-egresado/proyect-egresado.component';
+import { ResultAptitudesComponent } from './components/result-aptitudes/result-aptitudes.component';
+import { ProyectsInicioComponent } from './components/proyects-inicio/proyects-inicio.component';
 
 export const routes: Routes = [
   {path: '', component: InicioComponent},
   {path: 'carreras', component: CarrerasComponent},
+  {path: 'result-aptitudes', component: ResultAptitudesComponent},
+  {path: 'proyectEgresado', component: ProyectEgresadoComponent, canActivate: [EgresadoGuard]},
+  {path: 'proyectInicio', component: ProyectsInicioComponent, canActivate: [EgresadoGuard]},
   {path: 'logine', component: LogineComponent},
   {path: 'login', component: LoginComponent},
   { path: 'instrucciones/:tipo', component: InstruccionesComponent, canActivate: [AspiranteGuard]},

@@ -1,0 +1,194 @@
+<section class="hero-section">
+    <div class="hero-container">
+        <h1>Comparte tus proyectos</h1>
+        <p>Sube un video y comparte con todos los proyectos que pueden realizar. </p>
+    </div>
+</section>
+<br>
+
+<div class="tabs">
+    <button [class.active]="activeTab === 'detalles'" (click)="setActiveTab('detalles')">Detalles</button>
+    <button [class.active]="activeTab === 'pendiente'" (click)="setActiveTab('pendiente')">Pendiente</button>
+    <button [class.active]="activeTab === 'administra'" (click)="setActiveTab('administra')">Administra</button>
+  </div>
+  
+  <!-- Contenedor dinámico según la pestaña activa -->
+  <div class="tab-content">
+    <!-- Detalles -->
+    <div *ngIf="activeTab === 'detalles'">
+        <div class="details-container">
+            <!-- Sección de título -->
+            <div class="header">
+              <h2>Detalles</h2>
+              <p>Sube tu video y agrega su información correspondiente para que la comunidad pueda disfrutarlo.</p>
+            </div>
+          
+            <div class="content">
+              <!-- Columna izquierda: Información del video -->
+              <div class="left-panel">
+                <div class="form-group">
+                  <label for="title">Título Obligatorio</label>
+                  <input type="text" id="title" placeholder="Título del video" maxlength="100">
+                  <span class="char-count">0/100</span>
+                </div>
+          
+                <div class="form-group">
+                  <label for="description">Descripción</label>
+                  <textarea id="description" placeholder="Menciona a los usuarios de qué va tu video"></textarea>
+                </div>
+          
+                <div class="form-group">
+                  <label>Carrera a la que pertenece el video</label>
+                  <select>
+                    <option>Selecciona una carrera</option>
+                    <option>Ingeniería en Sistemas</option>
+                    <option>Licenciatura en Ciencia de Datos</option>
+                  </select>
+                </div>
+          
+                <div class="form-group">
+                  <label>Semestre</label>
+                  <input type="number" min="1" max="12" placeholder="Semestre">
+                </div>
+          
+                <div class="form-group">
+                  <label>Unidad de Aprendizaje</label>
+                  <input type="text" placeholder="Unidad de Aprendizaje">
+                </div>
+              </div>
+          
+              <!-- Columna derecha: Subida de video -->
+              <div class="right-panel">
+                <div class="video-upload">
+                  <div class="video-preview">
+                    <span class="play-icon">▶</span>
+                  </div>
+                  <p>Sube tu video</p>
+                  <input type="file">
+                </div>
+          
+                <div class="form-group">
+                  <label>Añadir URL:</label>
+                  <input type="text" placeholder="https://mivideo">
+                </div>
+          
+                <button class="upload-btn">Subir video</button>
+              </div>
+            </div>
+          </div>
+ 
+    </div>
+  
+    <!-- Pendiente -->
+    <div *ngIf="activeTab === 'pendiente'">
+        <div class="pending-container">
+            <!-- Tarjeta de Video Pendiente -->
+            <div class="card pending">
+              <div class="card-image">
+                
+                <img src="/site/Escom6.png" alt="Revisión de Video">
+                
+              </div>
+              <div class="card-content">
+                <h2>📂 Video Pendiente</h2>
+                <p>Tu solicitud de video está siendo revisada por un administrador.</p>
+                <p>Recibirás una respuesta en las próximas 24 horas.</p>
+                <table>
+                  <tr>
+                    <th>Nombre video</th>
+                    <th>Fecha</th>
+                  </tr>
+                  <tr>
+                    <td>Video 4</td>
+                    <td>XX/XX/XXXX</td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          
+            <!-- Tarjeta de Estatus -->
+            <div class="card status">
+              <div class="card-image">
+                <img src="/site/Escom6.png" alt="Estatus de Video">
+              </div>
+              <div class="card-content">
+                <h2>📊 Estatus</h2>
+                <p>Consulta el estatus de tus videos</p>
+                <table>
+                  <tr>
+                    <th>Nombre video</th>
+                    <th>Fecha Subida</th>
+                    <th>Estatus</th>
+                  </tr>
+                  <tr>
+                    <td>Video 3</td>
+                    <td>XX/XX/XXXX</td>
+                    <td class="approved">Aprobado</td>
+                  </tr>
+                  <tr>
+                    <td>Video 2</td>
+                    <td>XX/XX/XXXX</td>
+                    <td class="not-approved">No Aprobado</td>
+                  </tr>
+                  <tr>
+                    <td>Video 1</td>
+                    <td>XX/XX/XXXX</td>
+                    <td class="approved">Aprobado</td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          </div>
+          
+
+
+
+
+    </div>
+  
+    <!-- Administra -->
+    <div *ngIf="activeTab === 'administra'">
+       
+        <div class="admin-container">
+            <div class="video-card" *ngFor="let video of videos">
+              
+              <!-- Imagen del video con icono de reproducción -->
+              <div class="video-thumbnail">
+                <img [src]="video.thumbnail" alt="Video Thumbnail">
+                <div class="play-icon">
+                  <ion-icon name="play-circle"></ion-icon>
+                </div>
+              </div>
+          
+              <!-- Reacciones: Likes y Dislikes -->
+              <div class="video-reactions">
+                <div class="likes">
+                  <ion-icon name="thumbs-up" class="like-icon"></ion-icon>
+                  <span>{{ video.likes }}</span>
+                </div>
+                <div class="dislikes">
+                  <ion-icon name="thumbs-down" class="dislike-icon"></ion-icon>
+                  <span>{{ video.dislikes }}</span>
+                </div>
+              </div>
+          
+              <!-- Información del Video -->
+              <div class="video-info">
+                <h3>{{ video.title }}</h3>
+                <p>{{ video.description }}</p>
+                
+                <!-- Botón de Eliminar -->
+                <button class="delete-btn" (click)="deleteVideo(video.id)">
+                  <ion-icon name="trash"></ion-icon>
+                </button>
+              </div>
+            </div>
+          </div>
+          
+          
+    </div>
+
+
+  </div>
+  <br>
+  
