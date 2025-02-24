@@ -73,39 +73,16 @@ export class LogineComponent {
   constructor(private apiService: ApiService,  private authService: AuthService,private loader: LoaderService,private router: Router ) {}
 
   goNext(event: Event) {
-    event.preventDefault();  // Evita la recarga de la página
+    event.preventDefault(); // Evita la recarga de la página
   
     if (this.currentStep === 1 && this.validateStep1()) {
-      this.loader.mostrarCargando('Registrando cuenta...');
-  
-      const signUpData = {
-        nombre: this.firstName,
-        apellido: this.lastName,
-        email: this.email,
-        password: this.password,
-        role: 'ROLE_EGRESADO',  // 🔥 Especificamos el rol
-        carrera: parseInt(this.carrera) // 🔥 Convertimos a número
-      };
-  
-      console.log("📡 Enviando datos de registro:", signUpData);
-  
-      this.authService.registerEgresado(signUpData).subscribe({
-        next: () => {
-          this.loader.ocultarCargando();
-          Swal.fire('Éxito', 'Cuenta registrada correctamente.', 'success').then(() => {
-            this.currentStep++;
-          });
-        },
-        error: (error) => {
-          this.loader.ocultarCargando();
-          console.error("❌ Error en el registro:", error);
-          Swal.fire('Error', `No se pudo registrar la cuenta: ${error.message}`, 'error');
-        }
-      });
+      // En lugar de registrar aquí, simplemente avanzamos al siguiente paso
+      this.currentStep++;
     } else if (this.currentStep === 2) {
       this.validateStep2();
     }
   }
+  
   
   
 
@@ -337,11 +314,37 @@ verifyQrLink(qrLink: string) {
   }
 
   finalizeAccount() {
-    this.authService.storeUserSession(this.email, 'FAKE_TOKEN', 'ROLE_EGRESADO'); // Simulamos un token
-    Swal.fire('Cuenta creada con éxito', 'Tu cuenta ha sido registrada correctamente.', 'success').then(() => {
-      this.router.navigate(['/confirmacion-egresado']);
+    // Construir el objeto de registro con los datos ingresados
+    const signUpData = {
+      nombre: this.firstName,
+      apellido: this.lastName,
+      email: this.email,
+      password: this.password,
+      role: 'ROLE_EGRESADO',  // Especificamos el rol
+      carrera: parseInt(this.carrera) // Convertimos a número
+    };
+  
+    // Mostramos pantalla de carga mientras se registra
+    this.loader.mostrarCargando('Registrando cuenta...');
+  
+    // Llamada a la API para registrar la cuenta
+    this.authService.registerEgresado(signUpData).subscribe({
+      next: () => {
+        this.loader.ocultarCargando();
+        // Aquí se almacena la sesión. Si la API devuelve token, se debería usar ese valor.
+        this.authService.storeUserSession(this.email, 'FAKE_TOKEN', 'ROLE_EGRESADO');
+        Swal.fire('Cuenta creada con éxito', 'Tu cuenta ha sido registrada correctamente.', 'success').then(() => {
+          this.router.navigate(['/confirmacion-egresado']);
+        });
+      },
+      error: (error) => {
+        this.loader.ocultarCargando();
+        console.error("❌ Error en el registro:", error);
+        Swal.fire('Error', `No se pudo registrar la cuenta: ${error.message}`, 'error');
+      }
     });
   }
+  
   
 
   
