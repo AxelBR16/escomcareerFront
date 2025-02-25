@@ -1,3 +1,4 @@
+
 import { Component,AfterViewInit,PLATFORM_ID,Inject } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -5,15 +6,14 @@ import { isPlatformBrowser } from '@angular/common';
 import Chart from 'chart.js/auto';
 import annotationPlugin from 'chartjs-plugin-annotation';
 
-Chart.register(annotationPlugin);
-@Component({
-  selector: 'app-result-aptitudes',
-  imports: [CommonModule, RouterModule],
-  templateUrl: './result-aptitudes.component.html',
-  styleUrl: './result-aptitudes.component.css'
-})
 
-export class ResultAptitudesComponent implements AfterViewInit {
+@Component({
+  selector: 'app-result-univer',
+  imports: [CommonModule, RouterModule],
+  templateUrl: './result-univer.component.html',
+  styleUrl: './result-univer.component.css'
+})
+export class ResultUniverComponent {
   private chart: any;
 
   constructor(@Inject(PLATFORM_ID) private platformId: any) {}
@@ -42,17 +42,14 @@ export class ResultAptitudesComponent implements AfterViewInit {
       type: 'bar',
       data: {
         labels: [
-          "Abstracto", "Coordinación", "Numérica", "Verbal", "Persuasiva",
-          "Mecánica", "Social", "Directiva", "Organización", "Musical",
-          "Artístico-Plástica", "Espacial"
+          "Fisico-matematicas", "Administrativas", "Biologicas", "Químicas", "Sociales",
+          "Humanidades"
         ],
         datasets: [{
           label: "Puntaje",
-          data: [20, 35, 25, 40, 30, 28, 36, 42, 29, 33, 47, 10], 
+          data: [20, 35, 25, 40, 30, 45], 
           backgroundColor: [
-            "#AEC6CF", "#B2E7D4", "#FDFD96", "#FADADD", "#CFC4E1",
-            "#D3D3D3", "#FFD1DC", "#FFB347", "#E6E6FA", "#FFCBA4",
-            "#FF6347", "#B0E0E6"
+            "#D3D3D3", "#98FB98", "#DDA0DD", "#FDFD96", "#ADD8E6","#FFB6C1"
           ],
           borderWidth: 1
         }]

@@ -1,3 +1,4 @@
+
 import { Component,AfterViewInit,PLATFORM_ID,Inject } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -5,15 +6,13 @@ import { isPlatformBrowser } from '@angular/common';
 import Chart from 'chart.js/auto';
 import annotationPlugin from 'chartjs-plugin-annotation';
 
-Chart.register(annotationPlugin);
 @Component({
-  selector: 'app-result-aptitudes',
+  selector: 'app-result-intereses',
   imports: [CommonModule, RouterModule],
-  templateUrl: './result-aptitudes.component.html',
-  styleUrl: './result-aptitudes.component.css'
+  templateUrl: './result-intereses.component.html',
+  styleUrl: './result-intereses.component.css'
 })
-
-export class ResultAptitudesComponent implements AfterViewInit {
+export class ResultInteresesComponent {
   private chart: any;
 
   constructor(@Inject(PLATFORM_ID) private platformId: any) {}
@@ -50,9 +49,9 @@ export class ResultAptitudesComponent implements AfterViewInit {
           label: "Puntaje",
           data: [20, 35, 25, 40, 30, 28, 36, 42, 29, 33, 47, 10], 
           backgroundColor: [
-            "#AEC6CF", "#B2E7D4", "#FDFD96", "#FADADD", "#CFC4E1",
-            "#D3D3D3", "#FFD1DC", "#FFB347", "#E6E6FA", "#FFCBA4",
-            "#FF6347", "#B0E0E6"
+            "#FFD700", "#98FB98", "#DDA0DD", "#FFB6C1", "#ADD8E6",
+            "#FA8072", "#FFA07A", "#FF8C00", "#BA55D3", "#87CEEB",
+            "#FF6347", "#FFDAB9"
           ],
           borderWidth: 1
         }]

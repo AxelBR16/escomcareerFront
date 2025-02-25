@@ -18,11 +18,15 @@ import { EgresadoGuard } from './shared/guards/egresado.guard';
 import { ProyectEgresadoComponent } from './components/proyect-egresado/proyect-egresado.component';
 import { ResultAptitudesComponent } from './components/result-aptitudes/result-aptitudes.component';
 import { ProyectsInicioComponent } from './components/proyects-inicio/proyects-inicio.component';
+import { ResultInteresesComponent } from './components/result-intereses/result-intereses.component';
+import { ResultUniverComponent } from './components/result-univer/result-univer.component';
 
 export const routes: Routes = [
   {path: '', component: InicioComponent},
   {path: 'carreras', component: CarrerasComponent},
   {path: 'result-aptitudes', component: ResultAptitudesComponent},
+  {path: 'result-uni', component: ResultUniverComponent},
+  {path: 'result-intereses', component: ResultInteresesComponent},
   {path: 'proyectEgresado', component: ProyectEgresadoComponent, canActivate: [EgresadoGuard]},
   {path: 'proyectInicio', component: ProyectsInicioComponent, canActivate: [EgresadoGuard]},
   {path: 'logine', component: LogineComponent},
