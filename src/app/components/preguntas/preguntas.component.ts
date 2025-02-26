@@ -69,7 +69,7 @@ export class PreguntasComponent implements OnInit {
   }
 
   cargarRespuestasAPI() {
-    let tipoInventario = this.id.startsWith('inv2') ? 'intereses' : 'aptitudes';
+    let tipoInventario = this.id.startsWith('inv2') ? 'intereses' : 'aptitudes';//if
     const respuestasGuardadas = sessionStorage.getItem(`respuestasUsuario_${tipoInventario}`);
   
     if (respuestasGuardadas) {

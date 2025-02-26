@@ -20,6 +20,10 @@ export class PreguntasService {
     return this.httpClient.get<any>(`${environment.apiUrls.auth}/preguntas/inventario/2`);
   }
 
+  getPreguntasPreferencias() {
+    return this.httpClient.get<any>(`${environment.apiUrls.auth}/preguntas/inventario/3`);
+  }
+
   getPregunta(id: String): Observable<Pregunta>{
     return this.httpClient.get<Pregunta>(`${environment.apiUrls.auth}/preguntas/${id}`);
   }

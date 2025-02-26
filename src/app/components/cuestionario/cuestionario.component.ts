@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Component, OnInit} from '@angular/core';
+import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { PreguntasService } from '../../services/preguntas.service';
 
 @Component({
   selector: 'app-cuestionario',
@@ -8,6 +9,7 @@ import { CommonModule } from '@angular/common';
   templateUrl: './cuestionario.component.html',
   styleUrl: './cuestionario.component.css'
 })
+
 export class CuestionarioComponent {
 
 }

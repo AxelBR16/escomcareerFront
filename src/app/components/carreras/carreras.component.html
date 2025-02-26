@@ -1,6 +1,6 @@
 <div *ngIf="loaded">
   <!-- carousel -->
-  <div class="carousel">
+  <div class="carousel" *ngIf="!mostrarDetalle">
     <!-- list item -->
     <div class="list">
       <div *ngFor="let image of images; let i = index" class="item">
@@ -45,5 +45,6 @@
 
     <!-- time running -->
     <div class="time"></div>
+
   </div>
 </div>

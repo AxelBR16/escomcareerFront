@@ -36,6 +36,10 @@ export class CarrerasComponent implements OnInit {
   loaded: boolean = false;
   imagenesCargadas: number = 0;
 
+  mostrarDetalle: boolean = false;  // Nuevo estado para cambiar de vista
+  carreraSeleccionada: any = null;  // Datos de la carrera seleccionada
+
+
   constructor(private _CargarScripts: CargarScriptsService) {}
 
   ngOnInit() {
@@ -79,4 +83,5 @@ export class CarrerasComponent implements OnInit {
   cargarScript() {
     this._CargarScripts.Carga(["js/carrera.js"]);
   }
+
 }

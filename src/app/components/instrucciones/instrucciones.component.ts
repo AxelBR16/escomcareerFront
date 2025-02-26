@@ -102,6 +102,9 @@ export class InstruccionesComponent implements OnInit {
     if (this.tipo === 'intereses') {
       this.preguntaN = 'inv2-001'
     }
+    if(this.tipo === 'universitario'){
+      this.preguntaN == 'inv3-001'
+    }
 
     return `/${this.tipo}/preguntas/${this.preguntaN}`
   }

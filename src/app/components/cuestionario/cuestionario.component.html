@@ -21,6 +21,13 @@
             <h3>Inventario de preferencias universitarias🎓</h3>
             <p>Explora tus preferencias sobre las carreras universitarias más afines a ti.</p>
             <a [routerLink]="['/instrucciones', 'universitario']"><button class="btn" >comenzar</button></a>
+
+            <div class="progress-bar">
+                <div class="progress" ></div><!--[style.width.%]="progreso"-->
+            </div>
+              <button class="btn mt-2"> <!--(click)="redirigir()"-->
+                <!--{{ pruebasPreferenciasCompletadas ? 'Reanudar' : 'Comenzar' }}-->
+              </button>
         </div>
       
     </div>

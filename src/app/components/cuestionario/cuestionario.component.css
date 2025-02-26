@@ -346,3 +346,19 @@ main {
         text-align: center; /* Asegura que el texto esté centrado */
     }
 }
+
+
+.progress-bar {
+    width: 100%;
+    height: 10px;
+    background-color: #ddd;
+    border-radius: 5px;
+    overflow: hidden;
+    margin-top: 10px;
+  }
+  
+  .progress {
+    height: 100%;
+    background-color: #4caf50;
+    transition: width 0.5s ease-in-out;
+  }
