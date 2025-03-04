@@ -16,7 +16,7 @@
   background-color: transparent;
   position: absolute;
   z-index: 100000;
-  width: 100vw;
+  width: 100%;
 }
 
 /* Logo */
@@ -34,7 +34,7 @@ img {
   align-items: center;
   margin: 0;
   padding: 0;
-  
+
 }
 
 .header .nav-links li a {
@@ -72,7 +72,7 @@ img {
   border-radius: 30px;
   cursor: pointer;
   transition: all 0.3s ease;
-  
+
 }
 
 .boton-container {
@@ -116,12 +116,12 @@ img {
   .col-md-3.mb-2.mb-md-0 {
     display: none;
   }
-  
+
   /* Mostrar el botón de menú */
   .menu-toggle {
     display: block;
   }
-  
+
   /* La lista de navegación se adapta a columna y se oculta por defecto.
      Se establece un ancho menor al 100% (por ejemplo, 70%) y se centra. */
   .header .nav-links {
@@ -131,14 +131,14 @@ img {
     display: none;
     gap: 10px;
     background-color: #ffffff;
-  
+
     position: absolute;
     top: 70px;
     left: 15%; /* Para centrar: (100% - 70%) / 2 = 15% */
     padding: 10px 0;
     border-radius: 5px;
   }
-  
+
   /* Cuando se añade la clase 'show', se muestra la lista */
   .header .nav-links.show {
     display: flex;
