@@ -8,7 +8,7 @@ import { ResponseMessageDto } from '../models/response-message-dto';
 import { SignUpAspirante } from '../models/sign-up-aspirante';
 import { ConfirmForgotPassword } from '../models/confirm-forgot-password';
 import { catchError } from 'rxjs/operators';
-import { throwError } from 'rxjs'; 
+import { throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -49,6 +49,7 @@ export class AuthService {
       sessionStorage.removeItem('token');
       sessionStorage.removeItem('role');
       sessionStorage.removeItem('email');
+      sessionStorage.removeItem('respuestasUsuario');
     }
     this.userRoleSubject.next(null);  // Resetear el rol
     this.token = null;
@@ -57,9 +58,9 @@ export class AuthService {
 
   registerEgresado(registerData: any): Observable<ResponseMessageDto> {
     console.log("📡 Enviando solicitud de registro de egresado:", registerData);
-  
+
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-  
+
     return this.httpClient.post<ResponseMessageDto>(`${environment.apiUrls.auth}/auth/sign-up`, registerData, { headers }).pipe(
         catchError(error => {
             console.error(" Error en el registro de egresado:", error);
@@ -81,7 +82,7 @@ export class AuthService {
         })
       );
   }
-  
+
   authenticateUser(email: string, password: string): void {
     this.login({ email, password }).subscribe(response => {
       console.log("✅ Respuesta del backend:", response);
@@ -93,7 +94,7 @@ export class AuthService {
       }
     });
   }
-  
+
 
   registerAspirante(registerData: SignUpAspirante): Observable<ResponseMessageDto> {
       return this.httpClient.post<any>(`${environment.apiUrls.auth}/auth/sign-up`, registerData);

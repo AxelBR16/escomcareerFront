@@ -10,6 +10,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { Pregunta } from '../../models/pregunta';
 import { Respuesta } from '../../models/respuesta';
 
+
 @Component({
   selector: 'app-preguntas',
   templateUrl: './preguntas.component.html',
@@ -24,6 +25,7 @@ export class PreguntasComponent implements OnInit {
   isAnswered: boolean = false;
   progress: number = 0;
   tipo: string | null = null;
+  inventario: number = 1;
   userAnswers: (string | null)[] = [];
   totalQuestions = 100;
   currentQuestionId: string = '';
@@ -37,6 +39,7 @@ export class PreguntasComponent implements OnInit {
     private sanitizer: DomSanitizer,
     private aRouter: ActivatedRoute,
     private router: Router
+
   ) {
     this.id = this.aRouter.snapshot.paramMap.get('id') || '1';
   }
@@ -49,32 +52,72 @@ export class PreguntasComponent implements OnInit {
     this.aRouter.paramMap.subscribe(params => {
       this.id = params.get('id')!;
       if (this.id) {
-        if (this.id.startsWith('inv1')) {
-          this.totalQuestions = 120;
-        } else if (this.id.startsWith('inv2')) {
-          this.totalQuestions = 130;
-        } else if (this.id.startsWith('inv3')) {
-          this.totalQuestions = 60;
-        }
-
-        const currentIdNumber = parseInt(this.id.split('-')[1]);
-        if (!isNaN(currentIdNumber)) {
-          this.progress = (currentIdNumber / this.totalQuestions) * 100;
-        }
+        this.cargarPreguntas();
         this.cargarRespuestasAPI()
-        this.getPregunta(this.id);
-        this.cargarRespuestaGuardada();
+        this.determinarTotalPreguntas();
       }
     });
   }
 
+  determinarTotalPreguntas() {
+    if (this.id.startsWith('inv1')) {
+      this.totalQuestions = 120;
+      this.inventario = 1;
+    } else if (this.id.startsWith('inv2')) {
+      this.totalQuestions = 130;
+      this.inventario = 2;
+    } else if (this.id.startsWith('inv3')) {
+      this.totalQuestions = 60;
+      this.inventario = 3;
+    }
+  }
+  getPreguntaDesdeStorage() {
+    const preguntas = JSON.parse(localStorage.getItem('preguntas') || '[]');
+    const preguntaEncontrada = preguntas.find((p: Pregunta) => p.id === this.id) || { id: '', texto: '', imagen_url: '' };
+
+    if (preguntaEncontrada.imagen_url) {
+      this.determinarTotalPreguntas();
+      preguntaEncontrada.imagen_url = this.sanitizer.bypassSecurityTrustUrl(preguntaEncontrada.imagen_url);
+      let maxPregunta = parseInt(this.id.split('-')[1]);
+      this.progress = (maxPregunta / this.totalQuestions) * 100;
+      this.cargarRespuestaGuardada(this.id)
+    }
+    this.pregunta = preguntaEncontrada;
+  }
+
+
+  cargarPreguntas() {
+    const preguntasGuardadas = localStorage.getItem('preguntas');
+
+    if (preguntasGuardadas) {
+      this.getPreguntaDesdeStorage();
+    } else {
+      this.preguntasService.getPreguntas(this.inventario).subscribe(
+        (preguntas: Pregunta[]) => {
+          localStorage.setItem('preguntas', JSON.stringify(preguntas));
+          this.getPreguntaDesdeStorage();
+        },
+        (error) => {
+          Swal.fire({
+            icon: 'error',
+            title: 'Error al cargar las preguntas',
+            text: error.error?.message || 'Ocurrió un error desconocido.',
+            confirmButtonText: 'Aceptar'
+          });
+          this.router.navigate(['/pruebasA']);
+        }
+      );
+    }
+  }
   cargarRespuestasAPI() {
-    let tipoInventario = this.id.startsWith('inv2') ? 'intereses' : 'aptitudes';//if
-    const respuestasGuardadas = sessionStorage.getItem(`respuestasUsuario_${tipoInventario}`);
-  
+
+    const respuestasGuardadas = sessionStorage.getItem('respuestasUsuario');
+    this.loading = true;
+    this.loader.mostrarCargando('Cargando pregunta...');
     if (respuestasGuardadas) {
       this.respuestasUsuario = JSON.parse(respuestasGuardadas);
-      this.getPregunta(this.id);
+      this.getPreguntaDesdeStorage();
+      this.loader.ocultarCargando();
     } else {
       this.preguntasService.obtenerRespuestasUsuario(sessionStorage.getItem('email')!).subscribe(
         (respuestas: { id_pregunta: string; valor: number }[]) => {
@@ -82,49 +125,23 @@ export class PreguntasComponent implements OnInit {
             acc[curr.id_pregunta] = curr.valor.toString();
             return acc;
           }, {} as { [key: string]: string });
-  
-          // Guardar respuestas separadas en sessionStorage para evitar sobrescribir inventarios
-          sessionStorage.setItem(`respuestasUsuario_${tipoInventario}`, JSON.stringify(this.respuestasUsuario));
-          this.getPregunta(this.id);
+          sessionStorage.setItem(this.storageKey, JSON.stringify(this.respuestasUsuario));
+          this.getPreguntaDesdeStorage();
         },
-        () => this.getPregunta(this.id)
+        () => this.getPreguntaDesdeStorage()
       );
+      this.loader.ocultarCargando();
     }
   }
-  
-
-
-  getPregunta(id: string) {
-    this.loading = true;
-    this.loader.mostrarCargando('Cargando pregunta...');
-    this.preguntasService.getPregunta(id).subscribe(
-      (response: any) => {
-        this.loader.ocultarCargando();
-        this.loading = false;
-        this.pregunta = {
-          id: response.id,
-          texto: response.texto,
-          imagen_url: this.sanitizer.bypassSecurityTrustUrl(response.imagen_url)
-        };
-        this.cargarRespuestaGuardada();
-      },
-      (error) => {
-        this.loader.ocultarCargando();
-        this.loading = false;
-        Swal.fire({
-          icon: 'error',
-          title: 'Error al cargar la pregunta',
-          text: error.error?.message || 'Ocurrió un error desconocido.',
-          confirmButtonText: 'Aceptar'
-        });
-      }
-    );
-  }
-
-  cargarRespuestaGuardada() {
+  cargarRespuestaGuardada(id: string) {
     const respuestasGuardadas = this.obtenerRespuestasGuardadas();
-    if (respuestasGuardadas[this.id]) {
-      this.selectedAnswer = respuestasGuardadas[this.id];
+    console.log(id)
+    console.log(respuestasGuardadas)
+    const respuesta = Object.values(respuestasGuardadas).find(respuesta => respuesta.id_Pregunta === id);
+    console.log(respuesta)
+    if (respuesta) {
+      console.log('hola')
+      this.selectedAnswer = respuesta.valor.toString();
       this.isAnswered = true;
     } else {
       this.selectedAnswer = null;
@@ -132,90 +149,55 @@ export class PreguntasComponent implements OnInit {
     }
   }
 
-  obtenerRespuestasGuardadas(): { [key: string]: string } {
-    let tipoInventario = this.id.startsWith('inv2') ? 'intereses' : 'aptitudes';
-    const respuestasJSON = sessionStorage.getItem(`respuestasUsuario_${tipoInventario}`);
+  obtenerRespuestasGuardadas(): { [key: string]: Respuesta} {
+    const respuestasJSON = sessionStorage.getItem('respuestasUsuario');
     return respuestasJSON ? JSON.parse(respuestasJSON) : {};
   }
-  
 
   guardarRespuesta() {
     if (this.selectedAnswer) {
-      let tipoInventario = this.id.startsWith('inv2') ? 'intereses' : 'aptitudes';
-      
-      // Obtener respuestas guardadas
       const respuestasGuardadas = this.obtenerRespuestasGuardadas();
-      
-      // Guardar la nueva respuesta en localStorage
-      respuestasGuardadas[this.id] = this.selectedAnswer;
-      localStorage.setItem(`respuestasUsuario_${tipoInventario}`, JSON.stringify(respuestasGuardadas));
-  
-      // Enviar a la API
-      this.enviarRespuestas(parseInt(this.selectedAnswer), this.id);
-  
-      // Actualizar el progreso en localStorage
-      this.actualizarProgresoEnLocalStorage(tipoInventario, respuestasGuardadas);
-  
+      // respuestasGuardadas[this.id] = this.selectedAnswer;
+      sessionStorage.setItem('respuestasUsuario', JSON.stringify(respuestasGuardadas));
       this.isAnswered = true;
     }
   }
-  actualizarProgresoEnLocalStorage(tipoInventario: string, respuestas: { [key: string]: string }) {
-    let totalPreguntas = tipoInventario === 'inv1' ? 120 : 130;
-    let idsPreguntas = Object.keys(respuestas)
-      .map(id => parseInt(id.replace(`${tipoInventario}-`, '')))
-      .filter(num => !isNaN(num));
-  
-    if (idsPreguntas.length > 0) {
-      let maxPregunta = Math.max(...idsPreguntas);
-      let progresoCalculado = (maxPregunta / totalPreguntas) * 100;
-  
-      if (tipoInventario === 'inv1') {
-        localStorage.setItem('progreso_inv1', progresoCalculado.toString());
-      } else {
-        localStorage.setItem('progreso_inv2', progresoCalculado.toString());
-      }
-    }
-  }
-  
-  
-  
 
   onOptionChange(event: Event): void {
     this.selectedAnswer = (event.target as HTMLInputElement).value;
     this.guardarRespuesta();
   }
-  
 
   enviarRespuestas(valorR: number, id: string){
-    const respuesta: Respuesta = {
-      valor: valorR,
-      id_Pregunta: id,
-      emailAspirante: sessionStorage.getItem('email')!
-    };
-  
-    this.preguntasService.saveRespuesta(respuesta).subscribe(
-      (response: any) => {
-        console.log("Respuesta guardada en la API:", response);
-      },
-      (error) => {
-        console.error("Error al guardar la respuesta en la API", error);
+      const respuesta: Respuesta = {
+        valor: valorR,
+        id_Pregunta: id,
+        emailAspirante: sessionStorage.getItem('email')!
       }
-    );
+      this.preguntasService.saveRespuesta(respuesta).subscribe(
+        (response: any) => {
+        },
+        (error) => {
+          Swal.fire({
+            icon: 'error',
+            title: 'Error al guardar la respuesta',
+            text: error.error?.message || 'Ocurrió un error desconocido.',
+            confirmButtonText: 'Aceptar'
+          });
+          this.prev()
+        }
+      );
   }
-  
-  
 
   next() {
     if (this.selectedAnswer) {
       this.enviarRespuestas(parseInt(this.selectedAnswer), this.id);
       const currentIdNumber = parseInt(this.id.split('-')[1]);
-      console.log(this.selectedAnswer);
       if (!isNaN(currentIdNumber)) {
         const nextIdNumber = currentIdNumber + 1;
-        const currentIdinventario = this.id.split('-')[0];
-        this.progress = (nextIdNumber / this.totalQuestions) * 100;
         if (nextIdNumber <= this.totalQuestions) {
-          this.router.navigate([`${this.tipo}/preguntas/${currentIdinventario}-${nextIdNumber.toString().padStart(3, '0')}`]);
+          this.router.navigate([`${this.tipo}/preguntas/${this.id.split('-')[0]}-${nextIdNumber.toString().padStart(3, '0')}`]);
+          this.getPreguntaDesdeStorage();
         } else {
           this.mostrarDialogoFinal();
         }
@@ -227,9 +209,9 @@ export class PreguntasComponent implements OnInit {
 
   prev() {
     const currentIdNumber = parseInt(this.id.split('-')[1]);
-    const currentIdinventario = this.id.split('-')[0];
     if (!isNaN(currentIdNumber) && currentIdNumber > 1) {
-      this.router.navigate([`${this.tipo}/preguntas/${currentIdinventario}-${(currentIdNumber - 1).toString().padStart(3, '0')}`]);
+      this.router.navigate([`${this.tipo}/preguntas/${this.id.split('-')[0]}-${(currentIdNumber - 1).toString().padStart(3, '0')}`]);
+      this.getPreguntaDesdeStorage(); // Cargar desde sessionStorage
     }
   }
 

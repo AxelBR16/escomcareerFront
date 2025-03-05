@@ -12,12 +12,8 @@ import { PreguntasService } from '../../services/preguntas.service';
 export class PruebasAComponent implements OnInit {
   pruebasAptitudesCompletadas: boolean = false;
   progreso: number = 0;
-  pruebasInteresesCompletadas: boolean = false;
-  progresoIntereses: number = 0;
-  
-  // Variables separadas para cada inventario
-  preguntaInicialAptitudes: string = '001';
-  preguntaInicialIntereses: string = '001';
+  totalPreguntas: number = 120;
+  preguntainicial: string = '001';
 
   constructor(private preguntasService: PreguntasService,  private router: Router) {}
 
@@ -26,96 +22,38 @@ export class PruebasAComponent implements OnInit {
   }
 
   verificarCuestionario() {
-    // Obtener progreso desde localStorage primero
-    const progresoAptitudes = localStorage.getItem('progreso_inv1');
-    const progresoIntereses = localStorage.getItem('progreso_inv2');
-  
-    if (progresoAptitudes) this.progreso = parseFloat(progresoAptitudes);
-    if (progresoIntereses) this.progresoIntereses = parseFloat(progresoIntereses);
-  
-    // Cargar respuestas desde localStorage
-    const respuestasAptitudes = localStorage.getItem('respuestasUsuario_inv1');
-    const respuestasIntereses = localStorage.getItem('respuestasUsuario_inv2');
-  
-    if (respuestasAptitudes) {
-      const respuestas: { id_pregunta: string }[] = JSON.parse(respuestasAptitudes);
-      this.pruebasAptitudesCompletadas = respuestas.length > 0;
-      this.calcularProgreso(respuestas, 'inv1');
+    const respuestasGuardadas = sessionStorage.getItem('respuestasUsuario');
+
+    if (respuestasGuardadas) {
+      const respuestas = JSON.parse(respuestasGuardadas);
+      this.pruebasAptitudesCompletadas = true;
+      this.calcularProgreso(respuestas);
     } else {
-      this.cargarRespuestasDesdeAPI('inv1');
-    }
-  
-    if (respuestasIntereses) {
-      const respuestas: { id_pregunta: string }[] = JSON.parse(respuestasIntereses);
-      this.pruebasInteresesCompletadas = respuestas.length > 0;
-      this.calcularProgreso(respuestas, 'inv2');
-    } else {
-      this.cargarRespuestasDesdeAPI('inv2');
-    }
-  }
-  
-
-  cargarRespuestasDesdeAPI(tipoInventario: string) {
-    this.preguntasService.obtenerRespuestasUsuario(sessionStorage.getItem('email')!).subscribe(
-      (respuestas: { id_pregunta: string }[]) => {
-        const respuestasFiltradas = respuestas.filter(r => r.id_pregunta.startsWith(tipoInventario));
-
-        if (respuestasFiltradas.length > 0) {
-          localStorage.setItem(`respuestasUsuario_${tipoInventario}`, JSON.stringify(respuestasFiltradas));
-          this.calcularProgreso(respuestasFiltradas, tipoInventario);
-
-          if (tipoInventario === 'inv1') {
+      this.preguntasService.obtenerRespuestasUsuario(sessionStorage.getItem('email')!).subscribe(
+        (respuestas) => {
+          if (respuestas && respuestas.length > 0) {
             this.pruebasAptitudesCompletadas = true;
-          } else {
-            this.pruebasInteresesCompletadas = true;
+            sessionStorage.setItem('respuestasUsuario', JSON.stringify(respuestas));
+            this.calcularProgreso(respuestas);
           }
+        },
+        (error) => {
+          console.error('Error al obtener respuestas del usuario', error);
         }
-      },
-      (error) => {
-        console.error(`Error al obtener respuestas del usuario (${tipoInventario})`, error);
-      }
-    );
+      );
+    }
   }
 
-  calcularProgreso(respuestas: { id_pregunta: string }[], tipoInventario: string) {
-    let totalPreguntas = tipoInventario === 'inv1' ? 120 : 130;
-    let idsPreguntas = respuestas
-      .filter(r => r.id_pregunta.startsWith(tipoInventario))
-      .map(r => parseInt(r.id_pregunta.replace(`${tipoInventario}-`, '')))
-      .filter(num => !isNaN(num));
-
-    if (idsPreguntas.length === 0) {
-      if (tipoInventario === 'inv1') {
-        this.progreso = 0;
-      } else {
-        this.progresoIntereses = 0;
-      }
-      return;
-    }
-
+  calcularProgreso(respuestas: any[]) {
+    let idsPreguntas = respuestas.map(r => parseInt(r.id_pregunta.replace('inv1-', '')));
     let maxPregunta = Math.max(...idsPreguntas);
-    let progresoCalculado = (maxPregunta / totalPreguntas) * 100;
-
-    if (tipoInventario === 'inv1') {
-      this.preguntaInicialAptitudes = maxPregunta.toString().padStart(3, '0');
-      this.progreso = progresoCalculado;
-    } else {
-      this.preguntaInicialIntereses = maxPregunta.toString().padStart(3, '0');
-      this.progresoIntereses = progresoCalculado;
-    }
+    this.preguntainicial = maxPregunta.toString().padStart(3, '0');
+    this.progreso = (maxPregunta / this.totalPreguntas) * 100;
   }
 
   redirigir() {
-    const ruta = this.pruebasAptitudesCompletadas 
-      ? `/aptitudes/preguntas/inv1-${this.preguntaInicialAptitudes}` 
-      : '/instrucciones/aptitudes';
+    const ruta = this.pruebasAptitudesCompletadas ? `/aptitudes/preguntas/inv1-${this.preguntainicial}` : '/instrucciones/aptitudes';
     this.router.navigate([ruta]);
   }
 
-  redirigirIntereses() {
-    const ruta = this.pruebasInteresesCompletadas 
-      ? `/intereses/preguntas/inv2-${this.preguntaInicialIntereses}` 
-      : '/instrucciones/intereses';
-    this.router.navigate([ruta]);
-  }
 }
