@@ -3,6 +3,7 @@ import { AspiranteGuard } from './shared/guards/aspirante.guard';
 import { Routes } from '@angular/router';
 import { InicioComponent } from './components/inicio/inicio.component';
 import { CarrerasComponent } from './components/carreras/carreras.component';
+import { DetalleCarreraComponent } from './components/detalle-carrera/detalle-carrera.component';
 import { LoginComponent } from './components/login/login.component';
 import { LogineComponent } from './components/logine/logine.component';
 import { InstruccionesComponent } from './components/instrucciones/instrucciones.component';
@@ -41,5 +42,6 @@ export const routes: Routes = [
   {path: 'admin-dashboard', component: AdminDashboardComponent},
   {path: 'aspirante-dashboard', component: AspiranteDashboardComponent, canActivate: [AspiranteGuard]},
   { path: 'forgot-password', component: ForgotPasswordComponent },
+  { path: 'detalle/:id', component: DetalleCarreraComponent },
   { path: '**', redirectTo: '', pathMatch:'full'},
 ];  

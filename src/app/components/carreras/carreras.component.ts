@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CargarScriptsService } from '../../services/cargar-scripts.service';
 import Swal from 'sweetalert2';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-carreras',
@@ -36,11 +37,7 @@ export class CarrerasComponent implements OnInit {
   loaded: boolean = false;
   imagenesCargadas: number = 0;
 
-  mostrarDetalle: boolean = false;  // Nuevo estado para cambiar de vista
-  carreraSeleccionada: any = null;  // Datos de la carrera seleccionada
-
-
-  constructor(private _CargarScripts: CargarScriptsService) {}
+  constructor(private _CargarScripts: CargarScriptsService, private router: Router) {}
 
   ngOnInit() {
     this.mostrarAlertaCarga();
@@ -82,6 +79,10 @@ export class CarrerasComponent implements OnInit {
 
   cargarScript() {
     this._CargarScripts.Carga(["js/carrera.js"]);
+  }
+
+  verMas(index: number) {
+    this.router.navigate(['/detalle', index]);
   }
 
 }

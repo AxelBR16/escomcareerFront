@@ -1,6 +1,6 @@
 <div *ngIf="loaded">
   <!-- carousel -->
-  <div class="carousel" *ngIf="!mostrarDetalle">
+  <div class="carousel">
     <!-- list item -->
     <div class="list">
       <div *ngFor="let image of images; let i = index" class="item">
@@ -16,7 +16,7 @@
           <div class="topic">{{ topics[i].title }}</div>
           <div class="des">{{ topics[i].description }}</div>
           <div class="buttons">
-            <button>Ver más</button>
+            <button (click)="verMas(i)">Ver más</button>
           </div>
         </div>
       </div>
@@ -48,3 +48,4 @@
 
   </div>
 </div>
+
