@@ -1,13 +1,15 @@
 import { Component } from '@angular/core';
+import { Router, RouterModule } from '@angular/router';
 @Component({
   selector: 'app-aspirante-dashboard',
-  imports: [],
+  imports: [RouterModule],
   templateUrl: './aspirante-dashboard.component.html',
   styleUrl: './aspirante-dashboard.component.css'
 })
 export class AspiranteDashboardComponent {
   nombre: string = 'Usuario';
 
+  constructor(private router: Router){}
   /*
 nombre: string = 'Cargando...';
 

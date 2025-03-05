@@ -10,7 +10,17 @@ main {
     align-items: center;
     justify-content: center;
     min-height: 100vh;
-    
+
+}
+.video-fondo {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: translate(-50%, -50%);
+  z-index: 0;
 }
 
 .hero-section {
@@ -24,7 +34,7 @@ main {
     background-repeat: no-repeat; /* Evita que la imagen se repita */
     margin-top: 20px;
     border-radius: 10px;
-    
+
 }
 
 
@@ -49,7 +59,7 @@ main {
 .test-section p {
     font-size: 1rem;
     margin-bottom: 20px;
-    
+
 }
 
 
@@ -64,8 +74,8 @@ main {
     font-weight: bold; /* Haz el texto más llamativo */
     text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7); /* Sombra para mejorar la visibilidad */
     width: 80%;
-    
-    
+
+
 }
 .hero-container h1{
     font-size: 35px; /* Ajusta el tamaño del texto */
@@ -146,8 +156,8 @@ main {
     background-repeat: no-repeat; /* Evita que la imagen se repita */
     min-height: 250px; /* Altura mínima aumentada */
     width: 80%;
-    
-    
+
+
 }
 
 .card2 {
@@ -164,8 +174,8 @@ main {
     background-repeat: no-repeat; /* Evita que la imagen se repita */
     min-height: 250px; /* Altura mínima aumentada */
     width: 80%;
-    
-    
+
+
 }
 
 
@@ -205,7 +215,7 @@ main {
 
 
 .card h3, .card p {
-   
+
     padding: 10px;
     border-radius: 5px;
 }
@@ -224,7 +234,7 @@ main {
     font-size: 0.9rem;
     margin-bottom: 15px;
     line-height: 1.4;
-   
+
 }
 
 /* Buttons */
@@ -237,15 +247,15 @@ main {
     cursor: pointer;
     font-size: 1rem;
     transition: background-color 0.3s ease;
-  
+
 }
 
 .card .btn {
- 
+
     position: absolute; /* Posiciona el botón en un lugar específico */
     bottom: 10px; /* Ajusta la distancia desde la parte inferior */
     right: 20px; /* Ajusta la distancia desde la parte derecha */
-    
+
 }
 .card .btn:hover {
     background-color: #FFD700;
@@ -268,7 +278,7 @@ main {
     }
     .card {
         min-height: 100px; /* Tarjetas más largas en pantallas grandes */
-       
+
     }
 }
 
@@ -356,7 +366,7 @@ main {
     overflow: hidden;
     margin-top: 10px;
   }
-  
+
   .progress {
     height: 100%;
     background-color: #4caf50;
