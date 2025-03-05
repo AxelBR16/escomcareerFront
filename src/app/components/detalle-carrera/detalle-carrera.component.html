@@ -1,0 +1,242 @@
+  <div class="detalle-carrera">
+    <div class="hero">
+        <img [src]="career.Image" class="hero-image">
+      <div class="overlay">
+        <h1>{{ career.title }}</h1>
+        <p>{{ career.description }}</p>
+        <div class="btn-container">
+        <button class="btn-regresar" (click)="regresar()">Regresar</button>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Menú de secciones -->
+    <div class="menu">
+       
+            <button 
+              *ngFor="let section of ['Que ofrece', 'Plan Estudios', 'Experiencias', 'Bolsa Trabajo', 'Proyectos']"
+              (click)="changeSection(section)"
+              [ngClass]="{ 'active': selectedSection === section }">
+              {{ section | titlecase }}
+            </button> 
+        
+    </div>
+  
+  
+    <div class="content fade-in">
+  <!--SECCION QUE OFRECE-->
+      <div *ngIf="selectedSection === 'Que ofrece'">
+        <h2>🎓 ¿Qué ofrece la carrera de {{ career.title }}?</h2>
+
+        <div class="info-box">
+          <h3>📍 Escuelas que la imparten dentro del IPN</h3>
+          <ul>
+            <li *ngFor="let escuela of career.escuelas">
+              {{ escuela }}
+            </li>
+          </ul>
+        </div>
+        
+        <div class="info-box">
+          <h3>📖 Plan de estudios</h3>
+          <p>{{ career.planDuracion }}</p>
+          <ul>
+            <li><strong>Primeros semestres:</strong> {{ career.planEstudiosInicio }}</li>
+            <li><strong>Semestres intermedios:</strong> {{ career.planEstudiosMedios }}</li>
+            <li><strong>Últimos semestres:</strong> {{ career.planEstudiosFinal }}</li>
+          </ul>
+        </div>
+      
+        
+        <div class="info-box">
+          <h3>🔬 Laboratorios y herramientas</h3>
+          <p>Los estudiantes tienen acceso a laboratorios especializados en:</p>
+          <ul>
+            <li *ngFor="let lab of career.laboratorios">
+              {{ lab }}
+            </li>
+          </ul>
+        </div>
+      
+        <div class="info-box">
+          <h3>🎓 Opciones de titulación</h3>
+          <p>El IPN ofrece varias formas de titulación para los egresados:</p>
+          <ul>
+            <li *ngFor="let titulacion of career.titulacion">
+              {{ titulacion }}
+            </li>
+          </ul>
+        </div>
+      
+        <div class="info-box">
+          <h3>💼 Bolsa de trabajo</h3>
+          <p>Los egresados en {{ career.title }} pueden trabajar en diversos sectores:</p>
+          <ul>
+            <li *ngFor="let areaTrabajo of career.areaTrabajo">
+              {{ areaTrabajo }}
+            </li>
+          </ul>
+        </div>
+      
+        <div class="info-box">
+          <h3>👨‍💻 Perfil del egresado</h3>
+          <p>El Ingeniero en {{ career.title }} del IPN se caracteriza por:</p>
+          <ul>
+            <li *ngFor="let perfil of career.perfilEgresado">
+              {{ perfil }}
+            </li>
+          </ul>
+        </div>
+      
+        <div class="info-box">
+          <h3>❓ ¿Por qué estudiar {{ career.title }}?</h3>
+          <ul>
+            <li *ngFor="let razon of career.porqueEstudiar">
+              {{ razon }}
+            </li>
+          </ul>
+        </div>
+      </div>
+
+<!--SECCION PLAN DE ESTUDIOS-->
+      <div *ngIf="selectedSection === 'Plan Estudios'" class="plan-estudios">
+        <h2>📖 Plan de estudios - {{ career.title }}</h2>
+
+            <div class="semestres">
+                <button 
+                *ngFor="let semestre of career.planEstudios; let i = index"
+                (click)="selectSemestre(i)"
+                [ngClass]="{ 'active': selectedSemestre === i }">
+                {{ semestre.nombre }}
+                </button>
+            </div>
+    
+            <div class="materias">
+                <h3>{{career.planEstudios[selectedSemestre].titulo }}</h3>
+                <ul>
+                <li *ngFor="let materia of career.planEstudios[selectedSemestre].materias">
+                    {{ materia }}
+                </li>
+                </ul>
+            </div>
+      </div>
+<!--SECCION EXPERIENCIAS-->   
+      <div *ngIf="selectedSection === 'Experiencias'" class="experiencias-container">
+         <h2>🎤 Experiencias de Estudiantes y Egresados</h2>
+
+          <div *ngIf="experiencias.length > 0; else noExperiences">
+            <div *ngFor="let experiencia of experiencias" class="experiencia-card">
+              <div class="avatar">{{ getInitial(experiencia.nombre) }}</div>
+              <div class="experiencia-content">
+                <h3 class="nombre">{{ experiencia.nombre }}</h3>
+                <p class="status">{{ experiencia.status }}</p>
+                <p class="comentario">{{ experiencia.comentario }}</p>
+                <div class="feedbackpro">
+                  <ion-icon 
+                    name="thumbs-up-outline" 
+                    (click)="votar(experiencia.id, 'like')"
+                    [ngClass]="{'like-active': experiencia.voto === 'like'}">
+                  </ion-icon>
+
+                  <ion-icon 
+                    name="thumbs-down-outline" 
+                    (click)="votar(experiencia.id, 'dislike')"
+                    [ngClass]="{'dislike-active': experiencia.voto === 'dislike'}">
+                  </ion-icon>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <ng-template #noExperiences>
+            <p>No hay experiencias registradas aún.</p>
+          </ng-template>
+
+          <button class="compartir-btn">¿Estudiaste en esta carrera? ¡Comparte tu historia!</button>
+
+      </div>
+
+<!--SECCION BOLSA DE TRABAJO-->   
+      <div *ngIf="selectedSection === 'Bolsa Trabajo'" class="bolsa-trabajo-container">
+        <h2>💼 Bolsa de trabajo</h2>
+
+        <div *ngIf="bolsaTrabajo.length > 0; else noJobs">
+          <div *ngFor="let empleo of bolsaTrabajo" class="job-card">
+            <div class="job-header">
+              <p class="salario">{{ empleo.salario }}</p>
+              <h3 class="puesto">{{ empleo.puesto }}</h3>
+            </div>
+
+            <div class="habilidades">
+              <span *ngFor="let habilidad of empleo.habilidades" class="habilidad">{{ habilidad }}</span>
+            </div>
+
+            <p class="descripcion">{{ empleo.descripcion }}</p>
+            <p class="autor">
+              <span class="nombrejob">{{ empleo.nombre }}</span>
+              <span class="statusjob">{{ empleo.status }}</span>
+            </p>
+          </div>
+        </div>
+
+        <ng-template #noJobs>
+          <p>No hay ofertas de trabajo disponibles aún.</p>
+        </ng-template>
+
+        <button class="compartir-btn">¿Ya trabajas? ¡Comparte tu trabajo!</button>
+      </div>
+
+
+<!--SECCION PROYECTOS-->       
+      <div *ngIf="selectedSection === 'Proyectos'" class="proyectos-container">
+        <h2>📌 Proyectos realizados por Estudiantes/Egresados</h2>
+
+        <div *ngIf="proyectos.length > 0; else noProjects">
+          <div *ngFor="let proyecto of proyectos" class="proyecto-card">
+            
+            <!-- Información del Proyecto -->
+            <div class="proyecto-info">
+              <h3 class="titulo">{{ proyecto.titulo }}</h3>
+              <p class="descripcion">{{ proyecto.descripcion }}</p>
+              <span class="categoria">{{ proyecto.categoria }}</span>
+            </div>
+
+            <!-- Contenedor de video y reacciones -->
+            <div class="proyecto-derecha">
+              <div class="proyecto-video">
+                <video [src]="proyecto.video" controls class="video-proyecto"></video>
+              </div>
+
+              <div class="proyecto-footer">
+                <div class="feedbackpro">
+                  <ion-icon 
+                    name="thumbs-up-outline" 
+                    (click)="votarproyecto(proyecto.id, 'like')"
+                    [ngClass]="{'like-active': proyecto.voto === 'like'}">
+                  </ion-icon>
+
+                  <ion-icon 
+                    name="thumbs-down-outline" 
+                    (click)="votarproyecto(proyecto.id, 'dislike')"
+                    [ngClass]="{'dislike-active': proyecto.voto === 'dislike'}">
+                  </ion-icon>
+                </div>
+                <p class="autor">
+                  <span class="nombrejob">{{ proyecto.autor }}</span>
+                  <span class="statusjob">{{ proyecto.status }}</span>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <ng-template #noProjects>
+          <p>No hay proyectos registrados aún.</p>
+        </ng-template>
+
+        <button class="compartir-btn">¡Comparte tus proyectos!</button>
+
+      </div>
+    </div>
+  </div>
+  

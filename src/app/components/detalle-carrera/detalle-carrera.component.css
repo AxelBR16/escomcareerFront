@@ -1,0 +1,596 @@
+  .detalle-carrera {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    font-family: 'Poppins', sans-serif;
+    padding: 20px;
+  }
+  
+  .hero {
+    width: 100%;
+    height: 50vh;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    filter: brightness(0.6);
+  }  
+  
+  .overlay {
+    background: rgba(0, 0, 0, 0.6);
+    color: white;
+    padding: 20px;
+    text-align: center;
+    max-width: 80%;
+    border-radius: 10px;
+    animation: fadeIn 1s ease-in-out;
+  }
+
+  /* Animación de aparición */
+@keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  /* Menú de secciones */
+  .menu {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin: 20px 0;
+    flex-wrap: wrap;
+  }
+  
+  .menu button {
+    background: #f8f9fa;
+    border: 2px solid #007bff;
+    color: #007bff;
+    padding: 12px 16px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 5px;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .menu button:hover {
+    background: #007bff;
+    color: white;
+  }
+
+  .menu button.active {
+    background: #007bff;
+    color: white;
+  }
+  
+  .content {
+    width: 80%;
+    max-width: 900px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-top: 20px;
+    font-size: 18px;
+    text-align: center;
+    animation: fadeIn 0.5s ease-in-out;
+  }
+  
+  @media (max-width: 768px) {
+    .hero {
+      height: 40vh;
+    }
+    .menu {
+      flex-wrap: wrap;
+    }
+    .menu button {
+      font-size: 14px;
+      padding: 8px;
+    }
+    .content {
+      width: 90%;
+    }
+  }
+  
+  /* Animación para cambiar de sección */
+.fade-in {
+    animation: fadeIn 0.5s ease-in-out;
+  }
+  
+  .btn-container {
+    margin-top: 20px;
+  }
+  
+  .btn-regresar {
+    background: #ffc107;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: all 0.3s;
+  }
+  
+  .btn-regresar:hover {
+    background:#e0a800;
+  }
+
+/*Inicio CSS QUE OFRECE*/
+
+.que-ofrece {
+    width: 90%;
+    max-width: 900px;
+    text-align: center;
+    margin: 20px auto;
+    padding: 20px;
+  }
+  
+  .info-box {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    text-align: left;
+  }
+  
+  .info-box h3 {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #007bff;
+  }
+  
+  .info-box ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .info-box li {
+    background: white;
+    padding: 10px;
+    margin-bottom: 5px;
+    border-radius: 5px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    font-size: 16px;
+  }
+  
+  /* Responsivo */
+  @media (max-width: 768px) {
+    .que-ofrece {
+      width: 100%;
+      padding: 15px;
+    }
+  
+    .info-box {
+      padding: 15px;
+    }
+  }
+  
+
+
+/*Inicio CSS PLAN DE ESTUDIOS*/
+.plan-estudios {
+    width: 90%;
+    max-width: 900px;
+    text-align: center;
+    margin: 20px auto;
+    padding: 20px;
+  }
+
+  .semestres {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin: 20px 0;
+  }
+  
+  .semestres button {
+    padding: 12px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 25px;
+    border: none;
+    cursor: pointer;
+    transition: 0.3s;
+    background-color: #f1f1f1;
+    color: #333;
+    border: 2px solid transparent;
+  }
+  
+  .semestres button:hover {
+    background-color: #007bff;
+    color: white;
+  }
+  
+  .semestres button.active {
+    background-color: #ffc107;
+    color: black;
+    border: 2px solid #e0a800;
+  }
+  
+  .materias {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .materias h3 {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .materias ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .materias li {
+    background: white;
+    padding: 10px;
+    margin-bottom: 5px;
+    border-radius: 5px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    font-size: 16px;
+  }
+
+  /*FIN CSS Ofrece*/
+
+  /*CSS EXPERIENCIAS*/
+
+.experiencias-container {
+  width: 90%;
+  max-width: 900px;
+  margin: 20px auto;
+  text-align: center;
+}
+
+.experiencia-card {
+  display: flex;
+  align-items: center;
+  background: #f8f9fa;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 15px;
+  text-align: left;
+}
+
+.avatar {
+  width: 50px;
+  height: 50px;
+  background-color: #007bff;
+  color: white;
+  font-weight: bold;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  margin-right: 15px;
+}
+
+
+.experiencia-content {
+  flex: 1;
+}
+
+.nombre {
+  font-weight: bold;
+  font-size: 18px;
+  margin: 0;
+}
+
+.status {
+  font-size: 14px;
+  color: #666;
+  margin: 5px 0;
+}
+
+.comentario {
+  font-size: 16px;
+  line-height: 1.5;
+  margin: 10px 0;
+}
+
+/* Colores activos */
+.like-active {
+  color: #0056b3;
+}
+
+.dislike-active {
+  color: #ff4b5c; 
+}
+
+.compartir-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #0056b3;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  font-size: 16px;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: all 0.3s;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.compartir-btn:hover {
+  background: #004494;
+}
+
+@media (max-width: 768px) {
+  .experiencia-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .avatar {
+    width: 40px;
+    height: 40px;
+    font-size: 16px;
+  }
+
+  .compartir-btn {
+    bottom: 15px;
+    right: 15px;
+    padding: 10px 15px;
+    font-size: 14px;
+  }
+}
+
+
+  /*CSS TRABAJO*/
+
+.bolsa-trabajo-container {
+  width: 90%;
+  max-width: 900px;
+  margin: 20px auto;
+  text-align: center;
+}
+
+.job-card {
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 15px;
+  text-align: left;
+  border: 1px solid #e0e0e0;
+}
+
+.job-header {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+
+.salario {
+  font-size: 14px;
+  font-weight: normal;
+  color: #333;
+  margin: 0;
+  white-space: nowrap;
+}
+
+.puesto {
+  font-size: 18px;
+  font-weight: bold;
+  color: #0056b3;
+  margin-left: 60px;
+  white-space: nowrap;
+}
+
+.habilidades {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 10px 0;
+}
+
+.habilidad {
+  background: #dbeafe;
+  color: #007bff;
+  padding: 6px 12px;
+  font-size: 14px;
+  border-radius: 20px;
+  font-weight: bold;
+  display: inline-block;
+}
+
+.descripcion {
+  font-size: 14px;
+  line-height: 1.5;
+  color: #333;
+  margin: 10px 0;
+}
+
+.autor {
+  display: flex;
+  justify-content: flex-end;
+  font-size: 12px;
+  align-items: center;
+  margin-top: 5px;
+  color: #666;
+  font-weight: bold;
+}
+
+.nombrejob {
+  color: #0056b3; 
+  font-weight: bold;
+  margin-right: 10px; 
+}
+
+.statusjob{
+  color: #999; 
+}
+
+@media (max-width: 768px) {
+  .job-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .habilidad {
+    font-size: 12px;
+    padding: 4px 10px;
+  }
+
+}
+
+
+ /*CSS PROYECTO*/
+
+
+.proyectos-container {
+  width: 90%;
+  max-width: 900px;
+  margin: 20px auto;
+  text-align: center;
+}
+
+.proyecto-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #ffffff;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 15px;
+  text-align: left;
+  border: 1px solid #e0e0e0;
+}
+
+.proyecto-info {
+  flex: 1;
+  padding-right: 15px;
+}
+
+.titulo {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.descripcion {
+  font-size: 14px;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.categoria {
+  background: #dbeafe;
+  color: #0056b3;
+  padding: 6px 12px;
+  font-size: 14px;
+  border-radius: 20px;
+  font-weight: bold;
+  margin-top: 10px;
+  display: inline-block;
+}
+
+
+.proyecto-derecha {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Contenedor del video */
+.proyecto-video {
+  width: 250px;
+  height: 140px;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.video-proyecto {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.proyecto-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+  width: 100%;
+  padding: 10px 0;
+  border-top: 1px solid #ddd;
+  gap: 40px;
+}
+
+.feedbackpro{
+  display: flex;
+  gap: 10px;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.feedbackpro ion-icon {
+  transition: color 0.3s ease-in-out;
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .proyecto-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .proyecto-derecha {
+    width: 100%;
+    align-items: flex-start;
+  }
+
+  .proyecto-video {
+    width: 100%;
+    height: auto;
+    margin-top: 10px;
+  }
+
+  .video-proyecto {
+    width: 100%;
+    height: auto;
+  }
+
+  .proyecto-footer {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
