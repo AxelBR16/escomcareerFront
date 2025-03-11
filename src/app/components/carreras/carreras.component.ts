@@ -71,7 +71,9 @@ export class CarrerasComponent implements OnInit {
         if (this.imagenesCargadas === this.images.length) {
           this.loaded = true;
           Swal.close();
-          this.cargarScript();
+          if (window.location.pathname === '/carreras') {
+            this.cargarScript();
+          }
         }
       };
     });
@@ -82,7 +84,9 @@ export class CarrerasComponent implements OnInit {
   }
 
   verMas(index: number) {
-    this.router.navigate(['/detalle', index]);
+    this.router.navigate(['/carreras', index]);
   }
+
+
 
 }

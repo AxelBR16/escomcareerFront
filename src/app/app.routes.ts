@@ -42,6 +42,6 @@ export const routes: Routes = [
   {path: 'admin-dashboard', component: AdminDashboardComponent},
   {path: 'aspirante-dashboard', component: AspiranteDashboardComponent, canActivate: [AspiranteGuard]},
   { path: 'forgot-password', component: ForgotPasswordComponent },
-  { path: 'detalle/:id', component: DetalleCarreraComponent },
+  { path: 'carreras/:id', component: DetalleCarreraComponent },
   { path: '**', redirectTo: '', pathMatch:'full'},
-];  
+];
