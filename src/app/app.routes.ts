@@ -21,6 +21,10 @@ import { ResultAptitudesComponent } from './components/result-aptitudes/result-a
 import { ProyectsInicioComponent } from './components/proyects-inicio/proyects-inicio.component';
 import { ResultInteresesComponent } from './components/result-intereses/result-intereses.component';
 import { ResultUniverComponent } from './components/result-univer/result-univer.component';
+import { AdminCarrerasComponent } from './components/admin-carreras/admin-carreras.component';
+import { AdminExpeComponent } from './components/admin-expe/admin-expe.component';
+import { AdminvideosComponent } from './components/adminvideos/adminvideos.component';
+
 
 export const routes: Routes = [
   {path: '', component: InicioComponent},
@@ -40,6 +44,9 @@ export const routes: Routes = [
   //{path: 'admin-dashboard', component: AdminDashboardComponent, canActivate: [AdminGuard]},
   {path: 'egresado-dashboard', component: EgresadoDashboardComponent, canActivate: [EgresadoGuard]},
   {path: 'admin-dashboard', component: AdminDashboardComponent},
+  {path: 'admin-carreras', component: AdminCarrerasComponent},
+  {path: 'admin-expe', component: AdminExpeComponent},
+  {path: 'admin-videos', component: AdminvideosComponent},
   {path: 'aspirante-dashboard', component: AspiranteDashboardComponent, canActivate: [AspiranteGuard]},
   { path: 'forgot-password', component: ForgotPasswordComponent },
   { path: 'carreras/:id', component: DetalleCarreraComponent },

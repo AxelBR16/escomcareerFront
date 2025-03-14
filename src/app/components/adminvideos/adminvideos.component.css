@@ -1,0 +1,169 @@
+/* Estilos para el hero */
+.hero-section {
+    position: relative;
+    width: 100%;
+    min-height: 200px;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/site/proyectosi.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    margin-top: 20px;
+    border-radius: 10px;
+}
+
+.hero-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    text-align: center;
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+    width: 80%;
+}
+
+.hero-container h1 {
+    font-size: 35px;
+    margin-bottom: 20px;
+}
+
+.hero-container p {
+    font-size: 20px;
+}
+
+/* Contenedor principal */
+.video-approval-container {
+    max-width: 700px;
+    margin: auto;
+    text-align: center;
+}
+
+/* Tarjetas de aprobación */
+.video-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: white;
+    border-radius: 10px;
+    padding: 15px;
+    margin: 15px 0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out;
+}
+
+/* Efecto hover */
+.video-card:hover {
+    transform: scale(1.03);
+}
+
+/* Perfil del usuario */
+.user-profile {
+    display: flex;
+    align-items: center;
+    flex: 1;
+}
+
+.user-icon {
+    width: 50px;
+    height: 50px;
+    background: #0044cc;
+    color: white;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-size: 20px;
+    margin-right: 10px;
+}
+
+.user-details {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+
+.user-name {
+    font-weight: bold;
+    font-size: 16px;
+    color: #0044cc;
+}
+
+.user-role {
+    font-size: 14px;
+    color: gray;
+}
+
+/* Video */
+.video-content {
+    flex: 2;
+    display: flex;
+    justify-content: center;
+}
+
+.video-proyecto {
+    width: 150px;
+    height: 90px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Botones de acción */
+.actions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.approve-btn {
+    background: #28a745;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 5px;
+    transition: 0.3s;
+}
+
+.reject-btn {
+    background: #dc3545;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+/* Efectos hover para los botones */
+.approve-btn:hover {
+    background: #218838;
+}
+
+.reject-btn:hover {
+    background: #c82333;
+}
+
+/* Responsivo */
+@media (max-width: 600px) {
+    .video-card {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .video-content {
+        margin-top: 10px;
+    }
+
+    .actions {
+        flex-direction: row;
+        margin-top: 10px;
+    }
+
+    .approve-btn, .reject-btn {
+        margin: 0 5px;
+    }
+}
