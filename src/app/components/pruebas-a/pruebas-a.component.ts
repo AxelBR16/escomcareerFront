@@ -47,6 +47,7 @@ export class PruebasAComponent implements OnInit {
   calcularProgreso(respuestas: any[]) {
     let idsPreguntas = respuestas.map(r => parseInt(r.id_pregunta.replace('inv1-', '')));
     let maxPregunta = Math.max(...idsPreguntas);
+    console.log(maxPregunta);
     this.preguntainicial = maxPregunta.toString().padStart(3, '0');
     this.progreso = (maxPregunta / this.totalPreguntas) * 100;
   }
