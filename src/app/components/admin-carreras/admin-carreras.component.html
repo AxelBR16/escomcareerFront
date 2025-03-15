@@ -1,0 +1,32 @@
+<section class="hero-section">
+    <div class="hero-container">
+        <h1>Edición en el plan de estudios</h1>
+        <p>Revisa y aprueba las experiencias que los usuarios han compartido.</p>
+    </div>
+</section>
+<br>
+
+<div class="career-selection-container">
+    <h2>Edición de la Página</h2>
+    <label for="careerSelect">Seleccione la carrera</label>
+    <br>
+    <select id="careerSelect" class="career-selector" (change)="updateTable($event)">
+        <option *ngFor="let career of careers" [value]="career.name">{{ career.name }}</option>
+    </select>
+    
+    <div class="pricing-table">
+        <div class="header">
+            <div class="column">Sección</div>
+            <div class="column">Editar</div>
+        </div>
+        <div class="row" *ngFor="let section of selectedCareer.sections">
+            <div class="column">{{ section.name }}</div>
+            <div class="column">
+                <button (click)="editSection(section)" class="edit-button">
+                    ✏️ Editar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<br>

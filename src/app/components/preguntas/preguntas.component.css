@@ -1,5 +1,9 @@
 
-
+html, body {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
 
 
 .opciones label {
@@ -63,17 +67,7 @@
     /* Si no requieres centrar verticalmente, puedes omitir align-items */
   }
 
-.cuadro {
-    display: grid;
-    grid-template-columns: 1fr .05fr 1.5fr; /* Alinea los elementos en fila */
-    background-color: #001f3f;
-    width: 100%; /* Ocupa todo el ancho de la pantalla */
-    border-radius: 0; /* Elimina bordes redondeados */
-    overflow: hidden;
-    margin-top: 0px;
-    height: 100vh;
 
-}
 
 .selected-option {
     background-color: rgba(0, 123, 255, 0.2); /* Fondo azul claro */
@@ -83,24 +77,91 @@
   }
 
 
+/* 🟢 Contenedor Principal */
+.cuadro {
+    display: grid;
+    grid-template-columns: 1fr .05fr 1.5fr; /* Mantiene la disposición en escritorio */
+    background-color: #001f3f;
+    width: 100%;
+    min-height: 100vh; /* Evita que el contenedor crezca más de lo necesario */
+    border-radius: 0;
+    overflow: hidden;
+}
+
+/* 🟢 Imagen */
 .image {
-    flex: 0 0 35%; /* La imagen ocupa el 30% del contenedor */
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #000; /* Fondo negro para destacar la imagen */
-    padding: 0; /* Elimina el espacio interno */
+    background-color: black;
+    margin: 0;
+    padding: 0;
 }
 
-img {
-  width: 100%; /* La imagen ocupa todo el ancho del contenedor */
-  height: 100%;
-  object-fit: cover;
-  border: none; /* Elimina el borde */
-  object-position: center;
-
+.image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
 }
 
+/* 🟢 Modo Responsive: Asegurar que la imagen esté abajo */
+@media (max-width: 768px) {
+    .cuadro {
+        display: flex;
+        flex-direction: column; /* Apilar elementos en columna */
+        height: auto; /* Ajustar altura automáticamente */
+    }
+   
+
+    /* 🔹 Asegurar que la barra de progreso esté arriba de las preguntas */
+    .progress {
+        width: 100%;
+        height: auto; /* 🟢 Corrige el problema de altura */
+        min-height: 20px; /* 🟢 Evita que sea demasiado grande */
+        display: flex;
+        flex-direction: row; /* 🟢 Asegura que se mantenga en una sola línea */
+        align-items: center;
+        justify-content: center;
+        border-radius: 0;
+        background-color: transparent; /* 🟢 Si tiene color de fondo no deseado, se elimina */
+    }
+
+    .progress-container {
+        width: 100%;
+        height: 20px; /* 🟢 Mantiene una altura fija */
+        background-color: #e42323;
+        overflow: hidden;
+        margin-bottom: 10px;
+    }
+
+    .progress-bar {
+        width: 100%;
+        height: 100%; /* 🟢 Asegura que solo ocupe el tamaño necesario */
+        background-color: #39e223;
+        transition: width 0.3s ease;
+    }
+
+    .seccion {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    /* 🔹 Las preguntas ahora van debajo de la barra */
+    .question {
+        order: 2; /* Mantiene las preguntas en segundo lugar */
+        width: 100%;
+    }
+
+    /* 🔹 La imagen sigue yendo hasta abajo */
+    .image {
+        order: 3; /* Asegura que la imagen se mantenga hasta el final */
+        width: 100%;
+        height: auto;
+        margin-top: 20px;
+    }
+}
 
 
 /* Consultas de medios para pantallas más pequeñas */
@@ -225,9 +286,7 @@ img {
 .navigation button:hover {
     background-color: #0056b3;
 }
-.seccionp{
-  height: 100vh;
-}
+
 .progress {
   width: 100%; /* Ajusta el ancho de la barra */
   height: 100%; /* Ocupa toda la altura de la sección */
@@ -256,6 +315,7 @@ img {
     background-color: #39e223;
     transition: width 0.3s ease;
 }
+
 
 
 
