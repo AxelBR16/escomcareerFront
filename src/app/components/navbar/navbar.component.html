@@ -38,6 +38,12 @@
           Valora
         </a>
       </li>
+      
+      <li *ngIf="userRole=== 'ROLE_ASPIRANTE'">
+        <a [routerLink]="['/carreras']" routerLinkActive="active" class="nav-link px-2 text-warning">
+          Carreras
+        </a>
+      </li>
 
       <!--Role egresado-->
       <li *ngIf="userRole === 'ROLE_EGRESADO'">
