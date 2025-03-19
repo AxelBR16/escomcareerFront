@@ -19,6 +19,11 @@
           Dashboard Admin
         </a>
       </li>
+      <li *ngIf="userRole=== 'ROLE_ADMIN'">
+        <a [routerLink]="['/carreras']" routerLinkActive="active" class="nav-link px-2 text-warning">
+          Carreras
+        </a>
+      </li>
       <!--Aspirante-->
 
       <li *ngIf="userRole === 'ROLE_ASPIRANTE'">
@@ -38,7 +43,7 @@
           Valora
         </a>
       </li>
-      
+
       <li *ngIf="userRole=== 'ROLE_ASPIRANTE'">
         <a [routerLink]="['/carreras']" routerLinkActive="active" class="nav-link px-2 text-warning">
           Carreras
@@ -54,6 +59,12 @@
       <li *ngIf="userRole === 'ROLE_EGRESADO'">
         <a [routerLink]="['/proyectInicio']" routerLinkActive="active" class="nav-link px-2 text-warning">
           Proyectos
+        </a>
+      </li>
+
+      <li *ngIf="userRole=== 'ROLE_EGRESADO'">
+        <a [routerLink]="['/carreras']" routerLinkActive="active" class="nav-link px-2 text-warning">
+          Carreras
         </a>
       </li>
 
