@@ -25,7 +25,6 @@ import { AdminCarrerasComponent } from './components/admin-carreras/admin-carrer
 import { AdminExpeComponent } from './components/admin-expe/admin-expe.component';
 import { AdminvideosComponent } from './components/adminvideos/adminvideos.component';
 
-
 export const routes: Routes = [
   {path: '', component: InicioComponent},
   {path: 'carreras', component: CarrerasComponent},
