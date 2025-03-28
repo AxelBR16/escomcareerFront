@@ -8,7 +8,7 @@
   </section>
   <br>
   <h2>Pruebas de Orientación Vocacional</h2>
-  <p>Selecciona una prueba para comenzar</p>
+  <br>
   <div class="test-cards">
       <div class="cardF2" >
           <h1>PASO 2</h1>
@@ -16,21 +16,31 @@
       <P>Paso 2: Encuentra tus aptitudes para una carrera en la ESCOM. Este inventario te permitirá evaluar si cuentas con las aptitudes necesarias para estudiar alguna de las tres carreras que ofrece ESCOM, relacionadas con el área de Ciencias Físico-Matemáticas.
       </P>
 
- <!-- Tarjeta para Aptitudes -->
- <div class="card" style="background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('/site/t1.webp')">
+<!-- Tarjeta para Aptitudes -->
+<div class="card">
+  <video autoplay loop muted>
+    <source src="/site/h.mp4" type="video/mp4">
+    Tu navegador no soporta el formato de video.
+  </video>
   <h3>Inventario de autoevaluación de aptitudes</h3>
   <p>Este inventario tiene como objetivo evaluar tus aptitudes de acuerdo con tus intereses personales y habilidades destacadas.</p>
   <div class="progress-bar">
-      <div class="progress" [style.width.%]="progreso"></div>
+    <div class="progress" [style.width.%]="progreso"></div>
   </div>
-    <button class="btn mt-2" (click)="redirigir()">
-      {{ pruebasAptitudesCompletadas ? 'Reanudar' : 'Comenzar' }}
-    </button>
+  <button class="btn mt-2" (click)="redirigir()">
+    {{ pruebasAptitudesCompletadas ? 'Reanudar' : 'Comenzar' }}
+  </button>
 </div>
 
 
+
+
 <!-- Tarjeta para Económico -->
-<div class="card" style="background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('/site/T4.webp')">
+<div class="card">
+  <video autoplay loop muted>
+    <source src="/site/dinero.mp4" type="video/mp4">
+    Tu navegador no soporta el formato de video.
+  </video>
   <h3>Económico</h3>
   <p>Evalúa tu situación económica para encontrar opciones de carreras accesibles.</p>
   <a [routerLink]="['/instrucciones', 'economico']">

@@ -9,24 +9,34 @@
     </section>
     <br>
     <h2>Pruebas de Orientación Vocacional</h2>
-
+<br>
     <div class="test-cards">
 
         <div class="cardF" >
-            <h1>Paso 1</h1>
+            <h1>PASO 1</h1>
         </div>
         <p>Este es el primer paso para encontrar la carrera ideal para ti. Este primer inventario te permitirá evaluar si cuentas con las preferencias para estudiar alguna de las tres carreras que ofrece ESCOM, relacionadas con el área de Ciencias Físico-Matemáticas. Además, te ayudará a identificar si esta es el área más adecuada para tu perfil.
         </p>
-        <div [routerLink]="['/instrucciones', 'universitario']" class="card" style="background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('/site/0303.gif')">
-            <h3>Inventario de preferencias universitarias🎓</h3>
-            <p>Explora tus preferencias sobre las carreras universitarias más afines a ti.</p>
-
-            <div class="progress-bar">
-                <div class="progress" ></div><!--[style.width.%]="progreso"-->
-            </div>
-        </div>
 
     </div>
+       
+    
+    <div [routerLink]="['/instrucciones', 'universitario']" class="card">
+        <video autoplay loop muted>
+            <source src="/site/unis.mp4" type="video/mp4">
+            Tu navegador no soporta el formato de video.
+        </video>
+        <h3>Inventario de preferencias universitarias🎓</h3>
+        <p>Explora tus preferencias sobre las carreras universitarias más afines a ti.</p>
+    
+        <div class="progress-bar">
+            <div class="progress"></div> 
+        </div>
+    </div>
+    <br>
+    <br>
+
+
    <button class="btn results-btn" [routerLink]="['/pruebasA']">Siguiente</button>
 
     <br>

@@ -12,23 +12,13 @@ main {
     min-height: 100vh;
 
 }
-.video-fondo {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transform: translate(-50%, -50%);
-  z-index: 0;
-}
 
 .hero-section {
     position: relative; /* Habilita el posicionamiento de elementos hijos */
     width: 100%; /* Asegura que ocupe todo el ancho de la página */
     height: 100%; /* Asegura que ocupe toda la altura del contenedor */
     min-height: 200px; /* Establece una altura mínima */
-    background-image:linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/site/Cuestionario.webp'); /* Agrega la imagen como fondo */
+    background-image:linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/site/IAcues.jpeg'); /* Agrega la imagen como fondo */
     background-size:cover; /* La imagen cubre todo el contenedor */
     background-position: center; /* Centra la imagen */
     background-repeat: no-repeat; /* Evita que la imagen se repita */
@@ -141,42 +131,51 @@ main {
     gap: 20px; /* Espacio entre tarjetas */
     margin-bottom: 20px;
 }
-
+/* Asegurarse de que la tarjeta tenga suficiente altura y el video esté bien posicionado */
 .card {
-    position: relative; /* Permite posicionar elementos hijos de manera específica */
-    background-color: #0641cc;
+    position: relative;
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.6);
     padding: 20px;
     text-align: left;
-    transition: transform 0.3s ease;
     color: #ffffff;
-    background-size: cover; /* Ajusta la imagen para cubrir toda la tarjeta */
-    background-position: center; /* Centra la imagen en la tarjeta */
-    background-repeat: no-repeat; /* Evita que la imagen se repita */
-    min-height: 250px; /* Altura mínima aumentada */
-    width: 80%;
-
-
+    min-height: 300px; /* Asegura que la tarjeta tenga una altura mínima */
+    width: 90%;
+    overflow: hidden; /* Asegura que el video no sobresalga de la tarjeta */
+    background: transparent; /* Asegura que el fondo de la tarjeta sea transparente para que se vea el video */
+    transition: transform 0.6s ease-in-out; /* Suaviza la transición con un tiempo de 0.6 segundos */
 }
 
-.card2 {
-    position: relative; /* Permite posicionar elementos hijos de manera específica */
-    background-color: #CFE2FF;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.6);
-    padding: 20px;
-    text-align: left;
-    transition: transform 0.3s ease;
-    color: #000000;
-    background-size: cover; /* Ajusta la imagen para cubrir toda la tarjeta */
-    background-position: center; /* Centra la imagen en la tarjeta */
-    background-repeat: no-repeat; /* Evita que la imagen se repita */
-    min-height: 250px; /* Altura mínima aumentada */
-    width: 80%;
-
-
+/* Capa oscura sobre el video */
+.card::before {
+    content: ''; /* Asegura que la capa se muestre */
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.50); /* Fondo negro con 50% de opacidad */
+    z-index: 0; /* Coloca la capa encima del video pero debajo del contenido */
 }
+
+/* Asegura que el video se muestre y cubra toda la tarjeta */
+.card video {
+    position: absolute; /* Coloca el video en la parte inferior de la tarjeta */
+    top: 0;
+    left: 0;
+    width: 100%; /* El video ocupará todo el ancho de la tarjeta */
+    height: 100%; /* El video ocupará toda la altura de la tarjeta */
+    object-fit: cover; /* Asegura que el video cubra toda el área sin deformarse */
+    z-index: -1; /* Coloca el video detrás del contenido de la tarjeta */
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.4); /* Agrega una sombra más difusa al hacer hover */
+}
+
+
+
 
 
 
@@ -220,21 +219,20 @@ main {
     border-radius: 5px;
 }
 
-.card:hover {
-    transform: translateY(-5px);
-}
+
 
 .card h3 {
     font-size: 1.2rem;
     margin-bottom: 10px;
     color: #fff;
+    z-index: 1; /* Asegura que el texto esté sobre el video */
 }
 
 .card p {
     font-size: 0.9rem;
     margin-bottom: 15px;
     line-height: 1.4;
-
+    z-index: 1; /* Asegura que el texto esté sobre el video */
 }
 
 /* Buttons */

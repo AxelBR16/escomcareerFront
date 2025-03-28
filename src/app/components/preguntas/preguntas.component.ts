@@ -9,6 +9,7 @@ import { LoaderService } from '../../services/loader.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Pregunta } from '../../models/pregunta';
 import { Respuesta } from '../../models/respuesta';
+import { RespuestaService } from '../../services/respuesta.service';
 
 
 @Component({
@@ -38,7 +39,8 @@ export class PreguntasComponent implements OnInit {
     private loader: LoaderService,
     private sanitizer: DomSanitizer,
     private aRouter: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private respuestaService: RespuestaService
 
   ) {
     this.id = this.aRouter.snapshot.paramMap.get('id') || '1';
@@ -168,26 +170,28 @@ export class PreguntasComponent implements OnInit {
     this.guardarRespuesta();
   }
 
-  enviarRespuestas(valorR: number, id: string){
-      const respuesta: Respuesta = {
-        valor: valorR,
-        id_Pregunta: id,
-        emailAspirante: sessionStorage.getItem('email')!
+  enviarRespuestas(valorR: number, id: string) {
+    const respuesta: Respuesta = {
+      valor: valorR,
+      id_Pregunta: id,
+      emailAspirante: sessionStorage.getItem('email')!
+    };
+    this.preguntasService.saveRespuesta(respuesta).subscribe(
+      (response: any) => {
+        // Respuesta enviada correctamente
+      },
+      (error) => {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error al guardar la respuesta',
+          text: error.error?.message || 'Ocurrió un error desconocido.',
+          confirmButtonText: 'Aceptar'
+        });
+        this.prev();
       }
-      this.preguntasService.saveRespuesta(respuesta).subscribe(
-        (response: any) => {
-        },
-        (error) => {
-          Swal.fire({
-            icon: 'error',
-            title: 'Error al guardar la respuesta',
-            text: error.error?.message || 'Ocurrió un error desconocido.',
-            confirmButtonText: 'Aceptar'
-          });
-          this.prev()
-        }
-      );
+    );
   }
+  
 
   next() {
     if (this.selectedAnswer) {
@@ -223,6 +227,80 @@ export class PreguntasComponent implements OnInit {
       showCancelButton: true,
       confirmButtonText: 'Sí, enviar ahora',
       cancelButtonText: 'Revisar respuestas',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // Verificar respuestas antes de enviar
+        this.verificarRespuestasFinales();
+      } else {
+        this.router.navigate(['/revisar-respuestas']);  // Redirigir a revisar respuestas si el usuario no ha terminado
+      }
     });
   }
+
+  verificarRespuestasFinales() {
+    const email = sessionStorage.getItem('email') || 'usuario';
+  
+    this.respuestaService.verificarRespuestas(email).subscribe(
+      (response: any) => {
+        console.log('Respuesta de la API:', response);  // Verifica lo que llega de la API
+  
+        if (response && response.success !== undefined) {  // Verifica que la respuesta tenga el formato esperado
+          if (response.success) {
+            Swal.fire({
+              title: '¡Todo listo!',
+              text: 'Todas las preguntas tienen respuestas.',
+              icon: 'success',
+            }).then(() => {
+              // Enviar las respuestas
+              Object.keys(this.respuestasUsuario).forEach((key) => {
+                const valorRespuesta = parseInt(this.respuestasUsuario[key]);
+                this.enviarRespuestas(valorRespuesta, key);
+              });
+            });
+          } else {
+            // Verifica que preguntas_faltantes sea un arreglo y contiene datos
+            if (Array.isArray(response.preguntasFaltantes) && response.preguntasFaltantes.length > 0) {
+              const preguntasFaltantes = response.preguntasFaltantes.join(', '); // Aquí estamos uniendo las preguntas faltantes correctamente
+              console.log('Preguntas faltantes:', preguntasFaltantes);  // Verifica que preguntas_faltantes no esté vacío
+  
+              Swal.fire({
+                title: 'Faltan respuestas',
+                text: `Las siguientes preguntas no tienen respuestas: ${preguntasFaltantes}`,
+                icon: 'warning',
+              });
+            } else {
+              // Si no hay preguntas faltantes, muestra el mensaje adecuado
+              Swal.fire({
+                title: 'Faltan respuestas',
+                text: 'No se pudieron identificar las preguntas faltantes.',
+                icon: 'warning',
+              });
+            }
+          }
+        } else {
+          console.error('Formato de respuesta inesperado:', response);  // Diagnóstico de problemas
+          Swal.fire({
+            title: 'Error',
+            text: 'Ocurrió un error inesperado al verificar las respuestas.',
+            icon: 'error',
+          });
+        }
+      },
+      (error) => {
+        console.error('Error al verificar las respuestas:', error);  // Verifica qué está fallando
+        Swal.fire({
+          title: 'Error',
+          text: 'Ocurrió un error al verificar las respuestas.',
+          icon: 'error',
+        });
+      }
+    );
+  }
+  
+  
+  
+  
+  
+  
+  
 }
