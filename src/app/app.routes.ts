@@ -24,6 +24,8 @@ import { ResultUniverComponent } from './components/result-univer/result-univer.
 import { AdminCarrerasComponent } from './components/admin-carreras/admin-carreras.component';
 import { AdminExpeComponent } from './components/admin-expe/admin-expe.component';
 import { AdminvideosComponent } from './components/adminvideos/adminvideos.component';
+import { ExperenceComponent } from './components/experence/experence.component';
+
 
 export const routes: Routes = [
   {path: '', component: InicioComponent},
@@ -33,6 +35,7 @@ export const routes: Routes = [
   {path: 'result-intereses', component: ResultInteresesComponent},
   {path: 'proyectEgresado', component: ProyectEgresadoComponent, canActivate: [EgresadoGuard]},
   {path: 'proyectInicio', component: ProyectsInicioComponent, canActivate: [EgresadoGuard]},
+  {path: 'experience', component: ExperenceComponent, canActivate: [EgresadoGuard]},
   {path: 'logine', component: LogineComponent},
   {path: 'login', component: LoginComponent},
   { path: 'instrucciones/:tipo', component: InstruccionesComponent, canActivate: [AspiranteGuard]},

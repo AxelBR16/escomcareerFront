@@ -68,6 +68,12 @@
         </a>
       </li>
 
+      <li *ngIf="userRole=== 'ROLE_EGRESADO'">
+        <a [routerLink]="['/experience']" routerLinkActive="active" class="nav-link px-2 text-warning">
+          Experiencias
+        </a>
+      </li>
+
     <!--Default-->
       <li *ngIf="!userRole">
         <a [routerLink]="['/carreras']" routerLinkActive="active" class="nav-link px-2 text-warning">

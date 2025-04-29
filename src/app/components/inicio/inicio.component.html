@@ -190,40 +190,16 @@
     <h2>Testimonios</h2>
     <br>
   </div>
-
   <div class="contenedor-testimonios">
-    <!-- Primer testimonio -->
-        <!-- Primer testimonio -->
-        <div class="testimonio">
-          <div class="foto-nombre">
-              <img src="site/usu.jpg" alt="Foto de Juan Pérez">
-              <h2>Juan Pérez</h2>
-          </div>
-          <p>"Juan Pérez ha sido un gran profesional, siempre dispuesto a ayudar y con un conocimiento excepcional en su campo. ¡Lo recomiendo totalmente!"</p>
-          <p class="autor">- Cliente Satisfecho</p>
+    <div class="testimonio" *ngFor="let testimonio of testimonios">
+      <div class="foto-avatar">
+        <h2>{{ testimonio.nombre.charAt(0) }}</h2>
       </div>
-
-      <!-- Segundo testimonio -->
-      <div class="testimonio">
-          <div class="foto-nombre">
-              <img src="site/usu.jpg" alt="Foto de María Gómez">
-              <h2>María Gómez</h2>
-          </div>
-          <p>"María Gómez es una experta en su área, siempre brinda soluciones efectivas y con una actitud muy positiva. ¡Muy recomendada!"</p>
-          <p class="autor">- Cliente Satisfecho</p>
-      </div>
-
-      <!-- Tercer testimonio -->
-      <div class="testimonio">
-          <div class="foto-nombre">
-              <img src="site/usu.jpg" alt="Foto de Carlos Ruiz">
-              <h2>Carlos Ruiz</h2>
-          </div>
-          <p>"Carlos Ruiz es un profesional dedicado y comprometido. Su trabajo es de alta calidad y siempre cumple con los plazos. ¡Excelente servicio!"</p>
-          <p class="autor">- Cliente Satisfecho</p>
-      </div>
+      <h2>{{ testimonio.nombre }}</h2>
+      <p>"{{ testimonio.experiencia }}"</p>
+      <p class="autor">- {{ testimonio.nombre }}</p>
+    </div>
   </div>
-
-
+  
 
 

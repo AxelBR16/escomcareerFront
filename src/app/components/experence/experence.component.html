@@ -1,0 +1,33 @@
+<div class="form-container">
+    <h1>Cuéntanos tu experiencia</h1>
+    <p class="description">Queremos conocer tu experiencia a lo largo de tu estadía en la ESCOM y en tu trabajo. Tu opinión es muy importante para nosotros y para los cientos de aspirantes que buscan ingresar. Por favor, dedica unos minutos a responder las siguientes preguntas con sinceridad:</p>
+  
+    <form (ngSubmit)="agregarTestimonio()">
+      <div class="form-group">
+        <label for="career">¿Qué carrera estudiaste o estás estudiando?</label>
+        <select id="career" name="career" [(ngModel)]="carrera" required>
+          <option value="" disabled selected>Selecciona la carrera</option>
+          <option value="informatica">Ingeniería en Sistemas Computacionales</option>
+          <option value="electronica">Ingeniería en Inteligencia Artificial</option>
+          <option value="mecanica">Licenciatura en Bases de Datos</option>
+        </select>
+      </div>
+  
+      <div class="form-group">
+        <label for="experience">¿Cómo fue tu experiencia estudiando en la ESCOM?</label>
+        <textarea id="experience" name="experience" [(ngModel)]="experiencia" rows="4" placeholder="Comparte tu experiencia..." required></textarea>
+      </div>
+  
+      <div class="form-group">
+        <label for="work">¿Ya trabajas en algún campo relacionado a tu carrera?</label>
+        <select id="work" name="work" [(ngModel)]="trabajaRelacionada" required>
+          <option value="" disabled selected>Selecciona una opción</option>
+          <option value="si">Sí</option>
+          <option value="no">No</option>
+        </select>
+      </div>
+  
+      <button type="submit" class="submit-btn">Enviar Encuesta</button>
+    </form>
+  </div>
+  
