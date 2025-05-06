@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
   apiUrls: {
-    auth: 'https://escomcareer.onrender.com'
+    auth: 'http://78.12.154.16'
   }
 };
