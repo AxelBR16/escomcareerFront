@@ -170,27 +170,35 @@ export class PreguntasComponent implements OnInit {
     this.guardarRespuesta();
   }
 
-  enviarRespuestas(valorR: number, id: string) {
-    const respuesta: Respuesta = {
-      valor: valorR,
-      id_Pregunta: id,
-      emailAspirante: sessionStorage.getItem('email')!
-    };
-    this.preguntasService.saveRespuesta(respuesta).subscribe(
-      (response: any) => {
-        // Respuesta enviada correctamente
-      },
-      (error) => {
-        Swal.fire({
-          icon: 'error',
-          title: 'Error al guardar la respuesta',
-          text: error.error?.message || 'Ocurrió un error desconocido.',
-          confirmButtonText: 'Aceptar'
-        });
-        this.prev();
-      }
-    );
-  }
+// Función que maneja el envío de respuestas
+enviarRespuestas(valorR: number, id: string) {
+  const respuesta: Respuesta = {
+    valor: valorR,
+    id_Pregunta: id,
+    emailAspirante: sessionStorage.getItem('email')!
+  };
+
+  // Comentar todo el bloque que hace la llamada a la API para guardar las respuestas
+  /*
+  this.preguntasService.saveRespuesta(respuesta).subscribe(
+    (response: any) => {
+      // Respuesta enviada correctamente
+    },
+    (error) => {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error al guardar la respuesta',
+        text: error.error?.message || 'Ocurrió un error desconocido.',
+        confirmButtonText: 'Aceptar'
+      });
+      this.prev();
+    }
+  );
+  */
+
+  // Aquí puedes agregar cualquier otra lógica si la respuesta no tiene que ser guardada, o si deseas manejarla de otra forma.
+}
+
   
 
   next() {
@@ -229,13 +237,21 @@ export class PreguntasComponent implements OnInit {
       cancelButtonText: 'Revisar respuestas',
     }).then((result) => {
       if (result.isConfirmed) {
-        // Verificar respuestas antes de enviar
-        this.verificarRespuestasFinales();
+        // Aquí puedes enviar las respuestas sin hacer la verificación
+        Object.keys(this.respuestasUsuario).forEach((key) => {
+          const valorRespuesta = parseInt(this.respuestasUsuario[key]);
+          this.enviarRespuestas(valorRespuesta, key); // Enviar respuestas directamente
+        });
+  
+        // Redirigir a otra página después de enviar las respuestas
+        this.router.navigate(['/result-aptitudes']);  // Cambia 'pagina-diferente' por la ruta de la página a la que quieras redirigir
       } else {
-        this.router.navigate(['/revisar-respuestas']);  // Redirigir a revisar respuestas si el usuario no ha terminado
+        // Si elige "Revisar respuestas", puedes redirigir a otra ruta para revisar las respuestas
+        this.router.navigate(['/revisar-respuestas']);
       }
     });
   }
+  
 
   verificarRespuestasFinales() {
     const email = sessionStorage.getItem('email') || 'usuario';
@@ -256,6 +272,9 @@ export class PreguntasComponent implements OnInit {
                 const valorRespuesta = parseInt(this.respuestasUsuario[key]);
                 this.enviarRespuestas(valorRespuesta, key);
               });
+  
+              // Redirigir a una página después de enviar las respuestas
+              this.router.navigate(['/pagina-diferente']);  // Aquí coloca la ruta de la página a la que quieres redirigir
             });
           } else {
             // Verifica que preguntas_faltantes sea un arreglo y contiene datos
@@ -295,7 +314,62 @@ export class PreguntasComponent implements OnInit {
         });
       }
     );
+  
+    // Código comentado para omitir la verificación de respuestas:
+    /*
+    const email = sessionStorage.getItem('email') || 'usuario';
+  
+    this.respuestaService.verificarRespuestas(email).subscribe(
+      (response: any) => {
+        if (response && response.success !== undefined) {
+          if (response.success) {
+            Swal.fire({
+              title: '¡Todo listo!',
+              text: 'Todas las preguntas tienen respuestas.',
+              icon: 'success',
+            }).then(() => {
+              Object.keys(this.respuestasUsuario).forEach((key) => {
+                const valorRespuesta = parseInt(this.respuestasUsuario[key]);
+                this.enviarRespuestas(valorRespuesta, key);
+              });
+  
+              this.router.navigate(['/pagina-diferente']);  // Aquí coloca la ruta de la página a la que quieres redirigir
+            });
+          } else {
+            if (Array.isArray(response.preguntasFaltantes) && response.preguntasFaltantes.length > 0) {
+              const preguntasFaltantes = response.preguntasFaltantes.join(', ');
+              Swal.fire({
+                title: 'Faltan respuestas',
+                text: `Las siguientes preguntas no tienen respuestas: ${preguntasFaltantes}`,
+                icon: 'warning',
+              });
+            } else {
+              Swal.fire({
+                title: 'Faltan respuestas',
+                text: 'No se pudieron identificar las preguntas faltantes.',
+                icon: 'warning',
+              });
+            }
+          }
+        } else {
+          Swal.fire({
+            title: 'Error',
+            text: 'Ocurrió un error inesperado al verificar las respuestas.',
+            icon: 'error',
+          });
+        }
+      },
+      (error) => {
+        Swal.fire({
+          title: 'Error',
+          text: 'Ocurrió un error al verificar las respuestas.',
+          icon: 'error',
+        });
+      }
+    );
+    */
   }
+  
   
   
   
