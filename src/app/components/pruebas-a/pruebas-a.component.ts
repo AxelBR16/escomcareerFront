@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { PreguntasService } from '../../services/preguntas.service';
+import { RespuestaService } from '../../services/respuesta.service';
 
 @Component({
   selector: 'app-pruebas-a',
@@ -15,13 +16,28 @@ export class PruebasAComponent implements OnInit {
   totalPreguntas: number = 120;
   preguntainicial: string = '001';
 
-  constructor(private preguntasService: PreguntasService,  private router: Router) {}
+  constructor(private preguntasService: PreguntasService,  private router: Router, private respuestaService: RespuestaService) {}
 
   ngOnInit(): void {
     this.verificarCuestionario();
   }
 
   verificarCuestionario() {
+
+    this.preguntasService.obtenerRespuestasMasAlta(sessionStorage.getItem('email')!).subscribe(
+      (respuestaMasAlta) => {
+        if(respuestaMasAlta){
+          this.pruebasAptitudesCompletadas = true;
+          this.calcularProgreso(respuestaMasAlta.id);
+        }
+        else{
+          this.pruebasAptitudesCompletadas = false;
+        }
+      },
+      (error) => {
+        console.error('Error al obtener la respuesta más alta:', error);
+      }
+    );
     const respuestasGuardadas = sessionStorage.getItem('respuestasUsuario');
 
     if (respuestasGuardadas) {
@@ -44,13 +60,11 @@ export class PruebasAComponent implements OnInit {
     }
   }
 
-  calcularProgreso(respuestas: any[]) {
-    let idsPreguntas = respuestas.map(r => parseInt(r.id_pregunta.replace('inv1-', '')));
-    let maxPregunta = Math.max(...idsPreguntas);
-    console.log(maxPregunta);
-    this.preguntainicial = maxPregunta.toString().padStart(3, '0');
-    this.progreso = (maxPregunta / this.totalPreguntas) * 100;
+  calcularProgreso(id: any) {
+    this.preguntainicial = id.toString().padStart(3, '0');
+    this.progreso = (id / this.totalPreguntas) * 100;
   }
+
 
   redirigir() {
     const ruta = this.pruebasAptitudesCompletadas ? `/aptitudes/preguntas/inv1-${this.preguntainicial}` : '/instrucciones/aptitudes';

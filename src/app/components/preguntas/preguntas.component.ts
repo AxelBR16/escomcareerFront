@@ -83,6 +83,7 @@ export class PreguntasComponent implements OnInit {
       let maxPregunta = parseInt(this.id.split('-')[1]);
       this.progress = (maxPregunta / this.totalQuestions) * 100;
       this.cargarRespuestaGuardada(this.id)
+
     }
     this.pregunta = preguntaEncontrada;
   }
@@ -115,19 +116,15 @@ export class PreguntasComponent implements OnInit {
 
     const respuestasGuardadas = sessionStorage.getItem('respuestasUsuario');
     this.loading = true;
-    this.loader.mostrarCargando('Cargando pregunta...');
+
     if (respuestasGuardadas) {
       this.respuestasUsuario = JSON.parse(respuestasGuardadas);
       this.getPreguntaDesdeStorage();
       this.loader.ocultarCargando();
     } else {
       this.preguntasService.obtenerRespuestasUsuario(sessionStorage.getItem('email')!).subscribe(
-        (respuestas: { id_pregunta: string; valor: number }[]) => {
-          this.respuestasUsuario = respuestas.reduce((acc, curr) => {
-            acc[curr.id_pregunta] = curr.valor.toString();
-            return acc;
-          }, {} as { [key: string]: string });
-          sessionStorage.setItem(this.storageKey, JSON.stringify(this.respuestasUsuario));
+        (respuestas: Record<string, number>) => {
+          sessionStorage.setItem('respuestasUsuario', JSON.stringify(respuestas));
           this.getPreguntaDesdeStorage();
         },
         () => this.getPreguntaDesdeStorage()
@@ -135,15 +132,13 @@ export class PreguntasComponent implements OnInit {
       this.loader.ocultarCargando();
     }
   }
+
+
   cargarRespuestaGuardada(id: string) {
     const respuestasGuardadas = this.obtenerRespuestasGuardadas();
-    console.log(id)
-    console.log(respuestasGuardadas)
-    const respuesta = Object.values(respuestasGuardadas).find(respuesta => respuesta.id_Pregunta === id);
-    console.log(respuesta)
-    if (respuesta) {
-      console.log('hola')
-      this.selectedAnswer = respuesta.valor.toString();
+    const valor = this.respuestasUsuario[id];
+    if (valor) {
+      this.selectedAnswer = valor.toString();
       this.isAnswered = true;
     } else {
       this.selectedAnswer = null;
@@ -158,12 +153,12 @@ export class PreguntasComponent implements OnInit {
 
   guardarRespuesta() {
     if (this.selectedAnswer) {
-      const respuestasGuardadas = this.obtenerRespuestasGuardadas();
-      // respuestasGuardadas[this.id] = this.selectedAnswer;
-      sessionStorage.setItem('respuestasUsuario', JSON.stringify(respuestasGuardadas));
+      this.respuestasUsuario[this.id] = this.selectedAnswer;
+      sessionStorage.setItem('respuestasUsuario', JSON.stringify(this.respuestasUsuario));
       this.isAnswered = true;
     }
   }
+
 
   onOptionChange(event: Event): void {
     this.selectedAnswer = (event.target as HTMLInputElement).value;
@@ -191,7 +186,7 @@ export class PreguntasComponent implements OnInit {
       }
     );
   }
-  
+
 
   next() {
     if (this.selectedAnswer) {
@@ -239,11 +234,11 @@ export class PreguntasComponent implements OnInit {
 
   verificarRespuestasFinales() {
     const email = sessionStorage.getItem('email') || 'usuario';
-  
+
     this.respuestaService.verificarRespuestas(email).subscribe(
       (response: any) => {
         console.log('Respuesta de la API:', response);  // Verifica lo que llega de la API
-  
+
         if (response && response.success !== undefined) {  // Verifica que la respuesta tenga el formato esperado
           if (response.success) {
             Swal.fire({
@@ -262,7 +257,7 @@ export class PreguntasComponent implements OnInit {
             if (Array.isArray(response.preguntasFaltantes) && response.preguntasFaltantes.length > 0) {
               const preguntasFaltantes = response.preguntasFaltantes.join(', '); // Aquí estamos uniendo las preguntas faltantes correctamente
               console.log('Preguntas faltantes:', preguntasFaltantes);  // Verifica que preguntas_faltantes no esté vacío
-  
+
               Swal.fire({
                 title: 'Faltan respuestas',
                 text: `Las siguientes preguntas no tienen respuestas: ${preguntasFaltantes}`,
@@ -296,11 +291,11 @@ export class PreguntasComponent implements OnInit {
       }
     );
   }
-  
-  
-  
-  
-  
-  
-  
+
+
+
+
+
+
+
 }

@@ -24,6 +24,12 @@ export class PreguntasService {
     return this.httpClient.get<any>(`${environment.apiUrls.auth}/respuestas/obtenerPorAspirante/${email}`);
   }
 
+  obtenerRespuestasMasAlta(email: string) {
+    return this.httpClient.get<any>(`${environment.apiUrls.auth}/respuestas/obtenerRespuestaConIdMasAlto/${email}`);
+  }
+
+
+
   saveRespuesta(respuesta: Respuesta): Observable<Respuesta> {
     return this.httpClient.post<Respuesta>(`${environment.apiUrls.auth}/respuestas/guardar`, respuesta);
   }
