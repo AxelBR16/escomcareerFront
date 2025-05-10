@@ -42,23 +42,45 @@ canvas {
     text-align: center;
 }
 .btn-container {
-    text-align: center;
-    margin-top: 20px;
+  
+  
+  text-align: center;
 }
 
-button {
-    background-color: #003366;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
+/* Estilo del botón */
+.btn {
+  background-color: #001E62; /* Azul claro */
+  color: black;
+  padding: 15px 30px;
+  border: 2px solid #00bcd4; /* Borde azul */
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 18px;
+  position: relative;
+  font-weight: bold;
+  text-transform: uppercase;
+  transition: all 0.3s ease; /* Transición suave */
 }
 
-button:hover {
-    background-color: #002244;
+/* Efecto de neón en el texto */
+.neon {
+  color: #fff;
+  border: 2px solid #fff;
+  text-shadow: 0 0 5px #00bcd4, 0 0 10px #00bcd4, 0 0 15px #00bcd4;
+  font-size: 20px;
+  font-weight: bold;
+  font-style: italic;
+  padding: 15px 30px;
+  transition: text-shadow 0.3s ease, box-shadow 0.3s ease;
 }
+
+/* Efecto de hover: Resplandor y borde */
+.neon:hover {
+  text-shadow: 0 0 10px #00bcd4, 0 0 20px #00bcd4, 0 0 30px #00bcd4, 0 0 40px #00bcd4;
+  box-shadow: 0 0 10px #00bcd4, 0 0 20px #00bcd4, 0 0 30px #00bcd4;
+  border-color: #00bcd4;
+}
+
 
 /* Contenedor de la tabla */
 .escala-container {
