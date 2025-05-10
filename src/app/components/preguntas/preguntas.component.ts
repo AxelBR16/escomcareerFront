@@ -187,7 +187,6 @@ export class PreguntasComponent implements OnInit {
     );
   }
 
-
   next() {
     if (this.selectedAnswer) {
       this.enviarRespuestas(parseInt(this.selectedAnswer), this.id);
