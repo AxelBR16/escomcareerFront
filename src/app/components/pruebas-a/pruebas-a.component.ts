@@ -11,64 +11,41 @@ import { RespuestaService } from '../../services/respuesta.service';
   styleUrl: './pruebas-a.component.css'
 })
 export class PruebasAComponent implements OnInit {
-  pruebasAptitudesCompletadas: boolean = false;
-  progreso: number = 0;
-  totalPreguntas: number = 120;
-  preguntainicial: string = '001';
+  pruebasCompletadas: { aptitudes: boolean, interes: boolean } = { aptitudes: false, interes: false };
+  progreso: { aptitudes: number, interes: number } = { aptitudes: 0, interes: 0 };
+  totalPreguntas: { aptitudes: number, interes: number } = { aptitudes: 120, interes: 130 };
+  preguntainicial: { aptitudes: string, interes: string } = { aptitudes: '001', interes: '001' };
 
-  constructor(private preguntasService: PreguntasService,  private router: Router, private respuestaService: RespuestaService) {}
+  constructor(private preguntasService: PreguntasService, private router: Router, private respuestaService: RespuestaService) {}
 
   ngOnInit(): void {
-    this.verificarCuestionario();
+    this.verificarCuestionarios();
   }
 
-  verificarCuestionario() {
-
-    this.preguntasService.obtenerRespuestasMasAlta(sessionStorage.getItem('email')!).subscribe(
-      (respuestaMasAlta) => {
-        if(respuestaMasAlta){
-          this.pruebasAptitudesCompletadas = true;
-          this.calcularProgreso(respuestaMasAlta.id);
-        }
-        else{
-          this.pruebasAptitudesCompletadas = false;
-        }
-      },
-      (error) => {
-        console.error('Error al obtener la respuesta más alta:', error);
-      }
-    );
-    const respuestasGuardadas = sessionStorage.getItem('respuestasUsuario');
-
-    if (respuestasGuardadas) {
-      const respuestas = JSON.parse(respuestasGuardadas);
-      this.pruebasAptitudesCompletadas = true;
-      this.calcularProgreso(respuestas);
-    } else {
-      this.preguntasService.obtenerRespuestasUsuario(sessionStorage.getItem('email')!).subscribe(
-        (respuestas) => {
-          if (respuestas && respuestas.length > 0) {
-            this.pruebasAptitudesCompletadas = true;
-            sessionStorage.setItem('respuestasUsuario', JSON.stringify(respuestas));
-            this.calcularProgreso(respuestas);
+  verificarCuestionarios() {
+    ['inv1', 'inv2'].forEach((inv, index) => {
+      this.preguntasService.obtenerRespuestasMasAlta(sessionStorage.getItem('email')!, inv).subscribe(
+        (respuestaMasAlta) => {
+          if (respuestaMasAlta) {
+            const tipo = index === 0 ? 'aptitudes' : 'interes';
+            this.pruebasCompletadas[tipo] = true;
+            this.calcularProgreso(respuestaMasAlta, tipo);
           }
         },
-        (error) => {
-          console.error('Error al obtener respuestas del usuario', error);
-        }
+        (error) => console.error(`Error al obtener la respuesta más alta para ${inv}:`, error)
       );
-    }
+    });
   }
 
-  calcularProgreso(id: any) {
-    this.preguntainicial = id.toString().padStart(3, '0');
-    this.progreso = (id / this.totalPreguntas) * 100;
+  calcularProgreso(id: any, tipo: 'aptitudes' | 'interes') {
+    const total = tipo === 'aptitudes' ? this.totalPreguntas.aptitudes : this.totalPreguntas.interes;
+    const progreso = (id / total) * 100;
+    this.progreso[tipo] = progreso;
+    this.preguntainicial[tipo] = id.toString().padStart(3, '0');
   }
 
-
-  redirigir() {
-    const ruta = this.pruebasAptitudesCompletadas ? `/aptitudes/preguntas/inv1-${this.preguntainicial}` : '/instrucciones/aptitudes';
+  redirigir(tipo: 'aptitudes' | 'interes') {
+    const ruta = this.pruebasCompletadas[tipo] ? `/${tipo}/preguntas/${tipo === 'aptitudes' ? 'inv1' : 'inv2'}-${this.preguntainicial[tipo]}` : `/instrucciones/${tipo}`;
     this.router.navigate([ruta]);
   }
-
 }

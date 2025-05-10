@@ -20,12 +20,12 @@ export class PreguntasService {
     return this.httpClient.get<Pregunta>(`${environment.apiUrls.auth}/preguntas/${id}`);
   }
 
-  obtenerRespuestasUsuario(email: string) {
-    return this.httpClient.get<any>(`${environment.apiUrls.auth}/respuestas/obtenerPorAspirante/${email}`);
+  obtenerRespuestasUsuario(email: string, inventario: string) {
+    return this.httpClient.get<any>(`${environment.apiUrls.auth}/respuestas/obtenerPorAspiranteYInventario/${email}/${inventario}`);
   }
 
-  obtenerRespuestasMasAlta(email: string) {
-    return this.httpClient.get<any>(`${environment.apiUrls.auth}/respuestas/obtenerRespuestaConIdMasAlto/${email}`);
+  obtenerRespuestasMasAlta(email: string, inventario: string) {
+    return this.httpClient.get<any>(`${environment.apiUrls.auth}/respuestas/obtenerRespuestaConIdMasAlto/${email}/${inventario}`);
   }
 
 

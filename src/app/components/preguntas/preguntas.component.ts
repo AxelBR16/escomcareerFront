@@ -11,7 +11,6 @@ import { Pregunta } from '../../models/pregunta';
 import { Respuesta } from '../../models/respuesta';
 import { RespuestaService } from '../../services/respuesta.service';
 
-
 @Component({
   selector: 'app-preguntas',
   templateUrl: './preguntas.component.html',
@@ -32,7 +31,8 @@ export class PreguntasComponent implements OnInit {
   currentQuestionId: string = '';
   loading: boolean = false;
   private storageKey: string = '';
-  respuestasUsuario: { [key: string]: string } = {};
+  respuestasUsuario: Record<string, number> = {};  // Cambiar a 'number' en lugar de 'string'
+
 
   constructor(
     private preguntasService: PreguntasService,
@@ -41,7 +41,6 @@ export class PreguntasComponent implements OnInit {
     private aRouter: ActivatedRoute,
     private router: Router,
     private respuestaService: RespuestaService
-
   ) {
     this.id = this.aRouter.snapshot.paramMap.get('id') || '1';
   }
@@ -53,10 +52,11 @@ export class PreguntasComponent implements OnInit {
 
     this.aRouter.paramMap.subscribe(params => {
       this.id = params.get('id')!;
+      const parteIzquierda = this.id.split('-')[0];
       if (this.id) {
-        this.cargarPreguntas();
-        this.cargarRespuestasAPI()
         this.determinarTotalPreguntas();
+        this.cargarPreguntas();
+        this.cargarRespuestasAPI();
       }
     });
   }
@@ -73,8 +73,9 @@ export class PreguntasComponent implements OnInit {
       this.inventario = 3;
     }
   }
+
   getPreguntaDesdeStorage() {
-    const preguntas = JSON.parse(localStorage.getItem('preguntas') || '[]');
+    const preguntas = JSON.parse(localStorage.getItem(`preguntas_${this.inventario}`) || '[]');
     const preguntaEncontrada = preguntas.find((p: Pregunta) => p.id === this.id) || { id: '', texto: '', imagen_url: '' };
 
     if (preguntaEncontrada.imagen_url) {
@@ -82,22 +83,19 @@ export class PreguntasComponent implements OnInit {
       preguntaEncontrada.imagen_url = this.sanitizer.bypassSecurityTrustUrl(preguntaEncontrada.imagen_url);
       let maxPregunta = parseInt(this.id.split('-')[1]);
       this.progress = (maxPregunta / this.totalQuestions) * 100;
-      this.cargarRespuestaGuardada(this.id)
-
+      this.cargarRespuestaGuardada(this.id);
     }
     this.pregunta = preguntaEncontrada;
   }
 
-
   cargarPreguntas() {
     const preguntasGuardadas = localStorage.getItem('preguntas');
-
     if (preguntasGuardadas) {
       this.getPreguntaDesdeStorage();
     } else {
       this.preguntasService.getPreguntas(this.inventario).subscribe(
         (preguntas: Pregunta[]) => {
-          localStorage.setItem('preguntas', JSON.stringify(preguntas));
+          localStorage.setItem(`preguntas_${this.inventario}`, JSON.stringify(preguntas));
           this.getPreguntaDesdeStorage();
         },
         (error) => {
@@ -111,9 +109,10 @@ export class PreguntasComponent implements OnInit {
         }
       );
     }
+    console.log(this.inventario);
   }
-  cargarRespuestasAPI() {
 
+  cargarRespuestasAPI() {
     const respuestasGuardadas = sessionStorage.getItem('respuestasUsuario');
     this.loading = true;
 
@@ -122,17 +121,29 @@ export class PreguntasComponent implements OnInit {
       this.getPreguntaDesdeStorage();
       this.loader.ocultarCargando();
     } else {
-      this.preguntasService.obtenerRespuestasUsuario(sessionStorage.getItem('email')!).subscribe(
-        (respuestas: Record<string, number>) => {
-          sessionStorage.setItem('respuestasUsuario', JSON.stringify(respuestas));
-          this.getPreguntaDesdeStorage();
-        },
-        () => this.getPreguntaDesdeStorage()
-      );
+      const email = sessionStorage.getItem('email');
+      const inventario = this.id.split('-')[0]; // Esto te da "inv1" o "inv2"
+
+      if (email && inventario) {
+        this.preguntasService.obtenerRespuestasUsuario(email, inventario).subscribe(
+          (respuestas: Record<string, number>) => {
+            sessionStorage.setItem(`respuestasUsuario_${inventario}`, JSON.stringify(respuestas));
+            this.respuestasUsuario = respuestas;
+            this.getPreguntaDesdeStorage();
+          },
+          (error) => {
+            console.error("Error al obtener respuestas: ", error);
+            this.getPreguntaDesdeStorage();
+          }
+        );
+      } else {
+        console.error("No se pudo obtener el email o el inventario.");
+        this.getPreguntaDesdeStorage();
+      }
+
       this.loader.ocultarCargando();
     }
   }
-
 
   cargarRespuestaGuardada(id: string) {
     const respuestasGuardadas = this.obtenerRespuestasGuardadas();
@@ -146,18 +157,20 @@ export class PreguntasComponent implements OnInit {
     }
   }
 
-  obtenerRespuestasGuardadas(): { [key: string]: Respuesta} {
+  obtenerRespuestasGuardadas(): { [key: string]: Respuesta } {
     const respuestasJSON = sessionStorage.getItem('respuestasUsuario');
     return respuestasJSON ? JSON.parse(respuestasJSON) : {};
   }
 
   guardarRespuesta() {
     if (this.selectedAnswer) {
-      this.respuestasUsuario[this.id] = this.selectedAnswer;
+      // Convertir la respuesta a número antes de guardarla
+      this.respuestasUsuario[this.id] = parseInt(this.selectedAnswer);
       sessionStorage.setItem('respuestasUsuario', JSON.stringify(this.respuestasUsuario));
       this.isAnswered = true;
     }
   }
+
 
 
   onOptionChange(event: Event): void {
@@ -223,47 +236,39 @@ export class PreguntasComponent implements OnInit {
       cancelButtonText: 'Revisar respuestas',
     }).then((result) => {
       if (result.isConfirmed) {
-        // Verificar respuestas antes de enviar
-        this.verificarRespuestasFinales();
+
       } else {
-        this.router.navigate(['/revisar-respuestas']);  // Redirigir a revisar respuestas si el usuario no ha terminado
+        this.router.navigate(['/revisar-respuestas']);
       }
     });
   }
-
+/*
   verificarRespuestasFinales() {
     const email = sessionStorage.getItem('email') || 'usuario';
 
     this.respuestaService.verificarRespuestas(email).subscribe(
       (response: any) => {
-        console.log('Respuesta de la API:', response);  // Verifica lo que llega de la API
-
-        if (response && response.success !== undefined) {  // Verifica que la respuesta tenga el formato esperado
+        if (response && response.success !== undefined) {
           if (response.success) {
             Swal.fire({
               title: '¡Todo listo!',
               text: 'Todas las preguntas tienen respuestas.',
               icon: 'success',
             }).then(() => {
-              // Enviar las respuestas
               Object.keys(this.respuestasUsuario).forEach((key) => {
                 const valorRespuesta = parseInt(this.respuestasUsuario[key]);
                 this.enviarRespuestas(valorRespuesta, key);
               });
             });
           } else {
-            // Verifica que preguntas_faltantes sea un arreglo y contiene datos
             if (Array.isArray(response.preguntasFaltantes) && response.preguntasFaltantes.length > 0) {
-              const preguntasFaltantes = response.preguntasFaltantes.join(', '); // Aquí estamos uniendo las preguntas faltantes correctamente
-              console.log('Preguntas faltantes:', preguntasFaltantes);  // Verifica que preguntas_faltantes no esté vacío
-
+              const preguntasFaltantes = response.preguntasFaltantes.join(', ');
               Swal.fire({
                 title: 'Faltan respuestas',
                 text: `Las siguientes preguntas no tienen respuestas: ${preguntasFaltantes}`,
                 icon: 'warning',
               });
             } else {
-              // Si no hay preguntas faltantes, muestra el mensaje adecuado
               Swal.fire({
                 title: 'Faltan respuestas',
                 text: 'No se pudieron identificar las preguntas faltantes.',
@@ -272,7 +277,6 @@ export class PreguntasComponent implements OnInit {
             }
           }
         } else {
-          console.error('Formato de respuesta inesperado:', response);  // Diagnóstico de problemas
           Swal.fire({
             title: 'Error',
             text: 'Ocurrió un error inesperado al verificar las respuestas.',
@@ -281,7 +285,6 @@ export class PreguntasComponent implements OnInit {
         }
       },
       (error) => {
-        console.error('Error al verificar las respuestas:', error);  // Verifica qué está fallando
         Swal.fire({
           title: 'Error',
           text: 'Ocurrió un error al verificar las respuestas.',
@@ -289,12 +292,5 @@ export class PreguntasComponent implements OnInit {
         });
       }
     );
-  }
-
-
-
-
-
-
-
+  }*/
 }
