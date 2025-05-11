@@ -1,51 +1,48 @@
 <div class="body">
-    <h2>Resultados de Inventario de Autoevaluación de Aptitudes</h2>
-    <div class="chart-container">
-        <canvas id="aptitudesChart"></canvas>
-        
-    </div>
+  <h2>Resultados de Inventario de Autoevaluación de Aptitudes</h2>
+  <div class="chart-container">
+    <canvas id="aptitudesChart"></canvas>
+  </div>
 </div>
 
-
 <div class="escala-container">
-    <h2>Escalas de acuerdo a tu puntaje</h2>
-    
-    <table class="escala-table">
-      <thead>
-        <tr>
-          <th>Puntaje</th>
-          <th>Significado</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>0 - 10</td>
-          <td>Habilidad baja</td>
-        </tr>
-        <tr>
-          <td>11 - 20</td>
-          <td>Habilidad media-baja</td>
-        </tr>
-        <tr>
-          <td>21 - 30</td>
-          <td>Habilidad media</td>
-        </tr>
-        <tr>
-          <td>31 - 40</td>
-          <td>Habilidad alta</td>
-        </tr>
-        <tr>
-          <td>41 - 50</td>
-          <td>Habilidad muy alta</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
-  <div class="btn-container">
-    <a [routerLink]="['/instrucciones', 'economico']">
-      <button class="btn neon">Mostrar resumen con IA</button>
-    </a>
-  </div>
+  <h2>Escalas de acuerdo a tu puntaje</h2>
   
+  <table class="escala-table">
+    <thead>
+      <tr>
+        <th>Puntaje</th>
+        <th>Significado</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>0 - 10</td>
+        <td>Habilidad baja</td>
+      </tr>
+      <tr>
+        <td>11 - 20</td>
+        <td>Habilidad media-baja</td>
+      </tr>
+      <tr>
+        <td>21 - 30</td>
+        <td>Habilidad media</td>
+      </tr>
+      <tr>
+        <td>31 - 40</td>
+        <td>Habilidad alta</td>
+      </tr>
+      <tr>
+        <td>41 - 50</td>
+        <td>Habilidad muy alta</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- Botón con evento (click) -->
+<div class="btn-container">
+  <button class="btn neon" (click)="showLoading()">Mostrar resumen con IA</button>
+</div>
+
 <br>

@@ -6,11 +6,20 @@ footer {
     position: relative;
     background: #002F6C; /* Color de fondo */
     color: white;
-    padding: 100px 10% 50px;
+    padding: 40px 10% 50px;
     text-align: center;
   }
   
-  
+  /* Estilo para la imagen en el pie de página */
+.footer-image {
+    text-align: center;
+    margin-bottom: 30px;  /* Espaciado entre la imagen y las columnas */
+}
+
+.footer-image img {
+    min-width: 170px;  /* Tamaño máximo de la imagen */
+    height: auto;  /* Mantener la proporción de la imagen */
+}
   
   
   .footer-container {

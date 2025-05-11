@@ -25,6 +25,7 @@ import { AdminCarrerasComponent } from './components/admin-carreras/admin-carrer
 import { AdminExpeComponent } from './components/admin-expe/admin-expe.component';
 import { AdminvideosComponent } from './components/adminvideos/adminvideos.component';
 import { ExperenceComponent } from './components/experence/experence.component';
+import { ResultAIComponent } from './components/result-ai/result-ai.component';
 
 
 export const routes: Routes = [
@@ -48,6 +49,7 @@ export const routes: Routes = [
   {path: 'admin-dashboard', component: AdminDashboardComponent},
   {path: 'admin-carreras', component: AdminCarrerasComponent},
   {path: 'admin-expe', component: AdminExpeComponent},
+  {path: 'resultAI', component: ResultAIComponent},
   {path: 'admin-videos', component: AdminvideosComponent},
   {path: 'aspirante-dashboard', component: AspiranteDashboardComponent, canActivate: [AspiranteGuard]},
   { path: 'forgot-password', component: ForgotPasswordComponent },
