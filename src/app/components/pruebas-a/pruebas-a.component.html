@@ -1,55 +1,58 @@
 <section class="test-section">
   <section class="hero-section">
-      <div class="hero-container">
-          <p>En esta sección del sistema se podrá visualizar distintas
-              pruebas para poder conocer tu verdadera vocación,
-              y la carrera en la que estarás la siguiente etapa de tu vida.</p>
-      </div>
+    <div class="hero-container">
+      <p>En esta sección del sistema se podrá visualizar distintas pruebas para poder conocer tu verdadera vocación, y la carrera en la que estarás la siguiente etapa de tu vida.</p>
+    </div>
   </section>
   <br>
   <h2>Pruebas de Orientación Vocacional</h2>
   <br>
   <div class="test-cards">
-      <div class="cardF2" >
-          <h1>PASO 2</h1>
+    <div class="cardF2">
+      <h1>PASO 2</h1>
+    </div>
+    <p>Paso 2: Encuentra tus aptitudes para una carrera en la ESCOM. Este inventario te permitirá evaluar si cuentas con las aptitudes necesarias para estudiar alguna de las tres carreras que ofrece ESCOM, relacionadas con el área de Ciencias Físico-Matemáticas.</p>
+
+    <!-- Tarjeta para Aptitudes -->
+    <div class="card">
+      <video autoplay loop muted>
+        <source src="/site/h.mp4" type="video/mp4">
+        Tu navegador no soporta el formato de video.
+      </video>
+      <h3>Inventario de autoevaluación de aptitudes</h3>
+      <p>Este inventario tiene como objetivo evaluar tus aptitudes de acuerdo con tus intereses personales y habilidades destacadas.</p>
+      <div class="progress-bar">
+        <div class="progress" [style.width.%]="progreso.aptitudes"></div>
       </div>
-      <P>Paso 2: Encuentra tus aptitudes para una carrera en la ESCOM. Este inventario te permitirá evaluar si cuentas con las aptitudes necesarias para estudiar alguna de las tres carreras que ofrece ESCOM, relacionadas con el área de Ciencias Físico-Matemáticas.
-      </P>
+      <button class="btn mt-2" (click)="redirigir('aptitudes')"
+      (click)="redirigir('aptitudes')"
+      >
+        {{ pruebasCompletadas.aptitudes ? 'Reanudar' : 'Comenzar' }}
+      </button>
+    </div>
 
-<!-- Tarjeta para Aptitudes -->
-<div class="card">
-  <video autoplay loop muted>
-    <source src="/site/h.mp4" type="video/mp4">
-    Tu navegador no soporta el formato de video.
-  </video>
-  <h3>Inventario de autoevaluación de aptitudes</h3>
-  <p>Este inventario tiene como objetivo evaluar tus aptitudes de acuerdo con tus intereses personales y habilidades destacadas.</p>
-  <div class="progress-bar">
-    <div class="progress" [style.width.%]="progreso"></div>
-  </div>
-  <button class="btn mt-2" (click)="redirigir()">
-    {{ pruebasAptitudesCompletadas ? 'Reanudar' : 'Comenzar' }}
-  </button>
-</div>
+    <!-- Tarjeta para Intereses -->
+    <div class="card">
+      <video autoplay loop muted>
+        <source src="/site/h.mp4" type="video/mp4">
+        Tu navegador no soporta el formato de video.
+      </video>
+      <h3>Inventario de autoevaluación de intereses</h3>
+      <p>Este inventario tiene como objetivo evaluar tus intereses de acuerdo con tus inclinaciones personales y habilidades destacadas.</p>
+      <div class="progress-bar">
+        <div class="progress" [style.width.%]="progreso.interes"></div>
+      </div>
+      <button
+      class="btn mt-2"
+      (click)="redirigir('interes')"
+      >
+      {{ pruebasCompletadas.interes ? 'Reanudar' : 'Comenzar' }}
+    </button>
 
-
-
-
-<!-- Tarjeta para Económico -->
-<div class="card">
-  <video autoplay loop muted>
-    <source src="/site/h.mp4" type="video/mp4">
-    Tu navegador no soporta el formato de video.
-  </video>
-  <h3>Inventario de intereses ocupacionales </h3>
-  <p>Evalúa tu situación económica para encontrar opciones de carreras accesibles.</p>
-  <a [routerLink]="['/instrucciones', 'economico']">
-    <button class="btn">comenzar</button>
-  </a>
-</div>
+    </div>
 
   </div>
-  <a href="instrUniversitarias.html"><button class="btn results-btn">siguiente</button></a>
+  <a href="instrUniversitarias.html"><button class="btn results-btn">Siguiente</button></a>
   <br>
   <br>
 </section>

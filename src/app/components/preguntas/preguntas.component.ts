@@ -10,8 +10,9 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { Pregunta } from '../../models/pregunta';
 import { Respuesta } from '../../models/respuesta';
 import { RespuestaService } from '../../services/respuesta.service';
-
-
+interface Respuestas {
+  [key: string]: string;
+}
 @Component({
   selector: 'app-preguntas',
   templateUrl: './preguntas.component.html',
@@ -32,7 +33,9 @@ export class PreguntasComponent implements OnInit {
   currentQuestionId: string = '';
   loading: boolean = false;
   private storageKey: string = '';
-  respuestasUsuario: { [key: string]: string } = {};
+  respuestasUsuario: Record<string, number> = {};
+  preguntasFaltantes: string[] = [];
+
 
   constructor(
     private preguntasService: PreguntasService,
@@ -41,7 +44,6 @@ export class PreguntasComponent implements OnInit {
     private aRouter: ActivatedRoute,
     private router: Router,
     private respuestaService: RespuestaService
-
   ) {
     this.id = this.aRouter.snapshot.paramMap.get('id') || '1';
   }
@@ -53,10 +55,11 @@ export class PreguntasComponent implements OnInit {
 
     this.aRouter.paramMap.subscribe(params => {
       this.id = params.get('id')!;
+      const parteIzquierda = this.id.split('-')[0];
       if (this.id) {
-        this.cargarPreguntas();
-        this.cargarRespuestasAPI()
         this.determinarTotalPreguntas();
+        this.cargarPreguntas();
+        this.cargarRespuestasAPI();
       }
     });
   }
@@ -73,8 +76,9 @@ export class PreguntasComponent implements OnInit {
       this.inventario = 3;
     }
   }
+
   getPreguntaDesdeStorage() {
-    const preguntas = JSON.parse(localStorage.getItem('preguntas') || '[]');
+    const preguntas = JSON.parse(localStorage.getItem(`preguntas_${this.inventario}`) || '[]');
     const preguntaEncontrada = preguntas.find((p: Pregunta) => p.id === this.id) || { id: '', texto: '', imagen_url: '' };
 
     if (preguntaEncontrada.imagen_url) {
@@ -82,21 +86,19 @@ export class PreguntasComponent implements OnInit {
       preguntaEncontrada.imagen_url = this.sanitizer.bypassSecurityTrustUrl(preguntaEncontrada.imagen_url);
       let maxPregunta = parseInt(this.id.split('-')[1]);
       this.progress = (maxPregunta / this.totalQuestions) * 100;
-      this.cargarRespuestaGuardada(this.id)
+      this.cargarRespuestaGuardada(this.id);
     }
     this.pregunta = preguntaEncontrada;
   }
 
-
   cargarPreguntas() {
     const preguntasGuardadas = localStorage.getItem('preguntas');
-
     if (preguntasGuardadas) {
       this.getPreguntaDesdeStorage();
     } else {
       this.preguntasService.getPreguntas(this.inventario).subscribe(
         (preguntas: Pregunta[]) => {
-          localStorage.setItem('preguntas', JSON.stringify(preguntas));
+          localStorage.setItem(`preguntas_${this.inventario}`, JSON.stringify(preguntas));
           this.getPreguntaDesdeStorage();
         },
         (error) => {
@@ -110,40 +112,47 @@ export class PreguntasComponent implements OnInit {
         }
       );
     }
+    console.log(this.inventario);
   }
-  cargarRespuestasAPI() {
 
+  cargarRespuestasAPI() {
     const respuestasGuardadas = sessionStorage.getItem('respuestasUsuario');
     this.loading = true;
-    this.loader.mostrarCargando('Cargando pregunta...');
+
     if (respuestasGuardadas) {
       this.respuestasUsuario = JSON.parse(respuestasGuardadas);
       this.getPreguntaDesdeStorage();
       this.loader.ocultarCargando();
     } else {
-      this.preguntasService.obtenerRespuestasUsuario(sessionStorage.getItem('email')!).subscribe(
-        (respuestas: { id_pregunta: string; valor: number }[]) => {
-          this.respuestasUsuario = respuestas.reduce((acc, curr) => {
-            acc[curr.id_pregunta] = curr.valor.toString();
-            return acc;
-          }, {} as { [key: string]: string });
-          sessionStorage.setItem(this.storageKey, JSON.stringify(this.respuestasUsuario));
-          this.getPreguntaDesdeStorage();
-        },
-        () => this.getPreguntaDesdeStorage()
-      );
+      const email = sessionStorage.getItem('email');
+      const inventario = this.id.split('-')[0]; // Esto te da "inv1" o "inv2"
+
+      if (email && inventario) {
+        this.preguntasService.obtenerRespuestasUsuario(email, inventario).subscribe(
+          (respuestas: Record<string, number>) => {
+            sessionStorage.setItem(`respuestasUsuario_${inventario}`, JSON.stringify(respuestas));
+            this.respuestasUsuario = respuestas;
+            this.getPreguntaDesdeStorage();
+          },
+          (error) => {
+            console.error("Error al obtener respuestas: ", error);
+            this.getPreguntaDesdeStorage();
+          }
+        );
+      } else {
+        console.error("No se pudo obtener el email o el inventario.");
+        this.getPreguntaDesdeStorage();
+      }
+
       this.loader.ocultarCargando();
     }
   }
+
   cargarRespuestaGuardada(id: string) {
     const respuestasGuardadas = this.obtenerRespuestasGuardadas();
-    console.log(id)
-    console.log(respuestasGuardadas)
-    const respuesta = Object.values(respuestasGuardadas).find(respuesta => respuesta.id_Pregunta === id);
-    console.log(respuesta)
-    if (respuesta) {
-      console.log('hola')
-      this.selectedAnswer = respuesta.valor.toString();
+    const valor = this.respuestasUsuario[id];
+    if (valor) {
+      this.selectedAnswer = valor.toString();
       this.isAnswered = true;
     } else {
       this.selectedAnswer = null;
@@ -151,55 +160,48 @@ export class PreguntasComponent implements OnInit {
     }
   }
 
-  obtenerRespuestasGuardadas(): { [key: string]: Respuesta} {
+  obtenerRespuestasGuardadas(): { [key: string]: Respuesta } {
     const respuestasJSON = sessionStorage.getItem('respuestasUsuario');
     return respuestasJSON ? JSON.parse(respuestasJSON) : {};
   }
 
   guardarRespuesta() {
     if (this.selectedAnswer) {
-      const respuestasGuardadas = this.obtenerRespuestasGuardadas();
-      // respuestasGuardadas[this.id] = this.selectedAnswer;
-      sessionStorage.setItem('respuestasUsuario', JSON.stringify(respuestasGuardadas));
+      // Convertir la respuesta a número antes de guardarla
+      this.respuestasUsuario[this.id] = parseInt(this.selectedAnswer);
+      sessionStorage.setItem('respuestasUsuario', JSON.stringify(this.respuestasUsuario));
       this.isAnswered = true;
     }
   }
+
+
 
   onOptionChange(event: Event): void {
     this.selectedAnswer = (event.target as HTMLInputElement).value;
     this.guardarRespuesta();
   }
 
-// Función que maneja el envío de respuestas
-enviarRespuestas(valorR: number, id: string) {
-  const respuesta: Respuesta = {
-    valor: valorR,
-    id_Pregunta: id,
-    emailAspirante: sessionStorage.getItem('email')!
-  };
-
-  // Comentar todo el bloque que hace la llamada a la API para guardar las respuestas
-  
-  this.preguntasService.saveRespuesta(respuesta).subscribe(
-    (response: any) => {
-      // Respuesta enviada correctamente
-    },
-    (error) => {
-      Swal.fire({
-        icon: 'error',
-        title: 'Error al guardar la respuesta',
-        text: error.error?.message || 'Ocurrió un error desconocido.',
-        confirmButtonText: 'Aceptar'
-      });
-      this.prev();
-    }
-  );
-  
-
-  // Aquí puedes agregar cualquier otra lógica si la respuesta no tiene que ser guardada, o si deseas manejarla de otra forma.
-}
-
-  
+  enviarRespuestas(valorR: number, id: string) {
+    const respuesta: Respuesta = {
+      valor: valorR,
+      id_Pregunta: id,
+      emailAspirante: sessionStorage.getItem('email')!
+    };
+    this.preguntasService.saveRespuesta(respuesta).subscribe(
+      (response: any) => {
+        // Respuesta enviada correctamente
+      },
+      (error) => {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error al guardar la respuesta',
+          text: error.error?.message || 'Ocurrió un error desconocido.',
+          confirmButtonText: 'Aceptar'
+        });
+        this.prev();
+      }
+    );
+  }
 
   next() {
     if (this.selectedAnswer) {
@@ -227,6 +229,7 @@ enviarRespuestas(valorR: number, id: string) {
     }
   }
 
+
   mostrarDialogoFinal() {
     Swal.fire({
       title: '¡Cuestionario completado!',
@@ -237,144 +240,62 @@ enviarRespuestas(valorR: number, id: string) {
       cancelButtonText: 'Revisar respuestas',
     }).then((result) => {
       if (result.isConfirmed) {
-        // Aquí puedes enviar las respuestas sin hacer la verificación
-        /*Object.keys(this.respuestasUsuario).forEach((key) => {
-          const valorRespuesta = parseInt(this.respuestasUsuario[key]);
-          this.enviarRespuestas(valorRespuesta, key); // Enviar respuestas directamente
-        });*/
-  
-        // Redirigir a otra página después de enviar las respuestas
-        this.router.navigate(['/result-aptitudes']);  // Cambia 'pagina-diferente' por la ruta de la página a la que quieras redirigir
+        const respuestas = this.respuestasUsuario;
+        const validacion = this.verificarRespuestas(respuestas);
+
+        if (validacion) {
+          // Si todas las respuestas son válidas, se pueden enviar
+          this.preguntasService.obtenerRespuestasUsuario(sessionStorage.getItem('email')!, this.id.split('-')[0]!).subscribe(
+            (respuestas: Record<string, number>) => {
+              sessionStorage.setItem(`respuestasUsuario_${this.id.split('-')[0]}`, JSON.stringify(respuestas));
+              this.respuestasUsuario = respuestas;
+              this.getPreguntaDesdeStorage();
+            },
+            (error) => {
+              console.error("Error al obtener respuestas: ", error);
+              this.getPreguntaDesdeStorage();
+            }
+          );
+        } else {
+          // Si hay respuestas faltantes o vacías, no se envían
+          Swal.fire({
+            title: 'Faltan respuestas',
+            text: `Por favor, responde todas las preguntas antes de enviar. Las preguntas faltantes son: ${this.preguntasFaltantes.join(', ')}`,
+            icon: 'warning',
+            confirmButtonText: 'Entendido'
+          });
+        }
       } else {
-        // Si elige "Revisar respuestas", puedes redirigir a otra ruta para revisar las respuestas
-        this.router.navigate(['/revisar-respuestas']);
+
       }
     });
   }
-  
-/*
-  verificarRespuestasFinales() {
-    const email = sessionStorage.getItem('email') || 'usuario';
-  
-    this.respuestaService.verificarRespuestas(email).subscribe(
-      (response: any) => {
-        console.log('Respuesta de la API:', response);  // Verifica lo que llega de la API
-  
-        if (response && response.success !== undefined) {  // Verifica que la respuesta tenga el formato esperado
-          if (response.success) {
-            Swal.fire({
-              title: '¡Todo listo!',
-              text: 'Todas las preguntas tienen respuestas.',
-              icon: 'success',
-            }).then(() => {
-              // Enviar las respuestas
-              Object.keys(this.respuestasUsuario).forEach((key) => {
-                const valorRespuesta = parseInt(this.respuestasUsuario[key]);
-                this.enviarRespuestas(valorRespuesta, key);
-              });
-  
-              // Redirigir a una página después de enviar las respuestas
-              this.router.navigate(['/pagina-diferente']);  // Aquí coloca la ruta de la página a la que quieres redirigir
-            });
-          } else {
-            // Verifica que preguntas_faltantes sea un arreglo y contiene datos
-            if (Array.isArray(response.preguntasFaltantes) && response.preguntasFaltantes.length > 0) {
-              const preguntasFaltantes = response.preguntasFaltantes.join(', '); // Aquí estamos uniendo las preguntas faltantes correctamente
-              console.log('Preguntas faltantes:', preguntasFaltantes);  // Verifica que preguntas_faltantes no esté vacío
-  
-              Swal.fire({
-                title: 'Faltan respuestas',
-                text: `Las siguientes preguntas no tienen respuestas: ${preguntasFaltantes}`,
-                icon: 'warning',
-              });
-            } else {
-              // Si no hay preguntas faltantes, muestra el mensaje adecuado
-              Swal.fire({
-                title: 'Faltan respuestas',
-                text: 'No se pudieron identificar las preguntas faltantes.',
-                icon: 'warning',
-              });
-            }
-          }
-        } else {
-          console.error('Formato de respuesta inesperado:', response);  // Diagnóstico de problemas
-          Swal.fire({
-            title: 'Error',
-            text: 'Ocurrió un error inesperado al verificar las respuestas.',
-            icon: 'error',
-          });
-        }
-      },
-      (error) => {
-        console.error('Error al verificar las respuestas:', error);  // Verifica qué está fallando
-        Swal.fire({
-          title: 'Error',
-          text: 'Ocurrió un error al verificar las respuestas.',
-          icon: 'error',
-        });
+
+  verificarRespuestas(respuestas: Record<string, number>): boolean {
+    let respuestasCompletas = true;
+    this.preguntasFaltantes = []; // Limpiamos las preguntas faltantes cada vez que verificamos
+
+    for (let i = 1; i <= this.totalQuestions; i++) {
+      const pregunta = `${this.id.split('-')[0]}-${String(i).padStart(3, '0')}`;
+
+      if (!(pregunta in respuestas)) {
+        respuestasCompletas = false;
+        this.preguntasFaltantes.push(`${pregunta.split('-')[1]}`); // Añadimos cada pregunta faltante al array
       }
-    );
-  
-    // Código comentado para omitir la verificación de respuestas:
-    /*
-    const email = sessionStorage.getItem('email') || 'usuario';
-  
-    this.respuestaService.verificarRespuestas(email).subscribe(
-      (response: any) => {
-        if (response && response.success !== undefined) {
-          if (response.success) {
-            Swal.fire({
-              title: '¡Todo listo!',
-              text: 'Todas las preguntas tienen respuestas.',
-              icon: 'success',
-            }).then(() => {
-              Object.keys(this.respuestasUsuario).forEach((key) => {
-                const valorRespuesta = parseInt(this.respuestasUsuario[key]);
-                this.enviarRespuestas(valorRespuesta, key);
-              });
-  
-              this.router.navigate(['/pagina-diferente']);  // Aquí coloca la ruta de la página a la que quieres redirigir
-            });
-          } else {
-            if (Array.isArray(response.preguntasFaltantes) && response.preguntasFaltantes.length > 0) {
-              const preguntasFaltantes = response.preguntasFaltantes.join(', ');
-              Swal.fire({
-                title: 'Faltan respuestas',
-                text: `Las siguientes preguntas no tienen respuestas: ${preguntasFaltantes}`,
-                icon: 'warning',
-              });
-            } else {
-              Swal.fire({
-                title: 'Faltan respuestas',
-                text: 'No se pudieron identificar las preguntas faltantes.',
-                icon: 'warning',
-              });
-            }
-          }
-        } else {
-          Swal.fire({
-            title: 'Error',
-            text: 'Ocurrió un error inesperado al verificar las respuestas.',
-            icon: 'error',
-          });
+    }
+
+    if (respuestasCompletas) {
+      Swal.fire({
+        title: 'Cargando resultados finales...',
+        text: 'Estamos procesando tus respuestas.',
+        icon: 'info',
+        allowOutsideClick: false, // Evitar cerrar la alerta manualmente
+        didOpen: () => {
+          Swal.showLoading(); // Mostrar el ícono de carga
         }
-      },
-      (error) => {
-        Swal.fire({
-          title: 'Error',
-          text: 'Ocurrió un error al verificar las respuestas.',
-          icon: 'error',
-        });
-      }
-    );
-    
+      });
+    }
+
+    return respuestasCompletas;
   }
-  */
-  
-  
-  
-  
-  
-  
-  
 }
