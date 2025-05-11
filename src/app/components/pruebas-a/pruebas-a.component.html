@@ -40,13 +40,13 @@
       <h3>Inventario de autoevaluación de intereses</h3>
       <p>Este inventario tiene como objetivo evaluar tus intereses de acuerdo con tus inclinaciones personales y habilidades destacadas.</p>
       <div class="progress-bar">
-        <div class="progress" [style.width.%]="progreso.interes"></div>
+        <div class="progress" [style.width.%]="progreso.intereses"></div>
       </div>
       <button
       class="btn mt-2"
-      (click)="redirigir('interes')"
+      (click)="redirigir('intereses')"
       >
-      {{ pruebasCompletadas.interes ? 'Reanudar' : 'Comenzar' }}
+      {{ pruebasCompletadas.intereses ? 'Reanudar' : 'Comenzar' }}
     </button>
 
     </div>
