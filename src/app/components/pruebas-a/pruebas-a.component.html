@@ -24,7 +24,9 @@
       <div class="progress-bar">
         <div class="progress" [style.width.%]="progreso.aptitudes"></div>
       </div>
-      <button class="btn mt-2" (click)="redirigir('aptitudes')">
+      <button class="btn mt-2" (click)="redirigir('aptitudes')"
+      (click)="redirigir('aptitudes')"
+      >
         {{ pruebasCompletadas.aptitudes ? 'Reanudar' : 'Comenzar' }}
       </button>
     </div>
@@ -43,7 +45,7 @@
       <button
       class="btn mt-2"
       (click)="redirigir('interes')"
-      [disabled]="progreso.interes <= 0">
+      >
       {{ pruebasCompletadas.interes ? 'Reanudar' : 'Comenzar' }}
     </button>
 

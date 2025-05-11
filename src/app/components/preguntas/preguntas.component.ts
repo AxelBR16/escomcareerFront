@@ -10,7 +10,9 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { Pregunta } from '../../models/pregunta';
 import { Respuesta } from '../../models/respuesta';
 import { RespuestaService } from '../../services/respuesta.service';
-
+interface Respuestas {
+  [key: string]: string;
+}
 @Component({
   selector: 'app-preguntas',
   templateUrl: './preguntas.component.html',
@@ -31,7 +33,8 @@ export class PreguntasComponent implements OnInit {
   currentQuestionId: string = '';
   loading: boolean = false;
   private storageKey: string = '';
-  respuestasUsuario: Record<string, number> = {};  // Cambiar a 'number' en lugar de 'string'
+  respuestasUsuario: Record<string, number> = {};
+  preguntasFaltantes: string[] = [];
 
 
   constructor(
@@ -226,6 +229,7 @@ export class PreguntasComponent implements OnInit {
     }
   }
 
+
   mostrarDialogoFinal() {
     Swal.fire({
       title: '¡Cuestionario completado!',
@@ -236,61 +240,62 @@ export class PreguntasComponent implements OnInit {
       cancelButtonText: 'Revisar respuestas',
     }).then((result) => {
       if (result.isConfirmed) {
+        const respuestas = this.respuestasUsuario;
+        const validacion = this.verificarRespuestas(respuestas);
 
+        if (validacion) {
+          // Si todas las respuestas son válidas, se pueden enviar
+          this.preguntasService.obtenerRespuestasUsuario(sessionStorage.getItem('email')!, this.id.split('-')[0]!).subscribe(
+            (respuestas: Record<string, number>) => {
+              sessionStorage.setItem(`respuestasUsuario_${this.id.split('-')[0]}`, JSON.stringify(respuestas));
+              this.respuestasUsuario = respuestas;
+              this.getPreguntaDesdeStorage();
+            },
+            (error) => {
+              console.error("Error al obtener respuestas: ", error);
+              this.getPreguntaDesdeStorage();
+            }
+          );
+        } else {
+          // Si hay respuestas faltantes o vacías, no se envían
+          Swal.fire({
+            title: 'Faltan respuestas',
+            text: `Por favor, responde todas las preguntas antes de enviar. Las preguntas faltantes son: ${this.preguntasFaltantes.join(', ')}`,
+            icon: 'warning',
+            confirmButtonText: 'Entendido'
+          });
+        }
       } else {
-        this.router.navigate(['/revisar-respuestas']);
+
       }
     });
   }
-/*
-  verificarRespuestasFinales() {
-    const email = sessionStorage.getItem('email') || 'usuario';
 
-    this.respuestaService.verificarRespuestas(email).subscribe(
-      (response: any) => {
-        if (response && response.success !== undefined) {
-          if (response.success) {
-            Swal.fire({
-              title: '¡Todo listo!',
-              text: 'Todas las preguntas tienen respuestas.',
-              icon: 'success',
-            }).then(() => {
-              Object.keys(this.respuestasUsuario).forEach((key) => {
-                const valorRespuesta = parseInt(this.respuestasUsuario[key]);
-                this.enviarRespuestas(valorRespuesta, key);
-              });
-            });
-          } else {
-            if (Array.isArray(response.preguntasFaltantes) && response.preguntasFaltantes.length > 0) {
-              const preguntasFaltantes = response.preguntasFaltantes.join(', ');
-              Swal.fire({
-                title: 'Faltan respuestas',
-                text: `Las siguientes preguntas no tienen respuestas: ${preguntasFaltantes}`,
-                icon: 'warning',
-              });
-            } else {
-              Swal.fire({
-                title: 'Faltan respuestas',
-                text: 'No se pudieron identificar las preguntas faltantes.',
-                icon: 'warning',
-              });
-            }
-          }
-        } else {
-          Swal.fire({
-            title: 'Error',
-            text: 'Ocurrió un error inesperado al verificar las respuestas.',
-            icon: 'error',
-          });
-        }
-      },
-      (error) => {
-        Swal.fire({
-          title: 'Error',
-          text: 'Ocurrió un error al verificar las respuestas.',
-          icon: 'error',
-        });
+  verificarRespuestas(respuestas: Record<string, number>): boolean {
+    let respuestasCompletas = true;
+    this.preguntasFaltantes = []; // Limpiamos las preguntas faltantes cada vez que verificamos
+
+    for (let i = 1; i <= this.totalQuestions; i++) {
+      const pregunta = `${this.id.split('-')[0]}-${String(i).padStart(3, '0')}`;
+
+      if (!(pregunta in respuestas)) {
+        respuestasCompletas = false;
+        this.preguntasFaltantes.push(`${pregunta.split('-')[1]}`); // Añadimos cada pregunta faltante al array
       }
-    );
-  }*/
+    }
+
+    if (respuestasCompletas) {
+      Swal.fire({
+        title: 'Cargando resultados finales...',
+        text: 'Estamos procesando tus respuestas.',
+        icon: 'info',
+        allowOutsideClick: false, // Evitar cerrar la alerta manualmente
+        didOpen: () => {
+          Swal.showLoading(); // Mostrar el ícono de carga
+        }
+      });
+    }
+
+    return respuestasCompletas;
+  }
 }
