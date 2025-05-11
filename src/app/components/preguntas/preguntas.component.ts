@@ -179,7 +179,7 @@ enviarRespuestas(valorR: number, id: string) {
   };
 
   // Comentar todo el bloque que hace la llamada a la API para guardar las respuestas
-  /*
+  
   this.preguntasService.saveRespuesta(respuesta).subscribe(
     (response: any) => {
       // Respuesta enviada correctamente
@@ -194,7 +194,7 @@ enviarRespuestas(valorR: number, id: string) {
       this.prev();
     }
   );
-  */
+  
 
   // Aquí puedes agregar cualquier otra lógica si la respuesta no tiene que ser guardada, o si deseas manejarla de otra forma.
 }
@@ -238,10 +238,10 @@ enviarRespuestas(valorR: number, id: string) {
     }).then((result) => {
       if (result.isConfirmed) {
         // Aquí puedes enviar las respuestas sin hacer la verificación
-        Object.keys(this.respuestasUsuario).forEach((key) => {
+        /*Object.keys(this.respuestasUsuario).forEach((key) => {
           const valorRespuesta = parseInt(this.respuestasUsuario[key]);
           this.enviarRespuestas(valorRespuesta, key); // Enviar respuestas directamente
-        });
+        });*/
   
         // Redirigir a otra página después de enviar las respuestas
         this.router.navigate(['/result-aptitudes']);  // Cambia 'pagina-diferente' por la ruta de la página a la que quieras redirigir
@@ -252,7 +252,7 @@ enviarRespuestas(valorR: number, id: string) {
     });
   }
   
-
+/*
   verificarRespuestasFinales() {
     const email = sessionStorage.getItem('email') || 'usuario';
   
@@ -367,9 +367,9 @@ enviarRespuestas(valorR: number, id: string) {
         });
       }
     );
-    */
+    
   }
-  
+  */
   
   
   
