@@ -15,7 +15,7 @@ export class PruebasAComponent implements OnInit {
   progreso: { aptitudes: number, intereses: number } = { aptitudes: 0, intereses: 0 };
   totalPreguntas: { aptitudes: number, intereses: number } = { aptitudes: 120, intereses: 130 };
   preguntainicial: { aptitudes: string, intereses: string } = { aptitudes: '001', intereses: '001' };
-  cargando: boolean = true;
+
 
 
   constructor(private preguntasService: PreguntasService, private router: Router, private respuestaService: RespuestaService) {}
@@ -44,7 +44,7 @@ export class PruebasAComponent implements OnInit {
     const progreso = (id / total) * 100;
     this.progreso[tipo] = progreso;
     this.preguntainicial[tipo] = id.toString().padStart(3, '0');
-    this.cargando = false;
+
   }
 
   redirigir(tipo: 'aptitudes' | 'intereses') {
