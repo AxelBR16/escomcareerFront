@@ -1,33 +1,74 @@
 import { Component, AfterViewInit, PLATFORM_ID, Inject } from '@angular/core';
-import { Router } from '@angular/router';
-import { isPlatformBrowser } from '@angular/common';
+import { Router, RouterModule } from '@angular/router';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import Chart from 'chart.js/auto';
 import annotationPlugin from 'chartjs-plugin-annotation';
 import Swal from 'sweetalert2'; // Importar SweetAlert2
+
+import { ResultadoResumenDTO } from '../../models/ResultadoResumenDTO';
+import { ResultadoService } from '../../services/resultado.service';
+import { HttpClientModule } from '@angular/common/http';
 
 Chart.register(annotationPlugin);
 
 @Component({
   selector: 'app-result-aptitudes',
   templateUrl: './result-aptitudes.component.html',
-  styleUrls: ['./result-aptitudes.component.css']
+  styleUrls: ['./result-aptitudes.component.css'],
+  standalone: true,
+  imports: [CommonModule, RouterModule],
+  providers: [ResultadoService]
 })
 export class ResultAptitudesComponent implements AfterViewInit {
   private chart: any;
 
-  constructor(@Inject(PLATFORM_ID) private platformId: any, private router: Router) {}
+  constructor(@Inject(PLATFORM_ID) private platformId: any, private router: Router,private resultadoService: ResultadoService
+) {}
 
   ngAfterViewInit(): void {
     if (isPlatformBrowser(this.platformId)) {
       setTimeout(() => {
-        this.initChart();
-      }, 500); //se Espera a que la vista cargue completamente
+        const email = sessionStorage.getItem('email')!;
+
+        this.resultadoService.obtenerResumenPorCorreo(email).subscribe({
+          next: (res) => {
+            const { etiquetas, puntajes } = this.ordenarPorEscala(res);
+            this.initChart(etiquetas, puntajes);
+          },
+          error: () => {
+            Swal.fire('Error', 'No se pudieron cargar los resultados', 'error');
+          }
+        });
+      }, 500);
     }
   }
 
-  initChart(): void {
+   ordenarPorEscala(resultados: ResultadoResumenDTO[]): { etiquetas: string[], puntajes: number[] } {
+    const escalaLabels: { [key: number]: string } = {
+      1: 'Abstracta o Científica',
+      2: 'Coordinación',
+      3: 'Numérica',
+      4: 'Verbal',
+      5: 'Persuasiva',
+      6: 'Mecánica',
+      7: 'Social',
+      8: 'Directiva',
+      9: 'Organización',
+      10: 'Musical',
+      11: 'Artístico-Plástica',
+      12: 'Espacial'
+    };
+
+    const ordenados = resultados.sort((a, b) => a.escalaId - b.escalaId);
+    const etiquetas = ordenados.map(r => escalaLabels[r.escalaId] || `Escala ${r.escalaId}`);
+    const puntajes = ordenados.map(r => r.puntaje);
+
+    return { etiquetas, puntajes };
+  }
+
+   initChart(etiquetas: string[], puntajes: number[]): void {
     const canvas = document.getElementById('aptitudesChart') as HTMLCanvasElement;
-    
+
     if (!canvas) {
       console.error('No se encontró el canvas en el DOM.');
       return;
@@ -40,14 +81,10 @@ export class ResultAptitudesComponent implements AfterViewInit {
     this.chart = new Chart(canvas, {
       type: 'bar',
       data: {
-        labels: [
-          "Abstracto", "Coordinación", "Numérica", "Verbal", "Persuasiva",
-          "Mecánica", "Social", "Directiva", "Organización", "Musical",
-          "Artístico-Plástica", "Espacial"
-        ],
+        labels: etiquetas,
         datasets: [{
           label: "Puntaje",
-          data: [20, 35, 25, 40, 30, 28, 36, 42, 29, 33, 47, 10],
+          data: puntajes,
           backgroundColor: [
             "#AEC6CF", "#B2E7D4", "#FDFD96", "#FADADD", "#CFC4E1",
             "#D3D3D3", "#FFD1DC", "#FFB347", "#E6E6FA", "#FFCBA4",
@@ -67,8 +104,6 @@ export class ResultAptitudesComponent implements AfterViewInit {
         }
       }
     });
-
-    console.log("Gráfica generada correctamente");
   }
 
   // Método que se activa al hacer clic en el botón

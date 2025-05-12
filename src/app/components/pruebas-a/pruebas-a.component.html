@@ -24,10 +24,14 @@
       <div class="progress-bar">
         <div class="progress" [style.width.%]="progreso.aptitudes"></div>
       </div>
-      <button class="btn mt-2" (click)="redirigir('aptitudes')"
-      (click)="redirigir('aptitudes')"
-      >
-        {{ pruebasCompletadas.aptitudes ? 'Reanudar' : 'Comenzar' }}
+      <button class="btn mt-2"
+        (click)="redirigir('aptitudes')"
+         [disabled]="cargando">
+        {{
+          progreso.aptitudes === 100
+            ? 'Ver resultados'
+            : (pruebasCompletadas.aptitudes ? 'Reanudar' : 'Comenzar')
+        }}
       </button>
     </div>
 

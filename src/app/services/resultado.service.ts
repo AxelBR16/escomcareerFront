@@ -2,6 +2,7 @@ import { HttpClient , HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../environments/environment';
 import { Observable } from 'rxjs';
+import { ResultadoResumenDTO } from '../models/ResultadoResumenDTO';
 
 
 @Injectable({
@@ -16,5 +17,10 @@ export class ResultadoService {
     params: { email },
     responseType: 'text'
     });
+  }
+
+  obtenerResumenPorCorreo(email: string): Observable<ResultadoResumenDTO[]> {
+    const params = new HttpParams().set('email', email);
+    return this.httpClient.get<ResultadoResumenDTO[]>(`${environment.apiUrls.auth}/resultados`, { params });
   }
 }

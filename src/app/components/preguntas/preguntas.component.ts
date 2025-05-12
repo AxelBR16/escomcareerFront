@@ -11,9 +11,7 @@ import { Pregunta } from '../../models/pregunta';
 import { Respuesta } from '../../models/respuesta';
 import { RespuestaService } from '../../services/respuesta.service';
 import { ResultadoService } from '../../services/resultado.service';
-interface Respuestas {
-  [key: string]: string;
-}
+
 @Component({
   selector: 'app-preguntas',
   templateUrl: './preguntas.component.html',
@@ -38,6 +36,7 @@ export class PreguntasComponent implements OnInit {
   preguntasFaltantes: string[] = [];
   mensaje: string = '';
   parteIzquierda: string = '';
+  option1Value: string = '1';
 
 
   constructor(
@@ -60,6 +59,9 @@ export class PreguntasComponent implements OnInit {
     this.aRouter.paramMap.subscribe(params => {
       this.id = params.get('id')!;
       this.parteIzquierda = this.id.split('-')[0];
+      if(this.parteIzquierda === "inv1"){
+          this.option1Value = '0';
+      }
       if (this.id) {
         this.determinarTotalPreguntas();
         this.cargarPreguntas();

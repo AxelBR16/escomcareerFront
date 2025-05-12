@@ -5,7 +5,7 @@
       <br>
       <div class="opciones">
         <label [ngClass]="{'selected-option': selectedAnswer === '1'}">
-          <input type="radio" name="answer" class="answer-option" value="1"
+          <input type="radio" name="answer" class="answer-option" [value]="option1Value"
                  [(ngModel)]="selectedAnswer" (change)="onOptionChange($event)"> 1. Me desagrada totalmente.
         </label>
 
