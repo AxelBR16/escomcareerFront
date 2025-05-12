@@ -10,6 +10,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { Pregunta } from '../../models/pregunta';
 import { Respuesta } from '../../models/respuesta';
 import { RespuestaService } from '../../services/respuesta.service';
+import { ResultadoService } from '../../services/resultado.service';
 interface Respuestas {
   [key: string]: string;
 }
@@ -35,6 +36,8 @@ export class PreguntasComponent implements OnInit {
   private storageKey: string = '';
   respuestasUsuario: Record<string, number> = {};
   preguntasFaltantes: string[] = [];
+  mensaje: string = '';
+  parteIzquierda: string = '';
 
 
   constructor(
@@ -43,7 +46,8 @@ export class PreguntasComponent implements OnInit {
     private sanitizer: DomSanitizer,
     private aRouter: ActivatedRoute,
     private router: Router,
-    private respuestaService: RespuestaService
+    private respuestaService: RespuestaService,
+    private resultadoService: ResultadoService
   ) {
     this.id = this.aRouter.snapshot.paramMap.get('id') || '1';
   }
@@ -55,7 +59,7 @@ export class PreguntasComponent implements OnInit {
 
     this.aRouter.paramMap.subscribe(params => {
       this.id = params.get('id')!;
-      const parteIzquierda = this.id.split('-')[0];
+      this.parteIzquierda = this.id.split('-')[0];
       if (this.id) {
         this.determinarTotalPreguntas();
         this.cargarPreguntas();
@@ -112,7 +116,7 @@ export class PreguntasComponent implements OnInit {
         }
       );
     }
-    console.log(this.inventario);
+
   }
 
   cargarRespuestasAPI() {
@@ -257,7 +261,6 @@ export class PreguntasComponent implements OnInit {
             }
           );
         } else {
-          // Si hay respuestas faltantes o vacías, no se envían
           Swal.fire({
             title: 'Faltan respuestas',
             text: `Por favor, responde todas las preguntas antes de enviar. Las preguntas faltantes son: ${this.preguntasFaltantes.join(', ')}`,
@@ -285,15 +288,32 @@ export class PreguntasComponent implements OnInit {
     }
 
     if (respuestasCompletas) {
-      Swal.fire({
-        title: 'Cargando resultados finales...',
-        text: 'Estamos procesando tus respuestas.',
-        icon: 'info',
-        allowOutsideClick: false, // Evitar cerrar la alerta manualmente
-        didOpen: () => {
-          Swal.showLoading(); // Mostrar el ícono de carga
-        }
+      const email = sessionStorage.getItem('email');
+      const inventario = this.parteIzquierda;
+      this.loader.mostrarCargando('Calculando los resultados...');
+      this.resultadoService.calcularResultado(inventario, email!).subscribe({
+        next: (res) => {
+          this.loader.ocultarCargando();
+          Swal.fire({
+            icon: 'success',
+            title: 'Resultados calculados',
+            text: res,
+            confirmButtonText: 'Aceptar'
+          }).then(() => {
+        this.router.navigate(['/result-aptitudes']);
       });
+      },
+      error: (err) => {
+        this.loader.ocultarCargando();
+
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: err.error.message || 'No se pudo calcular el resultado',
+          confirmButtonText: 'Aceptar'
+        });
+      }
+    });
     }
 
     return respuestasCompletas;
