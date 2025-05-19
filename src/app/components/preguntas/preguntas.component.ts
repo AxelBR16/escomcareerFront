@@ -21,9 +21,8 @@ import { ResultadoService } from '../../services/resultado.service';
 export class PreguntasComponent implements OnInit {
   id: string;
   pregunta: Pregunta = { id: '', texto: '', imagen_url: '' };
-  selectedAnswer = "";
-  bloqueRespuestas: (number | null)[] = Array(6).fill(null);
-  respuestasUsadas: number[] = [];
+  selectedAnswer: string | null = null;
+
 
   currentQuestion: number = 0;
   isAnswered: boolean = false;
@@ -41,8 +40,8 @@ export class PreguntasComponent implements OnInit {
   parteIzquierda: string = '';
   option1Value: string = '1';
   Nav: boolean = false;
-  bloqueInv3Preguntas = [0,1,2,3,4,5];  // índices para las 6 preguntas del bloque
-  opcionesInv3 = [1,2,3,4,5,6];         // opciones posibles para cada pregunta
+  bloqueadas: Set<string> = new Set();
+
 
 
 
@@ -67,9 +66,6 @@ export class PreguntasComponent implements OnInit {
     this.id = params.get('id')!;
     this.parteIzquierda = this.id.split('-')[0];
 
-    if(this.parteIzquierda === "inv2"){
-      this.option1Value = '0';
-    }
     // Validar navegación permitida
     if (!this.puedeNavegarAPregunta(this.id)) {
       // Obtener la pregunta máxima permitida
@@ -168,6 +164,7 @@ async obtenerPreguntaMaximaPermitida(): Promise<string> {
   }
 
   cargarRespuestasAPI() {
+
     const respuestasGuardadas = sessionStorage.getItem('respuestasUsuario');
     this.loading = true;
 
@@ -212,19 +209,14 @@ async obtenerPreguntaMaximaPermitida(): Promise<string> {
   }
 
   obtenerRespuestasGuardadas(): { [key: string]: Respuesta } {
-    if(this.parteIzquierda === "inv1"){
-      const respuestasJSON = sessionStorage.getItem('respuestasUsuario_inv1');
-      return respuestasJSON ? JSON.parse(respuestasJSON) : {};
-    } else{
-      const respuestasJSON = sessionStorage.getItem('respuestasUsuario');
-      return respuestasJSON ? JSON.parse(respuestasJSON) : {};
-    }
+    const respuestasJSON = sessionStorage.getItem(`respuestasUsuario_${this.parteIzquierda}`);
+    return respuestasJSON ? JSON.parse(respuestasJSON) : {};
   }
 
   guardarRespuesta() {
     if (this.selectedAnswer) {
       this.respuestasUsuario[this.id] = parseInt(this.selectedAnswer);
-      sessionStorage.setItem('respuestasUsuario', JSON.stringify(this.respuestasUsuario));
+      sessionStorage.setItem(`respuestasUsuario_${this.parteIzquierda}`, JSON.stringify(this.respuestasUsuario));
       this.isAnswered = true;
     }
   }
@@ -280,14 +272,19 @@ async obtenerPreguntaMaximaPermitida(): Promise<string> {
     }
   }
 
-  prev() {
+ prev() {
+  const currentIdNumber = parseInt(this.id.split('-')[1]);
+  if (!isNaN(currentIdNumber) && currentIdNumber > 1) {
 
-    const currentIdNumber = parseInt(this.id.split('-')[1]);
-    if (!isNaN(currentIdNumber) && currentIdNumber > 1) {
-      this.router.navigate([`${this.tipo}/preguntas/${this.id.split('-')[0]}-${(currentIdNumber - 1).toString().padStart(3, '0')}`]);
+    this.router.navigate([
+      `${this.tipo}/preguntas/${this.id.split('-')[0]}-${(currentIdNumber - 1)
+        .toString()
+        .padStart(3, '0')}`
+    ]);
 
-    }
   }
+}
+
 
 
   mostrarDialogoFinal() {
@@ -379,22 +376,18 @@ async obtenerPreguntaMaximaPermitida(): Promise<string> {
     return respuestasCompletas;
   }
 
-  onOptionChangeInv3(event: any, preguntaIndex: number): void {
-  const valor = parseInt(event.target.value);
+ onOptionChange1(event: Event) {
+    const value = (event.target as HTMLInputElement).value;
 
-  // Quitar el valor anterior de respuestasUsadas
-  const anterior = this.bloqueRespuestas[preguntaIndex];
-  if (anterior !== null && anterior !== valor) {
-    this.respuestasUsadas = this.respuestasUsadas.filter(v => v !== anterior);
+    this.bloqueadas.add(value);
+    this.selectedAnswer = null;
+
+    if (this.bloqueadas.size === 6) { // porque tienes 6 opciones fijas
+      this.bloqueadas.clear();
+    }
   }
 
-  // Asignar el nuevo valor para esa pregunta
-  this.bloqueRespuestas[preguntaIndex] = valor;
-
-  // Añadir el nuevo valor si no está en la lista
-  if (!this.respuestasUsadas.includes(valor)) {
-    this.respuestasUsadas.push(valor);
+  isBlocked(value: string): boolean {
+    return this.bloqueadas.has(value);
   }
-}
-
 }
