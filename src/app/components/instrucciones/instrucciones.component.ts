@@ -64,9 +64,9 @@ export class InstruccionesComponent implements OnInit {
       titulo: 'Inventario intereses ocupacionales',
       descripcion: 'A continuación se presentan una serie de actividades. Clasifícalas de acuerdo con tu gusto. Esto tiene como finalidad medir tu propio interés por realizarlas. Para esto, tus ponderaciones se ajustarán a las siguientes claves:',
       instrucciones: [
-        '5. Me gusta mucho.', 
+        '5. Me gusta mucho.',
         '4. Me gusta. ',
-        '3. Me es indiferente.', 
+        '3. Me es indiferente.',
         '2. Me desagrada.',
         '1. Me desagrada totalmente.'
       ]
@@ -97,14 +97,13 @@ export class InstruccionesComponent implements OnInit {
 
   get iniciarLink(): string {
     if (this.tipo === 'aptitudes') {
-      this.preguntaN = 'inv1-001'
-    }
-    if (this.tipo === 'intereses') {
-      this.preguntaN = 'inv2-001'
-    }
-    if(this.tipo === 'universitario'){
-      this.preguntaN == 'inv3-001'
-    }
+  this.preguntaN = 'inv1-001';
+  } else if (this.tipo === 'intereses') {
+    this.preguntaN = 'inv2-001';
+  } else if (this.tipo === 'universitario') {
+    this.preguntaN = 'inv3-001';
+  }
+
 
     return `/${this.tipo}/preguntas/${this.preguntaN}`
   }

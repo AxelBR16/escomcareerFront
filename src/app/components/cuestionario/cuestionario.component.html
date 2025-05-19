@@ -19,24 +19,24 @@
         </p>
 
     </div>
-       
-    
-    <div [routerLink]="['/instrucciones', 'universitario']" class="card">
-        <video autoplay loop muted>
+
+     <!-- Tarjeta para Aptitudes -->
+      <div class="card">
+          <video autoplay loop muted>
             <source src="/site/unis.mp4" type="video/mp4">
             Tu navegador no soporta el formato de video.
-        </video>
-        <h3>Inventario de preferencias universitarias🎓</h3>
-        <p>Explora tus preferencias sobre las carreras universitarias más afines a ti.</p>
-    
-        <div class="progress-bar">
-            <div class="progress"></div> 
+          </video>
+          <h3>Inventario de autoevaluación de aptitudes</h3>
+          <p>Este inventario tiene como objetivo evaluar tus aptitudes de acuerdo con tus intereses personales y habilidades destacadas.</p>
+          <div class="progress-bar">
+            <div class="progress" [style.width.%]="progreso"></div>
+          </div>
+          <button class="btn mt-2" (click)="redirigir()">
+            {{ pruebasAptitudesCompletadas ? 'Reanudar' : 'Comenzar' }}
+          </button>
         </div>
-    </div>
-    <br>
-    <br>
-
-
+  <br>
+<br>
    <button class="btn results-btn" [routerLink]="['/pruebasA']">Siguiente</button>
 
     <br>

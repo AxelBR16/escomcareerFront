@@ -23,6 +23,11 @@ html, body {
 
 }
 
+.disabled {
+  opacity: 0.4;
+  pointer-events: none;
+}
+
 .opciones input[type="radio"] {
     display: none; /* Oculta los botones de radio */
 }
@@ -46,6 +51,10 @@ html, body {
 
 .opciones label:nth-child(5) {
     background-color: #2b6e2d; /* Verde Oscuro */
+}
+
+.opciones label:nth-child(6) {
+    background-color: #86c829bd; /* Verde Oscuro */
 }
 
 .opciones input[type="radio"]:checked + label {
@@ -112,7 +121,7 @@ html, body {
         flex-direction: column; /* Apilar elementos en columna */
         height: auto; /* Ajustar altura automáticamente */
     }
-   
+
 
     /* 🔹 Asegurar que la barra de progreso esté arriba de las preguntas */
     .progress {

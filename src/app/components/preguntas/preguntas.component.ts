@@ -21,7 +21,10 @@ import { ResultadoService } from '../../services/resultado.service';
 export class PreguntasComponent implements OnInit {
   id: string;
   pregunta: Pregunta = { id: '', texto: '', imagen_url: '' };
-  selectedAnswer: string | null = null;
+  selectedAnswer = "";
+  bloqueRespuestas: (number | null)[] = Array(6).fill(null);
+  respuestasUsadas: number[] = [];
+
   currentQuestion: number = 0;
   isAnswered: boolean = false;
   progress: number = 0;
@@ -37,6 +40,10 @@ export class PreguntasComponent implements OnInit {
   mensaje: string = '';
   parteIzquierda: string = '';
   option1Value: string = '1';
+  Nav: boolean = false;
+  bloqueInv3Preguntas = [0,1,2,3,4,5];  // índices para las 6 preguntas del bloque
+  opcionesInv3 = [1,2,3,4,5,6];         // opciones posibles para cada pregunta
+
 
 
   constructor(
@@ -51,24 +58,63 @@ export class PreguntasComponent implements OnInit {
     this.id = this.aRouter.snapshot.paramMap.get('id') || '1';
   }
 
-  ngOnInit() {
-    this.tipo = this.aRouter.snapshot.paramMap.get('tipo');
-    const email = sessionStorage.getItem('email') || 'usuario';
-    this.storageKey = `respuestas_${this.tipo}_${email}`;
+ ngOnInit() {
+  this.tipo = this.aRouter.snapshot.paramMap.get('tipo');
+  const email = sessionStorage.getItem('email') || 'usuario';
+  this.storageKey = `respuestas_${this.tipo}_${email}`;
 
-    this.aRouter.paramMap.subscribe(params => {
-      this.id = params.get('id')!;
-      this.parteIzquierda = this.id.split('-')[0];
-      if(this.parteIzquierda === "inv1"){
-          this.option1Value = '0';
-      }
-      if (this.id) {
-        this.determinarTotalPreguntas();
-        this.cargarPreguntas();
-        this.cargarRespuestasAPI();
-      }
-    });
+  this.aRouter.paramMap.subscribe(params => {
+    this.id = params.get('id')!;
+    this.parteIzquierda = this.id.split('-')[0];
+
+    if(this.parteIzquierda === "inv2"){
+      this.option1Value = '0';
+    }
+    // Validar navegación permitida
+    if (!this.puedeNavegarAPregunta(this.id)) {
+      // Obtener la pregunta máxima permitida
+      const maxPermitida = this.obtenerPreguntaMaximaPermitida();
+      // Redirigir a esa pregunta
+      this.router.navigate([`${this.tipo}/preguntas/${maxPermitida}`]);
+      return; // Salir para no cargar datos de una pregunta no permitida
+    }
+
+    if (this.id) {
+      this.determinarTotalPreguntas();
+      this.cargarPreguntas();
+      this.cargarRespuestasAPI();
+    }
+  });
+}
+
+// Método para validar si se puede navegar a esa pregunta
+async puedeNavegarAPregunta(idPregunta: string): Promise<boolean> {
+  const numeroPregunta = parseInt(idPregunta.split('-')[1]);
+  const maxPermitida = await this.obtenerPreguntaMaximaPermitida();
+  const maxNumero = parseInt(maxPermitida.split('-')[1]);
+  if(numeroPregunta <= maxNumero){
+    this.Nav = false;
   }
+  return numeroPregunta <= maxNumero;
+}
+
+
+// Obtener la pregunta con el formato correcto para redirigir (invX-xxx)
+async obtenerPreguntaMaximaPermitida(): Promise<string> {
+  const inventario = this.id.split('-')[0];
+  const email = sessionStorage.getItem('email')!;
+
+  try {
+    const maxRespondida = await this.preguntasService.obtenerRespuestasMasAlta(email, inventario).toPromise();
+    const siguiente = maxRespondida ? maxRespondida + 1 : 1;
+    return `${inventario}-${String(siguiente).padStart(3, '0')}`;
+  } catch (error) {
+    console.error('Error al obtener la respuesta más alta:', error);
+    return `${inventario}-001`; // fallback
+  }
+}
+
+
 
   determinarTotalPreguntas() {
     if (this.id.startsWith('inv1')) {
@@ -156,24 +202,27 @@ export class PreguntasComponent implements OnInit {
 
   cargarRespuestaGuardada(id: string) {
     const respuestasGuardadas = this.obtenerRespuestasGuardadas();
-    const valor = this.respuestasUsuario[id];
+    const valor = respuestasGuardadas[id];
     if (valor) {
       this.selectedAnswer = valor.toString();
       this.isAnswered = true;
     } else {
-      this.selectedAnswer = null;
       this.isAnswered = false;
     }
   }
 
   obtenerRespuestasGuardadas(): { [key: string]: Respuesta } {
-    const respuestasJSON = sessionStorage.getItem('respuestasUsuario');
-    return respuestasJSON ? JSON.parse(respuestasJSON) : {};
+    if(this.parteIzquierda === "inv1"){
+      const respuestasJSON = sessionStorage.getItem('respuestasUsuario_inv1');
+      return respuestasJSON ? JSON.parse(respuestasJSON) : {};
+    } else{
+      const respuestasJSON = sessionStorage.getItem('respuestasUsuario');
+      return respuestasJSON ? JSON.parse(respuestasJSON) : {};
+    }
   }
 
   guardarRespuesta() {
     if (this.selectedAnswer) {
-      // Convertir la respuesta a número antes de guardarla
       this.respuestasUsuario[this.id] = parseInt(this.selectedAnswer);
       sessionStorage.setItem('respuestasUsuario', JSON.stringify(this.respuestasUsuario));
       this.isAnswered = true;
@@ -213,11 +262,15 @@ export class PreguntasComponent implements OnInit {
     if (this.selectedAnswer) {
       this.enviarRespuestas(parseInt(this.selectedAnswer), this.id);
       const currentIdNumber = parseInt(this.id.split('-')[1]);
+       this.isAnswered = false;
       if (!isNaN(currentIdNumber)) {
         const nextIdNumber = currentIdNumber + 1;
-        if (nextIdNumber <= this.totalQuestions) {
+        if (nextIdNumber <= this.totalQuestions)
+          {
+           this.selectedAnswer = '';
+            this.isAnswered = false;
           this.router.navigate([`${this.tipo}/preguntas/${this.id.split('-')[0]}-${nextIdNumber.toString().padStart(3, '0')}`]);
-          this.getPreguntaDesdeStorage();
+
         } else {
           this.mostrarDialogoFinal();
         }
@@ -228,10 +281,11 @@ export class PreguntasComponent implements OnInit {
   }
 
   prev() {
+
     const currentIdNumber = parseInt(this.id.split('-')[1]);
     if (!isNaN(currentIdNumber) && currentIdNumber > 1) {
       this.router.navigate([`${this.tipo}/preguntas/${this.id.split('-')[0]}-${(currentIdNumber - 1).toString().padStart(3, '0')}`]);
-      this.getPreguntaDesdeStorage(); // Cargar desde sessionStorage
+
     }
   }
 
@@ -302,7 +356,11 @@ export class PreguntasComponent implements OnInit {
             text: res,
             confirmButtonText: 'Aceptar'
           }).then(() => {
-        this.router.navigate(['/result-aptitudes']);
+           if(this.parteIzquierda === "inv1"){
+            this.router.navigate(['/result-aptitudes']);
+           } else{
+             this.router.navigate(['/result-intereses']);
+           }
       });
       },
       error: (err) => {
@@ -320,4 +378,23 @@ export class PreguntasComponent implements OnInit {
 
     return respuestasCompletas;
   }
+
+  onOptionChangeInv3(event: any, preguntaIndex: number): void {
+  const valor = parseInt(event.target.value);
+
+  // Quitar el valor anterior de respuestasUsadas
+  const anterior = this.bloqueRespuestas[preguntaIndex];
+  if (anterior !== null && anterior !== valor) {
+    this.respuestasUsadas = this.respuestasUsadas.filter(v => v !== anterior);
+  }
+
+  // Asignar el nuevo valor para esa pregunta
+  this.bloqueRespuestas[preguntaIndex] = valor;
+
+  // Añadir el nuevo valor si no está en la lista
+  if (!this.respuestasUsadas.includes(valor)) {
+    this.respuestasUsadas.push(valor);
+  }
+}
+
 }
