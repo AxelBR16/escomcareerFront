@@ -87,7 +87,6 @@ export class LogineComponent {
   
 
   validateStep1(): boolean {
-
     this.validatePassword();
     this.validateEmail();
 
@@ -100,30 +99,22 @@ export class LogineComponent {
       Swal.fire('Error', 'Corrige los errores antes de continuar.', 'error');
       return false;
     }
-
     return true;  // Si todos los campos están completos, avanzamos al siguiente paso
   }
-
   async validateStep2() {
     if (!this.qrLink) {
       Swal.fire('Error', 'Por favor, ingresa el enlace de tu código QR.', 'error');
       return;
     }
-  
     console.log("🔹 Enviando QR a la API:", this.qrLink);
-    
-    // 🔥 Mostramos pantalla de carga mientras se verifica el QR
+    //Mostramos pantalla de carga mientras se verifica el QR
     this.loader.mostrarCargando('Verificando QR...');
-  
     this.apiService.verifyQr(this.qrLink).subscribe({
       next: (data) => {
         this.loader.ocultarCargando();
-  
-        console.log("✅ Respuesta de la API:", data);
-  
+        console.log(" Respuesta de la API:", data);
         const carreraApi = data.carrera?.trim().toUpperCase();
         const carreraSeleccionada = this.carrerasMap[this.carrera]?.trim().toUpperCase();
-  
         console.log("📌 Carrera en API:", carreraApi);
         console.log("📌 Carrera seleccionada por el usuario:", carreraSeleccionada);
   
