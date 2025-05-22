@@ -131,7 +131,7 @@ export class PreguntasComponent implements OnInit {
       this.loader.ocultarCargando();
     } else {
       const email = sessionStorage.getItem('email');
-      const inventario = this.id.split('-')[0]; // Esto te da "inv1" o "inv2"
+      const inventario = this.id.split('-')[0]; // Esto es el"inv1" o "inv2"
 
       if (email && inventario) {
         this.preguntasService.obtenerRespuestasUsuario(email, inventario).subscribe(
