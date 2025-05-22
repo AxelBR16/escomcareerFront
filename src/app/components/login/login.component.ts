@@ -158,12 +158,10 @@ export class LoginComponent implements OnInit {
           }
         },
         error: (error) => {
-          let errorMessage = error?.error?.message || 'Error en el inicio de sesión. Inténtalo nuevamente.';
-
           Swal.fire({
             icon: 'error',
             title: 'Error en el inicio de sesión',
-            text: errorMessage,
+            text: error.message,
             confirmButtonText: 'Aceptar'
           });
         }

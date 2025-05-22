@@ -74,7 +74,7 @@ export class LogineComponent {
 
   goNext(event: Event) {
     event.preventDefault(); // Evita la recarga de la página
-  
+
     if (this.currentStep === 1 && this.validateStep1()) {
       // En lugar de registrar aquí, simplemente avanzamos al siguiente paso
       this.currentStep++;
@@ -82,9 +82,9 @@ export class LogineComponent {
       this.validateStep2();
     }
   }
-  
-  
-  
+
+
+
 
   validateStep1(): boolean {
     this.validatePassword();
@@ -117,19 +117,19 @@ export class LogineComponent {
         const carreraSeleccionada = this.carrerasMap[this.carrera]?.trim().toUpperCase();
         console.log("📌 Carrera en API:", carreraApi);
         console.log("📌 Carrera seleccionada por el usuario:", carreraSeleccionada);
-  
+
         if (!carreraApi) {
           console.error("❌ Error: La API no devolvió información de carrera.");
           Swal.fire('Error', 'No se pudo obtener la carrera del QR.', 'error');
           return;
         }
-  
+
         if (carreraApi !== carreraSeleccionada) {
           console.warn("⚠️ Carrera no coincide. No se permite avanzar.");
           Swal.fire('Error', `La información no coincide. Carrera en API: ${data.carrera}`, 'error');
           return;
         }
-  
+
         console.log("✅ Carrera validada correctamente. Avanzando al Paso 3.");
         Swal.fire('Éxito', 'Verificación completada correctamente.', 'success').then(() => {
           this.currentStep = 3;
@@ -142,8 +142,8 @@ export class LogineComponent {
       }
     });
   }
-  
-  
+
+
 
   async startScan() {
     this.showCamera = true;
@@ -175,7 +175,7 @@ export class LogineComponent {
           this.verifyQrLink(this.qrLink);
           this.stopScan(); // Detiene la cámara después de escanear
         }
-  
+
         if (error) {
           console.warn('Esperando código QR...', error);
         }
@@ -194,17 +194,17 @@ export class LogineComponent {
   }
 
 
-  
+
   scanQrFromImage(event: Event) {
     const input = event.target as HTMLInputElement;
     const file = input.files?.[0];
-  
+
     if (file) {
       // Lógica para procesar el archivo de imagen y extraer el QR de la imagen
       this.processQrImage(file); // Llama a una función para procesar la imagen
     }
   }
-  
+
   scanQr() {
     if (!this.qrLink) {
       Swal.fire('Error', 'Por favor, ingresa el enlace de tu código QR.', 'error');
@@ -229,10 +229,10 @@ export class LogineComponent {
       });
       return;
     }
-    
+
     this.verifyQrLink(this.qrLink);
 
-    
+
 }
 
 verifyQrLink(qrLink: string) {
@@ -273,20 +273,16 @@ verifyQrLink(qrLink: string) {
 }
 
 
-
-
-
-  
   processQrImage(file: File) {
     const reader = new FileReader();
-  
+
     reader.onload = (e: ProgressEvent<FileReader>) => {
       const img = new Image();
       img.onload = async () => {
         try {
           const codeReader = new BrowserQRCodeReader();
           const result = await codeReader.decodeFromImageUrl(img.src); // ✅ Corrección aquí
-  
+
           this.qrLink = result.getText(); // ✅ Extrae el texto del QR
           Swal.fire('QR Escaneado', `Código QR detectado con éxito: ${this.qrLink}`, 'success');
         } catch (error) {
@@ -294,10 +290,10 @@ verifyQrLink(qrLink: string) {
           console.error(error);
         }
       };
-  
+
       img.src = e.target?.result as string;
     };
-  
+
     reader.readAsDataURL(file);
   }
   goToStep(step: number) {
@@ -305,7 +301,6 @@ verifyQrLink(qrLink: string) {
   }
 
   finalizeAccount() {
-    // Construir el objeto de registro con los datos ingresados
     const signUpData = {
       nombre: this.firstName,
       apellido: this.lastName,
@@ -314,10 +309,10 @@ verifyQrLink(qrLink: string) {
       role: 'ROLE_EGRESADO',  // Especificamos el rol
       carrera: parseInt(this.carrera) // Convertimos a número
     };
-  
+
     // Mostramos pantalla de carga mientras se registra
     this.loader.mostrarCargando('Registrando cuenta...');
-  
+
     // Llamada a la API para registrar la cuenta
     this.authService.registerEgresado(signUpData).subscribe({
       next: () => {
@@ -325,7 +320,7 @@ verifyQrLink(qrLink: string) {
         // Aquí se almacena la sesión. Si la API devuelve token, se debería usar ese valor.
         this.authService.storeUserSession(this.email, 'FAKE_TOKEN', 'ROLE_EGRESADO');
         Swal.fire('Cuenta creada con éxito', 'Tu cuenta ha sido registrada correctamente.', 'success').then(() => {
-          this.router.navigate(['/confirmacion-egresado']);
+          this.router.navigate(['/login']);
         });
       },
       error: (error) => {
@@ -335,8 +330,8 @@ verifyQrLink(qrLink: string) {
       }
     });
   }
-  
-  
 
-  
+
+
+
 }
