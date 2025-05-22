@@ -11,7 +11,6 @@
     <h2>Pruebas de Orientación Vocacional</h2>
 <br>
     <div class="test-cards">
-
         <div class="cardF" >
             <h1>PASO 1</h1>
         </div>
@@ -26,14 +25,18 @@
             <source src="/site/unis.mp4" type="video/mp4">
             Tu navegador no soporta el formato de video.
           </video>
-          <h3>Inventario de autoevaluación de aptitudes</h3>
-          <p>Este inventario tiene como objetivo evaluar tus aptitudes de acuerdo con tus intereses personales y habilidades destacadas.</p>
+          <h3>Inventario de preferencias universitarias</h3>
+          <p>Este inventario te permite identificar tus áreas de estudio preferidas.</p>
           <div class="progress-bar">
             <div class="progress" [style.width.%]="progreso"></div>
           </div>
           <button class="btn mt-2" (click)="redirigir()">
-            {{ pruebasAptitudesCompletadas ? 'Reanudar' : 'Comenzar' }}
-          </button>
+            {{
+              progreso === 100
+                ? 'Ver resultados'
+                : (pruebasPreferenciasCompletadas ? 'Reanudar' : 'Comenzar')
+            }}
+              </button>
         </div>
   <br>
 <br>
