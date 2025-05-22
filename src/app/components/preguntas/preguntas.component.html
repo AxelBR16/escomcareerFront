@@ -4,27 +4,85 @@
       <p>Elige una de las siguientes respuestas:</p>
       <br>
       <div class="opciones">
-        <label [ngClass]="{'selected-option': selectedAnswer === '1'}">
-          <input type="radio" name="answer" class="answer-option" [value]="option1Value"
+        <label *ngIf="parteIzquierda === 'inv1'" [ngClass]="{'selected-option': selectedAnswer === '0'}">
+          <input type="radio" name="answer" class="answer-option" value="0"
+                 [(ngModel)]="selectedAnswer" (change)="onOptionChange($event)"> 1. Nada hábil.
+        </label>
+
+        <label *ngIf="parteIzquierda === 'inv1'" [ngClass]="{'selected-option': selectedAnswer === '2'}">
+          <input type="radio" name="answer" class="answer-option" value="2"
+                 [(ngModel)]="selectedAnswer" (change)="onOptionChange($event)"> 2. Poco hábil.
+        </label>
+
+        <label *ngIf="parteIzquierda === 'inv1'" [ngClass]="{'selected-option': selectedAnswer === '3'}">
+          <input type="radio" name="answer" class="answer-option" value="3"
+                 [(ngModel)]="selectedAnswer" (change)="onOptionChange($event)"> 3. Medianamente hábil.
+        </label>
+
+        <label *ngIf="parteIzquierda === 'inv1'" [ngClass]="{'selected-option': selectedAnswer === '4'}">
+          <input type="radio" name="answer" class="answer-option" value="4"
+                 [(ngModel)]="selectedAnswer" (change)="onOptionChange($event)"> 4. Muy hábil.
+        </label>
+
+        <label *ngIf="parteIzquierda === 'inv1'" [ngClass]="{'selected-option': selectedAnswer === '5'}">
+          <input type="radio" name="answer" class="answer-option" value="5"
+                 [(ngModel)]="selectedAnswer" (change)="onOptionChange($event)"> 5. Mucho muy hábil.
+        </label>
+
+
+        <label *ngIf="parteIzquierda === 'inv3'" [ngClass]="{'selected-option': selectedAnswer === '1'}">
+          <input type="radio" name="answer" class="answer-option" value="1"
+                 [(ngModel)]="selectedAnswer" (change)="onOptionChange($event)"> 1.
+        </label>
+
+        <label *ngIf="parteIzquierda === 'inv3'" [ngClass]="{'selected-option': selectedAnswer === '2'}">
+          <input type="radio" name="answer" class="answer-option" value="2"
+                 [(ngModel)]="selectedAnswer" (change)="onOptionChange($event)"> 2.
+        </label>
+
+         <label *ngIf="parteIzquierda === 'inv3'" [ngClass]="{'selected-option': selectedAnswer === '3'}">
+          <input type="radio" name="answer" class="answer-option" value="3"
+                 [(ngModel)]="selectedAnswer" (change)="onOptionChange($event)"> 3.
+        </label>
+
+
+         <label *ngIf="parteIzquierda === 'inv3'" [ngClass]="{'selected-option': selectedAnswer === '4'}">
+          <input type="radio" name="answer" class="answer-option" value="4"
+                 [(ngModel)]="selectedAnswer" (change)="onOptionChange($event)"> 4.
+        </label>
+
+         <label *ngIf="parteIzquierda === 'inv3'" [ngClass]="{'selected-option': selectedAnswer === '5'}">
+          <input type="radio" name="answer" class="answer-option" value="5"
+                 [(ngModel)]="selectedAnswer" (change)="onOptionChange($event)"> 5.
+        </label>
+
+
+         <label *ngIf="parteIzquierda === 'inv3'" [ngClass]="{'selected-option': selectedAnswer === '6'}">
+          <input type="radio" name="answer" class="answer-option" value="6"
+                 [(ngModel)]="selectedAnswer" (change)="onOptionChange($event)"> 6.
+        </label>
+
+       <label *ngIf="parteIzquierda === 'inv2'" [ngClass]="{'selected-option': selectedAnswer === '1'}">
+          <input type="radio" name="answer" class="answer-option" value="1"
                  [(ngModel)]="selectedAnswer" (change)="onOptionChange($event)"> 1. Me desagrada totalmente.
         </label>
 
-        <label [ngClass]="{'selected-option': selectedAnswer === '2'}">
+        <label *ngIf="parteIzquierda === 'inv2'" [ngClass]="{'selected-option': selectedAnswer === '2'}">
           <input type="radio" name="answer" class="answer-option" value="2"
                  [(ngModel)]="selectedAnswer" (change)="onOptionChange($event)"> 2. Me desagrada.
         </label>
 
-        <label [ngClass]="{'selected-option': selectedAnswer === '3'}">
+        <label *ngIf="parteIzquierda === 'inv2'" [ngClass]="{'selected-option': selectedAnswer === '3'}">
           <input type="radio" name="answer" class="answer-option" value="3"
                  [(ngModel)]="selectedAnswer" (change)="onOptionChange($event)"> 3. Me es indiferente.
         </label>
 
-        <label [ngClass]="{'selected-option': selectedAnswer === '4'}">
+        <label *ngIf="parteIzquierda === 'inv2'" [ngClass]="{'selected-option': selectedAnswer === '4'}">
           <input type="radio" name="answer" class="answer-option" value="4"
                  [(ngModel)]="selectedAnswer" (change)="onOptionChange($event)"> 4. Me gusta.
         </label>
 
-        <label [ngClass]="{'selected-option': selectedAnswer === '5'}">
+        <label *ngIf="parteIzquierda === 'inv2'" [ngClass]="{'selected-option': selectedAnswer === '5'}">
           <input type="radio" name="answer" class="answer-option" value="5"
                  [(ngModel)]="selectedAnswer" (change)="onOptionChange($event)"> 5. Me gusta mucho.
         </label>

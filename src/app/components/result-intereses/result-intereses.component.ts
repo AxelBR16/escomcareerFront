@@ -5,6 +5,9 @@ import { CommonModule } from '@angular/common';
 import { isPlatformBrowser } from '@angular/common';
 import Chart from 'chart.js/auto';
 import annotationPlugin from 'chartjs-plugin-annotation';
+import { ResultadoService } from '../../services/resultado.service';
+import { ResultadoResumenDTO } from '../../models/ResultadoResumenDTO';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-result-intereses',
@@ -15,21 +18,56 @@ import annotationPlugin from 'chartjs-plugin-annotation';
 export class ResultInteresesComponent {
   private chart: any;
 
-  constructor(@Inject(PLATFORM_ID) private platformId: any) {}
+  constructor(@Inject(PLATFORM_ID) private platformId: any, private router: Router,private resultadoService: ResultadoService) {}
 
   ngAfterViewInit(): void {
-    if (isPlatformBrowser(this.platformId)) {
-      setTimeout(() => {
-        this.initChart();
-      }, 500); //se Espera a que la vista cargue completamente
-    }
-  }
+      if (isPlatformBrowser(this.platformId)) {
+        setTimeout(() => {
+          const email = sessionStorage.getItem('email')!;
 
-  initChart(): void {
+          this.resultadoService.obtenerResumenPorCorreo(email).subscribe({
+            next: (res) => {
+              const { etiquetas, puntajes } = this.ordenarPorEscala(res);
+              this.initChart(etiquetas, puntajes);
+            },
+            error: () => {
+              Swal.fire('Error', 'No se pudieron cargar los resultados', 'error');
+            }
+          });
+        }, 500);
+      }
+    }
+
+     ordenarPorEscala(resultados: ResultadoResumenDTO[]): { etiquetas: string[], puntajes: number[] } {
+       const escalaLabels: { [key: number]: string } = {
+          13: 'Biológicos',
+          14: 'Campestres',
+          15: 'Geofísicos',
+          16: 'Literarios',
+          17: 'Cálculo',
+          18: 'Contabilidad',
+          26: 'Científicos',
+          20: 'Mecánicos',
+          21: 'S. social',
+          22: 'Organización',
+          23: 'Persuasivo',
+          24: 'Musical',
+          25: 'Artístico-plástico'
+        };
+
+
+        const ordenados = resultados.sort((a, b) => a.escalaId - b.escalaId);
+        const etiquetas = ordenados.map(r => escalaLabels[r.escalaId] || `Escala ${r.escalaId}`);
+        const puntajes = ordenados.map(r => r.puntaje);
+
+        return { etiquetas, puntajes };
+      }
+
+initChart(etiquetas: string[], puntajes: number[]): void {
     const canvas = document.getElementById('aptitudesChart') as HTMLCanvasElement;
-    
+
     if (!canvas) {
-      console.error(' No se encontró el canvas en el DOM.');
+      console.error('No se encontró el canvas en el DOM.');
       return;
     }
 
@@ -40,18 +78,13 @@ export class ResultInteresesComponent {
     this.chart = new Chart(canvas, {
       type: 'bar',
       data: {
-        labels: [
-          "Abstracto", "Coordinación", "Numérica", "Verbal", "Persuasiva",
-          "Mecánica", "Social", "Directiva", "Organización", "Musical",
-          "Artístico-Plástica", "Espacial"
-        ],
+        labels: etiquetas,
         datasets: [{
           label: "Puntaje",
-          data: [20, 35, 25, 40, 30, 28, 36, 42, 29, 33, 47, 10], 
+          data: puntajes,
           backgroundColor: [
-            "#FFD700", "#98FB98", "#DDA0DD", "#FFB6C1", "#ADD8E6",
-            "#FA8072", "#FFA07A", "#FF8C00", "#BA55D3", "#87CEEB",
-            "#FF6347", "#FFDAB9"
+            "#A8E6A3",
+          "#A8E6A3", "#C5E1A5", "#D7CCC8", "#D1C4E9", "#BBDEFB", "#B2DFDB", "#C5CAE9", "#CFD8DC", "#FFCCBC", "#FFF59D", "#FFCDD2", "#E1BEE7", "#FFAB91"
           ],
           borderWidth: 1
         }]
@@ -67,9 +100,6 @@ export class ResultInteresesComponent {
         }
       }
     });
-
-    console.log("Gráfica generada correctamente");
   }
-
 
 }
