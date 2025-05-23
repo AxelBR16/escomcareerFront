@@ -22,7 +22,8 @@ export class PreguntasComponent implements OnInit {
   id: string;
   pregunta: Pregunta = { id: '', texto: '', imagen_url: '' };
   selectedAnswer: string | null = null;
-
+// Guarda las opciones seleccionadas (sus valores)
+  selectedOptions: string[] = [];
 
   currentQuestion: number = 0;
   isAnswered: boolean = false;
@@ -249,28 +250,55 @@ async obtenerPreguntaMaximaPermitida(): Promise<string> {
       }
     );
   }
-
-  next() {
-    if (this.selectedAnswer) {
-      this.enviarRespuestas(parseInt(this.selectedAnswer), this.id);
-      const currentIdNumber = parseInt(this.id.split('-')[1]);
-       this.isAnswered = false;
-      if (!isNaN(currentIdNumber)) {
-        const nextIdNumber = currentIdNumber + 1;
-        if (nextIdNumber <= this.totalQuestions)
-          {
-           this.selectedAnswer = '';
-            this.isAnswered = false;
-          this.router.navigate([`${this.tipo}/preguntas/${this.id.split('-')[0]}-${nextIdNumber.toString().padStart(3, '0')}`]);
-
-        } else {
-          this.mostrarDialogoFinal();
-        }
-      }
-    } else {
-      Swal.fire({ title: 'Atención', text: 'Selecciona una respuesta antes de continuar.', icon: 'warning', confirmButtonText: 'Entendido', confirmButtonColor: '#007bff' });
+next() {
+  if (this.selectedAnswer) {
+    // Agregar la opción seleccionada solo si no está en el array
+    if (!this.selectedOptions.includes(this.selectedAnswer)) {
+      this.selectedOptions.push(this.selectedAnswer);
     }
+
+    // Reiniciar el array si se han seleccionado 6 opciones
+    if (this.selectedOptions.length >= 6) {
+      this.selectedOptions = [];
+    }
+
+    // Enviar respuesta
+    this.enviarRespuestas(parseInt(this.selectedAnswer), this.id);
+
+    const currentIdNumber = parseInt(this.id.split('-')[1]);
+
+    if (!isNaN(currentIdNumber)) {
+      const nextIdNumber = currentIdNumber + 1;
+
+      if (nextIdNumber <= this.totalQuestions) {
+        // Limpiar selección para la siguiente pregunta
+        this.selectedAnswer = null;
+        this.isAnswered = false;
+
+        // Navegar a siguiente pregunta
+        this.router.navigate([
+          `${this.tipo}/preguntas/${this.id.split('-')[0]}-${nextIdNumber.toString().padStart(3, '0')}`
+        ]);
+      } else {
+        // Al terminar, reiniciar las opciones seleccionadas para el siguiente uso
+        this.selectedOptions = [];
+        this.mostrarDialogoFinal();
+      }
+    }
+  } else {
+    Swal.fire({
+      title: 'Atención',
+      text: 'Selecciona una respuesta antes de continuar.',
+      icon: 'warning',
+      confirmButtonText: 'Entendido',
+      confirmButtonColor: '#007bff'
+    });
   }
+}
+
+
+
+
 
  prev() {
   const currentIdNumber = parseInt(this.id.split('-')[1]);
@@ -376,18 +404,8 @@ async obtenerPreguntaMaximaPermitida(): Promise<string> {
     return respuestasCompletas;
   }
 
- onOptionChange1(event: Event) {
-    const value = (event.target as HTMLInputElement).value;
 
-    this.bloqueadas.add(value);
-    this.selectedAnswer = null;
-
-    if (this.bloqueadas.size === 6) { // porque tienes 6 opciones fijas
-      this.bloqueadas.clear();
-    }
-  }
-
-  isBlocked(value: string): boolean {
-    return this.bloqueadas.has(value);
-  }
+onOptionChange1(event: any) {
+   this.selectedAnswer = event.target.value;
+}
 }

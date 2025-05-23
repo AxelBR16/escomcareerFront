@@ -30,38 +30,38 @@
         </label>
 
 
-        <label *ngIf="parteIzquierda === 'inv3'" [ngClass]="{'selected-option': selectedAnswer === '1'}">
-          <input type="radio" name="answer" class="answer-option" value="1"
-                 [(ngModel)]="selectedAnswer" (change)="onOptionChange($event)"> 1.
-        </label>
+    <label *ngIf="parteIzquierda === 'inv3' && (!selectedOptions.includes('1') || selectedAnswer === '1')" [ngClass]="{'selected-option': selectedAnswer === '1'}">
+  <input type="radio" name="answer" class="answer-option" value="1"
+         [(ngModel)]="selectedAnswer" (change)="onOptionChange1($event)"> 1.
+</label>
 
-        <label *ngIf="parteIzquierda === 'inv3'" [ngClass]="{'selected-option': selectedAnswer === '2'}">
-          <input type="radio" name="answer" class="answer-option" value="2"
-                 [(ngModel)]="selectedAnswer" (change)="onOptionChange($event)"> 2.
-        </label>
+<label *ngIf="parteIzquierda === 'inv3' && (!selectedOptions.includes('2') || selectedAnswer === '2')" [ngClass]="{'selected-option': selectedAnswer === '2'}">
+  <input type="radio" name="answer" class="answer-option" value="2"
+         [(ngModel)]="selectedAnswer" (change)="onOptionChange1($event)"> 2.
+</label>
 
-         <label *ngIf="parteIzquierda === 'inv3'" [ngClass]="{'selected-option': selectedAnswer === '3'}">
-          <input type="radio" name="answer" class="answer-option" value="3"
-                 [(ngModel)]="selectedAnswer" (change)="onOptionChange($event)"> 3.
-        </label>
+<label *ngIf="parteIzquierda === 'inv3' && (!selectedOptions.includes('3') || selectedAnswer === '3')" [ngClass]="{'selected-option': selectedAnswer === '3'}">
+  <input type="radio" name="answer" class="answer-option" value="3"
+         [(ngModel)]="selectedAnswer" (change)="onOptionChange1($event)"> 3.
+</label>
+
+<label *ngIf="parteIzquierda === 'inv3' && (!selectedOptions.includes('4') || selectedAnswer === '4')" [ngClass]="{'selected-option': selectedAnswer === '4'}">
+  <input type="radio" name="answer" class="answer-option" value="4"
+         [(ngModel)]="selectedAnswer" (change)="onOptionChange1($event)"> 4.
+</label>
+
+<label *ngIf="parteIzquierda === 'inv3' && (!selectedOptions.includes('5') || selectedAnswer === '5')" [ngClass]="{'selected-option': selectedAnswer === '5'}">
+  <input type="radio" name="answer" class="answer-option" value="5"
+         [(ngModel)]="selectedAnswer" (change)="onOptionChange1($event)"> 5.
+</label>
+
+<label *ngIf="parteIzquierda === 'inv3' && (!selectedOptions.includes('6') || selectedAnswer === '6')" [ngClass]="{'selected-option': selectedAnswer === '6'}">
+  <input type="radio" name="answer" class="answer-option" value="6"
+         [(ngModel)]="selectedAnswer" (change)="onOptionChange1($event)"> 6.
+</label>
 
 
-         <label *ngIf="parteIzquierda === 'inv3'" [ngClass]="{'selected-option': selectedAnswer === '4'}">
-          <input type="radio" name="answer" class="answer-option" value="4"
-                 [(ngModel)]="selectedAnswer" (change)="onOptionChange($event)"> 4.
-        </label>
-
-         <label *ngIf="parteIzquierda === 'inv3'" [ngClass]="{'selected-option': selectedAnswer === '5'}">
-          <input type="radio" name="answer" class="answer-option" value="5"
-                 [(ngModel)]="selectedAnswer" (change)="onOptionChange($event)"> 5.
-        </label>
-
-
-         <label *ngIf="parteIzquierda === 'inv3'" [ngClass]="{'selected-option': selectedAnswer === '6'}">
-          <input type="radio" name="answer" class="answer-option" value="6"
-                 [(ngModel)]="selectedAnswer" (change)="onOptionChange($event)"> 6.
-        </label>
-
+  
        <label *ngIf="parteIzquierda === 'inv2'" [ngClass]="{'selected-option': selectedAnswer === '1'}">
           <input type="radio" name="answer" class="answer-option" value="1"
                  [(ngModel)]="selectedAnswer" (change)="onOptionChange($event)"> 1. Me desagrada totalmente.
