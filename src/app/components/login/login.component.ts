@@ -42,6 +42,7 @@ export class LoginComponent implements OnInit {
 
   // Expresión regular para validar el email
   emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  loading=false;
 
   ngOnInit(): void {
   }
@@ -138,6 +139,7 @@ export class LoginComponent implements OnInit {
         email: this.loginEmail,
         password: this.loginPassword
       };
+      this.loading = true;
       this.authService.login(signInData).subscribe({
         next: (response) => {
           Swal.fire({
@@ -146,6 +148,7 @@ export class LoginComponent implements OnInit {
             text: 'Bienvenido de nuevo',
             confirmButtonText: 'Aceptar'
           });
+          this.loading = false;
           this.authService.storeUserSession(this.loginEmail, response.token, response.role);
 
           console.log(sessionStorage.getItem('role'))
@@ -158,12 +161,11 @@ export class LoginComponent implements OnInit {
           }
         },
         error: (error) => {
-          let errorMessage = error?.error?.message || 'Error en el inicio de sesión. Inténtalo nuevamente.';
-
+          this.loading = false;
           Swal.fire({
             icon: 'error',
             title: 'Error en el inicio de sesión',
-            text: errorMessage,
+            text: error.message,
             confirmButtonText: 'Aceptar'
           });
         }
