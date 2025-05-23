@@ -55,8 +55,8 @@ export class ResultInteresesComponent {
           25: 'Artístico-plástico'
         };
 
-
-        const ordenados = resultados.sort((a, b) => a.escalaId - b.escalaId);
+        const filtrados = resultados.filter(r => r.escalaId >= 13 && r.escalaId <= 25);
+        const ordenados = filtrados.sort((a, b) => a.escalaId - b.escalaId);
         const etiquetas = ordenados.map(r => escalaLabels[r.escalaId] || `Escala ${r.escalaId}`);
         const puntajes = ordenados.map(r => r.puntaje);
 

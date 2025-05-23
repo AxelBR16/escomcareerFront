@@ -30,9 +30,9 @@ import { ResultAIComponent } from './components/result-ai/result-ai.component';
 export const routes: Routes = [
   {path: '', component: InicioComponent},
   {path: 'carreras', component: CarrerasComponent},
-  {path: 'result-aptitudes', component: ResultAptitudesComponent},
-  {path: 'result-uni', component: ResultUniverComponent},
-  {path: 'result-intereses', component: ResultInteresesComponent},
+  {path: 'result-aptitudes', component: ResultAptitudesComponent, canActivate: [AspiranteGuard]},
+  {path: 'result-uni', component: ResultUniverComponent, canActivate: [AspiranteGuard]},
+  {path: 'result-intereses', component: ResultInteresesComponent, canActivate: [AspiranteGuard]},
   {path: 'proyectEgresado', component: ProyectEgresadoComponent, canActivate: [EgresadoGuard]},
   {path: 'experience', component: ExperenceComponent, canActivate: [EgresadoGuard]},
   {path: 'logine', component: LogineComponent},

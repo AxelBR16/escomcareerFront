@@ -43,6 +43,10 @@ export class CuestionarioComponent implements OnInit{
 
 
   redirigir() {
+     if (this.progreso === 100) {
+    this.router.navigate(['/result-uni']);
+    return;
+    }
     const ruta = this.pruebasPreferenciasCompletadas ? `/universitario/preguntas/inv3-${this.preguntainicial}` : '/instrucciones/universitario';
     this.router.navigate([ruta]);
   }

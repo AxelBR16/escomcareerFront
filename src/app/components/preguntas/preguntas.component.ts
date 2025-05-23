@@ -171,7 +171,7 @@ async obtenerPreguntaMaximaPermitida(): Promise<string> {
 
   cargarRespuestasAPI() {
 
-    const respuestasGuardadas = sessionStorage.getItem('respuestasUsuario');
+    const respuestasGuardadas = sessionStorage.getItem(`respuestasUsuario_${this.inventario}`);
     this.loading = true;
 
     if (respuestasGuardadas) {
@@ -219,19 +219,19 @@ async obtenerPreguntaMaximaPermitida(): Promise<string> {
     return respuestasJSON ? JSON.parse(respuestasJSON) : {};
   }
 
-  guardarRespuesta() {
-    if (this.selectedAnswer) {
-      this.respuestasUsuario[this.id] = parseInt(this.selectedAnswer);
-      sessionStorage.setItem(`respuestasUsuario_${this.parteIzquierda}`, JSON.stringify(this.respuestasUsuario));
-      this.isAnswered = true;
-    }
+ guardarRespuesta() {
+  if (this.selectedAnswer) {
+    this.respuestasUsuario[this.id] = parseInt(this.selectedAnswer);
+    sessionStorage.setItem(`respuestasUsuario_${this.parteIzquierda}`, JSON.stringify(this.respuestasUsuario));
+    this.isAnswered = true;
   }
+}
+
 
 
 
   onOptionChange(event: Event): void {
     this.selectedAnswer = (event.target as HTMLInputElement).value;
-    this.guardarRespuesta();
   }
 
   enviarRespuestas(valorR: number, id: string) {
@@ -242,7 +242,7 @@ async obtenerPreguntaMaximaPermitida(): Promise<string> {
     };
     this.preguntasService.saveRespuesta(respuesta).subscribe(
       (response: any) => {
-        // Respuesta enviada correctamente
+
       },
       (error) => {
         Swal.fire({
@@ -284,7 +284,9 @@ next() {
         this.router.navigate([
           `${this.tipo}/preguntas/${this.id.split('-')[0]}-${nextIdNumber.toString().padStart(3, '0')}`
         ]);
+
       } else {
+        this.cargarRespuestasAPI();
         this.eliminatedOptionsInv3 = [];
         this.mostrarDialogoFinal();
       }
@@ -328,7 +330,6 @@ next() {
       if (result.isConfirmed) {
         const respuestas = this.respuestasUsuario;
         const validacion = this.verificarRespuestas(respuestas);
-
         if (validacion) {
           // Si todas las respuestas son válidas, se pueden enviar
           this.preguntasService.obtenerRespuestasUsuario(sessionStorage.getItem('email')!, this.id.split('-')[0]!).subscribe(
@@ -382,11 +383,18 @@ next() {
             text: res,
             confirmButtonText: 'Aceptar'
           }).then(() => {
-           if(this.parteIzquierda === "inv1"){
-            this.router.navigate(['/result-aptitudes']);
-           } else{
-             this.router.navigate(['/result-intereses']);
-           }
+           switch (this.parteIzquierda) {
+            case "inv1":
+              this.router.navigate(['/result-aptitudes']);
+              break;
+            case "inv3":
+              this.router.navigate(['/result-uni']);
+              break;
+            default:
+              this.router.navigate(['/result-intereses']);
+              break;
+          }
+
       });
       },
       error: (err) => {

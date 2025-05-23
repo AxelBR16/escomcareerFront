@@ -22,8 +22,7 @@ Chart.register(annotationPlugin);
 export class ResultAptitudesComponent implements AfterViewInit {
   private chart: any;
 
-  constructor(@Inject(PLATFORM_ID) private platformId: any, private router: Router,private resultadoService: ResultadoService
-) {}
+  constructor(@Inject(PLATFORM_ID) private platformId: any, private router: Router,private resultadoService: ResultadoService) {}
 
   ngAfterViewInit(): void {
     if (isPlatformBrowser(this.platformId)) {
@@ -44,27 +43,33 @@ export class ResultAptitudesComponent implements AfterViewInit {
   }
 
    ordenarPorEscala(resultados: ResultadoResumenDTO[]): { etiquetas: string[], puntajes: number[] } {
-    const escalaLabels: { [key: number]: string } = {
-      1: 'Abstracta o Científica',
-      2: 'Coordinación',
-      3: 'Numérica',
-      4: 'Verbal',
-      5: 'Persuasiva',
-      6: 'Mecánica',
-      7: 'Social',
-      8: 'Directiva',
-      9: 'Organización',
-      10: 'Musical',
-      11: 'Artístico-Plástica',
-      12: 'Espacial'
-    };
+  const escalaLabels: { [key: number]: string } = {
+    1: 'Abstracta o Científica',
+    2: 'Coordinación',
+    3: 'Numérica',
+    4: 'Verbal',
+    5: 'Persuasiva',
+    6: 'Mecánica',
+    7: 'Social',
+    8: 'Directiva',
+    9: 'Organización',
+    10: 'Musical',
+    11: 'Artístico-Plástica',
+    12: 'Espacial'
+  };
 
-    const ordenados = resultados.sort((a, b) => a.escalaId - b.escalaId);
-    const etiquetas = ordenados.map(r => escalaLabels[r.escalaId] || `Escala ${r.escalaId}`);
-    const puntajes = ordenados.map(r => r.puntaje);
+  // Filtrar solo escalas entre 1 y 12
+  const filtrados = resultados.filter(r => r.escalaId >= 1 && r.escalaId <= 12);
 
-    return { etiquetas, puntajes };
-  }
+  // Ordenar por escalaId
+  const ordenados = filtrados.sort((a, b) => a.escalaId - b.escalaId);
+
+  const etiquetas = ordenados.map(r => escalaLabels[r.escalaId] || `Escala ${r.escalaId}`);
+  const puntajes = ordenados.map(r => r.puntaje);
+
+  return { etiquetas, puntajes };
+}
+
 
    initChart(etiquetas: string[], puntajes: number[]): void {
     const canvas = document.getElementById('aptitudesChart') as HTMLCanvasElement;
