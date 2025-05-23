@@ -290,15 +290,21 @@ main {
  .btn:hover {
     background-color: #FFD700;
 }
+.btn-container {
+  display: flex;
+  justify-content: center; /* centra los botones en el contenedor */
+  gap: 10px; /* espacio entre los botones */
+}
 
 .results-btn {
-    width: 100%;
-    max-width: 200px;
-    margin: 0 auto;
+  width: 200px; /* o cualquier ancho fijo que prefieras */
+  margin: 0; /* quitar margen automático */
 }
+
 .results-btn:hover {
-    background-color: #FFD700;
+  background-color: #FFD700;
 }
+
 
 /* Responsividad */
 /* Pantallas grandes */
