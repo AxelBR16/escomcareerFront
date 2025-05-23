@@ -18,7 +18,6 @@ import { ForgotPasswordComponent } from './components/forgot-password/forgot-pas
 import { EgresadoGuard } from './shared/guards/egresado.guard';
 import { ProyectEgresadoComponent } from './components/proyect-egresado/proyect-egresado.component';
 import { ResultAptitudesComponent } from './components/result-aptitudes/result-aptitudes.component';
-import { ProyectsInicioComponent } from './components/proyects-inicio/proyects-inicio.component';
 import { ResultInteresesComponent } from './components/result-intereses/result-intereses.component';
 import { ResultUniverComponent } from './components/result-univer/result-univer.component';
 import { AdminCarrerasComponent } from './components/admin-carreras/admin-carreras.component';
@@ -35,7 +34,6 @@ export const routes: Routes = [
   {path: 'result-uni', component: ResultUniverComponent},
   {path: 'result-intereses', component: ResultInteresesComponent},
   {path: 'proyectEgresado', component: ProyectEgresadoComponent, canActivate: [EgresadoGuard]},
-  {path: 'proyectInicio', component: ProyectsInicioComponent, canActivate: [EgresadoGuard]},
   {path: 'experience', component: ExperenceComponent, canActivate: [EgresadoGuard]},
   {path: 'logine', component: LogineComponent},
   {path: 'login', component: LoginComponent},
