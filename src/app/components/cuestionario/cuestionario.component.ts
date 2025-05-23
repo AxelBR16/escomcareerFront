@@ -3,6 +3,7 @@ import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { PreguntasService } from '../../services/preguntas.service';
 import { RespuestaService } from '../../services/respuesta.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-cuestionario',
@@ -46,5 +47,34 @@ export class CuestionarioComponent implements OnInit{
     const ruta = this.pruebasPreferenciasCompletadas ? `/universitario/preguntas/inv3-${this.preguntainicial}` : '/instrucciones/universitario';
     this.router.navigate([ruta]);
   }
+
+  mostrarAlertaAntesDeSeguir() {
+  const puntajeFisicoMatematicas = this.progreso;
+
+  Swal.fire({
+    title: 'Antes de seguir',
+    html: `
+    Aseguarte de completar el inventario.<br><br>
+      ${puntajeFisicoMatematicas > 10
+        ? '<b>Felicidades, tu puntaje en del cuestionario esta completo al 100%</b>. Puedes contestar los demás cuestionarios.'
+        : '<b>No haz termiando tu invenatario</b>, aún así, puedes contestar los demás cuestionarios, pero nuestro modelo de recomendación no sera tan preciso con tu perfil. '}
+    `,
+    icon: 'info',
+    showCancelButton: true,
+    confirmButtonText: 'Continuar',
+    cancelButtonText: 'Cancelar',
+    focusConfirm: false,
+    allowOutsideClick: false,
+    allowEscapeKey: false,
+    customClass: {
+      popup: 'swal2-popup-custom'
+    }
+  }).then((result) => {
+    if (result.isConfirmed) {
+      this.router.navigate(['/pruebasA']); 
+    }
+  });
+}
+
 
 }

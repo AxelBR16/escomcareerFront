@@ -48,7 +48,7 @@
             <li>✔ Opiniones de alumnos que ya se encuentran en la Escuela.</li>
             <li>✔ Visualizar los diferentes proyectos realizados por Estudiantes en la ESCOM.</li>
         </ul>
-        <a href="#" class="read-more">Acceder</a>
+        <a [routerLink]="['/carreras/0']" class="read-more">Acceder</a>
     </div>
 </section>
 
@@ -81,7 +81,7 @@
       </div>
 
       <!-- Bloque 2:  -->
-      <div class="service-block">
+      <div [routerLink]="['/carreras/0']" class="service-block">
         <img src="site/voca.png" alt="dsfsdfds" class="service-icon">
         <h3 class="service-title">Experiencias de Alumnos</h3>
         <p>Podras conocer las diferentes opiniones de los alumnos en la escuela,
@@ -91,7 +91,7 @@
       </div>
 
       <!-- Bloque 3:  -->
-      <div class="service-block">
+      <div [routerLink]="['/carreras']" class="service-block">
         <img src="site/compu.png" alt="dsada" class="service-icon">
         <h3 class="service-title">Informacion de Acerca de las carreras</h3>
         <p>Aqui podras visualizar informacion relevante de las carreras que
