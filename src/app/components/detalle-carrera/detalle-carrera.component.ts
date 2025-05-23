@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { MateriaService } from '../../services/materia.service';
+import { log } from 'console';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-detalle-carrera',
@@ -9,15 +12,22 @@ import { CommonModule } from '@angular/common';
   styleUrl: './detalle-carrera.component.css'
 })
 export class DetalleCarreraComponent implements OnInit{
+  carreraId = 1;
   careers = [
     {
       title: 'Sistemas Computacionales',
       description: 'Transforma ideas en tecnología, desarrollando soluciones innovadoras que conectan el mundo digital.',
       Image: 'site/isc.jpg',
       planEstudios: [
-        { nombre: '1er', titulo: 'Primer semestre', materias: ['Cálculo', 'Análisis vectorial', 'Matemáticas discretas', 'Comunicación oral y escrita', 'Fundamentos de programación'] },
-        { nombre: '2do', titulo: 'Segundo semestre', materias: ['Álgebra lineal', 'Estructuras de datos', 'Programación orientada a objetos', 'Circuitos digitales', 'Probabilidad y estadística'] }
-
+        { nombre: '1er', titulo: 'Primer semestre', materias: [] },
+        { nombre: '2do', titulo: 'Segundo semestre', materias: [] },
+        { nombre: '3er', titulo: 'Tercer semestre', materias: [] },
+        { nombre: '4to', titulo: 'Cuarto semestre', materias: [] },
+        { nombre: '5to', titulo: 'Quinto semestre', materias: [] },
+        { nombre: '6to', titulo: 'Sexto semestre', materias: [] },
+        { nombre: '7mo', titulo: 'Séptimo semestre', materias: [] },
+        { nombre: '8vo', titulo: 'Octavo semestre', materias: [] },
+        { nombre: 'Opt', titulo: 'Optativas', materias: [] }
       ],
 
       escuelas: ['Escuela Superior de Cómputo (ESCOM)', 'UPIITA', 'UPIIG', 'UPIIZ', 'UPIH'],
@@ -55,8 +65,15 @@ export class DetalleCarreraComponent implements OnInit{
       description: 'Crea sistemas inteligentes que aprenden, evolucionan y revolucionan el futuro de la humanidad.',
       Image: 'site/IA.jpg',
       planEstudios: [
-        { nombre: '1er', titulo: 'Primer semestre', materias: ['Álgebra', 'Introducción a la IA', 'Cálculo diferencial', 'Estadística aplicada', 'Lógica matemática'] },
-        { nombre: '2do', titulo: 'Segundo semestre', materias: ['Redes neuronales', 'Estructuras de datos', 'Aprendizaje automático', 'Programación en Python', 'Procesamiento de datos'] }
+        { nombre: '1er', titulo: 'Primer semestre', materias: [] },
+        { nombre: '2do', titulo: 'Segundo semestre', materias: [] },
+        { nombre: '3er', titulo: 'Tercer semestre', materias: [] },
+        { nombre: '4to', titulo: 'Cuarto semestre', materias: [] },
+        { nombre: '5to', titulo: 'Quinto semestre', materias: [] },
+        { nombre: '6to', titulo: 'Sexto semestre', materias: [] },
+        { nombre: '7mo', titulo: 'Séptimo semestre', materias: [] },
+        { nombre: '8vo', titulo: 'Octavo semestre', materias: [] },
+        { nombre: 'Opt', titulo: 'Optativas', materias: [] }
 
       ],
 
@@ -138,15 +155,20 @@ export class DetalleCarreraComponent implements OnInit{
   experiencias: any[] = [];
   bolsaTrabajo: any[] = [];
   proyectos: any[] = [];
+  id: string;
 
-  constructor(private route: ActivatedRoute, private router: Router) {}
+  constructor(private route: ActivatedRoute, private router: Router, private materiaService: MateriaService) {
+    this.id = this.route.snapshot.paramMap.get('id') || '1';
+  }
 
   ngOnInit() {
+
     this.route.params.subscribe(params => {
       const index = +params['id'];
       if (index >= 0 && index < this.careers.length) {
         this.career = this.careers[index];
 
+        this.cargarMateriasApi();
         // carga de experiencias
         this.loadExperiences();
         this.loadJobOffers(); // Cargar datos simulados
@@ -160,9 +182,57 @@ export class DetalleCarreraComponent implements OnInit{
     });
   }
 
+cargarMateriasApi() {
+  switch(this.id) {
+    case '1':
+      this.carreraId = 2;
+      break;
+    case '2':
+      this.carreraId = 3;
+      break;
+    default:
+      this.carreraId = 1;
+  }
+
+  this.career.planEstudios.forEach((semestre: any) => {
+    const semestreNumero = this.parseNumeroSemestre(semestre.nombre);
+    this.materiaService.getMateriasPorSemestreYcarrera(semestreNumero, this.carreraId)
+      .subscribe(materias => {
+        // Guardar array de objetos con nombre y descripción
+        semestre.materias = materias.map(m => ({
+          nombre: m.nombre,
+          descripcion: m.descripcion || 'Descripción no disponible'
+        }));
+      });
+  });
+}
+
+
   regresar() {
     this.router.navigate(['/carreras']);
   }
+   parseNumeroSemestre(nombre: string): number {
+    if (nombre.startsWith('1')) return 1;
+    if (nombre.startsWith('2')) return 2;
+    if (nombre.startsWith('3')) return 3;
+    if (nombre.startsWith('4')) return 4;
+    if (nombre.startsWith('5')) return 5;
+    if (nombre.startsWith('6')) return 6;
+    if (nombre.startsWith('7')) return 7;
+    if (nombre.startsWith('8')) return 8;
+    if (nombre.startsWith('O')) return 0;
+    return 0;
+  }
+
+ mostrarDescripcion(materia: { nombre: string; descripcion: string }) {
+  Swal.fire({
+    title: materia.nombre,
+    text: materia.descripcion,
+    icon: 'info',
+    confirmButtonText: 'Cerrar'
+  });
+}
+
 
   changeSection(section: string) {
     this.selectedSection = section;
@@ -238,6 +308,7 @@ export class DetalleCarreraComponent implements OnInit{
       }
     ];
   }
+
 
 
 
