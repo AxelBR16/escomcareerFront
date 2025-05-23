@@ -18,13 +18,14 @@ import { ResultadoService } from '../../services/resultado.service';
   imports: [CommonModule, RouterModule, FormsModule],
   styleUrls: ['./preguntas.component.css'],
 })
+
 export class PreguntasComponent implements OnInit {
   id: string;
   pregunta: Pregunta = { id: '', texto: '', imagen_url: '' };
   selectedAnswer: string | null = null;
 // Guarda las opciones seleccionadas (sus valores)
   selectedOptions: string[] = [];
-
+readonly TOTAL_OPCIONES_INV3 = 6;
   currentQuestion: number = 0;
   isAnswered: boolean = false;
   progress: number = 0;
@@ -43,6 +44,9 @@ export class PreguntasComponent implements OnInit {
   Nav: boolean = false;
   bloqueadas: Set<string> = new Set();
 
+eliminatedOptionsInv3: string[] = [];
+
+
 
 
 
@@ -59,6 +63,7 @@ export class PreguntasComponent implements OnInit {
   }
 
  ngOnInit() {
+  this.cargarEliminadasInv3();
   this.tipo = this.aRouter.snapshot.paramMap.get('tipo');
   const email = sessionStorage.getItem('email') || 'usuario';
   this.storageKey = `respuestas_${this.tipo}_${email}`;
@@ -250,19 +255,21 @@ async obtenerPreguntaMaximaPermitida(): Promise<string> {
       }
     );
   }
+
+resetNext: boolean = false; // bandera para reiniciar en la siguiente pregunta
 next() {
   if (this.selectedAnswer) {
-    // Agregar la opción seleccionada solo si no está en el array
-    if (!this.selectedOptions.includes(this.selectedAnswer)) {
-      this.selectedOptions.push(this.selectedAnswer);
+    // Agregar la opción seleccionada solo si no está en eliminatedOptionsInv3
+    if (!this.eliminatedOptionsInv3.includes(this.selectedAnswer)) {
+      this.eliminatedOptionsInv3.push(this.selectedAnswer);
     }
 
-    // Reiniciar el array si se han seleccionado 6 opciones
-    if (this.selectedOptions.length >= 6) {
-      this.selectedOptions = [];
+    // Revisar si ya seleccionaron las 6 opciones, entonces resetear
+    if (this.eliminatedOptionsInv3.length >= 6) {
+      this.eliminatedOptionsInv3 = [];
     }
 
-    // Enviar respuesta
+    // Luego continúa con tu lógica normal de enviar respuestas y navegar
     this.enviarRespuestas(parseInt(this.selectedAnswer), this.id);
 
     const currentIdNumber = parseInt(this.id.split('-')[1]);
@@ -271,17 +278,14 @@ next() {
       const nextIdNumber = currentIdNumber + 1;
 
       if (nextIdNumber <= this.totalQuestions) {
-        // Limpiar selección para la siguiente pregunta
         this.selectedAnswer = null;
         this.isAnswered = false;
 
-        // Navegar a siguiente pregunta
         this.router.navigate([
           `${this.tipo}/preguntas/${this.id.split('-')[0]}-${nextIdNumber.toString().padStart(3, '0')}`
         ]);
       } else {
-        // Al terminar, reiniciar las opciones seleccionadas para el siguiente uso
-        this.selectedOptions = [];
+        this.eliminatedOptionsInv3 = [];
         this.mostrarDialogoFinal();
       }
     }
@@ -295,9 +299,6 @@ next() {
     });
   }
 }
-
-
-
 
 
  prev() {
@@ -408,4 +409,48 @@ next() {
 onOptionChange1(event: any) {
    this.selectedAnswer = event.target.value;
 }
+
+
+
+checkResetInv3() {
+  if (this.eliminatedOptionsInv3.length >= this.TOTAL_OPCIONES_INV3) {
+    // Ya se eliminaron todas, reiniciamos el arreglo para mostrar todas de nuevo
+    this.eliminatedOptionsInv3 = [];
+    this.selectedAnswer = ''; // limpia selección actual
+    // Opcional: también limpiar localStorage si usas
+    localStorage.removeItem('eliminatedOptionsInv3');
+  }
+}
+
+
+
+onOptionChangeInv3(event: any) {
+  this.selectedAnswer = event.target.value;
+  // NO agregar la opción eliminada aquí para evitar reinicio inmediato
+}
+
+
+
+salir() {
+  if (this.parteIzquierda === 'inv3') {
+    localStorage.setItem('eliminatedOptionsInv3', JSON.stringify(this.eliminatedOptionsInv3));
+  }
+  // Aquí va la lógica que tengas para salir o cambiar vista
+  this.router.navigate(['/cuestionario']);  // Cambia '/home' por la ruta que uses
+  console.log('Saliendo del inventario', this.parteIzquierda);
+}
+
+cargarEliminadasInv3() {
+  const eliminadas = localStorage.getItem('eliminatedOptionsInv3');
+  this.eliminatedOptionsInv3 = eliminadas ? JSON.parse(eliminadas) : [];
+}
+
+cargarInv3() {
+  this.parteIzquierda = 'inv3';
+  this.cargarEliminadasInv3();
+  this.selectedAnswer = '';
+}
+
+
+
 }

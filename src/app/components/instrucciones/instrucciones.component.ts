@@ -6,6 +6,7 @@ import { RouterModule } from '@angular/router';
 interface Instruccion {
   titulo: string;
   descripcion: string;
+  descripcion2: string;
   instrucciones?: string[];
 }
 
@@ -39,7 +40,11 @@ export class InstruccionesComponent implements OnInit {
         '3. Medianamente hábil.',
         '2. Poco hábil.',
         '1. Nada hábil.'
-      ]
+      ],
+       descripcion2: `Si en algún momento deseas salir, tus selecciones actuales
+         se guardarán para continuar después sin perder lo realizado.`,
+
+
     },
     'economico': {
       titulo: 'Prueba económica Económico',
@@ -47,21 +52,30 @@ export class InstruccionesComponent implements OnInit {
       instrucciones: [
         'Sigue las pautas establecidas para evaluar tu situación económica.',
         'Considera factores como tus ingresos y gastos.'
-      ]
+      ],
+       descripcion2: `Si en algún momento deseas salir, tus selecciones actuales
+         se guardarán para continuar después sin perder lo realizado.`,
     },
     'universitario': {
       titulo: 'Inventario de preferencias universitarias',
       descripcion: `El propósito de este inventario es servir como informador al estudiante preparatoriano que requiere
-                    del servicio de orientación vocacional, ya que por la forma en que está diseñado, el alumno lee y observa los
-                    patrones de actividad de las diversas profesiones a través de los reactivos, lo cual lo obliga a procesar información a la vez que compara,
-                    agrupa, evalúa y selecciona actividades diversas.`,
+                    del servicio de orientación vocacional. A continuación verás una serie de opciones que deberás 
+                    seleccionar una a una, indicando tu preferencia en cada pregunta. Cada vez que selecciones 
+                    una opción, ésta desaparecerá de las opciones disponibles para la siguiente pregunta. Procede de la siguiente manera:`,
+                    
       instrucciones: [
-        '1(1) 2(2) 3(3) 4(4) 5(5) 6(6)',
-        'Si observas que alguna actividad se repite, no pienses en lo que contestaste anteriormente. Además, si al jerarquizar notas que ninguna actividad te satisface, entonces piensa cuál sería la que menos te disgustaría.'
-      ]
+        '',
+        'Selecciona la opción que prefieras en cada pregunta.',
+        'Al seleccionar, esa opción dejará de aparecer en las siguientes preguntas para que no la vuelvas a elegir.',
+        'Cuando hayas seleccionado todas las opciones disponibles (6 en total), el sistema automáticamente reiniciará las opciones para que puedas comenzar a seleccionar nuevamente desde todas las opciones.',
+        'Así, el proceso se repetirá hasta que completes todas las preguntas.'
+      ],
+        descripcion2: `Si en algún momento deseas salir, tus selecciones actuales
+         se guardarán para continuar después sin perder lo realizado.`,
     },
     'intereses': {
       titulo: 'Inventario intereses ocupacionales',
+      
       descripcion: 'A continuación se presentan una serie de actividades. Clasifícalas de acuerdo con tu gusto. Esto tiene como finalidad medir tu propio interés por realizarlas. Para esto, tus ponderaciones se ajustarán a las siguientes claves:',
       instrucciones: [
         '5. Me gusta mucho.',
@@ -69,7 +83,10 @@ export class InstruccionesComponent implements OnInit {
         '3. Me es indiferente.',
         '2. Me desagrada.',
         '1. Me desagrada totalmente.'
-      ]
+      ],
+       descripcion2: `Si en algún momento deseas salir, tus selecciones actuales
+         se guardarán para continuar después sin perder lo realizado.`,
+
     },
   };
 
@@ -86,6 +103,7 @@ export class InstruccionesComponent implements OnInit {
       this.contenido = {
         titulo: 'Instrucciones',
         descripcion: 'No se encontró el tipo de instrucciones solicitado.',
+        descripcion2: 'No se encontró el tipo de instrucciones solicitado.',
         instrucciones: []
       };
     }
