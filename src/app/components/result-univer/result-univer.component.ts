@@ -18,6 +18,8 @@ import { ResultadoResumenDTO } from '../../models/ResultadoResumenDTO';
 })
 export class ResultUniverComponent {
   private chart: any;
+   etiquetas: string[] = [];
+  puntajes: number[] = [];
 
   constructor(@Inject(PLATFORM_ID) private platformId: any, private router: Router,private resultadoService: ResultadoService) {}
    ngAfterViewInit(): void {
@@ -63,6 +65,8 @@ export class ResultUniverComponent {
 
      initChart(etiquetas: string[], puntajes: number[]): void {
       const canvas = document.getElementById('aptitudesChart') as HTMLCanvasElement;
+      this.etiquetas = etiquetas;
+      this.puntajes = puntajes;
 
       if (!canvas) {
         console.error('No se encontró el canvas en el DOM.');
@@ -119,5 +123,50 @@ export class ResultUniverComponent {
         Swal.close(); // Cierra la alerta de carga
       }, 4000); // El tiempo de espera puede ajustarse
     }
+
+
+ mostrarAlertaYRedirigir(etiquetas: string[], puntajes: number[]) {
+  const indexFisico = etiquetas.indexOf('Fisicomatemáticas');
+  if (indexFisico === -1) {
+    Swal.fire('Información', 'No se encontró la escala Fisicomatemáticas.', 'info');
+    return;
+  }
+
+  const pares = etiquetas.map((et, i) => ({ etiqueta: et, puntaje: puntajes[i] }));
+  pares.sort((a, b) => b.puntaje - a.puntaje);
+  const fisicoEnTop3 = pares.slice(0, 3).some(p => p.etiqueta === 'Fisicomatemáticas');
+
+  if (fisicoEnTop3) {
+    Swal.fire({
+      title: '¡Felicidades!',
+      html: '<b>Tu puntaje en Fisicomatemáticas está dentro de los 3 más altos.</b> Puedes contestar los demás cuestionarios.',
+      icon: 'success',
+      showCancelButton: true,
+      confirmButtonText: 'Continuar',
+      cancelButtonText: 'Cancelar',
+      allowOutsideClick: false,
+      allowEscapeKey: false,
+      customClass: { popup: 'swal2-popup-custom' }
+    }).then(result => {
+      if (result.isConfirmed) {
+        this.router.navigate(['/pruebasA']);
+      }
+    });
+  } else {
+    Swal.fire({
+      title: 'Acceso denegado',
+      html: 'Tu puntaje en Fisicomatemáticas no está entre los 3 más altos, por lo que no puedes acceder a los siguientes cuestionarios.',
+      icon: 'error',
+      confirmButtonText: 'Aceptar',
+      allowOutsideClick: false,
+      allowEscapeKey: false,
+      customClass: { popup: 'swal2-popup-custom' }
+    });
+  }
+}
+
+
+
+
   }
 

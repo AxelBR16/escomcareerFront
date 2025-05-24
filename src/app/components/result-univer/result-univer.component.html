@@ -42,8 +42,12 @@
     </table>
   </div>
 
-  <div class="btn-container">
-    <a [routerLink]="['/instrucciones', 'economico']">
-        <button class="btn">comenzar</button>
-      </a>
+<div class="btn-container">
+  <button class="btn" (click)="mostrarAlertaYRedirigir(etiquetas, puntajes)">Siguiente</button>
+
+  <a [routerLink]="['/cuestionario']"><button class="btn results-btn">Regresar</button></a>
+    <!-- <a href="instrUniversitarias.html"><button class="btn results-btn">Ver resultados</button></a>-->
+
 </div>
+<br>
+

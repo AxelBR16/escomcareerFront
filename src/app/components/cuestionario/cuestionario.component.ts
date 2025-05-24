@@ -53,21 +53,29 @@ export class CuestionarioComponent implements OnInit{
   }
 
   mostrarAlertaAntesDeSeguir() {
-  const puntajeFisicoMatematicas = this.progreso;
+  const puntajeCompleto = this.progreso === 100;
 
+  if (!puntajeCompleto) {
+    Swal.fire({
+      title: 'Inventario incompleto',
+      html: 'No has terminado tu inventario. Debes completarlo al 100% para poder continuar.',
+      icon: 'warning',
+      confirmButtonText: 'Aceptar',
+      allowOutsideClick: false,
+      allowEscapeKey: false,
+      customClass: {
+        popup: 'swal2-popup-custom'
+      }
+    });
+    return; // No permite continuar ni redirigir
+  }
+
+  // Si está completo, permite continuar con la alerta y opción a confirmar
   Swal.fire({
-    title: 'Antes de seguir',
-    html: `
-    Aseguarte de completar el inventario.<br><br>
-      ${puntajeFisicoMatematicas > 10
-        ? '<b>Felicidades, tu puntaje en del cuestionario esta completo al 100%</b>. Puedes contestar los demás cuestionarios.'
-        : '<b>No haz termiando tu invenatario</b>, aún así, puedes contestar los demás cuestionarios, pero nuestro modelo de recomendación no sera tan preciso con tu perfil. '}
-    `,
-    icon: 'info',
-    showCancelButton: true,
+    title: 'Inventario completo',
+    html: '<b>Felicidades, tu puntaje en el cuestionario está completo al 100%.</b> Puedes contestar los demás cuestionarios.',
+    icon: 'success',
     confirmButtonText: 'Continuar',
-    cancelButtonText: 'Cancelar',
-    focusConfirm: false,
     allowOutsideClick: false,
     allowEscapeKey: false,
     customClass: {
@@ -75,7 +83,7 @@ export class CuestionarioComponent implements OnInit{
     }
   }).then((result) => {
     if (result.isConfirmed) {
-      this.router.navigate(['/pruebasA']); 
+      this.router.navigate(['/pruebasA']);
     }
   });
 }

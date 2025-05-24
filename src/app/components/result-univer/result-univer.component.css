@@ -41,9 +41,20 @@ canvas {
     width: 50px;
     text-align: center;
 }
+
 .btn-container {
-    text-align: center;
-    margin-top: 20px;
+  display: flex;
+  justify-content: center; /* centra los botones en el contenedor */
+  gap: 10px; /* espacio entre los botones */
+}
+
+.results-btn {
+  width: 200px; /* o cualquier ancho fijo que prefieras */
+  margin: 0; /* quitar margen automático */
+}
+
+.results-btn:hover {
+  background-color: #FFD700;
 }
 
 button {
