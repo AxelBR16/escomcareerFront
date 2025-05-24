@@ -102,4 +102,26 @@ initChart(etiquetas: string[], puntajes: number[]): void {
     });
   }
 
+
+  
+    // Método que se activa al hacer clic en el botón
+    showLoading(): void {
+      // Muestra la alerta de SweetAlert2
+      Swal.fire({
+        title: 'Cargando...',
+        text: 'Analizando resultados similares en el sistema de recomendación...',
+        icon: 'info',
+        allowOutsideClick: false, // Evita que el usuario cierre la alerta
+        showConfirmButton: false, // No mostrar el botón de confirmación
+        willOpen: () => {
+          Swal.showLoading(); // Muestra el spinner de carga
+        }
+      });
+  
+      // Simula una espera de 2 segundos antes de redirigir
+      setTimeout(() => {
+        this.router.navigate(['/resultAI2']); // Redirige a la página de resultados
+        Swal.close(); // Cierra la alerta de carga
+      }, 4000); // El tiempo de espera puede ajustarse
+    }
 }

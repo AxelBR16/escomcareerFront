@@ -25,14 +25,14 @@ import { AdminExpeComponent } from './components/admin-expe/admin-expe.component
 import { AdminvideosComponent } from './components/adminvideos/adminvideos.component';
 import { ExperenceComponent } from './components/experence/experence.component';
 import { ResultAIComponent } from './components/result-ai/result-ai.component';
-
+import { ResultAI2Component } from './components/result-ai2/result-ai2.component';
 
 export const routes: Routes = [
   {path: '', component: InicioComponent},
   {path: 'carreras', component: CarrerasComponent},
   {path: 'result-aptitudes', component: ResultAptitudesComponent, canActivate: [AspiranteGuard]},
   {path: 'result-uni', component: ResultUniverComponent, canActivate: [AspiranteGuard]},
-  {path: 'result-intereses', component: ResultInteresesComponent, canActivate: [AspiranteGuard]},
+  {path: 'result-intereses', component: ResultInteresesComponent},
   {path: 'proyectEgresado', component: ProyectEgresadoComponent, canActivate: [EgresadoGuard]},
   {path: 'experience', component: ExperenceComponent, canActivate: [EgresadoGuard]},
   {path: 'logine', component: LogineComponent},
@@ -48,6 +48,7 @@ export const routes: Routes = [
   {path: 'admin-carreras', component: AdminCarrerasComponent},
   {path: 'admin-expe', component: AdminExpeComponent},
   {path: 'resultAI', component: ResultAIComponent},
+   {path: 'resultAI2', component: ResultAI2Component},
   {path: 'admin-videos', component: AdminvideosComponent},
   {path: 'aspirante-dashboard', component: AspiranteDashboardComponent, canActivate: [AspiranteGuard]},
   { path: 'forgot-password', component: ForgotPasswordComponent },
