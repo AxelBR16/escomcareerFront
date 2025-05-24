@@ -111,8 +111,15 @@ export class DetalleCarreraComponent implements OnInit{
       description: 'Descubre el poder de los datos para entender patrones, anticipar tendencias y tomar decisiones inteligentes.',
       Image:'site/CD.jpg',
       planEstudios: [
-        { nombre: '1er', titulo: 'Primer semestre', materias: ['Introducción a la Ciencia de Datos', 'Cálculo', 'Probabilidad y Estadística', 'Programación en R', 'Análisis de datos'] },
-        { nombre: '2do', titulo: 'Segundo semestre', materias: ['Big Data', 'Bases de datos', 'Visualización de datos', 'Machine Learning', 'Optimización matemática'] }
+          { nombre: '1er', titulo: 'Primer semestre', materias: [] },
+        { nombre: '2do', titulo: 'Segundo semestre', materias: [] },
+        { nombre: '3er', titulo: 'Tercer semestre', materias: [] },
+        { nombre: '4to', titulo: 'Cuarto semestre', materias: [] },
+        { nombre: '5to', titulo: 'Quinto semestre', materias: [] },
+        { nombre: '6to', titulo: 'Sexto semestre', materias: [] },
+        { nombre: '7mo', titulo: 'Séptimo semestre', materias: [] },
+        { nombre: '8vo', titulo: 'Octavo semestre', materias: [] },
+        { nombre: 'Opt', titulo: 'Optativas', materias: [] }
 
       ],
 
