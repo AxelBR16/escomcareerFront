@@ -1,0 +1,44 @@
+.launch-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 50px;
+  background-color: #f0f8ff;  /* Fondo suave */
+}
+
+.launch-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 80%;
+}
+
+.launch-text {
+  max-width: 40%;
+}
+
+.launch-text h1 {
+  font-size: 32px;
+  font-weight: bold;
+}
+
+.launch-text h2 {
+  font-size: 28px;
+  color: #3498db;
+}
+
+.launch-text p {
+  font-size: 16px;
+  color: #555;
+  margin: 20px 0;
+}
+
+.launch-image {
+  width: 50%;
+}
+
+canvas {
+  width: 100%;  /* Esto asegura que el gráfico ocupe todo el ancho del canvas */
+  max-width: 800px;  /* Puedes ajustar el tamaño máximo aquí */
+  height: auto;
+}

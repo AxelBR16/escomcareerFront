@@ -42,10 +42,8 @@
     </table>
   </div>
 
-  <div class="btn-container">
-    <a [routerLink]="['/instrucciones', 'economico']">
-        <button class="btn">comenzar</button>
-      </a>
-      <br>
+ <!-- Botón con evento (click) -->
+<div class="btn-container">
+  <button class="btn neon" (click)="showLoading()">Mostrar resumen con IA</button>
 </div>
-  
+<br>
