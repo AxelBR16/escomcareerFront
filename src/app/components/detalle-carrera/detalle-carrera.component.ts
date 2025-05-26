@@ -4,6 +4,8 @@ import { CommonModule } from '@angular/common';
 import { MateriaService } from '../../services/materia.service';
 import { log } from 'console';
 import Swal from 'sweetalert2';
+import { ProyectoService } from '../../services/proyecto.service';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-detalle-carrera',
@@ -164,7 +166,7 @@ export class DetalleCarreraComponent implements OnInit{
   proyectos: any[] = [];
   id: string;
 
-  constructor(private route: ActivatedRoute, private router: Router, private materiaService: MateriaService) {
+  constructor(private route: ActivatedRoute, private router: Router, private materiaService: MateriaService, private proyectoService: ProyectoService, private sanitizer: DomSanitizer) {
     this.id = this.route.snapshot.paramMap.get('id') || '1';
   }
 
@@ -318,30 +320,23 @@ cargarMateriasApi() {
 
 
 
-
-   loadProjects() {
-    this.proyectos = [
-      {
-        id: 1,
-        titulo: "Práctica 3 Termómetro con diodo",
-        descripcion: "Lorem ipsum dolor sit amet consectetur. Sed et magna massa vestibulum malesuada adipiscing vestibulum. Dictumst massa tellus nulla venenatis interdum.",
-        categoria: "Instrumentación y Control",
-        imagen: "assets/proyecto1.jpg",
-        autor: "Pérez Medina Ruben",
-        status: "Egresado",
-        voto: null
+loadProjects() {
+    this.proyectoService.obtenerProyectosPorCarrera(this.carreraId).subscribe({
+      next: (data) => {
+        this.proyectos = data.map(proy => ({
+          id: proy.id,
+          titulo: proy.nombre,
+          descripcion: proy.descripcion,
+          categoria: proy.nombreMateria,
+          imagen: proy.url,
+          autor: `${proy.nombreEgresado} ${proy.apellidoEgresado}`,
+          status: proy.fecha,
+          voto: null
+        }));
       },
-      {
-        id: 2,
-        titulo: "Proyecto: Aplicación de análisis de movimientos bancarios con AWS",
-        descripcion: "Lorem ipsum dolor sit amet consectetur. Sed et magna massa vestibulum malesuada adipiscing vestibulum. Dictumst massa tellus nulla venenatis interdum.",
-        categoria: "Sistemas distribuidos",
-        imagen: "assets/proyecto2.jpg",
-        autor: "Pérez Medina Ruben",
-        status: "Egresado",
-        voto: null
-      }
-    ];
+      error: (err) => console.error('Error cargando proyectos', err)
+    });
+    console.log(this.proyectos)
   }
 
   votarproyecto(id: number, tipo: 'like' | 'dislike') {
@@ -350,5 +345,21 @@ cargarMateriasApi() {
       proyecto.voto = proyecto.voto === tipo ? null : tipo;
     }
   }
+  getVideoEmbedUrl(url: string): SafeResourceUrl | null {
+    if (!url) return null;
 
+    // YouTube
+    const youtubeMatch = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^\s&]+)/);
+    if (youtubeMatch && youtubeMatch[1]) {
+      return this.sanitizer.bypassSecurityTrustResourceUrl(`https://www.youtube.com/embed/${youtubeMatch[1]}`);
+    }
+
+    // Google Drive
+    const driveMatch = url.match(/drive\.google\.com\/file\/d\/([^\/]+)/);
+    if (driveMatch && driveMatch[1]) {
+      return this.sanitizer.bypassSecurityTrustResourceUrl(`https://drive.google.com/file/d/${driveMatch[1]}/preview`);
+    }
+
+    return null;
+  }
 }

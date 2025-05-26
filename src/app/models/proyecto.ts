@@ -8,6 +8,9 @@ export interface proyecto {
   egresadoEmail: string;
   carreraId: number;
   materiaId: number;
-  validado?: boolean;
+  estado?: boolean;
   fecha?: string;
+  nombreEgresado?: string;
+  apellidoEgresado?: string;
+  nombreMateria?: string;
 }

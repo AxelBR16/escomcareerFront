@@ -27,5 +27,9 @@ export class ProyectoService {
   return this.http.delete<void>(`${environment.apiUrls.auth}/proyectos/${id}`);
   }
 
+  obtenerProyectosPorCarrera(carreraId: number): Observable<proyecto[]> {
+    return this.http.get<proyecto[]>(`${environment.apiUrls.auth}/proyectos?carreraId=${carreraId}`);
+  }
+
 
 }

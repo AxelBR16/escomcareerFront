@@ -202,12 +202,13 @@
               <h3 class="titulo">{{ proyecto.titulo }}</h3>
               <p class="descripcion">{{ proyecto.descripcion }}</p>
               <span class="categoria">{{ proyecto.categoria }}</span>
+
             </div>
 
             <!-- Contenedor de video y reacciones -->
             <div class="proyecto-derecha">
-              <div class="proyecto-video">
-                <video [src]="proyecto.video" controls class="video-proyecto"></video>
+              <div class="proyecto-video" *ngIf="getVideoEmbedUrl(proyecto.imagen) as embedUrl">
+                <iframe [src]="embedUrl" width="250" height="140" frameborder="0" allowfullscreen></iframe>
               </div>
 
               <div class="proyecto-footer">
