@@ -11,7 +11,7 @@
     <button [class.active]="activeTab === 'pendiente'" (click)="setActiveTab('pendiente')">Pendiente</button>
     <button [class.active]="activeTab === 'administra'" (click)="setActiveTab('administra')">Administra</button>
   </div>
-  
+
   <!-- Contenedor dinámico según la pestaña activa -->
   <div class="tab-content">
     <!-- Detalles -->
@@ -22,72 +22,89 @@
               <h2>Detalles</h2>
               <p>Sube tu video y agrega su información correspondiente para que la comunidad pueda disfrutarlo.</p>
             </div>
-          
+
             <div class="content">
               <!-- Columna izquierda: Información del video -->
               <div class="left-panel">
                 <div class="form-group">
                   <label for="title">Título Obligatorio</label>
-                  <input type="text" id="title" placeholder="Título del video" maxlength="100">
-                  <span class="char-count">0/100</span>
+                  <input type="text" id="title" placeholder="Título del video" maxlength="100" [(ngModel)]="title" name="title" required>
+                  <span class="char-count">{{title.length}}/100</span>
                 </div>
-          
+
                 <div class="form-group">
                   <label for="description">Descripción</label>
-                  <textarea id="description" placeholder="Menciona a los usuarios de qué va tu video"></textarea>
+                  <textarea id="description" placeholder="Menciona a los usuarios de qué va tu video" [(ngModel)]="description" name="description"></textarea>
                 </div>
-          
+
                 <div class="form-group">
                   <label>Carrera a la que pertenece el video</label>
-                  <select>
-                    <option>Selecciona una carrera</option>
-                    <option>Ingeniería en Sistemas</option>
-                    <option>Licenciatura en Ciencia de Datos</option>
-                  </select>
+                 <select [(ngModel)]="carreraId" name="carreraId" (change)="cargarMaterias()">
+                  <option value="" disabled selected>Selecciona una carrera</option>
+                  <option [value]="1">Ingeniería en Sistemas</option>
+                  <option [value]="2">Ingeniería en Inteligencia Artificial</option>
+                  <option [value]="3">Licenciatura en Ciencia de Datos</option>
+                </select>
                 </div>
-          
+
                 <div class="form-group">
                   <label>Semestre</label>
-                  <input type="number" min="1" max="12" placeholder="Semestre">
+                    <select [(ngModel)]="semestre" name="semestre" (change)="cargarMaterias()">
+                      <option value="" disabled selected>Selecciona una semestre</option>
+                      <option [value]="0">Optativas</option>
+                      <option [value]="1">1er semestre</option>
+                      <option [value]="2">2do semestre</option>
+                      <option [value]="3">3er semestre</option>
+                      <option [value]="4">4to semestre</option>
+                      <option [value]="5">5to semestre</option>
+                      <option [value]="6">6to semestre</option>
+                      <option [value]="7">7mo semestre</option>
+                      <option [value]="8">8vo semestre</option>
+                    </select>
                 </div>
-          
+
                 <div class="form-group">
                   <label>Unidad de Aprendizaje</label>
-                  <input type="text" placeholder="Unidad de Aprendizaje">
+                  <select [(ngModel)]="materiaId" name="materiaId" (change)="cargarMaterias()">
+                    <option value="" disabled selected>Selecciona una unidad de aprendizaje</option>
+                    <option *ngFor="let materia of materias" [value]="materia.id">{{ materia.nombre }}</option>
+                  </select>
                 </div>
               </div>
-          
+
               <!-- Columna derecha: Subida de video -->
               <div class="right-panel">
                 <div class="video-upload">
                   <div class="video-preview">
                     <span class="play-icon">▶</span>
                   </div>
-                  <p>Sube tu video</p>
-                  <input type="file">
+
+                  <!-- <p>Sube tu video</p>
+                  <input type="file"> -->
                 </div>
-          
+
                 <div class="form-group">
                   <label>Añadir URL:</label>
-                  <input type="text" placeholder="https://mivideo">
+                  <input type="text" placeholder="https://mivideo" [(ngModel)]="urlVideo" name="urlVideo">
                 </div>
-          
-                <button class="upload-btn">Subir video</button>
+
+                <button class="upload-btn" (click)="subirProyecto()">Subir video</button>
+
               </div>
             </div>
           </div>
- 
+
     </div>
-  
+
     <!-- Pendiente -->
     <div *ngIf="activeTab === 'pendiente'">
         <div class="pending-container">
             <!-- Tarjeta de Video Pendiente -->
             <div class="card pending">
               <div class="card-image">
-                
+
                 <img src="/site/Escom6.png" alt="Revisión de Video">
-                
+
               </div>
               <div class="card-content">
                 <h2>📂 Video Pendiente</h2>
@@ -105,7 +122,7 @@
                 </table>
               </div>
             </div>
-          
+
             <!-- Tarjeta de Estatus -->
             <div class="card status">
               <div class="card-image">
@@ -139,19 +156,19 @@
               </div>
             </div>
           </div>
-          
+
 
 
 
 
     </div>
-  
+
     <!-- Administra -->
     <div *ngIf="activeTab === 'administra'">
-       
+
         <div class="admin-container">
             <div class="video-card" *ngFor="let video of videos">
-              
+
               <!-- Imagen del video con icono de reproducción -->
               <div class="video-thumbnail">
                 <img [src]="video.thumbnail" alt="Video Thumbnail">
@@ -159,7 +176,7 @@
                   <ion-icon name="play-circle"></ion-icon>
                 </div>
               </div>
-          
+
               <!-- Reacciones: Likes y Dislikes -->
               <div class="video-reactions">
                 <div class="likes">
@@ -171,12 +188,12 @@
                   <span>{{ video.dislikes }}</span>
                 </div>
               </div>
-          
+
               <!-- Información del Video -->
               <div class="video-info">
                 <h3>{{ video.title }}</h3>
                 <p>{{ video.description }}</p>
-                
+
                 <!-- Botón de Eliminar -->
                 <button class="delete-btn" (click)="deleteVideo(video.id)">
                   <ion-icon name="trash"></ion-icon>
@@ -184,11 +201,10 @@
               </div>
             </div>
           </div>
-          
-          
+
+
     </div>
 
 
   </div>
   <br>
-  
