@@ -1,18 +1,31 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
 import { CanActivate, Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
+import { isPlatformBrowser } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EgresadoGuard implements CanActivate {
-  constructor(private router: Router, private authService: AuthService) {}
+
+  constructor(
+    private router: Router,
+    private authService: AuthService,
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) {}
+
   canActivate(): boolean {
-    if (!this.authService.isLoggedIn() && !(sessionStorage.getItem('role') === 'ROLE_EGRESADO')) {
+    if (isPlatformBrowser(this.platformId)) {
+      const role = sessionStorage.getItem('role');
+      if (!this.authService.isLoggedIn() && role !== 'ROLE_EGRESADO') {
+        this.router.navigate(['/login']);
+        return false;
+      }
+      return true;
+    } else {
+      // No estamos en navegador, denegamos acceso o lo que prefieras hacer
       this.router.navigate(['/login']);
       return false;
     }
-    return true;
   }
 }
-

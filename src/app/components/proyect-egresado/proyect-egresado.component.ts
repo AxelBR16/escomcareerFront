@@ -8,6 +8,7 @@ import { proyecto } from '../../models/proyecto';
 import { FormsModule } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { Materia } from '../../models/materia';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 
 interface Video {
@@ -28,7 +29,7 @@ interface Video {
 export class ProyectEgresadoComponent implements OnInit {
   activeTab: string = 'detalles'; // Define la pestaña activa por defecto
 
-  constructor(private proyectoService: ProyectoService, private materiaService: MateriaService) {}
+  constructor(private proyectoService: ProyectoService, private materiaService: MateriaService, private sanitizer: DomSanitizer) {}
   title: string = '';
   description: string = '';
   carrera: number = 0;
@@ -39,10 +40,26 @@ export class ProyectEgresadoComponent implements OnInit {
   carreraId: number = 1;
   email = '';
   materias: Materia[] = [];
+  proyectosPendientes: proyecto[] = [];
+  videoEmbedUrls: { [key: number]: SafeResourceUrl | null } = {};
+  videos: proyecto[] = [];
 
   ngOnInit() {
-     this.email = sessionStorage.getItem('email')!;
+    this.email = sessionStorage.getItem('email')!;
+    this.cargarProyectosPendientes();
+    this.cargarProyectos();
   }
+
+    cargarProyectosPendientes() {
+    this.proyectoService.obtenerProyectosPendientes(this.email)
+      .subscribe(proyectos => {
+        this.proyectosPendientes = proyectos;
+        this.proyectosPendientes.forEach(proy => {
+          this.videoEmbedUrls[proy.id!] = this.getVideoEmbedUrl(proy.url);
+        });
+      });
+  }
+
 
   cargarMaterias() {
   if (this.semestre != null && this.carreraId != null) {
@@ -50,7 +67,6 @@ export class ProyectEgresadoComponent implements OnInit {
       .subscribe({
         next: (data) => {
           this.materias = data;
-          // Opcional: asignar la primera materia como seleccionada automáticamente
           if (this.materias.length > 0) {
             this.materiaId = this.materias[0].id;
           }
@@ -114,47 +130,66 @@ console.log();
   // Cambiar pestaña activa
   setActiveTab(tab: string) {
     this.activeTab = tab;
-  }
-
-  // Lista de videos con datos dinámicos
-  videos: Video[] = [
-    {
-      id: 1,
-      title: 'Video 1',
-      description: 'Descripción del Video 1',
-      thumbnail: '/site/Escom6.png',
-      likes: 45,
-      dislikes: 5
-    },
-    {
-      id: 2,
-      title: 'Video 2',
-      description: 'Descripción del Video 2',
-      thumbnail: '/site/Escom5.png',
-      likes: 30,
-      dislikes: 10
-    },
-    {
-      id: 3,
-      title: 'Video 3',
-      description: 'Descripción del Video 3',
-      thumbnail: '/site/Escom4.png',
-      likes: 60,
-      dislikes: 2
-    },
-    {
-      id: 4,
-      title: 'Video 4',
-      description: 'Descripción del Video 4',
-      thumbnail: '/site/Escom4.png',
-      likes: 60,
-      dislikes: 2
+    if (tab === 'pendiente') {
+      this.cargarProyectosPendientes();
     }
-  ];
-
-  // Función para eliminar un video
-  deleteVideo(videoId: number) {
-    this.videos = this.videos.filter(video => video.id !== videoId);
-    console.log("Video eliminado:", videoId);
   }
+
+
+
+  eliminarProyecto(id: number): void {
+  console.log('hols')
+  Swal.fire({
+    title: '¿Estás seguro?',
+    text: 'Esta acción eliminará el proyecto permanentemente.',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: 'Sí, eliminar',
+    cancelButtonText: 'Cancelar'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      this.proyectoService.eliminarProyecto(id).subscribe({
+        next: () => {
+          Swal.fire('¡Eliminado!', 'El proyecto ha sido eliminado.', 'success');
+          this.cargarProyectos(); // Recargar lista
+        },
+        error: err => {
+          console.error('Error al eliminar proyecto', err);
+          Swal.fire('Error', 'No se pudo eliminar el proyecto.', 'error');
+        }
+      });
+    }
+  });
+}
+
+
+   getVideoEmbedUrl(url: string): SafeResourceUrl | null {
+    if (!url) return null;
+
+    const youtubeMatch = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^\s&]+)/);
+    if (youtubeMatch && youtubeMatch[1]) {
+      return this.sanitizer.bypassSecurityTrustResourceUrl(`https://www.youtube.com/embed/${youtubeMatch[1]}`);
+    }
+
+    const driveMatch = url.match(/drive\.google\.com\/file\/d\/([^\/]+)/);
+    if (driveMatch && driveMatch[1]) {
+      return this.sanitizer.bypassSecurityTrustResourceUrl(`https://drive.google.com/file/d/${driveMatch[1]}/preview`);
+    }
+
+    return null;
+  }
+
+  cargarProyectos(): void {
+  this.proyectoService.obtenerTodosLosProyectos(this.email).subscribe({
+    next: proyectos => {
+      this.videos = proyectos;
+      this.videos.forEach(proy => {
+        this.videoEmbedUrls[proy.id!] = this.getVideoEmbedUrl(proy.url);
+      });
+    },
+    error: err => console.error('Error al cargar proyectos', err)
+  });
+}
+
+
 }

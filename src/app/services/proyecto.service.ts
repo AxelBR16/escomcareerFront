@@ -14,4 +14,18 @@ export class ProyectoService {
   guardarProyecto(proyecto: proyecto): Observable<any> {
     return this.http.post(`${environment.apiUrls.auth}/proyectos`, proyecto);
   }
+
+  obtenerProyectosPendientes(email: string): Observable<proyecto[]> {
+    return this.http.get<proyecto[]>(`${environment.apiUrls.auth}/proyectos/pendientes?email=${email}`);
+  }
+
+  obtenerTodosLosProyectos(email: string): Observable<proyecto[]> {
+  return this.http.get<proyecto[]>(`${environment.apiUrls.auth}/proyectos/usuario?email=${email}`);
+  }
+
+  eliminarProyecto(id: number): Observable<void> {
+  return this.http.delete<void>(`${environment.apiUrls.auth}/proyectos/${id}`);
+  }
+
+
 }

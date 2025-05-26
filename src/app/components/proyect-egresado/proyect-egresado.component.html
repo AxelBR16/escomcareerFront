@@ -97,113 +97,73 @@
     </div>
 
     <!-- Pendiente -->
-    <div *ngIf="activeTab === 'pendiente'">
-        <div class="pending-container">
-            <!-- Tarjeta de Video Pendiente -->
-            <div class="card pending">
-              <div class="card-image">
-
-                <img src="/site/Escom6.png" alt="Revisión de Video">
-
-              </div>
-              <div class="card-content">
-                <h2>📂 Video Pendiente</h2>
-                <p>Tu solicitud de video está siendo revisada por un administrador.</p>
-                <p>Recibirás una respuesta en las próximas 24 horas.</p>
-                <table>
-                  <tr>
-                    <th>Nombre video</th>
-                    <th>Fecha</th>
-                  </tr>
-                  <tr>
-                    <td>Video 4</td>
-                    <td>XX/XX/XXXX</td>
-                  </tr>
-                </table>
-              </div>
-            </div>
-
-            <!-- Tarjeta de Estatus -->
-            <div class="card status">
-              <div class="card-image">
-                <img src="/site/Escom6.png" alt="Estatus de Video">
-              </div>
-              <div class="card-content">
-                <h2>📊 Estatus</h2>
-                <p>Consulta el estatus de tus videos</p>
-                <table>
-                  <tr>
-                    <th>Nombre video</th>
-                    <th>Fecha Subida</th>
-                    <th>Estatus</th>
-                  </tr>
-                  <tr>
-                    <td>Video 3</td>
-                    <td>XX/XX/XXXX</td>
-                    <td class="approved">Aprobado</td>
-                  </tr>
-                  <tr>
-                    <td>Video 2</td>
-                    <td>XX/XX/XXXX</td>
-                    <td class="not-approved">No Aprobado</td>
-                  </tr>
-                  <tr>
-                    <td>Video 1</td>
-                    <td>XX/XX/XXXX</td>
-                    <td class="approved">Aprobado</td>
-                  </tr>
-                </table>
-              </div>
-            </div>
-          </div>
-
-
-
-
-
+   <div *ngIf="activeTab === 'pendiente'">
+  <div class="pending-container" *ngIf="proyectosPendientes.length > 0; else noPendientes">
+    <div class="card pending" *ngFor="let proyecto of proyectosPendientes">
+       <iframe
+          *ngIf="proyecto.id !== undefined && videoEmbedUrls[proyecto.id]"
+          [src]="videoEmbedUrls[proyecto.id]"
+          width="320"
+          height="180"
+          frameborder="0"
+          allowfullscreen>
+        </iframe>
+      <div class="card-content">
+        <h2>📂 {{ proyecto.nombre }}</h2>
+        <p>{{ proyecto.descripcion }}</p>
+        <p>Fecha de subida: {{ proyecto.fecha | date }}</p>
+        <p>Estado: Pendiente de validación</p>
+      </div>
     </div>
+  </div>
+
+  <ng-template #noPendientes>
+    <p style="text-align: center;">No tienes proyectos pendientes por validar.</p>
+  </ng-template>
+</div>
 
     <!-- Administra -->
     <div *ngIf="activeTab === 'administra'">
+  <div class="admin-container">
+    <div class="video-card" *ngFor="let video of videos">
+      <!-- Imagen del video con icono de reproducción -->
+      <div class="video-thumbnail">
+         <iframe
+          *ngIf="video.id !== undefined && videoEmbedUrls[video.id]"
+          [src]="videoEmbedUrls[video.id]"
+          width="320"
+          height="180"
+          frameborder="0"
+          allowfullscreen>
+        </iframe>
+      </div>
 
-        <div class="admin-container">
-            <div class="video-card" *ngFor="let video of videos">
+      <!-- Reacciones: Likes y Dislikes -->
+      <div class="video-reactions">
+        <div class="likes">
+          <ion-icon name="thumbs-up" class="like-icon"></ion-icon>
+          <span>{{ video.likes }}</span>
+        </div>
+        <div class="dislikes">
+          <ion-icon name="thumbs-down" class="dislike-icon"></ion-icon>
+          <span>{{ video.dislikes }}</span>
+        </div>
+      </div>
 
-              <!-- Imagen del video con icono de reproducción -->
-              <div class="video-thumbnail">
-                <img [src]="video.thumbnail" alt="Video Thumbnail">
-                <div class="play-icon">
-                  <ion-icon name="play-circle"></ion-icon>
-                </div>
-              </div>
+      <!-- Información del Video -->
+      <div class="video-info">
+        <h3>{{ video.nombre }}</h3>
+        <p>{{ video.descripcion }}</p>
 
-              <!-- Reacciones: Likes y Dislikes -->
-              <div class="video-reactions">
-                <div class="likes">
-                  <ion-icon name="thumbs-up" class="like-icon"></ion-icon>
-                  <span>{{ video.likes }}</span>
-                </div>
-                <div class="dislikes">
-                  <ion-icon name="thumbs-down" class="dislike-icon"></ion-icon>
-                  <span>{{ video.dislikes }}</span>
-                </div>
-              </div>
-
-              <!-- Información del Video -->
-              <div class="video-info">
-                <h3>{{ video.title }}</h3>
-                <p>{{ video.description }}</p>
-
-                <!-- Botón de Eliminar -->
-                <button class="delete-btn" (click)="deleteVideo(video.id)">
-                  <ion-icon name="trash"></ion-icon>
-                </button>
-              </div>
-            </div>
-          </div>
-
-
+        <!-- Botón de Eliminar -->
+        <button class="delete-btn"   *ngIf="video.id !== undefined" (click)="eliminarProyecto(video.id)">
+          <ion-icon name="trash"></ion-icon>
+        </button>
+      </div>
     </div>
+  </div>
+</div>
+
 
 
   </div>
