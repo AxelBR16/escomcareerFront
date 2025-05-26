@@ -40,7 +40,13 @@
         </div>
   <br>
 <br>
-<button class="btn results-btn" (click)="mostrarAlertaAntesDeSeguir()">Siguiente</button>
+
+<div class="btn-container">
+  <button class="btn results-btn" (click)="mostrarAlertaAntesDeSeguir()">Siguiente</button>
+  <a [routerLink]="['/aspirante-dashboard']"><button class="btn results-btn">Regresar</button></a>
+    <!-- <a href="instrUniversitarias.html"><button class="btn results-btn">Ver resultados</button></a>-->
+</div>
+
 
 
     <br>

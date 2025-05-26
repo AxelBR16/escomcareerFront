@@ -109,16 +109,43 @@ body {
 }
 
 /* Sección de test con carrusel */
-.test-section { 
+.test-section {
   text-align: center;
-  padding: 15px 10px;
+  padding: 30px 20px;  /* Aumentado el padding para mayor espacio */
   background: linear-gradient(to right, #0A1733, #002F6C);  /* Degradado azul con transparencia */
-  border-radius: 5px;
+  border-radius: 10px;
   margin: 40px auto;
-  width: 50%;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  width: 60%;  /* Ajusté el ancho para dar más espacio */
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
   color: white;
   backdrop-filter: blur(10px); /* Efecto difuminado */
+  transition: transform 0.5s ease, box-shadow 0.3s ease;
+  animation: floatEffect 3s infinite ease-in-out; /* Animación de flotación */
+}
+
+.test-section:hover {
+  transform: rotate(3deg);  /* Rotación suave al pasar el mouse */
+  box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.3); /* Sombra más fuerte en hover */
+}
+
+@keyframes floatEffect {
+  0%, 100% {
+    transform: translateY(0);  /* Estado inicial */
+  }
+  50% {
+    transform: translateY(-10px);  /* Efecto de flotación hacia arriba */
+  }
+}
+
+.test-section h2 {
+  font-size: 2.5em;  /* Título más grande */
+  margin-bottom: 20px;
+}
+
+.test-section p {
+  font-size: 1.2em;  /* Texto más grande */
+  line-height: 1.6;
+  margin-top: 10px;
 }
 
 
@@ -126,7 +153,7 @@ body {
 
 .carousel-inner {
   display: flex;
-  transition: transform 0.5s ease;
+  transition: transform 0.1s ease;
   height: 100%;
 }
 
@@ -283,13 +310,23 @@ body {
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   text-align: center;
-  transition: transform 0.6s ease-in-out; /* Suaviza la transición con un tiempo de 0.6 segundos */
+  transition: background-color 0.6s ease-in-out, color 0.6s ease-in-out, transform 0.6s ease-in-out;
+  cursor: pointer;  /* Cambia cursor a mano para indicar clickeable */
+  color: #0c0c0c; /* color original de texto */
 }
 
 .career-block:hover {
+  background-color: #002F6C; /* fondo azul */
+  color: white;              /* letras blancas */
   transform: translateY(-5px);
-  box-shadow: 0 12px 20px rgba(0, 0, 0, 0.4); /* Agrega una sombra más difusa al hacer hover */
+  box-shadow: 0 12px 20px rgba(0, 0, 0, 0.4);
 }
+
+.career-block:hover .career-title,
+.career-block:hover p {
+  color: white; /* Asegura que h3 y p cambien a blanco */
+}
+
 
 .career-icon {
   width: 60px;
@@ -507,8 +544,12 @@ footer {
 
 
 /* Sección de equipo */
+/* Sección de equipo */
+/* Sección de equipo */
 .team-section {
-  padding: 40px 20px;
+  padding: 60px 20px;
+  background: linear-gradient(135deg, #2d3b4c, #1a242f); /* Fondo degradado */
+  color: white;
   text-align: center;
 }
 
@@ -516,24 +557,93 @@ footer {
   display: flex;
   justify-content: space-around;
   flex-wrap: wrap;
+  gap: 20px;
 }
 
 .team-block {
+  position: relative;
   background-color: white;
-  padding: 20px;
-  margin: 10px;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  max-width: 300px;
+  padding: 25px;
+  margin: 15px;
+  border-radius: 12px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  max-width: 320px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  text-align: center;
+  overflow: hidden; /* Asegura que las luces no salgan del borde */
+}
+
+.team-block:hover {
+  transform: translateY(-10px); /* Efecto de elevar el bloque */
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3); /* Sombra más pronunciada */
 }
 
 .team-icon {
-  max-width: 100px;
-  margin-bottom: 15px;
+  width: 120px;
+  height: 120px;
+  margin-bottom: 20px;
   border-radius: 50%;
+  border: 4px solid #007bff; /* Borde azul alrededor de la imagen */
+  transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.team-icon:hover {
+  transform: scale(1.1); /* Efecto de zoom sobre la imagen */
+  filter: brightness(1.2); /* Aumenta el brillo de la imagen al pasar el mouse */
 }
 
 .team-title {
-  font-size: 1.5em;
+  font-size: 1.8em;
+  font-weight: bold;
+  color: #007bff;
   margin-bottom: 10px;
+  transition: color 0.3s ease;
+}
+
+.team-title:hover {
+  color: #0056b3; /* Cambio de color al pasar el mouse */
+}
+
+.team-block p {
+  font-size: 1em; /* Texto más pequeño */
+  color: #444;
+  margin-top: 5px; /* Menos espacio entre la descripción y el título */
+  font-style: italic;
+}
+
+.team-block p::before {
+  content: "“";
+ 
+  color: #007bff;
+}
+
+.team-block p::after {
+  content: "”";
+
+  color: #007bff;
+}
+
+/* Efecto de luces alrededor de la tarjeta */
+@keyframes lightBorder {
+  0% {
+    border-color: #007bff;
+    box-shadow: 0 0 8px 2px rgba(0, 123, 255, 0.6);
+  }
+  50% {
+    border-color: #ffdd00;
+    box-shadow: 0 0 8px 2px rgba(255, 221, 0, 0.6);
+  }
+  100% {
+    border-color: #ff007f;
+    box-shadow: 0 0 8px 2px rgba(255, 0, 127, 0.6);
+  }
+}
+
+.team-block:hover {
+  animation: lightBorder 1.5s infinite alternate; /* Animación de luces */
+}
+
+.career-btn:hover {
+  animation: lightBorder 1.5s infinite alternate; /* Animación de luces */
+  color: white;
 }

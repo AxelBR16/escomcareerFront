@@ -320,6 +320,13 @@ main {
     background-color: #FFD700;
 }
 
+.btn-container {
+  display: flex;
+  justify-content: center; /* centra los botones en el contenedor */
+  gap: 10px; /* espacio entre los botones */
+}
+
+
 /* Campos de texto */
 .input-field {
     width: 100%;

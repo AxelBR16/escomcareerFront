@@ -262,31 +262,56 @@ footer {
 }
 
 .image-container {
-    position: relative;
-    display: flex;
-    align-items: center;
+  position: relative;
+  display: flex;
+  align-items: center;
 }
 
 .image-stack {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .small-image {
-    width: 120px;
-    height: auto;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 120px;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease; /* Suaviza la animación */
 }
 
 .main-image {
-    width: 300px;
-    height: auto;
-    border-radius: 10px;
-    margin-left: 20px;
-    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+  width: 300px;
+  height: auto;
+  border-radius: 10px;
+  margin-left: 20px;
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease; /* Suaviza la animación */
 }
+
+/* Efecto de flotación y sombra */
+.image-container:hover .small-image,
+.image-container:hover .main-image {
+  transform: translateY(-10px); /* Movimiento hacia arriba */
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); /* Sombra más pronunciada */
+}
+
+/* Animación para efecto de flotación constante en todas las imágenes */
+@keyframes floatEffect {
+  0%, 100% {
+    transform: translateY(0); /* Estado inicial */
+  }
+  50% {
+    transform: translateY(-8px); /* Flotación hacia arriba */
+  }
+}
+
+/* Aplica la animación a todas las imágenes dentro del contenedor */
+.image-container img {
+  animation: floatEffect 3s ease-in-out infinite; /* Animación de flotación en bucle */
+}
+
 
 .text-container {
     max-width: 450px;
@@ -437,4 +462,26 @@ footer {
     .service-block, .team-block {
         max-width: 100%;
     }
+}
+
+
+/* Efecto de luces alrededor de la tarjeta */
+@keyframes lightBorder {
+  0% {
+    border-color: #007bff;
+    box-shadow: 0 0 8px 2px rgba(0, 123, 255, 0.6);
+  }
+  50% {
+    border-color: #ffdd00;
+    box-shadow: 0 0 8px 2px rgba(255, 221, 0, 0.6);
+  }
+  100% {
+    border-color: #ff007f;
+    box-shadow: 0 0 8px 2px rgba(255, 0, 127, 0.6);
+  }
+}
+.read-more:hover {
+  animation: lightBorder 1.5s infinite alternate; /* Animación de luces */
+  color: rgb(0, 0, 0);
+  background-color: #ffdd00;
 }
