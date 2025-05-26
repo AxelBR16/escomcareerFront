@@ -344,6 +344,25 @@
     font-size: 15px;
   }
 }
+.plan-estudios h2 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 25px;
+  letter-spacing: 2px;
+  color: #000000;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: normal; /* Permite que el texto se rompa en varias líneas */
+}
+
+@media (max-width: 768px) {
+  .plan-estudios h2 {
+    font-size: 1.8rem; /* Fuente más pequeña en móviles */
+    letter-spacing: 1px;
+    font-size: 1.2rem; /* Fuente mucho más pequeña en móviles */
+    padding: 0 10px; /* Espacio para que no toque los bordes */
+  }
+}
 
 
 
