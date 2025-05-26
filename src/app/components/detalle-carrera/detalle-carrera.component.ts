@@ -178,9 +178,8 @@ export class DetalleCarreraComponent implements OnInit{
         this.career = this.careers[index];
 
         this.cargarMateriasApi();
-        // carga de experiencias
         this.loadExperiences();
-        this.loadJobOffers(); // Cargar datos simulados
+        this.loadJobOffers();
         this.loadProjects();
       } else {
         this.router.navigate(['/']);
@@ -207,7 +206,6 @@ cargarMateriasApi() {
     const semestreNumero = this.parseNumeroSemestre(semestre.nombre);
     this.materiaService.getMateriasPorSemestreYcarrera(semestreNumero, this.carreraId)
       .subscribe(materias => {
-        // Guardar array de objetos con nombre y descripción
         semestre.materias = materias.map(m => ({
           nombre: m.nombre,
           descripcion: m.descripcion || 'Descripción no disponible'
@@ -283,9 +281,9 @@ cargarMateriasApi() {
     const experiencia = this.experiencias.find(exp => exp.id === id);
     if (experiencia) {
       if (experiencia.voto === tipo) {
-        experiencia.voto = null; // Si ya estaba votado con el mismo, lo quita
+        experiencia.voto = null;
       } else {
-        experiencia.voto = tipo; // Asigna el nuevo voto
+        experiencia.voto = tipo;
       }
     }
   }
@@ -336,7 +334,6 @@ loadProjects() {
       },
       error: (err) => console.error('Error cargando proyectos', err)
     });
-    console.log(this.proyectos)
   }
 
   votarproyecto(id: number, tipo: 'like' | 'dislike') {
