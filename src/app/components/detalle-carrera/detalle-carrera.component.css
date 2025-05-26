@@ -192,72 +192,160 @@
 
 
 /*Inicio CSS PLAN DE ESTUDIOS*/
-.plan-estudios {
-    width: 90%;
-    max-width: 900px;
-    text-align: center;
-    margin: 20px auto;
-    padding: 20px;
-  }
+/* Inicio CSS PLAN DE ESTUDIOS - Estilo mejorado */
+/* Inicio CSS PLAN DE ESTUDIOS - Blanco con acentos azules */
 
-  .semestres {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 10px;
-    margin: 20px 0;
+.plan-estudios {
+  width: 90%;
+  max-width: 900px;
+  margin: 30px auto;
+  padding: 30px 25px;
+  background: #fff;
+  border-radius: 20px;
+  box-shadow: 0 8px 20px rgba(0, 70, 160, 0.15);
+  color: #123975; /* azul oscuro */
+  font-family: 'Poppins', sans-serif;
+  text-align: center;
+  user-select: none;
+  border: 1px solid #cce0ff;
+}
+
+.plan-estudios h2 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 25px;
+  letter-spacing: 2px;
+  color: #000000; /* azul fuerte */
+}
+
+.semestres {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 30px;
+
+}
+
+.semestres button {
+  padding: 6px 10px;
+  font-size: 18px;
+  font-weight: 600;
+  border-radius: 40px;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: all 0.4s ease;
+  background: #e6f0ff; /* azul claro */
+  color: #0d47a1; /* azul fuerte */
+  box-shadow: 0 3px 6px rgba(13, 71, 161, 0.2);
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+}
+
+.semestres button:hover {
+  background: #0d47a1; /* azul fuerte */
+  color: #fff;
+  border-color: #0a3578;
+  box-shadow: 0 6px 12px rgba(13, 71, 161, 0.5);
+  transform: scale(1.05);
+}
+
+.semestres button.active {
+  background: #0d47a1;
+  color: #fff;
+  border-color: #0a3578;
+  box-shadow: 0 8px 15px rgba(13, 71, 161, 0.6);
+  transform: scale(1.1);
+}
+
+.materias {
+  background: #f9fbff;
+  padding: 25px 30px;
+  border-radius: 20px;
+  box-shadow: 0 8px 20px rgba(0, 70, 160, 0.1);
+  color: #007bff;
+  max-height: 400px;
+  overflow-y: auto;
+  border: 1px solid #cce0ff;
+}
+
+.materias h3 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+  letter-spacing: 1px;
+  color: #007bff;
+}
+
+.materias ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.materias li a {
+  color: inherit;        /* Hereda el color del texto padre */
+  text-decoration: none; /* Quita el subrayado */
+  cursor: pointer;       /* Mantiene el cursor pointer para que se vea clickeable */
+  transition: color 0.3s ease;
+}
+.materias li {
+  background: #fff;
+  padding: 12px 20px;
+  margin-bottom: 12px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(13, 71, 161, 0.1);
+  font-size: 17px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  color: #0d47a1;
+}
+
+.materias li:hover,
+.materias li a:hover {
+  background: #002F6C;
+  color: #fff;
+  transform: scale(1.05);
+  box-shadow: 0 8px 20px rgba(13, 71, 161, 0.3);
+  text-decoration: none;
+}
+
+/* Scrollbar personalizado para materias */
+.materias::-webkit-scrollbar {
+  width: 8px;
+}
+.materias::-webkit-scrollbar-track {
+  background: #f0f4ff;
+}
+.materias::-webkit-scrollbar-thumb {
+  background: #002F6C;
+  border-radius: 10px;
+}
+
+/* Responsive */
+
+@media (max-width: 768px) {
+  .plan-estudios {
+    padding: 20px 15px;
   }
-  
   .semestres button {
-    padding: 12px 20px;
+    padding: 12px 22px;
     font-size: 16px;
-    font-weight: bold;
-    border-radius: 25px;
-    border: none;
-    cursor: pointer;
-    transition: 0.3s;
-    background-color: #f1f1f1;
-    color: #333;
-    border: 2px solid transparent;
   }
-  
-  .semestres button:hover {
-    background-color: #007bff;
-    color: white;
-  }
-  
-  .semestres button.active {
-    background-color: #ffc107;
-    color: black;
-    border: 2px solid #e0a800;
-  }
-  
   .materias {
-    background: #f8f9fa;
+    max-height: 300px;
     padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
   }
-  
   .materias h3 {
-    font-size: 20px;
-    font-weight: bold;
-    margin-bottom: 10px;
+    font-size: 1.4rem;
   }
-  
-  .materias ul {
-    list-style: none;
-    padding: 0;
-  }
-  
   .materias li {
-    background: white;
-    padding: 10px;
-    margin-bottom: 5px;
-    border-radius: 5px;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-    font-size: 16px;
+    font-size: 15px;
   }
+}
+
+
 
   /*FIN CSS Ofrece*/
 
