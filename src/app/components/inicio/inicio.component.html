@@ -29,15 +29,17 @@
  <div class="bubble bubble-9"></div>
 <!-- Sección de test con carrusel -->
 <section class="test-section">
-  <h2>🏆Nuestro Objetivo🏆</h2>
-  <br>
-  <p>Desarrollar un sistema web y aplicación móvil que proporcione una orientación
-    personalizada para la elección de carreras en la Escuela Superior de Cómputo (ESCOM),
-    mediante una serie de pruebas interactivas, se evaluarán las aptitudes, preferencias
-    e intereses de cada aspirante para que, con base en los resultados,
-    se ofrezcan recomendaciones de la carrera más adecuada según su perfil.</p>
-
+  <div class="test-content">
+    <h2>🏆 Nuestro Objetivo 🏆</h2>
+    <br>
+    <p>Desarrollar un sistema web y aplicación móvil que proporcione una orientación
+      personalizada para la elección de carreras en la Escuela Superior de Cómputo (ESCOM),
+      mediante una serie de pruebas interactivas, se evaluarán las aptitudes, preferencias
+      e intereses de cada aspirante para que, con base en los resultados,
+      se ofrezcan recomendaciones de la carrera más adecuada según su perfil.</p>
+  </div>
 </section>
+
 
 <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
   <div class="carousel-inner">
@@ -87,21 +89,21 @@
     <div class="career-container">
 
       <!-- Bloque 1: Ingeniería en Sistemas Computacionales -->
-      <div class="career-block">
+      <div class="career-block" [routerLink]="['/carreras/0']">
         <img src="site/compu.png" alt="Icono Sistemas" class="career-icon">
         <h3 class="career-title">Ingeniería en Sistemas Computacionales</h3>
         <p>Desarrolla software innovador, administra bases de datos y optimiza sistemas informáticos para el futuro digital.</p>
       </div>
 
       <!-- Bloque 2: Ingeniería en Inteligencia Artificial -->
-      <div class="career-block">
+      <div class="career-block" [routerLink]="['/carreras/1']">
         <img src="site/ai.png" alt="Icono IA" class="career-icon">
         <h3 class="career-title">Ingeniería en Inteligencia Artificial</h3>
         <p>Explora el futuro con machine learning, redes neuronales y automatización de procesos inteligentes.</p>
       </div>
 
       <!-- Bloque 3: Licenciatura en Ciencia de Datos -->
-      <div class="career-block">
+      <div class="career-block" [routerLink]="['/carreras/2']">
         <img src="site/dt.png" alt="Icono Ciencia de Datos" class="career-icon">
         <h3 class="career-title">Licenciatura en Ciencia de Datos</h3>
         <p>Analiza grandes volúmenes de información y descubre patrones para la toma de decisiones estratégicas.</p>
@@ -132,21 +134,21 @@
   <div class="career-container">
 
     <!-- Bloque 1: Ingeniería en Sistemas Computacionales -->
-    <div class="career-block">
+    <div class="career-block" [routerLink]="['/cuestionario']">
       <img src="site/carrerasuni.png" alt="Icono Sistemas" class="career-icon">
       <h3 class="career-title">Inventario de preferencias universitarias</h3>
       <p>Identifica las áreas del conocimiento que más llaman tu atención. Este inventario te permitirá conocer qué campos académicos están alineados con tus gustos, intereses y motivaciones personales.</p>
     </div>
 
     <!-- Bloque 2: Ingeniería en Inteligencia Artificial -->
-    <div class="career-block">
+    <div class="career-block" [routerLink]="['/pruebasA']">
       <img src="site/aptitud.png" alt="Icono IA" class="career-icon">
       <h3 class="career-title">Inventario de autoevaluación de aptitudes</h3>
       <p>Explora tus habilidades y capacidades naturales para diferentes tipos de tareas. Este inventario te ayudará a reconocer en qué actividades destacas y cómo puedes aprovechar tu potencial en el ámbito académico o profesional.</p>
     </div>
 
     <!-- Bloque 3: Licenciatura en Ciencia de Datos -->
-    <div class="career-block">
+    <div class="career-block" [routerLink]="['/pruebasA']">
       <img src="https://cdn-icons-png.flaticon.com/512/833/833472.png" alt="Icono Corazón" class="career-icon">
 
       <h3 class="career-title">Inventario de interes ocupacional</h3>
@@ -174,7 +176,7 @@
       <!-- Bloque 2: Aquila Lobas -->
       <div class="team-block">
         <img src="site/usu.jpg" alt="Aquila Lobas" class="team-icon">
-        <h3 class="team-title">Jaciel Isai Hernandez Ramire</h3>
+        <h3 class="team-title">Jaciel Isai Hernández Ramírez</h3>
         <p>Especialista en desarrollo de interfaces gráficas para sitios web.</p>
       </div>
 
@@ -188,6 +190,7 @@
     </div>
   </section>
 
+  <br>
   <div class="Experiencias">
     <h2>Testimonios</h2>
     <br>

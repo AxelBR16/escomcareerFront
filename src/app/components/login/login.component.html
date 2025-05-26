@@ -32,7 +32,7 @@
             </div>
           </div>
 
-          <button type="submit">Crear tu cuenta</button>
+          <button class="hidden" type="submit">Crear tu cuenta</button>
         </form>
         <div class="div-centro">
         <button class="hidden" (click)="toggleIniciarSesion()">Iniciar sesión</button>
@@ -51,7 +51,7 @@
           <input id="email" name="email" type="email" [(ngModel)]="loginEmail" placeholder="Email" required>
           <input id="password" name="password" type="password" [(ngModel)]="loginPassword" placeholder="Password" required>
           <a [routerLink]="['/forgot-password']">¿Olvidaste la contraseña?</a>
-          <button type="submit">Iniciar sesión</button>
+          <button class="hidden" type="submit">Iniciar sesión</button>
         </form>
            <!--BOTONES EGRESADO/ASPIRANTE xd -->
            <div class="itemsL">

@@ -55,7 +55,7 @@ export class CuestionarioComponent implements OnInit{
   mostrarAlertaAntesDeSeguir() {
   const puntajeCompleto = this.progreso === 100;
 
-  if (puntajeCompleto) {
+  if (!puntajeCompleto) {
     Swal.fire({
       title: 'Inventario incompleto',
       html: 'No has terminado tu inventario. Debes completarlo al 100% para poder continuar.',

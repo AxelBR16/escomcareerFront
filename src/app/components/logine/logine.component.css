@@ -109,13 +109,17 @@
     cursor: pointer;
 }
 
-.container button.hidden {
-    background-color: #001E62;
+.button.hidden {
+    background-color: #002a8f;
     border-color: #fff;
     transition: transform 0.3s ease, background-color 0.3s ease; /* Animación suave */
 }
 
-.container button.hidden:hover {
+.btn-wrapper button.btn:hover {
+    transform: scale(1.1); /* Aumenta el tamaño en un 10% */
+    background-color: #002a8f; /* Cambia ligeramente el color al pasar el cursor */
+}
+.btn:hover {
     transform: scale(1.1); /* Aumenta el tamaño en un 10% */
     background-color: #002a8f; /* Cambia ligeramente el color al pasar el cursor */
 }
