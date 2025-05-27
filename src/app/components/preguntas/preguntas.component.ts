@@ -23,9 +23,8 @@ export class PreguntasComponent implements OnInit {
   id: string;
   pregunta: Pregunta = { id: '', texto: '', imagen_url: '' };
   selectedAnswer: string | null = null;
-// Guarda las opciones seleccionadas (sus valores)
   selectedOptions: string[] = [];
-readonly TOTAL_OPCIONES_INV3 = 6;
+  readonly TOTAL_OPCIONES_INV3 = 6;
   currentQuestion: number = 0;
   isAnswered: boolean = false;
   progress: number = 0;
@@ -35,7 +34,7 @@ readonly TOTAL_OPCIONES_INV3 = 6;
   totalQuestions = 100;
   currentQuestionId: string = '';
   loading: boolean = false;
-  private storageKey: string = '';
+  storageKey: string = '';
   respuestasUsuario: Record<string, number> = {};
   preguntasFaltantes: string[] = [];
   mensaje: string = '';
@@ -43,12 +42,8 @@ readonly TOTAL_OPCIONES_INV3 = 6;
   option1Value: string = '1';
   Nav: boolean = false;
   bloqueadas: Set<string> = new Set();
-
-eliminatedOptionsInv3: string[] = [];
-
-
-
-
+  eliminatedOptionsInv3: string[] = [];
+  resetNext: boolean = false;
 
   constructor(
     private preguntasService: PreguntasService,
@@ -69,18 +64,13 @@ eliminatedOptionsInv3: string[] = [];
   this.storageKey = `respuestas_${this.tipo}_${email}`;
 
   this.aRouter.paramMap.subscribe(params => {
-    this.id = params.get('id')!;
-    this.parteIzquierda = this.id.split('-')[0];
-
-    // Validar navegación permitida
+      this.id = params.get('id')!;
+      this.parteIzquierda = this.id.split('-')[0];
     if (!this.puedeNavegarAPregunta(this.id)) {
-      // Obtener la pregunta máxima permitida
       const maxPermitida = this.obtenerPreguntaMaximaPermitida();
-      // Redirigir a esa pregunta
       this.router.navigate([`${this.tipo}/preguntas/${maxPermitida}`]);
-      return; // Salir para no cargar datos de una pregunta no permitida
+      return;
     }
-
     if (this.id) {
       this.determinarTotalPreguntas();
       this.cargarPreguntas();
@@ -89,7 +79,6 @@ eliminatedOptionsInv3: string[] = [];
   });
 }
 
-// Método para validar si se puede navegar a esa pregunta
 async puedeNavegarAPregunta(idPregunta: string): Promise<boolean> {
   const numeroPregunta = parseInt(idPregunta.split('-')[1]);
   const maxPermitida = await this.obtenerPreguntaMaximaPermitida();
@@ -100,24 +89,18 @@ async puedeNavegarAPregunta(idPregunta: string): Promise<boolean> {
   return numeroPregunta <= maxNumero;
 }
 
-
-// Obtener la pregunta con el formato correcto para redirigir (invX-xxx)
 async obtenerPreguntaMaximaPermitida(): Promise<string> {
   const inventario = this.id.split('-')[0];
   const email = sessionStorage.getItem('email')!;
-
   try {
     const maxRespondida = await this.preguntasService.obtenerRespuestasMasAlta(email, inventario).toPromise();
     const siguiente = maxRespondida ? maxRespondida + 1 : 1;
     return `${inventario}-${String(siguiente).padStart(3, '0')}`;
   } catch (error) {
     console.error('Error al obtener la respuesta más alta:', error);
-    return `${inventario}-001`; // fallback
+    return `${inventario}-001`;
   }
 }
-
-
-
   determinarTotalPreguntas() {
     if (this.id.startsWith('inv1')) {
       this.totalQuestions = 120;
@@ -134,7 +117,6 @@ async obtenerPreguntaMaximaPermitida(): Promise<string> {
   getPreguntaDesdeStorage() {
     const preguntas = JSON.parse(localStorage.getItem(`preguntas_${this.inventario}`) || '[]');
     const preguntaEncontrada = preguntas.find((p: Pregunta) => p.id === this.id) || { id: '', texto: '', imagen_url: '' };
-
     if (preguntaEncontrada.imagen_url) {
       this.determinarTotalPreguntas();
       preguntaEncontrada.imagen_url = this.sanitizer.bypassSecurityTrustUrl(preguntaEncontrada.imagen_url);
@@ -166,22 +148,18 @@ async obtenerPreguntaMaximaPermitida(): Promise<string> {
         }
       );
     }
-
   }
 
   cargarRespuestasAPI() {
-
     const respuestasGuardadas = sessionStorage.getItem(`respuestasUsuario_${this.inventario}`);
     this.loading = true;
-
     if (respuestasGuardadas) {
       this.respuestasUsuario = JSON.parse(respuestasGuardadas);
       this.getPreguntaDesdeStorage();
       this.loader.ocultarCargando();
     } else {
       const email = sessionStorage.getItem('email');
-      const inventario = this.id.split('-')[0]; // Esto es el"inv1" o "inv2"
-
+      const inventario = this.id.split('-')[0];
       if (email && inventario) {
         this.preguntasService.obtenerRespuestasUsuario(email, inventario).subscribe(
           (respuestas: Record<string, number>) => {
@@ -198,7 +176,6 @@ async obtenerPreguntaMaximaPermitida(): Promise<string> {
         console.error("No se pudo obtener el email o el inventario.");
         this.getPreguntaDesdeStorage();
       }
-
       this.loader.ocultarCargando();
     }
   }
@@ -229,7 +206,6 @@ async obtenerPreguntaMaximaPermitida(): Promise<string> {
 
 
 
-
   onOptionChange(event: Event): void {
     this.selectedAnswer = (event.target as HTMLInputElement).value;
   }
@@ -255,28 +231,18 @@ async obtenerPreguntaMaximaPermitida(): Promise<string> {
       }
     );
   }
-
-resetNext: boolean = false; // bandera para reiniciar en la siguiente pregunta
 next() {
   if (this.selectedAnswer) {
-    // Agregar la opción seleccionada solo si no está en eliminatedOptionsInv3
     if (!this.eliminatedOptionsInv3.includes(this.selectedAnswer)) {
       this.eliminatedOptionsInv3.push(this.selectedAnswer);
     }
-
-    // Revisar si ya seleccionaron las 6 opciones, entonces resetear
     if (this.eliminatedOptionsInv3.length >= 6) {
       this.eliminatedOptionsInv3 = [];
     }
-
-    // Luego continúa con tu lógica normal de enviar respuestas y navegar
     this.enviarRespuestas(parseInt(this.selectedAnswer), this.id);
-
     const currentIdNumber = parseInt(this.id.split('-')[1]);
-
     if (!isNaN(currentIdNumber)) {
       const nextIdNumber = currentIdNumber + 1;
-
       if (nextIdNumber <= this.totalQuestions) {
         this.selectedAnswer = null;
         this.isAnswered = false;
@@ -284,7 +250,6 @@ next() {
         this.router.navigate([
           `${this.tipo}/preguntas/${this.id.split('-')[0]}-${nextIdNumber.toString().padStart(3, '0')}`
         ]);
-
       } else {
         this.cargarRespuestasAPI();
         this.eliminatedOptionsInv3 = [];
@@ -331,7 +296,6 @@ next() {
         const respuestas = this.respuestasUsuario;
         const validacion = this.verificarRespuestas(respuestas);
         if (validacion) {
-          // Si todas las respuestas son válidas, se pueden enviar
           this.preguntasService.obtenerRespuestasUsuario(sessionStorage.getItem('email')!, this.id.split('-')[0]!).subscribe(
             (respuestas: Record<string, number>) => {
               sessionStorage.setItem(`respuestasUsuario_${this.id.split('-')[0]}`, JSON.stringify(respuestas));
@@ -359,14 +323,12 @@ next() {
 
   verificarRespuestas(respuestas: Record<string, number>): boolean {
     let respuestasCompletas = true;
-    this.preguntasFaltantes = []; // Limpiamos las preguntas faltantes cada vez que verificamos
-
+    this.preguntasFaltantes = [];
     for (let i = 1; i <= this.totalQuestions; i++) {
       const pregunta = `${this.id.split('-')[0]}-${String(i).padStart(3, '0')}`;
-
       if (!(pregunta in respuestas)) {
         respuestasCompletas = false;
-        this.preguntasFaltantes.push(`${pregunta.split('-')[1]}`); // Añadimos cada pregunta faltante al array
+        this.preguntasFaltantes.push(`${pregunta.split('-')[1]}`);
       }
     }
 
@@ -399,7 +361,6 @@ next() {
       },
       error: (err) => {
         this.loader.ocultarCargando();
-
         Swal.fire({
           icon: 'error',
           title: 'Error',
@@ -409,23 +370,17 @@ next() {
       }
     });
     }
-
     return respuestasCompletas;
   }
-
 
 onOptionChange1(event: any) {
    this.selectedAnswer = event.target.value;
 }
 
-
-
 checkResetInv3() {
   if (this.eliminatedOptionsInv3.length >= this.TOTAL_OPCIONES_INV3) {
-    // Ya se eliminaron todas, reiniciamos el arreglo para mostrar todas de nuevo
     this.eliminatedOptionsInv3 = [];
-    this.selectedAnswer = ''; // limpia selección actual
-    // Opcional: también limpiar localStorage si usas
+    this.selectedAnswer = '';
     localStorage.removeItem('eliminatedOptionsInv3');
   }
 }
@@ -434,7 +389,6 @@ checkResetInv3() {
 
 onOptionChangeInv3(event: any) {
   this.selectedAnswer = event.target.value;
-  // NO agregar la opción eliminada aquí para evitar reinicio inmediato
 }
 
 
@@ -443,8 +397,7 @@ salir() {
   if (this.parteIzquierda === 'inv3') {
     localStorage.setItem('eliminatedOptionsInv3', JSON.stringify(this.eliminatedOptionsInv3));
   }
-  // Aquí va la lógica que tengas para salir o cambiar vista
-  this.router.navigate(['/cuestionario']);  // Cambia '/home' por la ruta que uses
+  this.router.navigate(['/cuestionario']);
   console.log('Saliendo del inventario', this.parteIzquierda);
 }
 
@@ -458,7 +411,4 @@ cargarInv3() {
   this.cargarEliminadasInv3();
   this.selectedAnswer = '';
 }
-
-
-
 }

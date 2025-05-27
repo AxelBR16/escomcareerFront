@@ -8,6 +8,9 @@ import Swal from 'sweetalert2'; // Importar SweetAlert2
 import { ResultadoResumenDTO } from '../../models/ResultadoResumenDTO';
 import { ResultadoService } from '../../services/resultado.service';
 import { HttpClientModule } from '@angular/common/http';
+import { ModelService } from '../../services/model.service';
+import { LoaderService } from '../../services/loader.service';
+import { PredictionResponse } from '../../models/PredictionResponse';
 
 Chart.register(annotationPlugin);
 
@@ -22,7 +25,9 @@ Chart.register(annotationPlugin);
 export class ResultAptitudesComponent implements AfterViewInit {
   private chart: any;
 
-  constructor(@Inject(PLATFORM_ID) private platformId: any, private router: Router,private resultadoService: ResultadoService) {}
+  constructor(@Inject(PLATFORM_ID) private platformId: any, private router: Router,private resultadoService: ResultadoService,
+  private modelService: ModelService,
+  private loaderService: LoaderService) {}
 
   ngAfterViewInit(): void {
     if (isPlatformBrowser(this.platformId)) {
@@ -32,6 +37,7 @@ export class ResultAptitudesComponent implements AfterViewInit {
         this.resultadoService.obtenerResumenPorCorreo(email).subscribe({
           next: (res) => {
             const { etiquetas, puntajes } = this.ordenarPorEscala(res);
+            sessionStorage.setItem('puntajes', JSON.stringify({ puntajes }));
             this.initChart(etiquetas, puntajes);
           },
           error: () => {
@@ -111,24 +117,32 @@ export class ResultAptitudesComponent implements AfterViewInit {
     });
   }
 
-  // Método que se activa al hacer clic en el botón
-  showLoading(): void {
-    // Muestra la alerta de SweetAlert2
-    Swal.fire({
-      title: 'Cargando...',
-      text: 'Analizando resultados similares en el sistema de recomendación...',
-      icon: 'info',
-      allowOutsideClick: false, // Evita que el usuario cierre la alerta
-      showConfirmButton: false, // No mostrar el botón de confirmación
-      willOpen: () => {
-        Swal.showLoading(); // Muestra el spinner de carga
-      }
-    });
+   calcularIA() {
+    const datosGuardados = sessionStorage.getItem('puntajes');
 
-    // Simula una espera de 2 segundos antes de redirigir
-    setTimeout(() => {
-      this.router.navigate(['/resultAI']); // Redirige a la página de resultados
-      Swal.close(); // Cierra la alerta de carga
-    }, 4000); // El tiempo de espera puede ajustarse
+if (datosGuardados) {
+  // Parseamos el string para obtener el objeto con la propiedad 'puntajes'
+  const datos = JSON.parse(datosGuardados); // { puntajes: [...] }
+
+  // Enviamos solo el array puntajes a la API
+  this.loaderService.mostrarCargando('Calculando resultados, por favor espera...');
+
+  this.modelService.predictCareer(datos.puntajes).subscribe({
+    next: (response: PredictionResponse) => {
+      sessionStorage.setItem('prediccionIA', JSON.stringify(response));
+      this.loaderService.ocultarCargando();
+      alert('Predicción guardada en sesión correctamente.');
+    },
+    error: (err) => {
+      console.error('Error al obtener predicción:', err);
+      this.loaderService.ocultarCargando();
+      alert('Ocurrió un error al calcular la predicción.');
+    }
+  });
+} else {
+  alert('No se encontraron los puntajes guardados.');
+}
   }
+
+
 }

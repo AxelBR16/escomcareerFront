@@ -10,16 +10,6 @@ import Swal from 'sweetalert2';
 import { Materia } from '../../models/materia';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
-
-interface Video {
-  id: number;
-  title: string;
-  description: string;
-  thumbnail: string;
-  likes: number;
-  dislikes: number;
-}
-
 @Component({
   selector: 'app-proyect-egresado',
   imports: [CommonModule, RouterModule,IonicModule, FormsModule],
@@ -27,9 +17,10 @@ interface Video {
   styleUrl: './proyect-egresado.component.css'
 })
 export class ProyectEgresadoComponent implements OnInit {
-  activeTab: string = 'detalles'; // Define la pestaña activa por defecto
+  activeTab: string = 'detalles';
 
   constructor(private proyectoService: ProyectoService, private materiaService: MateriaService, private sanitizer: DomSanitizer) {}
+
   title: string = '';
   description: string = '';
   carrera: number = 0;
@@ -50,26 +41,22 @@ export class ProyectEgresadoComponent implements OnInit {
     this.cargarProyectos();
   }
 
-    cargarProyectosPendientes() {
+  cargarProyectosPendientes() {
     this.proyectoService.obtenerProyectosPendientes(this.email)
-      .subscribe(proyectos => {
-        this.proyectosPendientes = proyectos;
-        this.proyectosPendientes.forEach(proy => {
-          this.videoEmbedUrls[proy.id!] = this.getVideoEmbedUrl(proy.url);
-        });
-      });
+    .subscribe(proyectos => {
+      this.proyectosPendientes = proyectos;
+      this.proyectosPendientes.forEach(proy => {
+      this.videoEmbedUrls[proy.id!] = this.getVideoEmbedUrl(proy.url);
+    });
+  });
   }
-
 
   cargarMaterias() {
   if (this.semestre != null && this.carreraId != null) {
     this.materiaService.getMateriasPorSemestreYcarrera(this.semestre, this.carreraId)
-      .subscribe({
+    .subscribe({
         next: (data) => {
           this.materias = data;
-          if (this.materias.length > 0) {
-            this.materiaId = this.materias[0].id;
-          }
         },
         error: (err) => {
           console.error('Error cargando materias', err);
@@ -85,7 +72,6 @@ export class ProyectEgresadoComponent implements OnInit {
       alert('El título es obligatorio');
       return;
     }
-
     const nuevoProyecto: proyecto = {
       nombre: this.title,
       descripcion: this.description,
@@ -96,7 +82,6 @@ export class ProyectEgresadoComponent implements OnInit {
       carreraId: Number(this.carreraId),
       egresadoEmail: this.email
     };
-console.log();
    this.proyectoService.guardarProyecto(nuevoProyecto).subscribe(
       (response: any) => {
         Swal.fire({
@@ -127,16 +112,13 @@ console.log();
     this.unidadAprendizaje = '';
     this.urlVideo = '';
   }
-  // Cambiar pestaña activa
   setActiveTab(tab: string) {
     this.activeTab = tab;
     if (tab === 'pendiente') {
+      this.cargarProyectos();
       this.cargarProyectosPendientes();
     }
   }
-
-
-
   eliminarProyecto(id: number): void {
   console.log('hols')
   Swal.fire({

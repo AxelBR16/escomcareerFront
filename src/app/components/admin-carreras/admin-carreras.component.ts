@@ -34,7 +34,7 @@ export class AdminCarrerasComponent {
     }
   ];
 
-  selectedCareer = this.careers[0]; 
+  selectedCareer = this.careers[0];
 
   // Método para actualizar la tabla cuando se cambia de carrera
   updateTable(event: any) {

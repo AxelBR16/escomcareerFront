@@ -65,8 +65,8 @@
 
                 <div class="form-group">
                   <label>Unidad de Aprendizaje</label>
-                  <select [(ngModel)]="materiaId" name="materiaId" (change)="cargarMaterias()">
-                    <option value="" disabled selected>Selecciona una unidad de aprendizaje</option>
+                 <select [(ngModel)]="materiaId" name="materiaId" (change)="cargarMaterias()">
+                    <option value="" disabled>Selecciona una unidad de aprendizaje</option>
                     <option *ngFor="let materia of materias" [value]="materia.id">{{ materia.nombre }}</option>
                   </select>
                 </div>
