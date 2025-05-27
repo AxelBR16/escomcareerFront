@@ -195,7 +195,7 @@
         <h2>📌 Proyectos realizados por Estudiantes/Egresados</h2>
 
         <div *ngIf="proyectos.length > 0; else noProjects">
-          <div *ngFor="let proyecto of proyectos" class="proyecto-card">
+          <div *ngFor="let proyecto of pagedProjects" class="proyecto-card">
 
             <!-- Información del Proyecto -->
             <div class="proyecto-info">
@@ -239,7 +239,18 @@
         </ng-template>
 
         <button class="compartir-btn">¡Comparte tus proyectos!</button>
+             <div class="pagination" *ngIf="totalPages > 1">
+  <button (click)="changePage(currentPage - 1)" [disabled]="currentPage === 1">Anterior</button>
 
+      <button *ngFor="let page of pagesArray"
+                      (click)="changePage(page)"
+                      [class.active]="page === currentPage">
+                  {{page}}
+              </button>
+
+          <button (click)="changePage(currentPage + 1)" [disabled]="currentPage === totalPages">Siguiente</button>
+        </div>
       </div>
     </div>
+
   </div>

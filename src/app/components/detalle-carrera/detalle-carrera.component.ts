@@ -359,4 +359,31 @@ loadProjects() {
 
     return null;
   }
+
+
+  
+//paginacion 
+
+currentPage = 1;
+itemsPerPage = 1;
+
+get pagedProjects() {
+  const start = (this.currentPage - 1) * this.itemsPerPage;
+  return this.proyectos.slice(start, start + this.itemsPerPage);
+}
+
+changePage(page: number) {
+  if (page < 1 || page > this.totalPages) return;
+  this.currentPage = page;
+}
+
+get totalPages() {
+  return Math.ceil(this.proyectos.length / this.itemsPerPage);
+}
+
+get pagesArray() {
+  return Array(this.totalPages).fill(0).map((x,i) => i + 1);
+}
+
+
 }
