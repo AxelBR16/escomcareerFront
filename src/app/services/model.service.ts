@@ -8,7 +8,7 @@ import { PredictionResponse } from '../models/PredictionResponse';
 })
 export class ModelService {
 
-  private apiUrl = 'https://yqg0jnfxwh.execute-api.us-east-2.amazonaws.com/dev/predict';
+  private apiUrl = 'https://j4rq1nt78j.execute-api.us-east-2.amazonaws.com/dev';
 
   constructor(private http: HttpClient) { }
 

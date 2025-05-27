@@ -117,32 +117,35 @@ export class ResultAptitudesComponent implements AfterViewInit {
     });
   }
 
-   calcularIA() {
-    const datosGuardados = sessionStorage.getItem('puntajes');
-
-if (datosGuardados) {
-  // Parseamos el string para obtener el objeto con la propiedad 'puntajes'
-  const datos = JSON.parse(datosGuardados); // { puntajes: [...] }
-
-  // Enviamos solo el array puntajes a la API
-  this.loaderService.mostrarCargando('Calculando resultados, por favor espera...');
-
-  this.modelService.predictCareer(datos.puntajes).subscribe({
-    next: (response: PredictionResponse) => {
-      sessionStorage.setItem('prediccionIA', JSON.stringify(response));
-      this.loaderService.ocultarCargando();
-      alert('Predicción guardada en sesión correctamente.');
-    },
-    error: (err) => {
-      console.error('Error al obtener predicción:', err);
-      this.loaderService.ocultarCargando();
-      alert('Ocurrió un error al calcular la predicción.');
-    }
-  });
-} else {
-  alert('No se encontraron los puntajes guardados.');
-}
+calcularIA() {
+  // Si ya hay una predicción guardada, redirige directamente al resultado
+  const prediccionGuardada = sessionStorage.getItem('prediccionIA');
+  if (prediccionGuardada) {
+    this.router.navigate(['/resultAI']);
+    return;
   }
+  const datosGuardados = sessionStorage.getItem('puntajes');
+  if (datosGuardados) {
+    const datos = JSON.parse(datosGuardados);
+
+    this.loaderService.mostrarCargando('Calculando resultados, por favor espera...');
+
+    this.modelService.predictCareer(datos.puntajes).subscribe({
+      next: (response: PredictionResponse) => {
+        sessionStorage.setItem('prediccionIA', JSON.stringify(response));
+        this.loaderService.ocultarCargando();
+        this.router.navigate(['/resultAI']);
+      },
+      error: (err) => {
+        console.error('Error al obtener predicción:', err);
+        this.loaderService.ocultarCargando();
+        alert('Ocurrió un error al calcular la predicción.');
+      }
+    });
+  } else {
+    alert('No se encontraron los puntajes guardados.');
+  }
+}
 
 
 }

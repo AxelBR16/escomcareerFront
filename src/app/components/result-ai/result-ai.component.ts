@@ -1,7 +1,7 @@
-import { Component, AfterViewInit, PLATFORM_ID, Inject } from '@angular/core';
+import { Component, AfterViewInit, PLATFORM_ID, Inject, ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
-import { isPlatformBrowser } from '@angular/common';  // Importa isPlatformBrowser
-import Chart from 'chart.js/auto';  // Importa Chart.js
+import { isPlatformBrowser } from '@angular/common';
+import Chart from 'chart.js/auto';
 
 @Component({
   selector: 'app-result-ai',
@@ -10,41 +10,85 @@ import Chart from 'chart.js/auto';  // Importa Chart.js
 })
 export class ResultAIComponent implements AfterViewInit {
 
-  constructor(@Inject(PLATFORM_ID) private platformId: any, private router: Router) {}
+  carreras: string[] = [
+    'Ingeniería en Sistemas Computacionales',
+    'Licenciatura en Ciencia de Datos',
+    'Ingeniería en Inteligencia Artificial'
+  ];
+
+  carreraSugerida: string = '';
+  porcentaje: number = 0;
+
+  constructor(
+    @Inject(PLATFORM_ID) private platformId: any,
+    private router: Router,
+    private cdRef: ChangeDetectorRef
+  ) {}
 
   ngAfterViewInit(): void {
-    // Verifica si estamos en el navegador antes de acceder a document
     if (isPlatformBrowser(this.platformId)) {
-      this.createPieChart();
+      const datosIA = sessionStorage.getItem('prediccionIA');
+
+      if (datosIA) {
+        try {
+          const parsed = JSON.parse(datosIA);
+          const probabilidades = parsed.probabilidades;
+          const prediccion = parseInt(parsed.prediccion);
+          this.cdRef.detectChanges();
+          if (
+            isNaN(prediccion) ||
+            !this.carreras[prediccion] ||
+            !probabilidades.hasOwnProperty(prediccion)
+          ) {
+            throw new Error('Datos de predicción inválidos.');
+          }
+
+          this.carreraSugerida = this.carreras[prediccion];
+          this.porcentaje = Math.round(probabilidades[prediccion] * 100);
+          const data: number[] = Object.keys(probabilidades).map(
+            (k) => Math.round(probabilidades[k] * 100)
+          );
+          const labels: string[] = this.carreras;
+
+          this.createPieChart(labels, data);
+
+        } catch (error) {
+          console.error('Error al procesar la predicción:', error);
+          alert('Hubo un problema al cargar la predicción.');
+          this.router.navigate(['/']);
+        }
+      } else {
+        alert('No se encontró la predicción. Redirigiendo...');
+        this.router.navigate(['/']);
+      }
     }
   }
 
-  createPieChart(): void {
-    // Ahora este código solo se ejecutará en el navegador
-    const ctx = (document.getElementById('pieChart') as HTMLCanvasElement).getContext('2d');
-    
+  createPieChart(labels: string[], data: number[]): void {
+    const ctx = (document.getElementById('pieChart') as HTMLCanvasElement)?.getContext('2d');
+
     if (ctx) {
       new Chart(ctx, {
         type: 'pie',
         data: {
-          labels: ['Similitud con Ingeniería en Sistemas Computacionales', 'Resto'],
+          labels: labels,
           datasets: [{
-            data: [78, 22], // 78% y 22% para completar el 100%
-            backgroundColor: ['#3498db', '#d1d1d1'], // Azul para el 78% y gris para el 22%
+            data: data,
+            backgroundColor: ['#3498db', '#2ecc71', '#f1c40f'],
             borderWidth: 0
           }]
         },
         options: {
-          responsive: true,  // Permite que el gráfico se ajuste al tamaño del canvas
-          maintainAspectRatio: true,  // Mantiene la proporción del gráfico
+          responsive: true,
+          maintainAspectRatio: true,
           plugins: {
             legend: {
-              position: 'bottom', // Coloca la leyenda en la parte inferior
+              position: 'bottom'
             },
             tooltip: {
               callbacks: {
-                label: function(tooltipItem) {
-                  return tooltipItem.raw + '%'; // Muestra el porcentaje en el tooltip
+                label: function(tooltipItem: any) {
+                  return tooltipItem.label + ': ' + tooltipItem.raw + '%';
                 }
               }
             }
