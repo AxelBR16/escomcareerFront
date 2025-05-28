@@ -1,6 +1,11 @@
 /* You can add global styles to this file, and also import other style files */
 .custom-snackbar {
-  background-color: #4caf50; /* verde */
-  color: white; /* texto blanco */
+  background-color: #4caf50;
+  color: white;
+  font-weight: bold;
+}
+.custom-snackbar-error {
+  background-color: #f44336;
+  color: white;
   font-weight: bold;
 }
