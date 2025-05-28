@@ -31,5 +31,16 @@ export class ProyectoService {
     return this.http.get<proyecto[]>(`${environment.apiUrls.auth}/proyectos?carreraId=${carreraId}`);
   }
 
+  obtenerProyectosSinAprobar(): Observable<proyecto[]> {
+    return this.http.get<proyecto[]>(`${environment.apiUrls.auth}/proyectos/inactivos`);
+  }
+
+  aprobarProyecto(id: number): Observable<void> {
+    return this.http.put<void>(`${environment.apiUrls.auth}/proyectos/aprobar/${id}`, null);
+  }
+
+  rechazarProyecto(id: number): Observable<void> {
+    return this.http.put<void>(`${environment.apiUrls.auth}/proyectos/rechazar/${id}`, null);
+  }
 
 }
