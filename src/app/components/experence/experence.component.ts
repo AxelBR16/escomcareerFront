@@ -1,66 +1,128 @@
-import { Component } from '@angular/core';
-import { TestimonioService } from '../../services/testimonio.service'; // Asegúrate de que el servicio esté importado
-import { Testimonio } from '../../models/testimonio.model';  // Importa el modelo Testimonio
-import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { trigger, state, style, transition, animate } from '@angular/animations';
+import { Component, OnInit, inject } from '@angular/core';
+import { FormsModule, ReactiveFormsModule, FormControl } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { ExperienciaService } from '../../services/experiencia.service';
+import { Observable } from 'rxjs';
+import { debounceTime, switchMap, startWith } from 'rxjs/operators';
+import { Habilidad } from '../../models/habilidad';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatInputModule } from '@angular/material/input';
+
 @Component({
   selector: 'app-experence',
-  imports: [FormsModule, CommonModule ],
+  standalone: true,
+  imports: [FormsModule, ReactiveFormsModule, CommonModule, MatAutocompleteModule, MatInputModule],
   templateUrl: './experence.component.html',
-  styleUrls: ['./experence.component.css'],
- 
+  styleUrls: ['./experence.component.css']
 })
+export class ExperenceComponent implements OnInit {
 
-export class ExperenceComponent {
-
-  nombre: string = '';
-  carrera: string = '';
   experiencia: string = '';
   trabajaRelacionada: string = '';
-  salario: number= 0;
-  // Nuevos campos
+  salario?: number;
+  descripcionTrabajo: string = '';
   puesto: string = '';
-  empresa: string = '';
+  email: string = '';
+
+  habilidadCtrl = new FormControl('');
+  habilidadesFiltradas!: Observable<Habilidad[]>;
+  habilidadesSeleccionadas: string[] = [];
+
+  private snackBar = inject(MatSnackBar);
+
+  constructor(
+    private experienciaService: ExperienciaService ) {}
+
+  ngOnInit() {
+    this.email = sessionStorage.getItem('email') || 'usuario@ejemplo.com';
+
+    this.habilidadesFiltradas = this.habilidadCtrl.valueChanges.pipe(
+      startWith(''),
+      debounceTime(300),
+      switchMap(value => this.experienciaService.buscarHabilidades(value || ''))
+    );
+  }
+
+  agregarHabilidad(nombre: string) {
+    if (!this.habilidadesSeleccionadas.includes(nombre)) {
+      this.habilidadesSeleccionadas.push(nombre);
+    }
+    this.habilidadCtrl.setValue('');
+  }
+
+  removerHabilidad(nombre: string) {
+    this.habilidadesSeleccionadas = this.habilidadesSeleccionadas.filter(h => h !== nombre);
+  }
+
   get showCampos() {
     return this.trabajaRelacionada === 'si';
   }
 
-  constructor(private testimonioService: TestimonioService) {}
-
-  agregarTestimonio() {
-    // Validación básica incluyendo los nuevos campos solo si trabajaRelacionada es 'si'
-    if (!this.nombre || !this.carrera || !this.experiencia || !this.trabajaRelacionada) {
-      alert("Por favor, completa todos los campos obligatorios.");
+  agregarTestimonio(): void {
+    if (!this.experiencia || !this.trabajaRelacionada) {
+      this.snackBar.open('Por favor completa los campos obligatorios', 'OK', {
+        duration: 4000,
+        panelClass: ['warning-snackbar']
+      });
       return;
     }
 
-    if (this.trabajaRelacionada === 'si' && (!this.puesto || !this.empresa)) {
-      alert("Por favor, completa los datos de tu trabajo.");
-      return;
-    }
-const testimonio: Testimonio = {
-  nombre: this.nombre,
-  carrera: this.carrera,
-  experiencia: this.experiencia,
-  trabajaRelacionada: this.trabajaRelacionada,
-  puesto: this.trabajaRelacionada === 'si' ? this.puesto : undefined,
-  empresa: this.trabajaRelacionada === 'si' ? this.empresa : undefined
-};
+    const experienciaData = {
+      descripcion: this.experiencia,
+      correo: this.email
+    };
 
-    console.log("Testimonio enviado:", testimonio);
+    this.experienciaService.guardarExperiencia(experienciaData).subscribe({
+      next: () => {
+        if (this.trabajaRelacionada === 'si') {
+          const trabajoData = {
+            descripcion: this.descripcionTrabajo,
+            puesto: this.puesto,
+            salario: this.salario || 0,
+            correoEgresado: this.email,
+            habilidades: this.habilidadesSeleccionadas
+          };
 
-    this.testimonioService.agregarTestimonio(testimonio);
-
-    // Limpiar campos
-    this.nombre = '';
-    this.carrera = '';
-    this.experiencia = '';
-    this.trabajaRelacionada = '';
-    this.puesto = '';
-    this.empresa = '';
-   
+          this.experienciaService.guardarTrabajo(trabajoData).subscribe({
+            next: () => {
+              this.snackBar.open('Experiencia y trabajo guardados correctamente', 'OK', {
+                duration: 5000,
+                panelClass: ['custom-snackbar']
+              });
+              this.limpiarFormulario();
+            },
+            error: () => {
+              this.snackBar.open('Error al guardar el trabajo', 'Cerrar', {
+                duration: 5000,
+                panelClass: ['custom-snackbar-error']
+              });
+            }
+          });
+        } else {
+          this.snackBar.open('Gracias por compartir tu experiencia', 'OK', {
+            duration: 5000,
+            panelClass: ['custom-snackbar']
+          });
+          this.limpiarFormulario();
+        }
+      },
+      error: () => {
+        this.snackBar.open('Error al guardar la experiencia', 'Cerrar', {
+          duration: 5000,
+          panelClass: ['custom-snackbar-error']
+        });
+      }
+    });
   }
 
+  limpiarFormulario(): void {
+    this.experiencia = '';
+    this.trabajaRelacionada = '';
+    this.salario = undefined;
+    this.descripcionTrabajo = '';
+    this.puesto = '';
+    this.habilidadesSeleccionadas = [];
+    this.habilidadCtrl.setValue('');
+  }
 }

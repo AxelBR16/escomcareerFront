@@ -1,19 +1,26 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, inject, OnInit } from '@angular/core';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { MateriaService } from '../../services/materia.service';
 import { log } from 'console';
 import Swal from 'sweetalert2';
 import { ProyectoService } from '../../services/proyecto.service';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Experiencia } from '../../models/experiencia';
+import { ExperienciaService } from '../../services/experiencia.service';
+import { JobOffer } from '../../models/jobOffer';
 
 @Component({
   selector: 'app-detalle-carrera',
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule],
   templateUrl: './detalle-carrera.component.html',
   styleUrl: './detalle-carrera.component.css'
 })
 export class DetalleCarreraComponent implements OnInit{
+  private snackBar = inject(MatSnackBar);
+  experiencias: Experiencia[] = [];
+  trabajos: JobOffer[] = [];
   carreraId = 1;
   careers = [
     {
@@ -159,15 +166,27 @@ export class DetalleCarreraComponent implements OnInit{
   career: any = null;
   selectedSection: string = 'Que ofrece';
   selectedSemestre: number = 0;
-
-
-  experiencias: any[] = [];
   bolsaTrabajo: any[] = [];
   proyectos: any[] = [];
   id: string;
 
-  constructor(private route: ActivatedRoute, private router: Router, private materiaService: MateriaService, private proyectoService: ProyectoService, private sanitizer: DomSanitizer) {
+  constructor(private route: ActivatedRoute, private router: Router, private materiaService: MateriaService, private proyectoService: ProyectoService, private sanitizer: DomSanitizer, private experienciaService: ExperienciaService) {
     this.id = this.route.snapshot.paramMap.get('id') || '1';
+  }
+
+
+  irAProyectos(): void {
+    const role = sessionStorage.getItem('role');
+
+    if (role === 'ROLE_EGRESADO') {
+      this.router.navigate(['/proyectEgresado']);
+    } else {
+      this.router.navigate(['/login']);
+      this.snackBar.open('👋 ¡Hola! Para compartir tus increíbles proyectos, por favor regístrate o inicia sesión. ¡Queremos ver tu talento! 🚀', 'OK', {
+        duration: 5000,
+        panelClass: ['warning-snackbar']
+      });
+    }
   }
 
   ngOnInit() {
@@ -251,33 +270,20 @@ cargarMateriasApi() {
   }
 
 
-   loadExperiences() {
-    this.experiencias = [
-      {
-        id: 1,
-        nombre: 'Gómez Pérez Jimena',
-        status: 'Egresado',
-        comentario: 'Una experiencia retadora, pero muy enriquecedora. Aprendí mucho sobre desarrollo de software.',
-        voto: null
+  loadExperiences() {
+    this.experienciaService.getExperienciasPorCarrera(this.carreraId).subscribe({
+      next: (data) => {
+        this.experiencias = data;
       },
-      {
-        id: 2,
-        nombre: 'Pérez Medina Ruben',
-        status: 'Egresado',
-        comentario: 'El ambiente es muy bueno y los profesores están bien capacitados en su área.',
-        voto: null
-      },
-      {
-        id: 3,
-        nombre: 'Yael Escalona Bastida',
-        status: 'Estudiante',
-        comentario: 'Me encanta la carrera, aunque hay muchas materias difíciles, la comunidad es muy unida.',
-        voto: null
+      error: (err) => {
+        console.error('Error al cargar experiencias', err);
+        this.experiencias = [];
       }
-    ];
+    });
   }
 
   votar(id: number, tipo: 'like' | 'dislike') {
+    /*
     const experiencia = this.experiencias.find(exp => exp.id === id);
     if (experiencia) {
       if (experiencia.voto === tipo) {
@@ -285,7 +291,7 @@ cargarMateriasApi() {
       } else {
         experiencia.voto = tipo;
       }
-    }
+    }*/
   }
 
   getInitial(nombre: string): string {
@@ -293,28 +299,18 @@ cargarMateriasApi() {
   }
 
 
-   loadJobOffers() {
-    this.bolsaTrabajo = [
-      {
-        id: 1,
-        salario: "$27,000 MXN mensuales",
-        puesto: "Desarrollador de Software Junior",
-        habilidades: ["Python", "Ingles", "Spring", "React", "Angular"],
-        descripcion: "Escribir y probar código, colaborar con equipos multidisciplinarios, realizar análisis de requerimientos y asegurarse de que el software sea eficiente y escalable.",
-        nombre: "Pérez Medina Ruben",
-        status: "Egresado"
-      },
-      {
-        id: 2,
-        salario: "$30,000 MXN mensuales",
-        puesto: "Administrador de Bases de Datos",
-        habilidades: ["MySQL", "AWS", "DynamoDB"],
-        descripcion: "Gestión y mantenimiento de bases de datos para asegurar que los datos estén organizados, accesibles y seguros.",
-        nombre: "Pérez Medina Ruben",
-        status: "Egresado"
-      }
-    ];
-  }
+
+loadJobOffers() {
+  this.experienciaService.getTrabajosPorCarrera(this.carreraId).subscribe({
+    next: (data) => {
+      this.trabajos = data.filter(t => t.estado); // solo los que estén activos
+    },
+    error: (error) => {
+      console.error('Error cargando trabajos', error);
+      this.trabajos = [];
+    }
+  });
+}
 
 
 
@@ -361,11 +357,11 @@ loadProjects() {
   }
 
 
-  
-//paginacion 
+
+//paginacion
 
 currentPage = 1;
-itemsPerPage = 1;
+itemsPerPage = 10;
 
 get pagedProjects() {
   const start = (this.currentPage - 1) * this.itemsPerPage;

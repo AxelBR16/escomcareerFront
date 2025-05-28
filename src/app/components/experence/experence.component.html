@@ -5,16 +5,6 @@
 
   <form (ngSubmit)="agregarTestimonio()">
     <div class="form-group">
-      <label for="career">¿Qué carrera estudiaste o estás estudiando?</label>
-      <select id="career" name="career" [(ngModel)]="carrera" required>
-        <option value="" disabled selected>Selecciona la carrera</option>
-        <option value="informatica">Ingeniería en Sistemas Computacionales</option>
-        <option value="electronica">Ingeniería en Inteligencia Artificial</option>
-        <option value="mecanica">Licenciatura en Bases de Datos</option>
-      </select>
-    </div>
-
-    <div class="form-group">
       <label for="experience">¿Cómo fue tu experiencia estudiando en la ESCOM?</label>
       <textarea id="experience" name="experience" [(ngModel)]="experiencia" rows="4" placeholder="Comparte tu experiencia..." required></textarea>
     </div>
@@ -29,18 +19,53 @@
 </div>
 
 <div *ngIf="trabajaRelacionada === 'si'">
-  <div class="form-group">
-    <label for="puesto">¿Cuál es tu puesto o rol actual?</label>
-    <input type="text" id="puesto" name="puesto" [(ngModel)]="puesto" placeholder="Escribe tu puesto" required />
+    <div class="form-group">
+      <label for="puesto">Puesto</label>
+      <input type="text" id="puesto" name="puesto" [(ngModel)]="puesto" required />
+    </div>
+    <div class="form-group">
+      <label for="descripcionTrabajo">Descripción del trabajo</label>
+      <textarea id="descripcionTrabajo" name="descripcionTrabajo" [(ngModel)]="descripcionTrabajo" rows="3" required></textarea>
+    </div>
+    <div class="form-group">
+      <label for="salario">Salario</label>
+      <input type="number" id="salario" name="salario" [(ngModel)]="salario" required />
+    </div>
+
+    <div *ngIf="showCampos" class="form-group habilidades-section">
+   <label for="habilidades" class="habilidades-label">Habilidades</label>
+    <small class="instrucciones">
+      Escribe una habilidad y selecciónala de la lista o presiona Enter para agregarla manualmente.
+    </small>
+
+  <mat-form-field appearance="fill" class="habilidades-autocomplete">
+    <input
+      type="text"
+      matInput
+      [formControl]="habilidadCtrl"
+      [matAutocomplete]="auto"
+      placeholder="Ejemplo: Java, Spring Boot, SQL"
+      id="habilidades"
+      name="habilidades"
+      (keydown.enter)="$event.preventDefault(); habilidadCtrl.value && agregarHabilidad(habilidadCtrl.value)"
+    />
+    <mat-autocomplete
+      #auto="matAutocomplete"
+      (optionSelected)="agregarHabilidad($event.option.value)"
+    >
+      <mat-option *ngFor="let habilidad of habilidadesFiltradas | async" [value]="habilidad.nombre">
+        {{ habilidad.nombre }}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+
+  <div class="habilidades-seleccionadas">
+    <span *ngFor="let hab of habilidadesSeleccionadas" class="chip">
+      {{ hab }}
+      <button type="button" class="chip-remove-btn" (click)="removerHabilidad(hab)">×</button>
+    </span>
   </div>
-  <div class="form-group">
-    <label for="empresa">¿En qué empresa o institución trabajas?</label>
-    <input type="text" id="empresa" name="empresa" [(ngModel)]="empresa" placeholder="Nombre de la empresa" required />
-  </div>
-   <div class="form-group">
-    <label for="empresa">¿Cual es tu salrio ?</label>
-    <input type="number" id="salario" name="salario" [(ngModel)]="salario" placeholder="Nombre de la empresa" required />
-  </div>
+    </div>
 </div>
 
 

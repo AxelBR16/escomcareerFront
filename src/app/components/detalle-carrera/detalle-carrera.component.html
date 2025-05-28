@@ -27,7 +27,7 @@
     <div class="content fade-in">
   <!--SECCION QUE OFRECE-->
       <div *ngIf="selectedSection === 'Que ofrece'">
-        <h2>🎓 ¿Qué ofrece la carrera de {{ career.title }}?</h2>
+        <h2 class="tituloP">🎓 ¿Qué ofrece la carrera de {{ career.title }}?</h2>
 
         <div class="info-box">
           <h3>📍 Escuelas que la imparten dentro del IPN</h3>
@@ -101,7 +101,7 @@
 
 <!--SECCION PLAN DE ESTUDIOS-->
       <div *ngIf="selectedSection === 'Plan Estudios'" class="plan-estudios">
-        <h2>Plan de estudios - {{ career.title }}</h2>
+        <h2 class="tituloP">Plan de estudios - {{ career.title }}</h2>
 
             <div class="semestres">
                 <button
@@ -125,27 +125,17 @@
       </div>
 <!--SECCION EXPERIENCIAS-->
       <div *ngIf="selectedSection === 'Experiencias'" class="experiencias-container">
-         <h2>🎤 Experiencias de Estudiantes y Egresados</h2>
+         <h2 class="tituloP">🎤 Experiencias de Estudiantes y Egresados</h2>
 
           <div *ngIf="experiencias.length > 0; else noExperiences">
             <div *ngFor="let experiencia of experiencias" class="experiencia-card">
-              <div class="avatar">{{ getInitial(experiencia.nombre) }}</div>
+              <div class="avatar">{{ getInitial(experiencia.nombreEgresado ?? '') }}</div>
               <div class="experiencia-content">
-                <h3 class="nombre">{{ experiencia.nombre }}</h3>
-                <p class="status">{{ experiencia.status }}</p>
-                <p class="comentario">{{ experiencia.comentario }}</p>
+                <h3 class="nombre">{{ experiencia.nombreEgresado }}{{ experiencia.apellidoEgresado }}</h3>
+                <p class="status">{{ experiencia.fecha }}</p>
+                <p class="comentario">{{ experiencia.descripcion }}</p>
                 <div class="feedbackpro">
-                  <ion-icon
-                    name="thumbs-up-outline"
-                    (click)="votar(experiencia.id, 'like')"
-                    [ngClass]="{'like-active': experiencia.voto === 'like'}">
-                  </ion-icon>
 
-                  <ion-icon
-                    name="thumbs-down-outline"
-                    (click)="votar(experiencia.id, 'dislike')"
-                    [ngClass]="{'dislike-active': experiencia.voto === 'dislike'}">
-                  </ion-icon>
                 </div>
               </div>
             </div>
@@ -161,24 +151,20 @@
 
 <!--SECCION BOLSA DE TRABAJO-->
       <div *ngIf="selectedSection === 'Bolsa Trabajo'" class="bolsa-trabajo-container">
-        <h2>💼 Bolsa de trabajo</h2>
+        <h2 class="tituloP">💼 Bolsa de trabajo</h2>
 
-        <div *ngIf="bolsaTrabajo.length > 0; else noJobs">
-          <div *ngFor="let empleo of bolsaTrabajo" class="job-card">
+        <div *ngIf="trabajos.length > 0; else noJobs" class="jobs-grid ">
+          <div *ngFor="let empleo of trabajos" class="job-card">
             <div class="job-header">
-              <p class="salario">{{ empleo.salario }}</p>
+              <p class="salario">{{ empleo.salario | currency:'MXN':'symbol':'1.0-0' }}</p>
               <h3 class="puesto">{{ empleo.puesto }}</h3>
             </div>
 
             <div class="habilidades">
-              <span *ngFor="let habilidad of empleo.habilidades" class="habilidad">{{ habilidad }}</span>
+              <span *ngFor="let habilidad of empleo.habilidades" class="habilidad">{{ habilidad.nombre }}</span>
             </div>
 
             <p class="descripcion">{{ empleo.descripcion }}</p>
-            <p class="autor">
-              <span class="nombrejob">{{ empleo.nombre }}</span>
-              <span class="statusjob">{{ empleo.status }}</span>
-            </p>
           </div>
         </div>
 
@@ -192,7 +178,7 @@
 
 <!--SECCION PROYECTOS-->
       <div *ngIf="selectedSection === 'Proyectos'" class="proyectos-container">
-        <h2>📌 Proyectos realizados por Estudiantes/Egresados</h2>
+        <h2 class="tituloP">📌 Proyectos realizados por Estudiantes/Egresados</h2>
 
         <div *ngIf="proyectos.length > 0; else noProjects">
           <div *ngFor="let proyecto of pagedProjects" class="proyecto-card">
@@ -237,7 +223,7 @@
           <p>No hay proyectos registrados aún.</p>
         </ng-template>
 
-        <button class="compartir-btn">¡Comparte tus proyectos!</button>
+        <button class="compartir-btn" (click)="irAProyectos()">¡Comparte tus proyectos!</button>
              <div class="pagination" *ngIf="totalPages > 1">
   <button (click)="changePage(currentPage - 1)" [disabled]="currentPage === 1">Anterior</button>
 

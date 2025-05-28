@@ -1,115 +1,30 @@
 <section class="hero-section">
-    <div class="hero-container">
-        <h1>Validar Experiencias</h1>
-        <p>Revisa y aprueba las experiencias que los usuarios han compartido.</p>
-    </div>
+  <div class="hero-container">
+    <h1>Gestión de Experiencias</h1>
+    <p>Aquí puedes revisar y gestionar las experiencias compartidas por los estudiantes.</p>
+  </div>
 </section>
 
 <br>
-<div class="experience-approval-container">
-    <h2>Aprobar Experiencias</h2>
-    <br>
+<div class="video-approval-container">
+  <h2>Lista de Experiencias Pendientes</h2>
 
-    <div class="experience-card">
-        <div class="user-profile">
-            <div class="user-icon">A</div>
-            <div class="user-details">
-                <span class="user-name">Ana Martínez casandra hernadez </span>
-                <span class="user-role">Estudiante</span>
-            </div>
-        </div>
-        <div class="comment-content">
-            <p>"Me encantó la carrera, los profesores son excelentes y el ambiente es increíble."</p>
-        </div>
-        <div class="actions">
-            <button class="approve-btn">Aprobar</button>
-            <button class="reject-btn">Rechazar</button>
-        </div>
-    </div>
+  <ul *ngIf="experiencias.length > 0; else sinExperiencias" class="proyecto-lista">
+    <li *ngFor="let experiencia of experiencias" class="proyecto-item">
+      <div class="info-proyecto">
+        <p>{{ experiencia.descripcion }}</p>
+        <p style="color: white;" class="fecha-badge">📅 {{ experiencia.fecha }}</p>
+      </div>
 
-    <div class="experience-card">
-        <div class="user-profile">
-            <div class="user-icon">J</div>
-            <div class="user-details">
-                <span class="user-name">Juan Pérez</span>
-                <span class="user-role">Egresado</span>
-            </div>
-        </div>
-        <div class="comment-content">
-            <p>"La universidad me brindó muchas 
-                sjkahdkahdfkjhfjksdhflksoportunidades para crecer y encontrar trabajo."</p>
-        </div>
-        <div class="actions">
-            <button class="approve-btn">Aprobar</button>
-            <button class="reject-btn">Rechazar</button>
-        </div>
-    </div>
+      <div class="acciones">
+        <button *ngIf="experiencia.id !== undefined" (click)="aprobar(experiencia.id)">Aprobar</button>
+        <button *ngIf="experiencia.id !== undefined" (click)="rechazar(experiencia.id)">Rechazar</button>
+      </div>
+    </li>
+  </ul>
 
-    <div class="experience-card">
-        <div class="user-profile">
-            <div class="user-icon">M</div>
-            <div class="user-details">
-                <span class="user-name">María López</span>
-                <span class="user-role">Aspirante</span>
-            </div>
-        </div>
-        <div class="comment-content">
-            <p>"Estoy considerando estudiar aquí, me gustaría saber más sobre las materias y profesores."</p>
-        </div>
-        <div class="actions">
-            <button class="approve-btn">Aprobar</button>
-            <button class="reject-btn">Rechazar</button>
-        </div>
-    </div>
-
-    <div class="experience-card">
-        <div class="user-profile">
-            <div class="user-icon">M</div>
-            <div class="user-details">
-                <span class="user-name">María López</span>
-                <span class="user-role">Aspirante</span>
-            </div>
-        </div>
-        <div class="comment-content">
-            <p>"Estoy considerando estudiar aquí, me gustaría saber más sobre las materias y profesores."</p>
-        </div>
-        <div class="actions">
-            <button class="approve-btn">Aprobar</button>
-            <button class="reject-btn">Rechazar</button>
-        </div>
-    </div>
-
-    <div class="experience-card">
-        <div class="user-profile">
-            <div class="user-icon">M</div>
-            <div class="user-details">
-                <span class="user-name">María López</span>
-                <span class="user-role">Aspirante</span>
-            </div>
-        </div>
-        <div class="comment-content">
-            <p>"Estoy considerando estudiar aquí, me gustaría saber más sobre las materias y profesores."</p>
-        </div>
-        <div class="actions">
-            <button class="approve-btn">Aprobar</button>
-            <button class="reject-btn">Rechazar</button>
-        </div>
-    </div>
-
-    <div class="experience-card">
-        <div class="user-profile">
-            <div class="user-icon">M</div>
-            <div class="user-details">
-                <span class="user-name">María López</span>
-                <span class="user-role">Aspirante</span>
-            </div>
-        </div>
-        <div class="comment-content">
-            <p>"Estoy considerando estudiar aquí, me gustaría saber más sobre las materias y profesores."</p>
-        </div>
-        <div class="actions">
-            <button class="approve-btn">Aprobar</button>
-            <button class="reject-btn">Rechazar</button>
-        </div>
-    </div>
+  <ng-template #sinExperiencias>
+    <p>No hay experiencias pendientes por aprobar.</p>
+    <br><br><br>
+  </ng-template>
 </div>

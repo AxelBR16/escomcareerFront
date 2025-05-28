@@ -51,20 +51,15 @@
       </li>
 
       <!--Role egresado-->
-      <li *ngIf="userRole === 'ROLE_EGRESADO'">
-        <a [routerLink]="['/bolsa-trabajo']" routerLinkActive="active" class="nav-link px-2 text-warning">
-          Bolsa de Trabajo
-        </a>
-      </li>
-      <li *ngIf="userRole === 'ROLE_EGRESADO'">
-        <a [routerLink]="['/proyectEgresado']" routerLinkActive="active" class="nav-link px-2 text-warning">
-          Proyectos
-        </a>
-      </li>
-
       <li *ngIf="userRole=== 'ROLE_EGRESADO'">
         <a [routerLink]="['/carreras']" routerLinkActive="active" class="nav-link px-2 text-warning">
           Carreras
+        </a>
+      </li>
+
+      <li *ngIf="userRole === 'ROLE_EGRESADO'">
+        <a [routerLink]="['/proyectEgresado']" routerLinkActive="active" class="nav-link px-2 text-warning">
+          Proyectos
         </a>
       </li>
 
