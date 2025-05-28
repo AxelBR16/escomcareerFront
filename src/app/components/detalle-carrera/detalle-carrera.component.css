@@ -6,7 +6,7 @@
     font-family: 'Poppins', sans-serif;
     padding: 10px;
   }
-  
+
   .hero {
     width: 100%;
     height: 60vh;
@@ -29,8 +29,8 @@
     left: 0;
     z-index: -1;
     filter: brightness(0.6);
-  }  
-  
+  }
+
   .overlay {
     background: rgba(0, 0, 0, 0.6);
     color: white;
@@ -52,7 +52,7 @@
       transform: translateY(0);
     }
   }
-  
+
   /* Menú de secciones */
   .menu {
     display: flex;
@@ -61,7 +61,7 @@
     margin: 20px 0;
     flex-wrap: wrap;
   }
-  
+
   .menu button {
     background: #f8f9fa;
     border: 2px solid #007bff;
@@ -73,7 +73,7 @@
     border-radius: 5px;
     transition: all 0.3s ease-in-out;
   }
-  
+
   .menu button:hover {
     background: #007bff;
     color: white;
@@ -83,7 +83,7 @@
     background: #007bff;
     color: white;
   }
-  
+
   .content {
     width: 80%;
     max-width: 900px;
@@ -96,7 +96,7 @@
     text-align: center;
     animation: fadeIn 0.5s ease-in-out;
   }
-  
+
   @media (max-width: 768px) {
     .hero {
       height: 40vh;
@@ -112,16 +112,16 @@
       width: 90%;
     }
   }
-  
+
   /* Animación para cambiar de sección */
 .fade-in {
     animation: fadeIn 0.5s ease-in-out;
   }
-  
+
   .btn-container {
     margin-top: 20px;
   }
-  
+
   .btn-regresar {
     background: #ffc107;
     color: white;
@@ -132,7 +132,7 @@
     border-radius: 5px;
     transition: all 0.3s;
   }
-  
+
   .btn-regresar:hover {
     background:#e0a800;
   }
@@ -146,7 +146,7 @@
     margin: 20px auto;
     padding: 20px;
   }
-  
+
   .info-box {
     background: #f8f9fa;
     padding: 20px;
@@ -155,19 +155,19 @@
     margin-bottom: 20px;
     text-align: left;
   }
-  
+
   .info-box h3 {
     font-size: 20px;
     font-weight: bold;
     margin-bottom: 10px;
     color: #007bff;
   }
-  
+
   .info-box ul {
     list-style: none;
     padding: 0;
   }
-  
+
   .info-box li {
     background: white;
     padding: 10px;
@@ -176,19 +176,19 @@
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
     font-size: 16px;
   }
-  
+
   /* Responsivo */
   @media (max-width: 768px) {
     .que-ofrece {
       width: 100%;
       padding: 15px;
     }
-  
+
     .info-box {
       padding: 15px;
     }
   }
-  
+
 
 
 /*Inicio CSS PLAN DE ESTUDIOS*/
@@ -431,7 +431,7 @@
 }
 
 .dislike-active {
-  color: #ff4b5c; 
+  color: #ff4b5c;
 }
 
 .compartir-btn {
@@ -554,13 +554,13 @@
 }
 
 .nombrejob {
-  color: #0056b3; 
+  color: #0056b3;
   font-weight: bold;
-  margin-right: 10px; 
+  margin-right: 10px;
 }
 
 .statusjob{
-  color: #999; 
+  color: #999;
 }
 
 @media (max-width: 768px) {
@@ -649,6 +649,16 @@
   height: 100%;
   object-fit: cover;
   display: block;
+}
+ .fecha-badge {
+  display: inline-block;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  padding: 0.2rem 1rem;
+  border-radius: 20px;
+  font-size: 0.7rem;
+  font-weight: 500;
+  margin: 0.5rem 0;
 }
 
 .proyecto-footer {
