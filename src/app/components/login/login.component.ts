@@ -1,6 +1,6 @@
 import { AuthService } from './../../services/auth.service';
 
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, inject } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -8,6 +8,8 @@ import Swal from 'sweetalert2';
 import { SignIn } from '../../models/sign-in';
 import { SignUpAspirante } from '../../models/sign-up-aspirante';
 import { LoaderService } from '../../services/loader.service';
+import { MatSnackBar } from '@angular/material/snack-bar'
+
 
 @Component({
   selector: 'app-login',
@@ -17,6 +19,7 @@ import { LoaderService } from '../../services/loader.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
+  private snackBar = inject(MatSnackBar);
 
   @ViewChild('contenedor') contenedor!: ElementRef;
 
@@ -142,11 +145,9 @@ export class LoginComponent implements OnInit {
       this.loading = true;
       this.authService.login(signInData).subscribe({
         next: (response) => {
-          Swal.fire({
-            icon: 'success',
-            title: 'Inicio de sesión exitoso',
-            text: 'Bienvenido de nuevo',
-            confirmButtonText: 'Aceptar'
+          this.snackBar.open('✅ ¡Sesión iniciada con éxito! Disfruta tu experiencia. 🚀', 'OK', {
+            duration: 9000,
+            panelClass: ['custom-snackbar']
           });
           this.loading = false;
           this.authService.storeUserSession(this.loginEmail, response.token, response.role);
