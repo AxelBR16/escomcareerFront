@@ -26,6 +26,7 @@ export class AdminvideosComponent implements OnInit{
       data => this.proyectos = data,
       error => console.error('Error al cargar proyectos', error)
     );
+    console.log(this.proyectos);
   }
 
  aprobar(id?: number) {
