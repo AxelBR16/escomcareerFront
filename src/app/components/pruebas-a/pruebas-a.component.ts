@@ -53,6 +53,11 @@ export class PruebasAComponent implements OnInit {
     return;
   }
 
+   if (tipo === 'intereses' && this.progreso.intereses === 100) {
+    this.router.navigate(['/result-intereses']);
+    return;
+  }
+
   const ruta = this.pruebasCompletadas[tipo]
     ? `/${tipo}/preguntas/${tipo === 'aptitudes' ? 'inv1' : 'inv2'}-${this.preguntainicial[tipo]}`
     : `/instrucciones/${tipo}`;

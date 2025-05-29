@@ -46,7 +46,7 @@ export class ResultInteresesComponent {
           16: 'Literarios',
           17: 'Cálculo',
           18: 'Contabilidad',
-          26: 'Científicos',
+          19: 'Científicos',
           20: 'Mecánicos',
           21: 'S. social',
           22: 'Organización',
@@ -103,7 +103,7 @@ initChart(etiquetas: string[], puntajes: number[]): void {
   }
 
 
-  
+
     // Método que se activa al hacer clic en el botón
     showLoading(): void {
       // Muestra la alerta de SweetAlert2
@@ -117,7 +117,7 @@ initChart(etiquetas: string[], puntajes: number[]): void {
           Swal.showLoading(); // Muestra el spinner de carga
         }
       });
-  
+
       // Simula una espera de 2 segundos antes de redirigir
       setTimeout(() => {
         this.router.navigate(['/resultAI2']); // Redirige a la página de resultados

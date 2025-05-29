@@ -50,7 +50,8 @@
       class="btn mt-2"
       (click)="redirigir('intereses')"
       >
-      {{ pruebasCompletadas.intereses ? 'Reanudar' : 'Comenzar' }}
+      {{  progreso.intereses === 100
+            ? 'Ver resultados': pruebasCompletadas.intereses ? 'Reanudar' : 'Comenzar' }}
     </button>
 
     </div>
