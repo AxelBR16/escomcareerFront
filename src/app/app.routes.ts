@@ -26,6 +26,7 @@ import { AdminvideosComponent } from './components/adminvideos/adminvideos.compo
 import { ExperenceComponent } from './components/experence/experence.component';
 import { ResultAIComponent } from './components/result-ai/result-ai.component';
 import { ResultAI2Component } from './components/result-ai2/result-ai2.component';
+import { AdminTrabajoComponent } from './components/admin-trabajo/admin-trabajo.component';
 
 export const routes: Routes = [
   {path: '', component: InicioComponent},
@@ -44,9 +45,10 @@ export const routes: Routes = [
   { path: ':tipo/preguntas/:id', component: PreguntasComponent, canActivate: [AspiranteGuard]},
   //{path: 'admin-dashboard', component: AdminDashboardComponent, canActivate: [AdminGuard]},
   {path: 'egresado-dashboard', component: EgresadoDashboardComponent, canActivate: [EgresadoGuard]},
-  {path: 'admin-dashboard', component: AdminDashboardComponent},
-  {path: 'admin-carreras', component: AdminCarrerasComponent},
-  {path: 'admin-expe', component: AdminExpeComponent},
+  {path: 'admin-dashboard', component: AdminDashboardComponent, canActivate: [AdminGuard]},
+  {path: 'admin-carreras', component: AdminCarrerasComponent,  canActivate: [AdminGuard]},
+  {path: 'admin-expe', component: AdminExpeComponent,  canActivate: [AdminGuard]},
+  {path: 'admin-trabajo', component: AdminTrabajoComponent, canActivate: [AdminGuard]},
   {path: 'resultAI', component: ResultAIComponent},
    {path: 'resultAI2', component: ResultAI2Component},
   {path: 'admin-videos', component: AdminvideosComponent},

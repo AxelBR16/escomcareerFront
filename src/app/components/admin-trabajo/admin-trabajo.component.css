@@ -1,0 +1,369 @@
+/* Estilos para el hero */
+.hero-section {
+    position: relative;
+    width: 100%;
+    min-height: 200px;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/site/proyectosi.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    margin-top: 20px;
+    border-radius: 10px;
+}
+
+.hero-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    text-align: center;
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+    width: 80%;
+}
+
+.hero-container h1 {
+    font-size: 35px;
+    margin-bottom: 20px;
+}
+
+.hero-container p {
+    font-size: 20px;
+}
+
+/* Contenedor principal */
+.video-approval-container {
+    max-width: 700px;
+    margin: auto;
+    text-align: center;
+}
+
+/* Tarjetas de aprobación */
+.video-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: white;
+    border-radius: 10px;
+    padding: 15px;
+    margin: 15px 0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out;
+}
+
+/* Efecto hover */
+.video-card:hover {
+    transform: scale(1.03);
+}
+
+/* Perfil del usuario */
+.user-profile {
+    display: flex;
+    align-items: center;
+    flex: 1;
+}
+
+.user-icon {
+    width: 50px;
+    height: 50px;
+    background: #0044cc;
+    color: white;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-size: 20px;
+    margin-right: 10px;
+}
+
+.user-details {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+
+.user-name {
+    font-weight: bold;
+    font-size: 16px;
+    color: #0044cc;
+}
+
+.user-role {
+    font-size: 14px;
+    color: gray;
+}
+
+/* Video */
+.video-content {
+    flex: 2;
+    display: flex;
+    justify-content: center;
+}
+
+.video-proyecto {
+    width: 150px;
+    height: 90px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Botones de acción */
+.actions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.approve-btn {
+    background: #28a745;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 5px;
+    transition: 0.3s;
+}
+
+.reject-btn {
+    background: #dc3545;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+/* Efectos hover para los botones */
+.approve-btn:hover {
+    background: #218838;
+}
+
+.reject-btn:hover {
+    background: #c82333;
+}
+
+/* Responsivo */
+@media (max-width: 600px) {
+    .video-card {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .video-content {
+        margin-top: 10px;
+    }
+
+    .actions {
+        flex-direction: row;
+        margin-top: 10px;
+    }
+
+    .approve-btn, .reject-btn {
+        margin: 0 5px;
+    }
+}
+
+ .video-approval-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .proyectos-lista {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .proyecto-item {
+            background: white;
+            border-radius: 16px;
+            padding: 0;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .proyecto-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        .proyecto-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+        }
+
+        .info-proyecto {
+            padding: 2rem;
+            padding-bottom: 1rem;
+        }
+
+        .info-proyecto h3 {
+            color: #2d3748;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .info-proyecto p {
+            color: #4a5568;
+            line-height: 1.6;
+            margin-bottom: 0.8rem;
+        }
+
+        .info-proyecto p strong {
+            color: #2d3748;
+            font-weight: 600;
+        }
+
+        .fecha-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin: 0.5rem 0;
+        }
+
+        .link-proyecto {
+            display: inline-block;
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+            padding: 0.5rem 1rem;
+            border: 2px solid #667eea;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+        }
+
+        .link-proyecto:hover {
+            background: #667eea;
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .no-url {
+            display: inline-block;
+            color: #e53e3e;
+            font-style: italic;
+            padding: 0.5rem 1rem;
+            background: #fed7d7;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            margin-top: 1rem;
+        }
+
+        .acciones {
+            background: #f7fafc;
+            padding: 1.5rem 2rem;
+            display: flex;
+            gap: 1rem;
+            justify-content: space-between;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .acciones button {
+            flex: 1;
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .acciones button:first-child {
+            background: linear-gradient(135deg, #48bb78, #38a169);
+            color: white;
+        }
+
+        .acciones button:first-child:hover {
+            background: linear-gradient(135deg, #38a169, #2f855a);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(72, 187, 120, 0.4);
+        }
+
+        .acciones button:last-child {
+            background: linear-gradient(135deg, #f56565, #e53e3e);
+            color: white;
+        }
+
+        .acciones button:last-child:hover {
+            background: linear-gradient(135deg, #e53e3e, #c53030);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(245, 101, 101, 0.4);
+        }
+
+        .status-indicator {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: #fed7d7;
+            color: #e53e3e;
+            padding: 0.3rem 0.8rem;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+            }
+
+            h2 {
+                font-size: 2rem;
+                margin-bottom: 2rem;
+            }
+
+            .proyectos-lista {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .info-proyecto {
+                padding: 1.5rem;
+            }
+
+            .acciones {
+                flex-direction: column;
+                gap: 0.8rem;
+            }
+
+            .acciones button {
+                padding: 0.9rem;
+            }
+        }
+
+        .empty-state {
+            text-align: center;
+            color: white;
+            padding: 3rem;
+        }
+
+        .empty-state svg {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 1rem;
+            opacity: 0.7;
+        }

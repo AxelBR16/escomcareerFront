@@ -43,4 +43,19 @@ export class ExperienciaService {
   rechazarExperiencia(id: number): Observable<void> {
     return this.http.delete<void>(`${environment.apiUrls.auth}/experiencias/rechazar/${id}`);
   }
+
+   // Obtener todos los trabajos pendientes (estado = false)
+  obtenerTrabajosPendientes(): Observable<JobOffer[]> {
+    return this.http.get<JobOffer[]>(`${environment.apiUrls.auth}/experiencias/trabajo/pendientes`);
+  }
+
+  // Aprobar un trabajo (cambiar estado a true)
+  aprobarTrabajo(id: number): Observable<void> {
+    return this.http.put<void>(`${environment.apiUrls.auth}/experiencias/trabajo/aprobar/${id}`, null);
+  }
+
+  // Rechazar un trabajo (eliminarlo)
+  rechazarTrabajo(id: number): Observable<void> {
+    return this.http.delete<void>(`${environment.apiUrls.auth}/experiencias/trabajo/rechazar/${id}`);
+  }
   }

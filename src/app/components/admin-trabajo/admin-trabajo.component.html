@@ -1,0 +1,46 @@
+<section class="hero-section">
+  <div class="hero-container">
+    <h1>Gestión de Trabajos</h1>
+    <p>Aquí puedes revisar y gestionar los trabajos compartidos por los egresados.</p>
+  </div>
+</section>
+
+<br>
+<div class="proyecto-approval-container">
+  <h2>Lista de Trabajos Pendientes</h2>
+
+  <ul *ngIf="trabajos.length > 0; else sinTrabajos" class="proyecto-lista">
+    <li *ngFor="let trabajo of trabajos" class="proyecto-item">
+      <div class="info-trabajo">
+        <p><strong>Puesto:</strong> {{ trabajo.puesto }}</p>
+        <p><strong>Descripción:</strong> {{ trabajo.descripcion }}</p>
+        <ng-container *ngIf="trabajo.habilidades && trabajo.habilidades.length > 0">
+            <p>
+              <strong>Habilidades:</strong>
+              <span *ngFor="let habilidad of trabajo.habilidades; let last = last">
+                {{ habilidad.nombre }}<span *ngIf="!last">, </span>
+              </span>
+            </p>
+          </ng-container>
+
+
+        <!-- <p *ngIf="trabajo.habilidades?.length > 0">
+          <strong>Habilidades:</strong>
+          <span *ngFor="let habilidad of trabajo.habilidades; let last = last">
+            {{ habilidad.nombre || habilidad }}<span *ngIf="!last">, </span>
+          </span>
+        </p> -->
+      </div>
+
+      <div class="acciones">
+        <button *ngIf="trabajo.id !== undefined" (click)="aprobar(trabajo.id)">Aprobar</button>
+        <button *ngIf="trabajo.id !== undefined" (click)="rechazar(trabajo.id)">Rechazar</button>
+      </div>
+    </li>
+  </ul>
+
+  <ng-template #sinTrabajos>
+    <p>No hay trabajos pendientes por aprobar.</p>
+    <br><br><br>
+  </ng-template>
+</div>
