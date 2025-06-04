@@ -14,7 +14,6 @@ export class SplashScreenComponent implements OnInit {
 
 
 ngOnInit(): void {
-                // Simular carga de datos, autenticación, etc.
                 this.loadApplication();
             }
 

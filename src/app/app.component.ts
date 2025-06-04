@@ -13,22 +13,30 @@ import { SplashScreenComponent } from './shared/splash-screen/splash-screen.comp
 })
 export class AppComponent implements OnInit {
   title = 'escomcareer';
-  showSplash: boolean = true;  // Controla la animación de carga
-  isMobile: boolean = false;   // Verifica si es móvil
+  showSplash: boolean = true;
+   isMobile: boolean = false;
+    isPlatformReady: boolean = false;
 
   constructor(private platform: Platform) {}
 
-  ngOnInit() {
-    // Detecta si la aplicación está corriendo en un dispositivo móvil
-    this.isMobile = this.platform.is('mobile');
-
-    // Solo mostrar la animación en la versión móvil
-    if (this.isMobile) {
-      setTimeout(() => {
-        this.showSplash = false;
-      }, 2000);
-    } else {
-      this.showSplash = false;
-    }
+ ngOnInit() {
+    // Espera a que la plataforma esté completamente cargada antes de hacer algo
+    this.platform.ready().then(() => {
+      this.isPlatformReady = true;  // Marca la plataforma como lista
+      this.isMobile = this.platform.is('mobile');
+      if (this.isMobile) {
+        // Si es móvil, mostrar splash por 2 segundos
+        setTimeout(() => {
+          this.showSplash = false;
+        }, 2000);
+      } else {
+        this.showSplash = false;  // No es necesario mostrar splash en plataformas web
+      }
+    });
   }
-}
+
+  // Se asegura de que el contenido solo se muestre cuando la plataforma esté lista
+  shouldShowContent(): boolean {
+    return this.isPlatformReady && !this.showSplash;
+  }
+ }
