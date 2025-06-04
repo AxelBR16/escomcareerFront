@@ -23,7 +23,6 @@ export class EgresadoGuard implements CanActivate {
       }
       return true;
     } else {
-      // No estamos en navegador, denegamos acceso o lo que prefieras hacer
       this.router.navigate(['/login']);
       return false;
     }

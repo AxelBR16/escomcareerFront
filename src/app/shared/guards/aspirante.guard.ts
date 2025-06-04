@@ -10,11 +10,10 @@ export class AspiranteGuard implements CanActivate {
   constructor(
     private router: Router,
     private authService: AuthService,
-    @Inject(PLATFORM_ID) private platformId: object // Inyectamos el ID de la plataforma
+    @Inject(PLATFORM_ID) private platformId: object
   ) {}
 
   canActivate(): boolean {
-    // Verifica si está en el navegador antes de acceder a sessionStorage
     if (isPlatformBrowser(this.platformId)) {
       const role = sessionStorage.getItem('role');
       if (!this.authService.isLoggedIn() || role !== 'ROLE_ASPIRANTE') {
@@ -22,7 +21,6 @@ export class AspiranteGuard implements CanActivate {
         return false;
       }
     } else {
-      // Si está en el servidor, evita usar sessionStorage y deniega el acceso
       return false;
     }
     return true;
