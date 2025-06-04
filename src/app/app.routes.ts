@@ -27,9 +27,13 @@ import { ExperenceComponent } from './components/experence/experence.component';
 import { ResultAIComponent } from './components/result-ai/result-ai.component';
 import { ResultAI2Component } from './components/result-ai2/result-ai2.component';
 import { AdminTrabajoComponent } from './components/admin-trabajo/admin-trabajo.component';
+import { PlatformGuard } from './shared/guards/platform.guard';
+import { InicioMobileComponent } from './components/inicio-mobile/inicio-mobile.component';
 
 export const routes: Routes = [
-  {path: '', component: InicioComponent},
+  {path: '', component: InicioComponent, canActivate: [PlatformGuard]},
+  {path: 'inicio-mobile', component: InicioMobileComponent, canActivate: [PlatformGuard]},
+  {path: 'inicio-web',component: InicioComponent,canActivate: [PlatformGuard]},
   {path: 'carreras', component: CarrerasComponent},
   {path: 'result-aptitudes', component: ResultAptitudesComponent, canActivate: [AspiranteGuard]},
   {path: 'result-uni', component: ResultUniverComponent, canActivate: [AspiranteGuard]},
