@@ -32,8 +32,8 @@ import { InicioMobileComponent } from './components/inicio-mobile/inicio-mobile.
 
 export const routes: Routes = [
   {path: '', component: InicioComponent, canActivate: [PlatformGuard]},
-  {path: 'inicio-mobile', component: InicioMobileComponent, canActivate: [PlatformGuard]},
-  {path: 'inicio-web',component: InicioComponent,canActivate: [PlatformGuard]},
+  {path: 'inicio-mobile', component: InicioMobileComponent},
+  {path: 'inicio-web',component: InicioComponent},
   {path: 'carreras', component: CarrerasComponent},
   {path: 'result-aptitudes', component: ResultAptitudesComponent, canActivate: [AspiranteGuard]},
   {path: 'result-uni', component: ResultUniverComponent, canActivate: [AspiranteGuard]},
