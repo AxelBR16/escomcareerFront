@@ -326,6 +326,48 @@
     padding: 20px 40px;
   }
 
+
+.btn {
+  padding: 10px 20px;
+  font-size: 1rem; /* Usar unidades relativas */
+  border: none;
+  background-color: #007bff;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+   text-align: center; /* Centra el texto dentro del botón */
+  width: 100%; /* Hace que los botones se adapten a su contenedor */
+  max-width: 200px; /* Limita el tamaño máximo de los botones */
+}
+
+
+/* Responsividad: ajustes para pantallas más pequeñas */
+@media (max-width: 768px) {
+  .btn-wrapper {
+    padding: 15px 20px; /* Menor padding en pantallas pequeñas */
+     
+  }
+
+  .btn {
+    padding: 8px 16px; /* Botón más pequeño */
+    font-size: 0.875rem; /* Texto más pequeño en pantallas medianas */
+      width: 100%; /* Asegura que los botones se estiren */
+  }
+}
+
+@media (max-width: 480px) {
+  .btn-wrapper {
+    padding: 10px 10px; /* Menor padding en pantallas muy pequeñas */
+  }
+
+  .btn {
+    padding: 6px 12px; /* Botón aún más pequeño */
+    font-size: 0.75rem; /* Texto más pequeño en pantallas pequeñas */
+  }
+}
+
+  
 .btn-camera {
     display: flex;
     align-items: center;
@@ -392,23 +434,198 @@
     width: 100%;
 
   }
-  
-  .password-hint {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    background-color: #f8d7da;
-    color: #721c24;
-    padding: 5px;
-    border-radius: 5px;
-    font-size: 12px;
-    width: auto;
-    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
-  }
-  
   .error-message {
-    color: #ff0000;
-    font-size: 12px;
-    margin-top: 5px;
+  color: red;
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+input.ng-invalid.ng-touched {
+  border-color: red;
+}
+
+input.ng-valid.ng-touched {
+  border-color: green;
+}
+
+.password-hint {
+  color: gray;
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+
+
+.password-hint {
+  color: gray;
+  font-size: 12px;
+  margin-top: 5px;
+  background-color: #f9f9f9;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.password-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+
+/* Asegura que el ícono se coloque al final del mensaje de ayuda */
+.password-hint ion-icon {
+  cursor: pointer;
+  font-size: 1.5em;
+}
+
+/* Media queries para adaptabilidad */
+@media (max-width: 768px) {
+  .password-container input {
+    padding-right: 40px; /* Asegura que el ícono en el input no se solape */
   }
-  
+
+  .password-hint {
+    flex-direction: row-reverse; /* Coloca el ícono a la derecha en pantallas móviles */
+    padding: 10px 15px;
+  }
+}
+
+
+
+
+.password-container input {
+  width: 100%;
+  padding-right: 40px; /* Crea espacio a la derecha para el ícono */
+  padding-left: 10px;  /* Un pequeño padding a la izquierda para que no se solape con el texto */
+  font-size: 1.1em;
+}
+
+.password-toggle {
+  position: absolute;
+  right: 10px;
+  cursor: pointer;
+  font-size: 1.5em; /* Tamaño del ícono */
+  color: #666;
+  top: 50%;
+  transform: translateY(-50%); /* Centra el ícono verticalmente dentro del input */
+}
+
+.password-toggle ion-icon {
+  pointer-events: none; /* Asegura que el clic no interfiera con el campo */
+}
+
+
+
+
+.eye-icon {
+  position: absolute;
+  right: 10px;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+input {
+  padding-right: 30px; /* Deja espacio para el ícono */
+}   
+
+
+/* Estilo básico para los campos de formulario */
+select {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  font-size: 14px;
+  color: #333;
+}
+
+select:focus {
+  border-color: #007bff; /* Cambia el color del borde cuando se enfoca */
+  outline: none;
+}
+
+option {
+  padding: 10px;
+}
+
+/* Estilo para los mensajes de error */
+.error-message {
+  color: red;
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+/* Si el campo está tocado y es inválido, aplica borde rojo */
+select.ng-invalid.ng-touched {
+  border-color: red;
+}
+
+/* Opciones del select - personaliza aquí según el diseño que quieras */
+select {
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  color: #333;
+  padding: 8px;
+}
+
+
+/* Estilo para cambiar el color del label cuando la carrera no está seleccionada */
+.error-label {
+  color: red;
+}
+
+/* Estilo de error del select */
+select.ng-invalid.ng-touched {
+  border-color: red;
+}
+
+
+
+
+/* Estilo general para los campos */
+.user-data {
+  font-family: Arial, sans-serif;
+  margin-bottom: 20px;
+}
+
+.user-data-item {
+  margin: 10px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+strong {
+  font-weight: bold;
+}
+
+input[type="text"], input[type="email"] {
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  width: 60%;
+  transition: border-color 0.3s;
+}
+
+/* Estilo para cuando el campo está siendo editado */
+input[type="text"]:focus, input[type="email"]:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+/* Estilo para los mensajes de error */
+.error-message {
+  color: red;
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+
+
+
+.btn-wrapper button {
+  width: 32%;
+}

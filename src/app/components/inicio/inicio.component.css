@@ -111,43 +111,88 @@ body {
 /* Sección de test con carrusel */
 .test-section {
   text-align: center;
-  padding: 30px 20px;  /* Aumentado el padding para mayor espacio */
-  background: linear-gradient(to right, #0A1733, #002F6C);  /* Degradado azul con transparencia */
+  padding: 30px 20px;
+  background: linear-gradient(to right, #0A1733, #002F6C);
   border-radius: 10px;
   margin: 40px auto;
-  width: 60%;  /* Ajusté el ancho para dar más espacio */
+  width: 60%;
   box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
   color: white;
-  backdrop-filter: blur(10px); /* Efecto difuminado */
+  backdrop-filter: blur(10px);
   transition: transform 0.5s ease, box-shadow 0.3s ease;
-  animation: floatEffect 3s infinite ease-in-out; /* Animación de flotación */
+  animation: floatEffect 3s infinite ease-in-out;
 }
 
 .test-section:hover {
-  transform: rotate(3deg);  /* Rotación suave al pasar el mouse */
-  box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.3); /* Sombra más fuerte en hover */
+  transform: rotate(3deg);
+  box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.3);
 }
 
 @keyframes floatEffect {
   0%, 100% {
-    transform: translateY(0);  /* Estado inicial */
+    transform: translateY(0);
   }
   50% {
-    transform: translateY(-10px);  /* Efecto de flotación hacia arriba */
+    transform: translateY(-10px);
   }
 }
 
 .test-section h2 {
-  font-size: 2.5em;  /* Título más grande */
+  font-size: 2.5em;
   margin-bottom: 20px;
 }
 
 .test-section p {
-  font-size: 1.2em;  /* Texto más grande */
+  font-size: 1.2em;
   line-height: 1.6;
   margin-top: 10px;
 }
 
+/* Estilo de la caja que contiene el "Objetivo" */
+.toggle-box {
+  width: 100%;
+  max-width: 90%;
+  margin: 10px auto;
+  padding: 10px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.toggle-header {
+  font-size: 1.5em;
+  font-weight: bold;
+  cursor: pointer;
+  text-align: center;
+  padding: 10px;
+  background-color: #002F6C;
+  color: white;
+  border-radius: 10px;
+}
+
+.toggle-text {
+  display: block;  /* En pantallas grandes, se muestra por defecto */
+  padding: 10px;
+ background: linear-gradient(to right, #0A1733, #002F6C);
+  border-radius: 10px;
+  margin-top: 10px;
+  font-size: 1.1em;
+  line-height: 1.6;
+}
+
+/* Media query para dispositivos móviles (pantallas pequeñas) */
+@media (max-width: 368px) {
+  .toggle-box {
+    width: 90%;  /* El cuadro ocupa más espacio en pantallas pequeñas */
+  }
+
+  /* En pantallas móviles, inicialmente se oculta el texto */
+  .toggle-text {
+    display: none;  /* Por defecto el texto está oculto */
+  }
+
+
+}
 
 
 
@@ -366,7 +411,7 @@ body {
 }
 
 .career-content {
-  max-width: 50%;
+  max-width: 100%;
 }
 
 .career-titleD {
@@ -396,12 +441,47 @@ body {
   background-color: #e6b800;
 }
 
+/* Estilo general para la imagen */
 .career-image img {
-  width: 400px;
+  width: 100%;
+  max-width: 400px;
+  height: auto;
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
+/* Media query para ocultar la imagen en pantallas pequeñas (teléfonos) */
+@media (max-width: 608px) {
+  .career-image img {
+    display: none; /* Oculta la imagen en pantallas con un ancho máximo de 608px */
+  }
+
+  /* Estilo para que el texto ocupe el lugar de la imagen */
+  .career-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Centra los elementos verticalmente */
+    align-items: center; /* Centra los elementos horizontalmente */
+    text-align: center; /* Centra el texto */
+  }
+
+  .career-block {
+    width: 100%; /* Los bloques ocupan todo el ancho disponible */
+    margin: 10px 0; /* Añadir márgenes para separar los bloques */
+  }
+
+  .career-title {
+    font-size: 1.5em; /* Aumenta el tamaño del título en pantallas pequeñas */
+    padding: 10px 0; /* Espaciado alrededor del título */
+  }
+
+  /* Opcional: Si quieres añadir un fondo o color detrás del texto */
+  .career-title {
+    background-color: #f1f1f1; /* Fondo gris claro */
+    padding: 20px; /* Espaciado alrededor del título */
+    border-radius: 10px; /* Bordes redondeados */
+  }
+}
 
 /* Responsividad para pantallas pequeñas */
 @media (max-width: 768px) {
@@ -437,6 +517,7 @@ body {
     font-size: 1.1em;
   }
 }
+
 
 
 .content {

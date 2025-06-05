@@ -6,34 +6,81 @@
       </div>
       <!-- Formulario de Registro (sign-up) -->
       <div class="form-contenedor sign-up">
-        <form id="signupForm" (submit)="onRegisterSubmit($event)" method="POST">
-          <h1>Crea tu cuenta</h1>
-          <input required maxlength="30" type="text" id="firstName" name="firstName" [(ngModel)]="firstName" placeholder="Nombre" required>
-          <input required maxlength="30" type="text" id="lastName" name="lastName" [(ngModel)]="lastName" placeholder="Apellidos" required>
-          <input type="email" id="correo" name="correo" [(ngModel)]="email" placeholder="TuEmail@example.com"  (blur)="validateEmail()" required>
+      <form id="signupForm" (submit)="onRegisterSubmit($event)" method="POST">
+  <h1>Crea tu cuenta</h1>
 
-           <!-- Mensaje de error del email -->
-          <div class="error-message" *ngIf="emailError">
-            {{ emailError }}
-          </div>
+  <input 
+    required 
+    maxlength="30" 
+    type="text" 
+    id="firstName" 
+    name="firstName" 
+    [(ngModel)]="firstName" 
+    #firstNameField="ngModel" 
+    placeholder="Nombre" 
+  />
+  <span *ngIf="firstNameField.invalid && firstNameField.touched" class="error-message">
+    <span *ngIf="firstNameField.errors?.['required']">El nombre es obligatorio.</span>
+  </span>
+
+  <input 
+    required 
+    maxlength="30" 
+    type="text" 
+    id="lastName" 
+    name="lastName" 
+    [(ngModel)]="lastName" 
+    #lastNameField="ngModel" 
+    placeholder="Apellidos" 
+  />
+  <span *ngIf="lastNameField.invalid && lastNameField.touched" class="error-message">
+    <span *ngIf="lastNameField.errors?.['required']">El apellido es obligatorio.</span>
+  </span>
+
+  <input 
+    type="email" 
+    id="correo" 
+    name="correo" 
+    [(ngModel)]="email" 
+    #emailField="ngModel" 
+    placeholder="TuEmail@example.com" 
+   
+   required [pattern]="emailPattern">
+  
+  <span *ngIf="emailField.invalid && emailField.touched" class="error-message">
+    <span *ngIf="emailField.errors?.['required']">El correo es obligatorio.</span>
+    <span *ngIf="emailField.errors?.['email']">El correo debe tener un formato válido.</span>
+    <span *ngIf="emailField.errors?.['pattern']">El correo debe tener una extensión válida.</span>
+  </span>
+
+    <div class="password-container">
+  <input 
+    [type]="isPasswordVisible ? 'text' : 'password'" 
+    id="signup-password" 
+    name="password" 
+    [(ngModel)]="password" 
+    #passwordField="ngModel" 
+    required 
+    minlength="8" 
+    maxlength="20" 
+    placeholder="Password"
+    [pattern]="passwordPattern" 
+  />
+
+  <!-- Ícono de ojo dentro del input -->
+  <span *ngIf="isPasswordVisible" class="eye-icon" (click)="togglePasswordVisibility()">👀</span>
+  <span *ngIf="!isPasswordVisible" class="eye-icon" (click)="togglePasswordVisibility()">👁️‍🗨️</span>
+</div>
 
 
-          <div class="password-container">
-            <input type="password" id="signup-password" name="password" [(ngModel)]="password" required minlength="8" maxlength="20" placeholder="Password"
-            (focus)="showPasswordHint = true" (blur)="showPasswordHint = false" required>
-             <!--Mensaje de ayuda-->
-             <div class="password-hint" *ngIf="showPasswordHint">
-              Debe contener al menos 1 mayúscula, 1 número y 1 carácter especial.
-            </div>
-
-             <!-- Mensaje de error de la contraseña -->
-            <div class="error-message" *ngIf="passwordError">
-              {{ passwordError }}
-            </div>
-          </div>
-
-          <button class="hidden" type="submit">Crear tu cuenta</button>
-        </form>
+    <span *ngIf="passwordField.invalid && passwordField.touched" class="error-message">
+      <span *ngIf="passwordField.errors?.['required']">La contraseña es obligatoria.</span>
+      <span *ngIf="passwordField.errors?.['minlength']">La contraseña debe tener al menos 8 caracteres.</span>
+      <span *ngIf="passwordField.errors?.['pattern']">La contraseña debe contener al menos una mayúscula, un número y un carácter especial.</span>
+    </span>
+  <button class="hidden" type="submit">Crear tu cuenta</button>
+</form>
+      
         <div class="div-centro">
         <button class="hidden" (click)="toggleIniciarSesion()">Iniciar sesión</button>
       </div>
@@ -45,11 +92,46 @@
           <div class="progress-bar progress-bar-striped progress-bar-animated" style="width: 100%"></div>
         </div>
         <form id="loginform" (submit)="onLoginSubmit($event)" method="POST">
-          <img src="./site/logoN.png" alt="Logo escomcareer">
-          <br><br>
+          <a [routerLink]="['/inicio']">
+           <img src="./site/logoN.png" alt="Logo escomcareer">
+          </a>
+
+          <br>
           <h1>Inicia Sesión</h1>
-          <input id="email" name="email" type="email" [(ngModel)]="loginEmail" placeholder="Email" required>
-          <input id="password" name="password" type="password" [(ngModel)]="loginPassword" placeholder="Password" required>
+
+          <input 
+          id="email" 
+          name="email" type="email" 
+          [(ngModel)]="loginEmail" 
+          placeholder="Email"
+           #emailField="ngModel"
+          required [pattern]="emailPattern">
+  
+
+
+ <div class="password-container">
+          <input id="password" 
+          name="password" 
+            [type]="isPasswordVisible ? 'text' : 'password'" 
+          [(ngModel)]="loginPassword" 
+          placeholder="Password" 
+           
+          required
+          [pattern]="passwordPattern" 
+  />
+
+  <!-- Ícono de ojo dentro del input -->
+  <span *ngIf="isPasswordVisible" class="eye-icon" (click)="togglePasswordVisibility()">👀</span>
+  <span *ngIf="!isPasswordVisible" class="eye-icon" (click)="togglePasswordVisibility()">👁️‍🗨️</span>
+</div>
+ <span *ngIf="passwordField.invalid && passwordField.touched" class="error-message">
+      <span *ngIf="passwordField.errors?.['required']">La contraseña es obligatoria.</span>
+      <span *ngIf="passwordField.errors?.['minlength']">La contraseña debe tener al menos 8 caracteres.</span>
+      <span *ngIf="passwordField.errors?.['pattern']">La contraseña debe contener al menos una mayúscula, un número y un carácter especial.</span>
+    </span>
+
+
+          
           <a [routerLink]="['/forgot-password']">¿Olvidaste la contraseña?</a>
           <button class="hidden" type="submit">Iniciar sesión</button>
         </form>

@@ -395,3 +395,52 @@ html, body {
 }
 
 }
+
+/* Estilo para los campos de entrada */
+
+input:focus {
+  border-color: #007bff; /* Cambia el color del borde cuando se enfoca */
+  outline: none;
+}
+
+.error-message {
+  color: red;
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+input.ng-invalid.ng-touched {
+  border-color: red;
+}
+
+
+.password-hint {
+  font-size: 12px;
+  color: #888;
+  margin-top: 5px;
+}
+
+
+.eye-icon {
+  position: absolute;
+  right: 10px; /* Ajusta la posición desde la derecha */
+  top: 50%; /* Centra verticalmente el ícono */
+  transform: translateY(-50%); /* Alinea el ícono verticalmente */
+  cursor: pointer;
+  font-size: 18px;
+}
+input {
+  width: 100%;
+  padding-right: 30px; /* Añadimos espacio a la derecha para el ícono */
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+
+ .password-container {
+    position: relative;
+    width: 100%;
+
+  }

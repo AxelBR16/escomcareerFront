@@ -25,6 +25,7 @@ export class LoginComponent implements OnInit {
 
   constructor(private authService: AuthService, private router: Router, private loader: LoaderService){ }
 
+  
   // Campos para el registro (sign-up)
   firstName: string = '';
   lastName: string = '';
@@ -180,4 +181,15 @@ export class LoginComponent implements OnInit {
       });
     }
   }
+
+  
+  // Variable que controla si la contraseña es visible
+  isPasswordVisible: boolean = false;
+
+  // Método para alternar la visibilidad de la contraseña
+ 
+  togglePasswordVisibility() {
+    this.isPasswordVisible = !this.isPasswordVisible;
+  }
+
 }

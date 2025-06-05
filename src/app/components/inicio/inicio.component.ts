@@ -20,4 +20,14 @@ export class InicioComponent implements OnInit {
     // Recuperamos los testimonios desde el servicio
     this.testimonios = this.testimonioService.getTestimonios();
   }
+
+ // Variable que controla la visibilidad del texto
+  isTextVisible: boolean = false;
+
+  // Método que alterna la visibilidad del texto
+  toggleTextVisibility(): void {
+    this.isTextVisible = !this.isTextVisible;
+  }
+
+  
 }

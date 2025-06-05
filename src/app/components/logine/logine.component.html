@@ -15,108 +15,182 @@
       </div>
     </div>
   
-    <!-- Paso 1 -->
-    <div id="step1" *ngIf="currentStep === 1" class="step active">
-      <form id="registerForm" (submit)="goNext($event)">
-        <h1>Crea tu cuenta</h1>
-        <input type="text" required maxlength="30" name="firstName" [(ngModel)]="firstName" placeholder="Nombres" required>
-        <input type="text" required maxlength="30" name="lastName" [(ngModel)]="lastName" placeholder="Apellidos" required>
-        <select class="form-select" [(ngModel)]="carrera" name="carrera" required>
-          <option value="" disabled>Selecciona tu carrera en la ESCOM</option>
-          <option value="1">Ingeniería en Sistemas Computacionales</option>
-          <option value="2">Licenciatura en Ciencia de Datos</option>
-          <option value="3">Ingeniería en Inteligencia Artificial</option>
-        </select>
-        <input type="email" name="correo" [(ngModel)]="email" placeholder="TuEmail@example.com" required>
+   
+          <!-- Paso 1 -->
+          <div id="step1" *ngIf="currentStep === 1" class="step active">
+            <form (ngSubmit)="goNext($event)">
+              <h1>Crea tu cuenta</h1>
 
-        <!-- Mensaje de error del email -->
-        <div class="error-message" *ngIf="emailError">
-          {{ emailError }}
-        </div>
+              <!-- Nombre -->
+              <input type="text" name="firstName" [(ngModel)]="firstName" maxlength="30" placeholder="Nombres" #firstNameField="ngModel" required>
+              <span *ngIf="firstNameField.invalid && firstNameField.touched" class="error-message">
+                El nombre es obligatorio.
+              </span>
 
-        <div class="password-container">
-          <input type="password" name="password" [(ngModel)]="password" required minlength="8" maxlength="20" placeholder="Password" 
-          (focus)="showPasswordHint = true" (blur)="showPasswordHint = false"  required>
+              <!-- Apellido -->
+              <input type="text" name="lastName" [(ngModel)]="lastName" maxlength="30" placeholder="Apellidos" #lastNameField="ngModel" required>
+              <span *ngIf="lastNameField.invalid && lastNameField.touched" class="error-message">
+                El apellido es obligatorio.
+              </span>
+              <!-- Carrera -->
+              <div class="form-group">
+                <label for="carrera" [ngClass]="{'error-label': carreraTouched && !carrera}">
+                  Selecciona tu carrera
+                </label>
+                <select name="carrera" [(ngModel)]="carrera" #carreraField="ngModel" required (blur)="carreraTouched = true">
+                  <option value="" disabled>Selecciona tu carrera en la ESCOM</option>
+                  <option value="1">Ingeniería en Sistemas Computacionales</option>
+                  <option value="2">Licenciatura en Ciencia de Datos</option>
+                  <option value="3">Ingeniería en Inteligencia Artificial</option>
+                </select>
 
-            <!--Mensaje de ayuda-->
-            <div class="password-hint" *ngIf="showPasswordHint">
-              Debe contener al menos 1 mayúscula, 1 número, 1 carácter especial y minimo 8 caracteres.
+                <!-- Mensaje de error -->
+                <span *ngIf="carreraTouched && !carrera" class="error-message">
+                  La carrera es obligatoria.
+                </span>
+              </div>
+
+              <!-- Correo -->
+                <input type="email" name="email" [(ngModel)]="email" placeholder="TuEmail@example.com"
+                      #emailField="ngModel" required [pattern]="emailPattern">
+                
+                <span *ngIf="emailField.invalid && emailField.touched" class="error-message">
+                  <span *ngIf="emailField.errors?.['required']">El correo es obligatorio.</span>
+                  <span *ngIf="emailField.errors?.['email']">El correo debe tener un formato válido.</span>
+                  <span *ngIf="emailField.errors?.['pattern']">El correo debe tener una extensión válida</span>
+                </span>
+
+
+                    <!-- Contraseña -->
+              <div class="password-container">
+                <input 
+                  [type]="isPasswordVisible ? 'text' : 'password'" 
+                  name="password" 
+                  [(ngModel)]="password" 
+                  placeholder="Enter Password" 
+                  #passwordField="ngModel" 
+                  required 
+                  [pattern]="passwordPattern" 
+                  minlength="8">
+
+                <span *ngIf="isPasswordVisible" class="eye-icon" (click)="togglePasswordVisibility()">👀</span>
+                <span *ngIf="!isPasswordVisible" class="eye-icon" (click)="togglePasswordVisibility()">👁️‍🗨️</span>
+              </div>
+                <span *ngIf="passwordField.invalid && passwordField.touched" class="error-message">
+                  <span *ngIf="passwordField.errors?.['required']">La contraseña es obligatoria.</span>
+                  <span *ngIf="passwordField.errors?.['minlength']">La contraseña debe tener al menos 8 caracteres.</span>
+                  <span *ngIf="passwordField.errors?.['pattern']">La contraseña debe contener al menos una mayúscula, un número y un carácter especial.</span>
+                </span>
+                
+                <!-- Mensaje de ayuda -->
+                <div *ngIf="passwordField.touched && !passwordField.valid" class="password-hint">
+                  La contraseña debe cumplir con los siguientes requisitos:
+                  <ul>
+                    <li>Al menos 8 caracteres</li>
+                    <li>Contener al menos una letra mayúscula</li>
+                    <li>Contener al menos un número</li>
+                    <li>Contener al menos un carácter especial (como `!`, `&#64;`, `#`, etc.)</li>
+                  </ul>
+                </div>
+              <!-- Botón de Registro -->
+              <button class="btn" type="submit" [disabled]="firstNameField.invalid || lastNameField.invalid || carreraField.invalid || emailField.invalid || passwordField.invalid">Registrar</button>
+            </form>
+
+            <div class="btn-wrapper">
+              <button class="btn" [routerLink]="['/login']">Regresar</button>
             </div>
-        </div>
-        
-          <!-- Mensaje de error de la contraseña -->
-          <div class="error-message" *ngIf="passwordError">
-            {{ passwordError }}
           </div>
 
-
-        <button class="btn" type="submit">Registrar</button>
-      
-      </form>
-      <div class="btn-wrapper">
-        <button class="btn"  [routerLink]="['/login']">Regresar</button>
-      </div>
-    </div>
   
-    <!-- Paso 2 -->
-    <div id="step2" *ngIf="currentStep === 2" class="step active">
-      <form>
-        <h1>Verificación de Identidad ESCOM</h1>
-        <input type="text" name="qr" [(ngModel)]="qrLink" placeholder="Pega el enlace de tu código QR" >
-        
-        <!-- Botón para verificar el QR -->
-        <button type="button" (click)="scanQr()">Verificar</button>
-        
-      
-            <!-- Botón para escanear QR (solo abre la cámara) -->
-      <!-- <button type="button" (click)="startScan()">Escanear QR</button>-->
+        <!-- Paso 2 -->
+        <div id="step2" *ngIf="currentStep === 2" class="step active">
+          <form>
+            <h1>Verificación de Identidad ESCOM</h1>
+              <br>
+              <p>Puedes seleccionar un documento de tus archivos, escanear tu coidgo QR o pegar la liga de 
+              tu código QR para verificar tu identidad.</p>
+            
+            <input type="text" name="qr" [(ngModel)]="qrLink" placeholder="Pega el enlace de tu código QR" >
+          
+            <!-- Botón para verificar el QR -->
+          <!--   <button type="button" (click)="scanQr()">Verificar</button>-->
+            
+          
+                <!-- Botón para escanear QR (solo abre la cámara) -->
+          <!-- <button type="button" (click)="startScan()">Escanear QR</button>-->
 
 
-        <!-- Opción para importar una imagen con QR -->
-        <input type="file" (change)="scanQrFromImage($event)" accept="image/*">
+            <!-- Opción para importar una imagen con QR -->
+            <input type="file" (change)="scanQrFromImage($event)" accept="image/*">
 
-        <!-- Botón para verificar y comprar -->
-        <button type="button" (click)="scanQr()">Verificar y Comprar</button>
-      </form>
-      
-      <div class="btn-wrapper">
-        <button (click)="goToStep(1)">Regresar</button>
+            <!-- Botón para verificar y comprar -->
+              <button class="btn-camera" (click)="startScan()">
+              <ion-icon name="camera-outline"></ion-icon>Escanear
+            </button>
+          
+          </form>
+          
+          <div class="btn-wrapper">
+            <button class="btn"  (click)="goToStep(1)">Regresar</button>
+                <button class="btn"  type="button" (click)="scanQr()">Verificar</button>
+          
+          </div>
 
-        <button class="btn-camera" (click)="startScan()">
-          <ion-icon name="camera-outline"></ion-icon>Escanear
-        </button>
-      </div>
+                <!-- Área para mostrar la cámara -->
+          <div class="camera-container" *ngIf="showCamera">
+            <video #videoElement class="camera-feed"></video>
+            <button class="btn-stop" (click)="stopScan()">Detener</button>
+          </div>
 
-            <!-- Área para mostrar la cámara -->
-      <div class="camera-container" *ngIf="showCamera">
-        <video #videoElement class="camera-feed"></video>
-        <button class="btn-stop" (click)="stopScan()">Detener</button>
-      </div>
+        </div>
 
-    </div>
 
-  <!-- Paso 3 - Mostrar los datos ingresados -->
-<div id="step3" *ngIf="currentStep === 3" class="step active">
-  <h1>Cuenta Creada</h1>
-  <p>Revisa los datos que ingresaste:</p>
 
-  <div class="user-data">
-    <p><strong>Nombres:</strong> {{ firstName || 'No ingresado' }}</p>
-    <p><strong>Apellidos:</strong> {{ lastName || 'No ingresado' }}</p>
-    <p><strong>Carrera:</strong> 
-      <span *ngIf="carrera === '1'">Ingeniería en Sistemas Computacionales</span>
-      <span *ngIf="carrera === '2'">Licenciatura en Ciencia de Datos</span>
-      <span *ngIf="carrera === '3'">Ingeniería en Inteligencia Artificial</span>
-      <span *ngIf="!carrera">No ingresada</span>
-    </p>
-    <p><strong>Email:</strong> {{ email || 'No ingresado' }}</p>
-  </div>
+        <!-- Paso 3 - Mostrar los datos ingresados -->
+        <div id="step3" *ngIf="currentStep === 3" class="step active">
+          <h1>Cuenta Creada</h1>
+          <p>Revisa los datos que ingresaste:</p>
 
-  <div class="btn-wrapper">
-    <button (click)="goToStep(1)">Editar</button>
-    <button (click)="finalizeAccount()">Finalizar</button>
-  </div>
-</div>
+          <div class="user-data">
+            <!-- Nombres -->
+            <div class="user-data-item">
+              <strong>Nombres:</strong>
+              <span *ngIf="!isEditing">{{ firstName || 'No ingresado' }}</span>
+              <input *ngIf="isEditing" type="text" [(ngModel)]="firstName" placeholder="Ingresa tu nombre">
+            </div>
+
+            <!-- Apellidos -->
+            <div class="user-data-item">
+              <strong>Apellidos:</strong>
+              <span *ngIf="!isEditing">{{ lastName || 'No ingresado' }}</span>
+              <input *ngIf="isEditing" type="text" [(ngModel)]="lastName" placeholder="Ingresa tu apellido">
+            </div>
+
+            <!-- Carrera (No editable) -->
+            <div class="user-data-item">
+              <strong>Carrera:</strong>
+              <span *ngIf="carrera === '1'">Ingeniería en Sistemas Computacionales</span>
+              <span *ngIf="carrera === '2'">Licenciatura en Ciencia de Datos</span>
+              <span *ngIf="carrera === '3'">Ingeniería en Inteligencia Artificial</span>
+              <span *ngIf="!carrera">No ingresada</span>
+            </div>
+
+            <!-- Email -->
+            <div class="user-data-item">
+              <strong>Email:</strong>
+              <span *ngIf="!isEditing">{{ email || 'No ingresado' }}</span>
+              <input *ngIf="isEditing" type="email" [(ngModel)]="email" placeholder="Ingresa tu email">
+            </div>
+          </div>
+
+          <div class="btn-wrapper">
+            <button *ngIf="!isEditing" (click)="toggleEdit()">Editar</button>
+            <button *ngIf="isEditing" (click)="toggleEdit()">Guardar</button>
+            <button (click)="finalizeAccount()">Finalizar</button>
+          </div>
+           <button (click)="goToStep(2)">Regresar</button>
+        </div>
+
 
   </div>
 </div>
