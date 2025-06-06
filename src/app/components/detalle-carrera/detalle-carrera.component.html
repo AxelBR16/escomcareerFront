@@ -155,9 +155,8 @@
   <button class="compartir-btn">¿Estudiaste en esta carrera? ¡Comparte tu historia!</button>
 </div>
 
-
 <!-- SECCION BOLSA DE TRABAJO -->
-<div *ngIf="selectedSection === 'Bolsa trabajo'" class="bolsa-trabajo-container">
+<div *ngIf="selectedSection === 'Bolsa Trabajo'" class="bolsa-trabajo-container">
   <h2 class="tituloP">💼 Bolsa de trabajo</h2>
 
   <div *ngIf="trabajos.length > 0; else noJobs" class="jobs-grid">
@@ -174,21 +173,21 @@
       <p class="descripcion">{{ empleo.descripcion }}</p>
     </div>
 
-   
   </div>
-   <!-- Controles de paginación -->
+
+    <!-- Controles de paginación -->
     <div class="pagination-controls">
       <button (click)="changePage2(currentPage2 - 1)" [disabled]="currentPage2 === 1">Anterior</button>
       <span>Página {{ currentPage2 }} de {{ totalPages2 }}</span>
       <button (click)="changePage2(currentPage2 + 1)" [disabled]="currentPage2 === totalPages2">Siguiente</button>
     </div>
-
   <ng-template #noJobs>
     <p>No hay ofertas de trabajo disponibles aún.</p>
   </ng-template>
 
   <button class="compartir-btn">¿Ya trabajas? ¡Comparte tu trabajo!</button>
 </div>
+
 
 
 
