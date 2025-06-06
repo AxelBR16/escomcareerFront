@@ -76,4 +76,13 @@ export class ForgotPasswordComponent {
         })
   }
 
+
+// Función para ajustar el ancho del input según la cantidad de caracteres
+  adjustWidth(event: any): void {
+    const input = event.target;
+    const length = input.value.length;  // Obtén la longitud del valor del campo de entrada
+    
+    // A medida que el usuario escribe, aumenta el ancho del input
+    input.style.width = `${length + 2}ch`;  // "ch" es una unidad de medida relativa al ancho de un carácter
+  }
 }
