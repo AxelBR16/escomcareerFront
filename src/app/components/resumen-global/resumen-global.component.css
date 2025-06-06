@@ -1,0 +1,215 @@
+/* General Styles */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f9f9f9;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Body Styling */
+.body {
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin: 30px auto;
+  padding: 20px;
+  max-width: 1100px;
+  width: 90%;
+  text-align: center;
+}
+
+/* Center the chart container */
+.chart-container {
+  margin-top: 30px;
+  display: flex;
+  justify-content: center;  /* Horizontally center the chart */
+  align-items: center;      /* Vertically center the chart */
+  min-height: 400px;        /* Ensure there's enough space for the chart */
+}
+
+/* Ensure the canvas scales properly within the container */
+canvas {
+  width: 100%;
+  max-width: 800px; /* Set max-width for the chart */
+  height: auto;
+}
+
+/* Table for Aptitude Scores */
+.escala-container {
+  margin-top: 40px;
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.escala-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.escala-table th,
+.escala-table td {
+  padding: 12px;
+  text-align: center;
+  border: 1px solid #ddd;
+  font-size: 16px;
+}
+
+.escala-table th {
+  background-color: #3498db;
+  color: white;
+}
+
+.escala-table td {
+  background-color: #f9f9f9;
+}
+
+.escala-table tr:hover {
+  background-color: #f1f1f1;
+}
+
+/* Button Styling */
+.btn-container {
+  text-align: center;
+  margin-top: 30px;
+}
+
+.btn {
+  background-color: #3498db;
+  color: white;
+  padding: 15px 30px;
+  font-size: 18px;
+  text-decoration: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  display: inline-block;
+}
+
+.btn:hover {
+  background-color: #2980b9;
+}
+
+.btn.neon {
+  background: linear-gradient(45deg, #ff6ec7, #ff9a8b);
+  box-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
+}
+
+.btn.neon:hover {
+  background: linear-gradient(45deg, #ff9a8b, #ff6ec7);
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
+}
+
+/* Launch Container */
+/* Launch Container */
+.launch-container {
+  margin-top: 50px;
+  display: flex;
+  justify-content: space-between;  /* Aligns content to the left and right */
+  align-items: center;
+  background-color: #ffffff;
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  gap: 20px;  /* Space between the text and the graph */
+}
+
+.launch-content {
+  display: flex;
+  flex-direction: row;  /* Row layout to have text on the left and image on the right */
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.launch-text {
+  width: 50%;
+  text-align: left;  /* Align text to the left */
+}
+
+.launch-text h1 {
+  font-size: 28px;
+  color: #3498db;
+}
+
+.launch-text h2 {
+  font-size: 24px;
+  color: #2c3e50;
+}
+
+.launch-text p {
+  font-size: 16px;
+  color: #7f8c8d;
+}
+
+.launch-image {
+  width: 50%;
+  display: flex;
+  justify-content: center;  /* Centers the graph horizontally */
+  align-items: center;
+}
+
+canvas {
+
+  height: 100px;
+  max-width: 500px;  /* Adjust the max-width to make the chart smaller */
+  border-radius: 10px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .body {
+    width: 95%;
+  }
+
+  .launch-container {
+    flex-direction: column;  /* Stack the content vertically on smaller screens */
+    padding: 20px;
+  }
+
+  .btn {
+    font-size: 16px;
+    padding: 12px 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .escala-table th, .escala-table td {
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  .btn {
+    font-size: 14px;
+    padding: 10px 15px;
+  }
+}
+/* Disclaimer container */
+.disclaimer-container {
+  margin-top: 30px;
+  padding: 20px;
+  background-color: #f1f1f1;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 90%;
+  max-width: 1100px;
+  text-align: center;  /* Center the text horizontally */
+  font-size: 16px;
+  margin-left: auto;  /* Center horizontally */
+  margin-right: auto;  /* Center horizontally */
+}
+
+/* Disclaimer text styling */
+.disclaimer-text {
+  color: #7f8c8d;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.disclaimer-text strong {
+  color: #e74c3c;
+  font-weight: bold;
+}

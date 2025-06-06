@@ -76,3 +76,32 @@ canvas {
     transition: background-color 0.3s ease;
 
 }
+
+
+
+/* Disclaimer container */
+.disclaimer-container {
+  margin-top: 30px;
+  padding: 20px;
+  background-color: #f1f1f1;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 90%;
+  max-width: 1100px;
+  text-align: center;  /* Center the text horizontally */
+  font-size: 16px;
+  margin-left: auto;  /* Center horizontally */
+  margin-right: auto;  /* Center horizontally */
+}
+
+/* Disclaimer text styling */
+.disclaimer-text {
+  color: #7f8c8d;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.disclaimer-text strong {
+  color: #e74c3c;
+  font-weight: bold;
+}

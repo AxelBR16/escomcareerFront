@@ -25,8 +25,7 @@
         <div class="progress" [style.width.%]="progreso.aptitudes"></div>
       </div>
       <button class="btn mt-2"
-        (click)="redirigir('aptitudes')"
-        >
+        (click)="redirigir('aptitudes')">
         {{
           progreso.aptitudes === 100
             ? 'Ver resultados'
@@ -47,20 +46,26 @@
         <div class="progress" [style.width.%]="progreso.intereses"></div>
       </div>
       <button
-      class="btn mt-2"
-      (click)="redirigir('intereses')"
-      >
-      {{  progreso.intereses === 100
-            ? 'Ver resultados': pruebasCompletadas.intereses ? 'Reanudar' : 'Comenzar' }}
-    </button>
-
+        class="btn mt-2"
+        (click)="redirigir('intereses')">
+        {{
+          progreso.intereses === 100
+            ? 'Ver resultados'
+            : pruebasCompletadas.intereses ? 'Reanudar' : 'Comenzar'
+        }}
+      </button>
     </div>
 
   </div>
-<div class="btn-container">
-  <a [routerLink]="['/cuestionario']"><button class="btn results-btn">Regresar</button></a>
-    <!-- <a href="instrUniversitarias.html"><button class="btn results-btn">Ver resultados</button></a>-->
-</div>
+
+  <!-- Botones de navegación -->
+  <div class="btn-container">
+    <a [routerLink]="['/cuestionario']"><button class="btn results-btn">Regresar</button></a>
+    <!-- Aquí se bloquea el botón 'Resumen' hasta que ambas pruebas estén completas -->
+    <a [routerLink]="['/resumenglobal']">
+      <button class="btn results-btn" [disabled]="progreso.aptitudes < 100 || progreso.intereses < 100">Resumen</button>
+    </a>
+  </div>
 
   <br>
   <br>
