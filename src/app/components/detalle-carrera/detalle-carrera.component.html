@@ -100,7 +100,7 @@
       </div>
 
 <!--SECCION PLAN DE ESTUDIOS-->
-      <div *ngIf="selectedSection === 'Plan Estudios'" class="plan-estudios">
+      <div *ngIf="selectedSection === 'Plan de estudios'" class="plan-estudios">
         <h2 class="tituloP">Plan de estudios - {{ career.title }}</h2>
 
             <div class="semestres">
@@ -123,57 +123,73 @@
                 </ul>
             </div>
       </div>
-<!--SECCION EXPERIENCIAS-->
-      <div *ngIf="selectedSection === 'Experiencias'" class="experiencias-container">
-         <h2 class="tituloP">🎤 Experiencias de Estudiantes y Egresados</h2>
+<!-- SECCION EXPERIENCIAS -->
+<div *ngIf="selectedSection === 'Experiencias'" class="experiencias-container">
+  <h2 class="tituloP">🎤 Experiencias de estudiantes y egresados</h2>
 
-          <div *ngIf="experiencias.length > 0; else noExperiences">
-            <div *ngFor="let experiencia of experiencias" class="experiencia-card">
-              <div class="avatar">{{ getInitial(experiencia.nombreEgresado ?? '') }}</div>
-              <div class="experiencia-content">
-                <h3 class="nombre">{{ experiencia.nombreEgresado }}{{ experiencia.apellidoEgresado }}</h3>
-                <p class="status">{{ experiencia.fecha }}</p>
-                <p class="comentario">{{ experiencia.descripcion }}</p>
-                <div class="feedbackpro">
-
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <ng-template #noExperiences>
-            <p>No hay experiencias registradas aún.</p>
-          </ng-template>
-
-          <button class="compartir-btn">¿Estudiaste en esta carrera? ¡Comparte tu historia!</button>
-
-      </div>
-
-<!--SECCION BOLSA DE TRABAJO-->
-      <div *ngIf="selectedSection === 'Bolsa Trabajo'" class="bolsa-trabajo-container">
-        <h2 class="tituloP">💼 Bolsa de trabajo</h2>
-
-        <div *ngIf="trabajos.length > 0; else noJobs" class="jobs-grid ">
-          <div *ngFor="let empleo of trabajos" class="job-card">
-            <div class="job-header">
-              <p class="salario">{{ empleo.salario | currency:'MXN':'symbol':'1.0-0' }}</p>
-              <h3 class="puesto">{{ empleo.puesto }}</h3>
-            </div>
-
-            <div class="habilidades">
-              <span *ngFor="let habilidad of empleo.habilidades" class="habilidad">{{ habilidad.nombre }}</span>
-            </div>
-
-            <p class="descripcion">{{ empleo.descripcion }}</p>
-          </div>
+  <div *ngIf="experiencias.length > 0; else noExperiences">
+    <div *ngFor="let experiencia of paginatedExperiences" class="experiencia-card">
+      <div class="avatar">{{ getInitial(experiencia.nombreEgresado ?? '') }}</div>
+      <div class="experiencia-content">
+        <h3 class="nombre">{{ experiencia.nombreEgresado }} {{ experiencia.apellidoEgresado }}</h3>
+        <p class="status">{{ experiencia.fecha }}</p>
+        <p class="comentario">{{ experiencia.descripcion }}</p>
+        <div class="feedbackpro">
+          <!-- Puedes agregar cualquier otro contenido aquí, si es necesario -->
         </div>
-
-        <ng-template #noJobs>
-          <p>No hay ofertas de trabajo disponibles aún.</p>
-        </ng-template>
-
-        <button class="compartir-btn">¿Ya trabajas? ¡Comparte tu trabajo!</button>
       </div>
+    </div>
+
+    <!-- Controles de paginación -->
+    <div class="pagination-controls">
+      <button (click)="changePage1(currentPage1 - 1)" [disabled]="currentPage1 === 1">Anterior</button>
+      <span>Página {{ currentPage1 }} de {{ totalPages1 }}</span>
+      <button (click)="changePage1(currentPage1 + 1)" [disabled]="currentPage1 === totalPages1">Siguiente</button>
+    </div>
+  </div>
+
+  <ng-template #noExperiences>
+    <p>No hay experiencias registradas aún.</p>
+  </ng-template>
+
+  <button class="compartir-btn">¿Estudiaste en esta carrera? ¡Comparte tu historia!</button>
+</div>
+
+
+<!-- SECCION BOLSA DE TRABAJO -->
+<div *ngIf="selectedSection === 'Bolsa trabajo'" class="bolsa-trabajo-container">
+  <h2 class="tituloP">💼 Bolsa de trabajo</h2>
+
+  <div *ngIf="trabajos.length > 0; else noJobs" class="jobs-grid">
+    <div *ngFor="let empleo of paginatedJobs" class="job-card">
+      <div class="job-header">
+        <p class="salario">{{ empleo.salario | currency:'MXN':'symbol':'1.0-0' }}</p>
+        <h3 class="puesto">{{ empleo.puesto }}</h3>
+      </div>
+
+      <div class="habilidades">
+        <span *ngFor="let habilidad of empleo.habilidades" class="habilidad">{{ habilidad.nombre }}</span>
+      </div>
+
+      <p class="descripcion">{{ empleo.descripcion }}</p>
+    </div>
+
+   
+  </div>
+   <!-- Controles de paginación -->
+    <div class="pagination-controls">
+      <button (click)="changePage2(currentPage2 - 1)" [disabled]="currentPage2 === 1">Anterior</button>
+      <span>Página {{ currentPage2 }} de {{ totalPages2 }}</span>
+      <button (click)="changePage2(currentPage2 + 1)" [disabled]="currentPage2 === totalPages2">Siguiente</button>
+    </div>
+
+  <ng-template #noJobs>
+    <p>No hay ofertas de trabajo disponibles aún.</p>
+  </ng-template>
+
+  <button class="compartir-btn">¿Ya trabajas? ¡Comparte tu trabajo!</button>
+</div>
+
 
 
 <!--SECCION PROYECTOS-->
@@ -224,14 +240,11 @@
         </ng-template>
 
         <button class="compartir-btn" (click)="irAProyectos()">¡Comparte tus proyectos!</button>
-             <div class="pagination" *ngIf="totalPages > 1">
-  <button (click)="changePage(currentPage - 1)" [disabled]="currentPage === 1">Anterior</button>
+             
+        <div class="pagination-controls" *ngIf="totalPages > 1">
+           <button (click)="changePage(currentPage - 1)" [disabled]="currentPage === 1">Anterior</button>
 
-      <button *ngFor="let page of pagesArray"
-                      (click)="changePage(page)"
-                      [class.active]="page === currentPage">
-                  {{page}}
-              </button>
+          <span>Página {{ currentPage }} de {{ totalPages }}</span>
 
           <button (click)="changePage(currentPage + 1)" [disabled]="currentPage === totalPages">Siguiente</button>
         </div>

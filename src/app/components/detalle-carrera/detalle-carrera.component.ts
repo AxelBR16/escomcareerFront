@@ -358,10 +358,10 @@ loadProjects() {
 
 
 
-//paginacion
+//paginacion de proyectos 
 
 currentPage = 1;
-itemsPerPage = 10;
+itemsPerPage = 2;
 
 get pagedProjects() {
   const start = (this.currentPage - 1) * this.itemsPerPage;
@@ -380,6 +380,52 @@ get totalPages() {
 get pagesArray() {
   return Array(this.totalPages).fill(0).map((x,i) => i + 1);
 }
+
+
+
+
+
+currentPage1 = 1; // Página actual
+itemsPerPage1 = 3; // Experiencias por página de experiencias 
+
+  get paginatedExperiences() {
+    const startIndex = (this.currentPage1 - 1) * this.itemsPerPage1;
+    return this.experiencias.slice(startIndex, startIndex + this.itemsPerPage1);
+  }
+
+  // Cambiar la página
+  changePage1(page: number) {
+    if (page > 0 && page <= this.totalPages1) {
+      this.currentPage1 = page;
+    }
+  }
+
+  // Obtener el total de páginas
+  get totalPages1() {
+    return Math.ceil(this.experiencias.length / this.itemsPerPage1);
+  }
+
+
+
+
+  
+currentPage2 = 1; // Página actual bolsa de trabajo 
+itemsPerPage2 = 4; // Experiencias por página 
+    get paginatedJobs() {
+    const startIndex = (this.currentPage2 - 1) * this.itemsPerPage2;
+    return this.trabajos.slice(startIndex, startIndex + this.itemsPerPage2);
+  }
+
+   changePage2(page: number) {
+    if (page > 0 && page <= this.totalPages2) {
+      this.currentPage2 = page;
+    }
+  }
+
+  get totalPages2() {
+    return Math.ceil(this.trabajos.length / this.itemsPerPage2);
+  }
+
 
 
 }

@@ -182,14 +182,14 @@
         <p>Especialista en backend, responsable del desarrollo de una arquitectura robusta basada en AWS y Spring Boot.</p>
       </div>
 
-      <!-- Bloque 2: Aquila Lobas -->
+      <!-- Bloque 2:s -->
       <div class="team-block">
         <img src="site/usu.jpg" alt="Aquila Lobas" class="team-icon">
         <h3 class="team-title">Jaciel Isai Hernández Ramírez</h3>
         <p>Especialista en desarrollo de interfaces gráficas para sitios web.</p>
       </div>
 
-      <!-- Bloque 3: Otario Bu -->
+      <!-- Bloque 3: O -->
       <div class="team-block">
         <img src="site/usu.jpg" alt="Otario Bu" class="team-icon">
         <h3 class="team-title">Yael</h3>
@@ -199,21 +199,39 @@
     </div>
   </section>
 
-  <br>
-  <div class="Experiencias">
-    <h2>Testimonios</h2>
-    <br>
-  </div>
-  <div class="contenedor-testimonios">
-    <div class="testimonio" *ngFor="let testimonio of testimonios">
-      <div class="foto-avatar">
-        <h2>{{ testimonio.nombre.charAt(0) }}</h2>
+ <section>
+  <!-- Sección de testimonios -->
+<br>
+<div *ngIf="selectedSection === 'Experiencias'" class="experiencias-container">
+  <h2 class="tituloP">🎤 Experiencias de Estudiantes y Egresados</h2>
+<br>
+  <div *ngIf="paginatedExperiences.length > 0; else noExperiences">
+    <div *ngFor="let experiencia of paginatedExperiences" class="experiencia-card">
+      <div class="experiencia-content">
+        <div class="avatar">{{ getInitial(experiencia.nombreEgresado ?? '') }}</div>
+        <h3 class="nombre">{{ experiencia.nombreEgresado }} {{ experiencia.apellidoEgresado }}</h3>
       </div>
-      <h2>{{ testimonio.nombre }}</h2>
-      <p>"{{ testimonio.experiencia }}"</p>
-      <p class="autor">- {{ testimonio.nombre }}</p>
+      <div class="experiencia-content">
+        <p class="comentario">{{ experiencia.descripcion }}</p>
+      </div>
+      <p class="status">{{ experiencia.fecha }}</p> <!-- Fecha a la derecha -->
+    </div>
+
+    <!-- Controles de paginación -->
+    <div class="pagination-controls">
+      <button (click)="changePage(currentPage - 1)" [disabled]="currentPage === 1">Anterior</button>
+      <span>Página {{ currentPage }} de {{ totalPages }}</span>
+      <button (click)="changePage(currentPage + 1)" [disabled]="currentPage === totalPages">Siguiente</button>
     </div>
   </div>
+
+  <ng-template #noExperiences>
+    <p>No hay experiencias registradas aún.</p>
+  </ng-template>
+</div>
+
+ </section>
+
 
 
 

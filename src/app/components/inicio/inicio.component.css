@@ -173,26 +173,60 @@ body {
 .toggle-text {
   display: block;  /* En pantallas grandes, se muestra por defecto */
   padding: 10px;
- background: linear-gradient(to right, #0A1733, #002F6C);
+  background: linear-gradient(to right, #0A1733, #002F6C);
   border-radius: 10px;
   margin-top: 10px;
   font-size: 1.1em;
   line-height: 1.6;
+  word-wrap: break-word;  /* Asegura que el texto se ajuste dentro del cuadro */
+  white-space: normal;  /* Permite que el texto se ajuste a varias líneas */
 }
 
 /* Media query para dispositivos móviles (pantallas pequeñas) */
-@media (max-width: 368px) {
+@media (max-width: 768px) {
+  .test-section {
+    width: 90%;  /* Reducir el tamaño de la sección principal en móviles */
+  }
+
+  .test-section h2 {
+    font-size: 1.8em; /* Reducir el tamaño del título en pantallas móviles */
+  }
+
   .toggle-box {
-    width: 90%;  /* El cuadro ocupa más espacio en pantallas pequeñas */
+    width: 100%;  /* El cuadro ocupa todo el ancho disponible en pantallas pequeñas */
+    padding: 8px;  /* Reducir el padding para un mejor ajuste */
   }
 
-  /* En pantallas móviles, inicialmente se oculta el texto */
+  .toggle-header {
+    font-size: 1.3em;  /* Reducir el tamaño del texto del header */
+    padding: 8px;  /* Reducir el padding en pantallas pequeñas */
+  }
+
   .toggle-text {
-    display: none;  /* Por defecto el texto está oculto */
+    font-size: 0.9em;  /* Reducir el tamaño de la fuente en móviles */
+    padding: 8px;  /* Ajuste del padding */
+  }
+}
+
+@media (max-width: 368px) {
+  .test-section {
+    width: 90%;  /* Redimensiona para pantallas muy pequeñas */
   }
 
+  .toggle-box {
+    padding: 6px;  /* Reducción del padding en pantallas muy pequeñas */
+  }
 
+  .toggle-header {
+    font-size: 1.2em;  /* Reducción del tamaño de texto en el header */
+  }
+
+  .toggle-text {
+    font-size: 0.8em;  /* Ajuste del tamaño de fuente aún más pequeño */
+    padding: 6px;  /* Ajuste del padding */
+  }
 }
+
 
 
 
@@ -244,75 +278,115 @@ body {
   border-radius: 10px;
   
 }
-
-/* Frase llamativa */
-.Experiencias {
-  background-color: #555a60;
-  color: white;
-  padding: 20px;
+/* Contenedor principal */
+.experiencias-container {
   text-align: center;
-}
-
-.Experiencias h2 {
-  margin: 0;
-  font-size: 1.8em;
-}
-
-
-.contenedor-testimonios {
-  display: flex;
-  justify-content: space-around; /* Distribuye el espacio uniformemente */
-  align-items: center; /* Centra verticalmente los testimonios */
-  gap: 20px; /* Espacio entre los testimonios */
-  width: 100%; /* Ocupa todo el ancho disponible */
-
+  margin: 40px auto;
   padding: 20px;
+  width: 100%;
+  background: linear-gradient(to right, #0A1733, #002F6C);
+  border-radius: 15px;
+  color: white;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
-.testimonio {
-  background-color: #fff;
-  border-radius: 10px;
-  box-shadow: 0 8px 10px rgba(0, 0, 0, 0.1);
-  padding: 20px;
-  width: calc(33.33% - 20px); /* Ancho de cada testimonio */
-  text-align: left; /* Alineación del texto a la izquierda */
-  flex: 1; /* Asegura que todos los testimonios tengan el mismo ancho */
-}
-.testimonio .foto-nombre {
-  display: flex;
-  align-items: center; /* Alinea la foto y el nombre verticalmente */
-  margin-bottom: 15px;
-}
-.testimonio img {
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  margin-right: 15px; /* Espacio entre la foto y el nombre */
-}
-.testimonio h2 {
-  margin: 0;
-  font-size: 1.2em;
-  color: #426EA4;
-}
-.testimonio p {
-  font-size: 1em;
-  color: #666;
-  line-height: 1.5;
-}
-.testimonio .autor {
+
+/* Título de la sección */
+.tituloP {
+  font-size: 2.5em;
+  margin-bottom: 20px;
   font-weight: bold;
-  margin-top: 15px;
+}
+
+/* Estilos para las tarjetas */
+.experiencia-card {
+  background-color: #fff;
+  color: #333;
+  border-radius: 10px;
+  padding: 15px;
+  width: 80%;  /* Ajuste para que cada tarjeta ocupe más espacio */
+  margin: 10px auto; /* Espaciado entre tarjetas */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  /* Sin animación ni scroll */
+}
+
+.experiencia-card:hover {
+  transform: scale(1.05); /* Agrandar la tarjeta al pasar el cursor */
+}
+
+/* Contenedor para avatar y nombre */
+.experiencia-content {
+  display: flex;
+  align-items: center; /* Alinea el avatar y nombre verticalmente */
+  margin-bottom: 10px;
+}
+
+/* Avatar circular */
+.avatar {
+  background-color: #002F6C;
+  color: white;
+  font-size: 24px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 15px; /* Espacio entre el avatar y el nombre */
+}
+
+/* Estilo para el nombre */
+.nombre {
+  font-weight: bold;
+  font-size: 1.2em;
   color: #333;
 }
 
+/* Estilo para la fecha (esquina inferior derecha) */
+/* Alineación de la fecha a la derecha */
+.experiencia-card .status {
+  font-size: 0.9em;
+  color: #444;
+  margin-top: auto; /* Esto empuja la fecha al final */
+  text-align: right; /* Alinea la fecha a la derecha */
+}
+
+/* Contenido de la experiencia */
+.experiencia-content {
+  font-size: 1em;
+  line-height: 1.4;
+}
+
+.experiencia-content .nombre {
+  font-weight: bold;
+  margin-bottom: 10px;
+  align-items: center; /* Alinea verticalmente el avatar y el nombre */
+}
+
+.experiencia-content .comentario {
+  font-size: 0.9em;
+  margin-top: 10px;
+  color: #444;
+}
+
+/* Media query para pantallas pequeñas */
 @media (max-width: 768px) {
-  .contenedor-testimonios {
-      flex-direction: column; /* Cambia a una columna en pantallas pequeñas */
-  }
-  .testimonio {
-      width: 100%; /* Ocupa todo el ancho en pantallas pequeñas */
-    
+  .experiencia-card {
+    width: 90%; /* En pantallas más pequeñas, cada tarjeta ocupa el 90% del contenedor */
   }
 }
+
+@media (max-width: 480px) {
+  .experiencia-card {
+    width: 100%; /* En pantallas muy pequeñas, cada tarjeta ocupa el 100% */
+  }
+}
+
+
+
 
 .hero {
   position: relative;
@@ -727,4 +801,70 @@ footer {
 .career-btn:hover {
   animation: lightBorder 1.5s infinite alternate; /* Animación de luces */
   color: white;
+}
+
+
+
+/* Estilo para los controles de paginación */
+.pagination-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.pagination-controls button {
+  padding: 12px 25px;
+  background-color: #ffcc00;
+  color: rgb(8, 8, 8);
+  border: none;
+  cursor: pointer;
+  font-size: 1em;
+  margin: 0 10px;
+  border-radius: 25px; /* Bordes redondeados */
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+}
+
+.pagination-controls button:hover {
+  background-color: #a16e00; /* Color de fondo al pasar el cursor */
+  transform: translateY(-2px); /* Efecto de movimiento al pasar el cursor */
+}
+
+.pagination-controls button:active {
+  transform: translateY(2px); /* Efecto de pulsación */
+}
+
+.pagination-controls button[disabled] {
+  background-color: #ccc;
+  cursor: not-allowed;
+  box-shadow: none; /* Sin sombra para el botón deshabilitado */
+}
+
+.pagination-controls span {
+  font-size: 1.1em;
+  color: #ffffff;
+}
+
+/* Hacer los botones más pequeños en pantallas más pequeñas */
+@media (max-width: 768px) {
+  .pagination-controls button {
+    padding: 10px 20px;
+    font-size: 0.9em;
+  }
+
+  .pagination-controls span {
+    font-size: 1em;
+  }
+}
+
+@media (max-width: 480px) {
+  .pagination-controls button {
+    padding: 8px 15px;
+    font-size: 0.8em;
+  }
+
+  .pagination-controls span {
+    font-size: 0.9em;
+  }
 }
