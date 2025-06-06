@@ -42,3 +42,35 @@ canvas {
   max-width: 800px;  /* Puedes ajustar el tamaño máximo aquí */
   height: auto;
 }
+
+@media (max-width: 768px) {
+  .launch-content {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .launch-text {
+    max-width: 100%;  /* El texto ocupa el 100% en pantallas pequeñas */
+    text-align: center;
+  }
+
+  .launch-image {
+    width: 100%;  /* El gráfico ocupa el 100% en pantallas pequeñas */
+  }
+}
+
+.btn:hover {
+    background-color: #FFD700;
+}
+
+.btn {
+    background-color: #001E62;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+
+}

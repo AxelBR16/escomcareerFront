@@ -1,10 +1,11 @@
 import { Component, AfterViewInit, PLATFORM_ID, Inject, ChangeDetectorRef } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterModule, NavigationEnd } from '@angular/router';
 import { isPlatformBrowser } from '@angular/common';
 import Chart from 'chart.js/auto';
 
 @Component({
   selector: 'app-result-ai',
+  imports: [RouterModule],
   templateUrl: './result-ai.component.html',
   styleUrls: ['./result-ai.component.css']
 })

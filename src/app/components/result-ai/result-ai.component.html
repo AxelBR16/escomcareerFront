@@ -4,8 +4,9 @@
       <h1>La recomendación basada en IA:</h1>
       <h2>{{ porcentaje }}% de similitud con {{ carreraSugerida }}</h2>
       <p>"Basado en tus aptitudes, la IA sugiere {{ carreraSugerida }} con un {{ porcentaje }}% de similitud"</p>
-      <a routerLink="/">Inicio</a>
+       <a [routerLink]="['/pruebasA']"  class="btn">Regresar</a>
     </div>
+    <br>
     <div class="launch-image">
       <!-- Canvas donde se renderizará la gráfica de pastel -->
       <canvas id="pieChart"></canvas>

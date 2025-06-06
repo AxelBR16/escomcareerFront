@@ -16,7 +16,22 @@
         <!--Admin-->
       <li *ngIf="userRole === 'ROLE_ADMIN'">
         <a [routerLink]="['/admin-dashboard']" routerLinkActive="active" class="nav-link px-2 text-warning">
-          Dashboard Admin
+          Inicio
+        </a>
+      </li>
+      <li *ngIf="userRole=== 'ROLE_ADMIN'">
+        <a [routerLink]="['/admin-expe']" routerLinkActive="active" class="nav-link px-2 text-warning">
+          Experiencias
+        </a>
+      </li>
+         <li *ngIf="userRole=== 'ROLE_ADMIN'">
+        <a [routerLink]="['/admin-trabajo']" routerLinkActive="active" class="nav-link px-2 text-warning">
+          Trabajo
+        </a>
+      </li>
+          <li *ngIf="userRole=== 'ROLE_ADMIN'">
+        <a [routerLink]="['/admin-videos']" routerLinkActive="active" class="nav-link px-2 text-warning">
+          Videos
         </a>
       </li>
       <li *ngIf="userRole=== 'ROLE_ADMIN'">
@@ -32,6 +47,12 @@
         </a>
       </li>
 
+      <li *ngIf="userRole=== 'ROLE_ASPIRANTE'">
+        <a [routerLink]="['/carreras']" routerLinkActive="active" class="nav-link px-2 text-warning">
+          Carreras
+        </a>
+      </li>
+
       <li *ngIf="userRole === 'ROLE_ASPIRANTE'">
         <a [routerLink]="['/cuestionario']" routerLinkActive="active" class="nav-link px-2 text-warning">
           Pruebas
@@ -44,16 +65,12 @@
         </a>
       </li>
 
-      <li *ngIf="userRole=== 'ROLE_ASPIRANTE'">
-        <a [routerLink]="['/carreras']" routerLinkActive="active" class="nav-link px-2 text-warning">
-          Carreras
-        </a>
-      </li>
+   
 
       <!--Role egresado-->
-      <li *ngIf="userRole=== 'ROLE_EGRESADO'">
-        <a [routerLink]="['/carreras']" routerLinkActive="active" class="nav-link px-2 text-warning">
-          Carreras
+       <li *ngIf="userRole === 'ROLE_EGRESADO'">
+        <a [routerLink]="['/egresado-dashboard']" routerLinkActive="active" class="nav-link px-2 text-warning">
+          Inicio
         </a>
       </li>
 
@@ -66,6 +83,12 @@
       <li *ngIf="userRole=== 'ROLE_EGRESADO'">
         <a [routerLink]="['/experience']" routerLinkActive="active" class="nav-link px-2 text-warning">
           Experiencias
+        </a>
+      </li>
+
+      <li *ngIf="userRole=== 'ROLE_EGRESADO'">
+        <a [routerLink]="['/carreras']" routerLinkActive="active" class="nav-link px-2 text-warning">
+          Carreras
         </a>
       </li>
 

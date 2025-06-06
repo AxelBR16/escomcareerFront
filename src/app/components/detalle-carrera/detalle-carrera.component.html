@@ -100,7 +100,9 @@
       </div>
 
 <!--SECCION PLAN DE ESTUDIOS-->
-      <div *ngIf="selectedSection === 'Plan de estudios'" class="plan-estudios">
+   
+<!--SECCION PLAN DE ESTUDIOS-->
+      <div *ngIf="selectedSection === 'Plan Estudios'" class="plan-estudios">
         <h2 class="tituloP">Plan de estudios - {{ career.title }}</h2>
 
             <div class="semestres">
@@ -115,7 +117,7 @@
             <div class="materias">
                 <h3>{{career.planEstudios[selectedSemestre].titulo }}</h3>
                 <ul>
-                <li *ngFor="let materia of career.planEstudios[selectedSemestre].materias">
+                <li *ngFor="let materia of career.planEstudios[selectedSemestre].materias"  (click)="mostrarDescripcion(materia); $event.preventDefault()">
                      <a href="#" (click)="mostrarDescripcion(materia); $event.preventDefault()">
                       {{ materia.nombre }}
                     </a>
@@ -123,6 +125,7 @@
                 </ul>
             </div>
       </div>
+      
 <!-- SECCION EXPERIENCIAS -->
 <div *ngIf="selectedSection === 'Experiencias'" class="experiencias-container">
   <h2 class="tituloP">🎤 Experiencias de estudiantes y egresados</h2>

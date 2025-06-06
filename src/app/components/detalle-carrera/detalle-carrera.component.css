@@ -776,6 +776,16 @@
   background-color: #8eb6e3;
 }
 
+.experiencia-card {
+  transition: background-color 0.3s ease, transform 0.3s ease; /* Suaviza el cambio de color y el tamaño */
+}
+
+.experiencia-card:hover {
+  background-color: #e7eaee; /* Color de fondo al pasar el cursor */
+  transform: scale(1.05); /* Ligeramente agranda el card */
+}
+
+
 .proyecto-info {
   flex: 1;
   padding-right: 15px;

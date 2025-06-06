@@ -23,4 +23,9 @@ export class ResultadoService {
     const params = new HttpParams().set('email', email);
     return this.httpClient.get<ResultadoResumenDTO[]>(`${environment.apiUrls.auth}/resultados`, { params });
   }
+
+  // Método para obtener las similitudes de carrera
+  obtenerSimilitudes(email: string): Observable<{ carrera: string, porcentaje: number }[]> {
+    return this.httpClient.get<{ carrera: string, porcentaje: number }[]>(`${environment.apiUrls.auth}/similitudes?email=${email}`);
+  }
 }
