@@ -28,7 +28,7 @@ export class LoadingInicioComponent implements OnInit {
       // Redirigir a la página correspondiente después de la animación de desvanecimiento (1 segundo)
       setTimeout(() => {
         if (isMobile) {
-          this.router.navigate(['/inicio-mobile']);  // Redirige a la página de inicio móvil
+          this.router.navigate(['/login']);  // Redirige a la página de inicio móvil
         } else {
           this.router.navigate(['/inicio']);  // Redirige a la página de inicio de escritorio
         }

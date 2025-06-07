@@ -18,7 +18,8 @@ import { DeviceDetectorService } from 'ngx-device-detector'; // Importamos el se
 })
 export class AppComponent {
   title = 'escomcareer';
-   showNavbarAndFooter = true; // Variable para controlar la visibilidad
+   showNavbarAndFooter = true; 
+   showFooter = true;
 
   constructor(private router: Router) { }
 
@@ -30,19 +31,17 @@ export class AppComponent {
       // Ocultar navbar y footer solo si la ruta es la raíz ''
       const currentRoute = this.router.url;
       this.showNavbarAndFooter = currentRoute !== '/';
+      this.showFooter = currentRoute !== '/';
     });
 
      this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)
     ).subscribe(() => {
-      // Detectar si el dispositivo es móvil
-      const isMobile = window.innerWidth <= 768;  // Definir el umbral de dispositivos móviles
-
-      // Ocultar navbar y footer si es un dispositivo móvil
+      const isMobile = window.innerWidth <= 768; 
       if (isMobile) {
-        this.showNavbarAndFooter = false;
+        this.showFooter = false;
       } else {
-        this.showNavbarAndFooter = true;
+        this.showFooter = true;
       }
     });
   }

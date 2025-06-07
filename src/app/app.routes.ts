@@ -37,7 +37,6 @@ import { MobileGuard } from './shared/guards/mobile.guard';
 export const routes: Routes = [
   {path: '', component: LoadingInicioComponent},
   {path: 'inicio', component: InicioComponent},
-  {path: 'inicio-mobile', component: InicioMobileComponent, canActivate: [MobileGuard]},
   {path: 'carreras', component: CarrerasComponent},
   {path: 'result-aptitudes', component: ResultAptitudesComponent, canActivate: [AspiranteGuard]},
   {path: 'result-uni', component: ResultUniverComponent, canActivate: [AspiranteGuard]},
