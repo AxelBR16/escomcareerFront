@@ -10,6 +10,22 @@
     justify-content: center;
 }
 
+.loading-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.5); /* Fondo oscuro semitransparente */
+    opacity: 1;
+    transition: opacity 1s ease-out; /* Transición de desvanecimiento */
+    z-index: 9999; /* Asegura que la pantalla de carga esté encima de otros elementos */
+}
+
+/* Contenedor para el logo */
 .container {
     padding: 10px;
     display: flex;
@@ -17,9 +33,15 @@
     align-items: center;
 }
 
+/* Logo */
 .logo {
     width: 250px;
     height: 250px;
     object-fit: contain;
 }
-    
+
+/* Clase para ocultar la pantalla de carga con el desvanecimiento */
+.loading-screen.fade-out {
+    opacity: 0; /* Hace que la pantalla de carga desaparezca */
+    pointer-events: none; /* Evita que la pantalla de carga bloquee interacciones */
+}

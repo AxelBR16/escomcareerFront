@@ -12,52 +12,38 @@ import { DeviceDetectorService } from 'ngx-device-detector'; // Importamos el se
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, CommonModule, NavbarComponent, FooterComponent, LoadingInicioComponent],
+  imports: [RouterOutlet, CommonModule, NavbarComponent, FooterComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
   title = 'escomcareer';
-  isLoading: boolean = true;
-  isMobile: boolean = false; // Controla si el dispositivo es móvil
-  showNavbarFooter: boolean = true; // Controla si se debe mostrar el Navbar y el Footer
+   showNavbarAndFooter = true; // Variable para controlar la visibilidad
 
-  constructor(private router: Router, private deviceService: DeviceDetectorService) {}
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
-    // Usar ngx-device-detector para verificar el dispositivo
-    this.isMobile = this.deviceService.isMobile(); // Detectar si es móvil
-
-    // Suscribirse a los cambios de ruta
+    // Observar los cambios de la ruta activa
     this.router.events.pipe(
-      filter((event) => event instanceof NavigationEnd) // Filtra solo los eventos de navegación
-    ).subscribe((event: NavigationEnd) => {
-      if (event.url === '/inicio-mobile') {
-        // Si estamos en la ruta de inicio móvil, no mostrar Navbar y Footer
-        this.showNavbarFooter = false;
-      } else {
-        // Mostrar Navbar y Footer en otras rutas
-        this.showNavbarFooter = true;
-      }
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe(() => {
+      // Ocultar navbar y footer solo si la ruta es la raíz ''
+      const currentRoute = this.router.url;
+      this.showNavbarAndFooter = currentRoute !== '/';
     });
 
-    // Simular la carga y redirección después de 3 segundos
-    setTimeout(() => {
-      this.isLoading = false;
-      if (this.isMobile) {
-        this.router.navigate(['/inicio-mobile']); // Redirigir a la vista móvil
-      } else {
-        this.router.navigate(['/inicio']); // Redirigir a la vista de escritorio
-      }
-    }, 3000);
-  }
+     this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe(() => {
+      // Detectar si el dispositivo es móvil
+      const isMobile = window.innerWidth <= 768;  // Definir el umbral de dispositivos móviles
 
-  onLoadingFinished() {
-    this.isLoading = false;
-    if (this.isMobile) {
-      this.router.navigate(['/inicio-mobile']);
-    } else {
-      this.router.navigate(['/inicio']);
-    }
+      // Ocultar navbar y footer si es un dispositivo móvil
+      if (isMobile) {
+        this.showNavbarAndFooter = false;
+      } else {
+        this.showNavbarAndFooter = true;
+      }
+    });
   }
 }

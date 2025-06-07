@@ -1,1 +1,175 @@
-<p>inicio-mobile works!</p>
+
+<div class="body">
+    <div class="contenedor" id="contenedor" #contenedor>
+      <div *ngIf="loading" class="progress" role="progressbar" aria-label="Animated striped example" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
+        <div class="progress-bar progress-bar-striped progress-bar-animated" style="width: 100%"></div>
+      </div>
+      <!-- Formulario de Registro (sign-up) -->
+      <div class="form-contenedor sign-up">
+      <form id="signupForm" (submit)="onRegisterSubmit($event)" method="POST">
+  <h1>Crea tu cuenta</h1>
+
+  <input 
+    required 
+    maxlength="30" 
+    type="text" 
+    id="firstName" 
+    name="firstName" 
+    [(ngModel)]="firstName" 
+    #firstNameField="ngModel" 
+    placeholder="Nombre" 
+  />
+  <span *ngIf="firstNameField.invalid && firstNameField.touched" class="error-message">
+    <span *ngIf="firstNameField.errors?.['required']">El nombre es obligatorio.</span>
+  </span>
+
+  <input 
+    required 
+    maxlength="30" 
+    type="text" 
+    id="lastName" 
+    name="lastName" 
+    [(ngModel)]="lastName" 
+    #lastNameField="ngModel" 
+    placeholder="Apellidos" 
+  />
+  <span *ngIf="lastNameField.invalid && lastNameField.touched" class="error-message">
+    <span *ngIf="lastNameField.errors?.['required']">El apellido es obligatorio.</span>
+  </span>
+
+  <input 
+    type="email" 
+    id="correo" 
+    name="correo" 
+    [(ngModel)]="email" 
+    #emailField="ngModel" 
+    placeholder="TuEmail@example.com" 
+   
+   required [pattern]="emailPattern">
+  
+  <span *ngIf="emailField.invalid && emailField.touched" class="error-message">
+    <span *ngIf="emailField.errors?.['required']">El correo es obligatorio.</span>
+    <span *ngIf="emailField.errors?.['email']">El correo debe tener un formato válido.</span>
+    <span *ngIf="emailField.errors?.['pattern']">El correo debe tener una extensión válida.</span>
+  </span>
+
+    <div class="password-container">
+  <input 
+    [type]="isPasswordVisible ? 'text' : 'password'" 
+    id="signup-password" 
+    name="password" 
+    [(ngModel)]="password" 
+    #passwordField="ngModel" 
+    required 
+    minlength="8" 
+    maxlength="20" 
+    placeholder="Password"
+    [pattern]="passwordPattern" 
+  />
+
+  <!-- Ícono de ojo dentro del input -->
+  <span *ngIf="isPasswordVisible" class="eye-icon" (click)="togglePasswordVisibility()">👀</span>
+  <span *ngIf="!isPasswordVisible" class="eye-icon" (click)="togglePasswordVisibility()">👁️‍🗨️</span>
+</div>
+
+
+    <span *ngIf="passwordField.invalid && passwordField.touched" class="error-message">
+      <span *ngIf="passwordField.errors?.['required']">La contraseña es obligatoria.</span>
+      <span *ngIf="passwordField.errors?.['minlength']">La contraseña debe tener al menos 8 caracteres.</span>
+      <span *ngIf="passwordField.errors?.['pattern']">La contraseña debe contener al menos una mayúscula, un número y un carácter especial.</span>
+    </span>
+  <button class="hidden" type="submit">Crear tu cuenta</button>
+</form>
+      
+        <div class="div-centro">
+        <button class="hidden" (click)="toggleIniciarSesion()">Iniciar sesión</button>
+      </div>
+      </div>
+
+      <!-- Formulario de Inicio de Sesión (sign-in) -->
+      <div class="form-contenedor sign-in">
+        <div *ngIf="loading" class="progress" role="progressbar" aria-label="Animated striped example" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
+          <div class="progress-bar progress-bar-striped progress-bar-animated" style="width: 100%"></div>
+        </div>
+        <form id="loginform" (submit)="onLoginSubmit($event)" method="POST">
+          <a [routerLink]="['/inicio']">
+           <img src="./site/logoN.png" alt="Logo escomcareer">
+          </a>
+
+          <br>
+          <h1>Inicia sesión</h1>
+
+          <input 
+          id="email" 
+          name="email" type="email" 
+          [(ngModel)]="loginEmail" 
+          placeholder="Email"
+           #emailField="ngModel"
+          required [pattern]="emailPattern">
+  
+
+
+ <div class="password-container">
+          <input id="password" 
+          name="password" 
+            [type]="isPasswordVisible ? 'text' : 'password'" 
+          [(ngModel)]="loginPassword" 
+          placeholder="Password" 
+           
+          required
+          [pattern]="passwordPattern" 
+  />
+
+  <!-- Ícono de ojo dentro del input -->
+  <span *ngIf="isPasswordVisible" class="eye-icon" (click)="togglePasswordVisibility()">👀</span>
+  <span *ngIf="!isPasswordVisible" class="eye-icon" (click)="togglePasswordVisibility()">👁️‍🗨️</span>
+</div>
+ <span *ngIf="passwordField.invalid && passwordField.touched" class="error-message">
+      <span *ngIf="passwordField.errors?.['required']">La contraseña es obligatoria.</span>
+      <span *ngIf="passwordField.errors?.['minlength']">La contraseña debe tener al menos 8 caracteres.</span>
+      <span *ngIf="passwordField.errors?.['pattern']">La contraseña debe contener al menos una mayúscula, un número y un carácter especial.</span>
+    </span>
+
+
+          
+          <a [routerLink]="['/forgot-password']">¿Olvidaste la contraseña?</a>
+          <button class="hidden" type="submit">Iniciar sesión</button>
+        </form>
+           <!--BOTONES EGRESADO/ASPIRANTE xd -->
+           <div class="itemsL">
+            <button (click)="toggleAspirante()">
+                <img src="/site/Aspirante.png" alt="Aspirante">
+                Aspirante
+            </button>
+        </div>
+      </div>
+
+      <!-- Contenedor para la zona de alternancia -->
+      <div class="toggle-contenedor">
+        <div class="toggle">
+          <!-- Panel izquierdo: vista de Iniciar Sesión -->
+          <div class="toggle-panel toggle-left">
+            <h1 class="fontMarca">¡Bienvenido de nuevo!</h1>
+            <p>Ingresa tus datos personales para usar todas las funciones del sitio</p>
+            <button class="hidden" (click)="toggleIniciarSesion()">Iniciar sesión</button>
+          </div>
+
+          <!-- Panel derecho: vista para Aspirante -->
+          <div class="toggle-panel toggle-right">
+            <h1 class="fontMarca">¡Bienvenido!</h1>
+            <p>Únete a nuestra comunidad y accede a contenido exclusivo para aspirantes y egresados. ¡No pierdas la oportunidad!</p>
+            <div class="items">
+              <button class="hidden" [routerLink]="['/logine']">
+                <img src="./site/Egresado.png" alt="Egresado" />
+                Egresado/
+                Estudiante
+              </button>
+              <!-- Botón Aspirante que activa la transición -->
+              <button class="hidden" (click)="toggleAspirante()">
+                <img src="./site/Aspirante.png" alt="Egresado" />Aspirante</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
