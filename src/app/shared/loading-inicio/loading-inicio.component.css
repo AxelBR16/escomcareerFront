@@ -19,7 +19,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: rgba(0, 0, 0, 1); /* Fondo oscuro opaco */
+    background: linear-gradient(to bottom, #00aaff, #003366); /* Fondo oscuro opaco */
     opacity: 1;
     transition: opacity 1s ease-out; /* Transición de desvanecimiento */
     z-index: 9999; /* Asegura que la pantalla de carga esté encima de otros elementos */
