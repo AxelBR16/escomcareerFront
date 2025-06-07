@@ -1,3 +1,7 @@
-<app-navbar></app-navbar>
-<router-outlet></router-outlet>
-<app-footer></app-footer>
+<app-loading-inicio *ngIf="isLoading" (finishedLoading)="onLoadingFinished()"></app-loading-inicio>
+
+<div *ngIf="!isLoading">
+  <app-navbar *ngIf="showNavbarFooter"></app-navbar>
+  <router-outlet></router-outlet>
+  <app-footer *ngIf="showNavbarFooter"></app-footer>
+</div>

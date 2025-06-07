@@ -28,11 +28,15 @@ import { ResultAIComponent } from './components/result-ai/result-ai.component';
 import { ResultAI2Component } from './components/result-ai2/result-ai2.component';
 import { AdminTrabajoComponent } from './components/admin-trabajo/admin-trabajo.component';
 import { ResumenGlobalComponent } from './components/resumen-global/resumen-global.component';
+import { LoadingInicioComponent } from './shared/loading-inicio/loading-inicio.component';
+import { InicioMobileComponent } from './components/inicio-mobile/inicio-mobile.component';
 
 
 
 export const routes: Routes = [
-  {path: '', component: InicioComponent},
+  {path: '', component: LoadingInicioComponent},
+  {path: 'inicio', component: InicioComponent},
+  {path: 'inicio-mobile', component: InicioMobileComponent},
   {path: 'carreras', component: CarrerasComponent},
   {path: 'result-aptitudes', component: ResultAptitudesComponent, canActivate: [AspiranteGuard]},
   {path: 'result-uni', component: ResultUniverComponent, canActivate: [AspiranteGuard]},
