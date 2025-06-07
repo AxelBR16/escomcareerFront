@@ -1,5 +1,4 @@
 .body {
-    position: fixed;
     margin: 0;
     padding: 0;
     background-image: url('/site/fondosplash.png');
@@ -9,7 +8,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 1000000;
 }
 
 .loading-screen {
@@ -21,7 +19,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: rgba(0, 0, 0, 0.5); /* Fondo oscuro semitransparente */
+    background-color: rgba(0, 0, 0, 1); /* Fondo oscuro opaco */
     opacity: 1;
     transition: opacity 1s ease-out; /* Transición de desvanecimiento */
     z-index: 9999; /* Asegura que la pantalla de carga esté encima de otros elementos */
