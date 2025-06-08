@@ -26,6 +26,7 @@ export class CuestionarioComponent implements OnInit{
   ngOnInit(): void {
     this.authService.getCurrentUserEmail().then(email => {
         this.verificarCuestionario(email!);
+        console.log(email);
       });
     }
 
@@ -37,7 +38,7 @@ export class CuestionarioComponent implements OnInit{
             this.calcularProgreso(respuestaMasAlta);
           }
         },
-        (error) => console.error(`Error al obtener la respuesta más alta para inv3:`, error)
+(error) => console.error(`Error al obtener la respuesta más alta para inv2:`, error.error?.message || error.message)
       );
   }
 

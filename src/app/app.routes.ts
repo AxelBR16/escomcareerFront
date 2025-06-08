@@ -47,7 +47,7 @@ export const routes: Routes = [
   {path: 'cuestionario', component: CuestionarioComponent, canActivate: [AspiranteGuard]},
   {path: 'pruebasA', component: PruebasAComponent, canActivate: [AspiranteGuard]},
   {path: 'valora', component: ValoraComponent, canActivate: [AspiranteGuard]},
-  { path: ':tipo/preguntas/:id', component: PreguntasComponent, canActivate: [AspiranteGuard]},
+  { path: ':tipo/preguntas/:id', component: PreguntasComponent},
   //{path: 'admin-dashboard', component: AdminDashboardComponent, canActivate: [AdminGuard]},
   {path: 'egresado-dashboard', component: EgresadoDashboardComponent, canActivate: [EgresadoGuard]},
   {path: 'admin-dashboard', component: AdminDashboardComponent, canActivate: [AdminGuard]},
