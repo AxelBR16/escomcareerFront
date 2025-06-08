@@ -70,12 +70,10 @@ export class AuthService {
           key: key,
           value: value,
         });
-        console.log(`📱 Guardado en móvil: ${key}`);
       } else {
         // ALMACENAMIENTO WEB - localStorage
         if (this.isBrowser()) {
           localStorage.setItem(key, value);
-          console.log(`🌐 Guardado en web: ${key}`);
         }
       }
     } catch (error) {
@@ -108,12 +106,10 @@ export class AuthService {
       if (this.isMobile()) {
         // ELIMINAR DE MÓVIL - Capacitor Preferences
         await Preferences.remove({ key: key });
-        console.log(`📱 Eliminado de móvil: ${key}`);
       } else {
         // ELIMINAR DE WEB - localStorage
         if (this.isBrowser()) {
           localStorage.removeItem(key);
-          console.log(`🌐 Eliminado de web: ${key}`);
         }
       }
     } catch (error) {
@@ -132,7 +128,6 @@ export class AuthService {
         if (this.isBrowser()) {
           const keysToRemove = ['token', 'role', 'email', 'respuestasUsuario'];
           keysToRemove.forEach(key => localStorage.removeItem(key));
-          console.log('🌐 Almacenamiento web limpiado');
         }
       }
     } catch (error) {
@@ -157,9 +152,7 @@ export class AuthService {
       this.userRoleSubject.next(role);
       this.token = token;
       this.setLoggedIn(true);
-      
-      console.log(`✅ Sesión guardada exitosamente en ${this.isMobile() ? 'móvil' : 'web'}`);
-      console.log(`🔹 Email: ${email}, Rol: ${role}`);
+
     } catch (error) {
       console.error('❌ Error al guardar sesión:', error);
       throw error;
@@ -182,7 +175,6 @@ export class AuthService {
       this.token = null;
       this.setLoggedIn(false);
       
-      console.log(`✅ Sesión limpiada exitosamente en ${this.isMobile() ? 'móvil' : 'web'}`);
     } catch (error) {
       console.error('❌ Error al limpiar sesión:', error);
     }
@@ -192,7 +184,6 @@ export class AuthService {
     try {
       const token = await this.getStoredValue('token');
       const isValid = !!token;
-      console.log(`🔍 Estado de login: ${isValid ? 'Autenticado' : 'No autenticado'}`);
       return isValid;
     } catch (error) {
       console.error('❌ Error al verificar estado de login:', error);
@@ -229,7 +220,6 @@ export class AuthService {
     try {
       const responsesJson = JSON.stringify(responses);
       await this.setStoredValue('respuestasUsuario', responsesJson);
-      console.log('✅ Respuestas de usuario guardadas');
     } catch (error) {
       console.error('❌ Error al guardar respuestas:', error);
     }
@@ -249,7 +239,6 @@ export class AuthService {
     try {
       const preferencesJson = JSON.stringify(preferences);
       await this.setStoredValue('appPreferences', preferencesJson);
-      console.log('✅ Preferencias de la app guardadas');
     } catch (error) {
       console.error('❌ Error al guardar preferencias:', error);
     }
@@ -281,7 +270,6 @@ export class AuthService {
         hasPreferences: !!(await this.getStoredValue('appPreferences'))
       };
       
-      console.log('📊 Información de almacenamiento:', info);
       return info;
     } catch (error) {
       console.error('❌ Error al obtener información de almacenamiento:', error);
@@ -297,7 +285,6 @@ export class AuthService {
   }
 
   registerEgresado(registerData: any): Observable<ResponseMessageDto> {
-    console.log("📡 Enviando solicitud de registro de egresado:", registerData);
 
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 
@@ -321,9 +308,7 @@ export class AuthService {
 
   authenticateUser(email: string, password: string): void {
     this.login({ email, password }).subscribe(async response => {
-      console.log("✅ Respuesta del backend:", response);
       if (response.token && response.role) {
-        console.log("🔹 Guardando sesión: Token:", response.token, "Rol:", response.role);
         try {
           await this.storeUserSession(email, response.token, response.role);
         } catch (error) {
