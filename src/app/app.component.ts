@@ -37,11 +37,11 @@ export class AppComponent {
      this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)
     ).subscribe(() => {
-      const isMobile = window.innerWidth <= 768; 
-      if (isMobile) {
-        this.showFooter = false;
-      } else {
-        this.showFooter = true;
+       if (typeof window !== 'undefined') {
+        const isMobile = window.innerWidth <= 768;
+        if (isMobile) {
+          this.showFooter = false;
+        }
       }
     });
   }

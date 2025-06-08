@@ -26,6 +26,7 @@
     "@capacitor/android": "^7.2.0",
     "@capacitor/cli": "^7.2.0",
     "@capacitor/core": "^7.2.0",
+    "@capacitor/preferences": "^7.0.1",
     "@ionic/angular": "^8.6.0",
     "@netlify/angular-runtime": "^2.3.0",
     "@zxing/browser": "^0.1.5",

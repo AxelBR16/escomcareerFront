@@ -5,6 +5,7 @@ import { PreguntasService } from '../../services/preguntas.service';
 import { RespuestaService } from '../../services/respuesta.service';
 import Swal from 'sweetalert2';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-cuestionario',
@@ -20,14 +21,16 @@ export class CuestionarioComponent implements OnInit{
   totalPreguntas: number = 60;
   preguntainicial: string = '001';
 
-  constructor(private preguntasService: PreguntasService, private router: Router, private respuestaService: RespuestaService) {}
+  constructor(private preguntasService: PreguntasService, private router: Router, private respuestaService: RespuestaService, private authService: AuthService) {}
 
   ngOnInit(): void {
-    this.verificarCuestionario();
-  }
+    this.authService.getCurrentUserEmail().then(email => {
+        this.verificarCuestionario(email!);
+      });
+    }
 
-    verificarCuestionario() {
-       this.preguntasService.obtenerRespuestasMasAlta(sessionStorage.getItem('email')!, 'inv3').subscribe(
+    verificarCuestionario(email: string) {
+       this.preguntasService.obtenerRespuestasMasAlta(email!, 'inv3').subscribe(
         (respuestaMasAlta) => {
           if (respuestaMasAlta) {
             this.pruebasPreferenciasCompletadas = true;

@@ -8,6 +8,7 @@ import annotationPlugin from 'chartjs-plugin-annotation';
 import { ResultadoService } from '../../services/resultado.service';
 import { ResultadoResumenDTO } from '../../models/ResultadoResumenDTO';
 import Swal from 'sweetalert2';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-result-intereses',
@@ -18,25 +19,32 @@ import Swal from 'sweetalert2';
 export class ResultInteresesComponent {
   private chart: any;
 
-  constructor(@Inject(PLATFORM_ID) private platformId: any, private router: Router,private resultadoService: ResultadoService) {}
+  constructor(@Inject(PLATFORM_ID) private platformId: any, private router: Router,private resultadoService: ResultadoService,  private authService: AuthService) {}
 
-  ngAfterViewInit(): void {
-      if (isPlatformBrowser(this.platformId)) {
-        setTimeout(() => {
-          const email = sessionStorage.getItem('email')!;
-
-          this.resultadoService.obtenerResumenPorCorreo(email).subscribe({
-            next: (res) => {
-              const { etiquetas, puntajes } = this.ordenarPorEscala(res);
-              this.initChart(etiquetas, puntajes);
-            },
-            error: () => {
-              Swal.fire('Error', 'No se pudieron cargar los resultados', 'error');
-            }
-          });
-        }, 500);
-      }
-    }
+ async ngAfterViewInit(): Promise<void> {
+   await new Promise(resolve => setTimeout(resolve, 500));
+ 
+   try {
+     const emailU = await this.authService.getCurrentUserEmail();
+     if (emailU) {
+       this.resultadoService.obtenerResumenPorCorreo(emailU).subscribe({
+         next: (res) => {
+           const { etiquetas, puntajes } = this.ordenarPorEscala(res);
+           sessionStorage.setItem('puntajes', JSON.stringify({ puntajes }));
+           this.initChart(etiquetas, puntajes);
+         },
+         error: () => {
+           Swal.fire('Error', 'No se pudieron cargar los resultados', 'error');
+         }
+       });
+     } else {
+       Swal.fire('Error', 'Email no encontrado', 'error');
+     }
+   } catch (error) {
+     Swal.fire('Error', 'No se pudieron cargar los resultados', 'error');
+   }
+ }
+ 
 
      ordenarPorEscala(resultados: ResultadoResumenDTO[]): { etiquetas: string[], puntajes: number[] } {
        const escalaLabels: { [key: number]: string } = {

@@ -3,6 +3,7 @@ import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { PreguntasService } from '../../services/preguntas.service';
 import { RespuestaService } from '../../services/respuesta.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-pruebas-a',
@@ -18,15 +19,17 @@ export class PruebasAComponent implements OnInit {
 
 
 
-  constructor(private preguntasService: PreguntasService, private router: Router, private respuestaService: RespuestaService) {}
+  constructor(private preguntasService: PreguntasService, private router: Router, private respuestaService: RespuestaService, private authService: AuthService) {}
 
-  ngOnInit(): void {
-    this.verificarCuestionarios();
-  }
+   ngOnInit(): void {
+    this.authService.getCurrentUserEmail().then(email => {
+        this.verificarCuestionarios(email!);
+      });
+    }
 
-  verificarCuestionarios() {
+  verificarCuestionarios(email: string) {
     ['inv1', 'inv2'].forEach((inv, index) => {
-      this.preguntasService.obtenerRespuestasMasAlta(sessionStorage.getItem('email')!, inv).subscribe(
+      this.preguntasService.obtenerRespuestasMasAlta(email!, inv).subscribe(
         (respuestaMasAlta) => {
           if (respuestaMasAlta) {
             const tipo = index === 0 ? 'aptitudes' : 'intereses';
