@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { CommonModule } from '@angular/common';
@@ -11,6 +11,8 @@ import { Pregunta } from '../../models/pregunta';
 import { Respuesta } from '../../models/respuesta';
 import { RespuestaService } from '../../services/respuesta.service';
 import { ResultadoService } from '../../services/resultado.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-preguntas',
@@ -44,6 +46,9 @@ export class PreguntasComponent implements OnInit {
   bloqueadas: Set<string> = new Set();
   eliminatedOptionsInv3: string[] = [];
   resetNext: boolean = false;
+  emailUsuario: string = '';
+  private snackBar = inject(MatSnackBar);
+
 
   constructor(
     private preguntasService: PreguntasService,
@@ -52,25 +57,36 @@ export class PreguntasComponent implements OnInit {
     private aRouter: ActivatedRoute,
     private router: Router,
     private respuestaService: RespuestaService,
-    private resultadoService: ResultadoService
+    private resultadoService: ResultadoService,
+    private authService: AuthService
   ) {
     this.id = this.aRouter.snapshot.paramMap.get('id') || '1';
   }
 
- ngOnInit() {
+ async ngOnInit() {
   this.cargarEliminadasInv3();
   this.tipo = this.aRouter.snapshot.paramMap.get('tipo');
-  const email = sessionStorage.getItem('email') || 'usuario';
+
+  const email = await this.authService.getCurrentUserEmail();
+  this.emailUsuario = email!;
+  if (!email) {
+    console.error('Email no disponible');
+    this.router.navigate(['/login']);
+    return;
+  }
+
   this.storageKey = `respuestas_${this.tipo}_${email}`;
 
   this.aRouter.paramMap.subscribe(params => {
-      this.id = params.get('id')!;
-      this.parteIzquierda = this.id.split('-')[0];
+    this.id = params.get('id')!;
+    this.parteIzquierda = this.id.split('-')[0];
+
     if (!this.puedeNavegarAPregunta(this.id)) {
       const maxPermitida = this.obtenerPreguntaMaximaPermitida();
       this.router.navigate([`${this.tipo}/preguntas/${maxPermitida}`]);
       return;
     }
+
     if (this.id) {
       this.determinarTotalPreguntas();
       this.cargarPreguntas();
@@ -78,6 +94,7 @@ export class PreguntasComponent implements OnInit {
     }
   });
 }
+
 
 async puedeNavegarAPregunta(idPregunta: string): Promise<boolean> {
   const numeroPregunta = parseInt(idPregunta.split('-')[1]);
@@ -91,9 +108,8 @@ async puedeNavegarAPregunta(idPregunta: string): Promise<boolean> {
 
 async obtenerPreguntaMaximaPermitida(): Promise<string> {
   const inventario = this.id.split('-')[0];
-  const email = sessionStorage.getItem('email')!;
   try {
-    const maxRespondida = await this.preguntasService.obtenerRespuestasMasAlta(email, inventario).toPromise();
+    const maxRespondida = await this.preguntasService.obtenerRespuestasMasAlta(this.emailUsuario, inventario).toPromise();
     const siguiente = maxRespondida ? maxRespondida + 1 : 1;
     return `${inventario}-${String(siguiente).padStart(3, '0')}`;
   } catch (error) {
@@ -158,10 +174,9 @@ async obtenerPreguntaMaximaPermitida(): Promise<string> {
       this.getPreguntaDesdeStorage();
       this.loader.ocultarCargando();
     } else {
-      const email = sessionStorage.getItem('email');
       const inventario = this.id.split('-')[0];
-      if (email && inventario) {
-        this.preguntasService.obtenerRespuestasUsuario(email, inventario).subscribe(
+      if (this.emailUsuario && inventario) {
+        this.preguntasService.obtenerRespuestasUsuario(this.emailUsuario, inventario).subscribe(
           (respuestas: Record<string, number>) => {
             sessionStorage.setItem(`respuestasUsuario_${inventario}`, JSON.stringify(respuestas));
             this.respuestasUsuario = respuestas;
@@ -214,19 +229,17 @@ async obtenerPreguntaMaximaPermitida(): Promise<string> {
     const respuesta: Respuesta = {
       valor: valorR,
       id_Pregunta: id,
-      emailAspirante: sessionStorage.getItem('email')!
+      emailAspirante: this.emailUsuario!
     };
     this.preguntasService.saveRespuesta(respuesta).subscribe(
       (response: any) => {
 
       },
       (error) => {
-        Swal.fire({
-          icon: 'error',
-          title: 'Error al guardar la respuesta',
-          text: error.error?.message || 'Ocurrió un error desconocido.',
-          confirmButtonText: 'Aceptar'
-        });
+        this.snackBar.open(`Error al guardar la respuesta`, 'OK', {
+            duration: 6000,
+            panelClass: ['custom-snackbar-error']
+          });
         this.prev();
       }
     );
@@ -296,7 +309,7 @@ next() {
         const respuestas = this.respuestasUsuario;
         const validacion = this.verificarRespuestas(respuestas);
         if (validacion) {
-          this.preguntasService.obtenerRespuestasUsuario(sessionStorage.getItem('email')!, this.id.split('-')[0]!).subscribe(
+          this.preguntasService.obtenerRespuestasUsuario(this.emailUsuario!, this.id.split('-')[0]!).subscribe(
             (respuestas: Record<string, number>) => {
               sessionStorage.setItem(`respuestasUsuario_${this.id.split('-')[0]}`, JSON.stringify(respuestas));
               this.respuestasUsuario = respuestas;
@@ -333,10 +346,9 @@ next() {
     }
 
     if (respuestasCompletas) {
-      const email = sessionStorage.getItem('email');
       const inventario = this.parteIzquierda;
       this.loader.mostrarCargando('Calculando los resultados...');
-      this.resultadoService.calcularResultado(inventario, email!).subscribe({
+      this.resultadoService.calcularResultado(inventario, this.emailUsuario!).subscribe({
         next: (res) => {
           this.loader.ocultarCargando();
           Swal.fire({

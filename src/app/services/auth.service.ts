@@ -54,9 +54,7 @@ export class AuthService {
       this.token = token;
       this.userRoleSubject.next(role);
       this.loggedInSubject.next(!!token);
-      
-      console.log(`🔧 Auth inicializada en ${this.isMobile() ? 'móvil' : 'web'}`);
-    } catch (error) {
+      } catch (error) {
       console.error('❌ Error al inicializar autenticación:', error);
     }
   }

@@ -29,8 +29,6 @@ import { ResultAI2Component } from './components/result-ai2/result-ai2.component
 import { AdminTrabajoComponent } from './components/admin-trabajo/admin-trabajo.component';
 import { ResumenGlobalComponent } from './components/resumen-global/resumen-global.component';
 import { LoadingInicioComponent } from './shared/loading-inicio/loading-inicio.component';
-import { InicioMobileComponent } from './components/inicio-mobile/inicio-mobile.component';
-import { MobileGuard } from './shared/guards/mobile.guard';
 
 
 
