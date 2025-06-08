@@ -20,7 +20,6 @@ export class AdminGuard implements CanActivate {
     state: RouterStateSnapshot
   ): Promise<boolean> {
     
-    console.log('🛡️ AdminGuard: Verificando acceso...');
     
     try {
       if (!isPlatformBrowser(this.platformId)) {
@@ -35,11 +34,9 @@ export class AdminGuard implements CanActivate {
 
       const userRole = await this.authService.getCurrentUserRole();
       if (userRole !== 'ROLE_ADMIN') {
-        console.log(`❌ Acceso denegado para AdminGuard. Rol: ${userRole}`);
         return false;
       }
 
-      console.log('✅ Acceso autorizado para ROLE_ADMIN');
       return true;
 
     } catch (error) {

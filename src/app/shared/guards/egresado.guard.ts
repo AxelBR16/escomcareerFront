@@ -19,7 +19,6 @@ export class EgresadoGuard implements CanActivate {
     state: RouterStateSnapshot
   ): Promise<boolean> {
     
-    console.log('🛡️ EgresadoGuard: Verificando acceso...');
     
     try {
       if (!isPlatformBrowser(this.platformId)) {
@@ -34,11 +33,9 @@ export class EgresadoGuard implements CanActivate {
 
       const userRole = await this.authService.getCurrentUserRole();
       if (userRole !== 'ROLE_EGRESADO') {
-        console.log(`❌ Acceso denegado para EgresadoGuard. Rol: ${userRole}`);
         return false;
       }
 
-      console.log('✅ Acceso autorizado para ROLE_EGRESADO');
       return true;
 
     } catch (error) {

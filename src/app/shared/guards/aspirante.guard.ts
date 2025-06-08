@@ -21,21 +21,17 @@ export class AspiranteGuard implements CanActivate {
     state: RouterStateSnapshot
   ): Promise<boolean> {
     
-    console.log('🛡️ AspiranteGuard: Verificando acceso...');
     
     try {
       // Verificar si estamos en el navegador (para SSR)
       if (!isPlatformBrowser(this.platformId)) {
-        console.log('⚠️ No está en el navegador, acceso denegado');
         return false;
       }
 
       // Verificar si el usuario está logueado
       const isLoggedIn = await this.authService.isLoggedIn();
-      console.log(`🔍 Estado de login: ${isLoggedIn ? 'Autenticado' : 'No autenticado'}`);
       
       if (!isLoggedIn) {
-        console.log('❌ Usuario no autenticado, redirigiendo a login');
         this.router.navigate(['/login'], { 
           queryParams: { returnUrl: state.url } 
         });
@@ -44,9 +40,7 @@ export class AspiranteGuard implements CanActivate {
 
       // Obtener el rol del usuario
       const userRole = await this.authService.getCurrentUserRole();
-      console.log(`👤 Rol del usuario: ${userRole}`);
 
-      console.log('✅ Acceso autorizado para ROLE_ASPIRANTE');
       return true;
 
     } catch (error) {
