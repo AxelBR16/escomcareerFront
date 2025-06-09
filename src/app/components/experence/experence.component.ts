@@ -8,6 +8,7 @@ import { debounceTime, switchMap, startWith } from 'rxjs/operators';
 import { Habilidad } from '../../models/habilidad';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatInputModule } from '@angular/material/input';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-experence',
@@ -32,11 +33,12 @@ export class ExperenceComponent implements OnInit {
   private snackBar = inject(MatSnackBar);
 
   constructor(
-    private experienciaService: ExperienciaService ) {}
+    private experienciaService: ExperienciaService,  private authService: AuthService ) {}
 
   ngOnInit() {
-    this.email = sessionStorage.getItem('email') || 'usuario@ejemplo.com';
-
+     this.authService.getCurrentUserEmail().then(email => {
+        this.email = email!;
+      });
     this.habilidadesFiltradas = this.habilidadCtrl.valueChanges.pipe(
       startWith(''),
       debounceTime(300),
