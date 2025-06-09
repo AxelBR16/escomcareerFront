@@ -9,6 +9,7 @@ import { FormsModule } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { Materia } from '../../models/materia';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-proyect-egresado',
@@ -19,7 +20,12 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 export class ProyectEgresadoComponent implements OnInit {
   activeTab: string = 'detalles';
 
-  constructor(private proyectoService: ProyectoService, private materiaService: MateriaService, private sanitizer: DomSanitizer) {}
+  constructor(
+    private proyectoService: ProyectoService, 
+    private materiaService: MateriaService, 
+    private sanitizer: DomSanitizer,
+    private authService: AuthService,
+  ) {}
 
   title: string = '';
   description: string = '';
@@ -36,13 +42,15 @@ export class ProyectEgresadoComponent implements OnInit {
   videos: proyecto[] = [];
 
   ngOnInit() {
-    this.email = sessionStorage.getItem('email')!;
-    this.cargarProyectosPendientes();
-    this.cargarProyectos();
+    this.authService.getCurrentUserEmail().then(email => {
+        this.cargarProyectosPendientes(email!);
+        this.cargarProyectos(email!);
+        this.email = email!;
+      });
   }
 
-  cargarProyectosPendientes() {
-    this.proyectoService.obtenerProyectosPendientes(this.email)
+  cargarProyectosPendientes(correo: string) {
+    this.proyectoService.obtenerProyectosPendientes(correo)
     .subscribe(proyectos => {
       this.proyectosPendientes = proyectos;
       this.proyectosPendientes.forEach(proy => {
@@ -79,7 +87,6 @@ export class ProyectEgresadoComponent implements OnInit {
       likes: 0,
       dislikes: 0,
       materiaId: this.materiaId,
-      carreraId: Number(this.carreraId),
       egresadoEmail: this.email
     };
    this.proyectoService.guardarProyecto(nuevoProyecto).subscribe(
@@ -115,8 +122,8 @@ export class ProyectEgresadoComponent implements OnInit {
   setActiveTab(tab: string) {
     this.activeTab = tab;
     if (tab === 'pendiente') {
-      this.cargarProyectos();
-      this.cargarProyectosPendientes();
+      this.cargarProyectos(this.email );
+      this.cargarProyectosPendientes(this.email );
     }
   }
   eliminarProyecto(id: number): void {
@@ -133,7 +140,7 @@ export class ProyectEgresadoComponent implements OnInit {
       this.proyectoService.eliminarProyecto(id).subscribe({
         next: () => {
           Swal.fire('¡Eliminado!', 'El proyecto ha sido eliminado.', 'success');
-          this.cargarProyectos(); // Recargar lista
+          this.cargarProyectos(this.email); // Recargar lista
         },
         error: err => {
           console.error('Error al eliminar proyecto', err);
@@ -161,8 +168,8 @@ export class ProyectEgresadoComponent implements OnInit {
     return null;
   }
 
-  cargarProyectos(): void {
-  this.proyectoService.obtenerTodosLosProyectos(this.email).subscribe({
+  cargarProyectos(email: string): void {
+  this.proyectoService.obtenerTodosLosProyectos(email).subscribe({
     next: proyectos => {
       this.videos = proyectos;
       this.videos.forEach(proy => {

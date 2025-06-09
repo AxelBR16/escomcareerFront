@@ -4,6 +4,7 @@ import { CommonModule, NgClass } from '@angular/common';
 import { Experiencia } from '../../models/experiencia';
 import { ExperienciaService } from '../../services/experiencia.service';
 import { ActivatedRoute } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-egresado-dashboard',
@@ -16,30 +17,32 @@ export class EgresadoDashboardComponent {
 
   carreraId = 1;
   isTextVisible: boolean = false;
-  selectedSection: string = 'Experiencias'; // Agregar propiedad selectedSection
-currentSlideIndex: number = 0; // Índice del carrusel
+  selectedSection: string = 'Experiencias';
+  currentSlideIndex: number = 0; 
   interval: any;
- experienciasAleatorias = [];
+  experienciasAleatorias = [];
   currentIndex = 0;
+  nombreUsuario: string | null = null;
+
 
 
  constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private experienciaService: ExperienciaService
+    private experienciaService: ExperienciaService,
+    private authService: AuthService
   ) {
-    // Inicializamos el valor de `carreraId` usando la ruta.
     this.carreraId = parseInt(this.route.snapshot.paramMap.get('id') || '1');
   }
   ngOnInit(): void {
-    // Cargar las experiencias cuando el componente se inicializa.
     this.loadExperiences();
-   
-
-    
+    this.loadNombreUsuario(); 
+    console.log(this.nombreUsuario)
   }
 
-
+  async loadNombreUsuario(): Promise<void> {
+    this.nombreUsuario = await this.authService.getCurrentUserName();
+  }
   // Método para cargar las experiencias desde el servicio
   loadExperiences(): void {
     this.experienciaService.getExperienciasPorCarrera(this.carreraId).subscribe({

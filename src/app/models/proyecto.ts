@@ -6,7 +6,6 @@ export interface proyecto {
   likes: number;
   dislikes: number;
   egresadoEmail: string;
-  carreraId: number;
   materiaId: number;
   estado?: boolean;
   fecha?: string;

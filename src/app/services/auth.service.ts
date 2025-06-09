@@ -311,6 +311,7 @@ export class AuthService {
       if (response.token && response.role) {
         try {
           await this.storeUserSession(email, response.token, response.role);
+          await this.setStoredValue('nombre', response.nombre);
         } catch (error) {
           console.error("❌ Error al guardar sesión después del login:", error);
         }
@@ -319,6 +320,11 @@ export class AuthService {
       }
     });
   }
+
+  async getCurrentUserName(): Promise<string | null> {
+    return await this.getStoredValue('nombre');
+  }
+
 
   registerAspirante(registerData: SignUpAspirante): Observable<ResponseMessageDto> {
       return this.httpClient.post<any>(`${environment.apiUrls.auth}/auth/sign-up`, registerData);
