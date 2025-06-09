@@ -64,9 +64,6 @@ export class PreguntasComponent implements OnInit {
   }
 
  async ngOnInit() {
-    this.determinarTotalPreguntas();
-    this.cargarPreguntas();
-    this.cargarRespuestasAPI();
   
   this.cargarEliminadasInv3();
   this.tipo = this.aRouter.snapshot.paramMap.get('tipo');
@@ -89,6 +86,12 @@ export class PreguntasComponent implements OnInit {
       const maxPermitida = this.obtenerPreguntaMaximaPermitida();
       this.router.navigate([`${this.tipo}/preguntas/${maxPermitida}`]);
       return;
+    }
+
+    if (this.id) {
+      this.determinarTotalPreguntas();
+      this.cargarPreguntas();
+      this.cargarRespuestasAPI();
     }
   });
 }
