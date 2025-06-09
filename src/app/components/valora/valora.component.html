@@ -1,6 +1,15 @@
 
 <div class="body">
     <br>
+
+ <div class="instructions">
+    <h2>Valora el sistema</h2>
+    <p>
+      Ayúdanos a mejorar. Califica tu experiencia con el sistema usando estrellas:<br>
+      ⭐ = Bajo &nbsp;&nbsp; ⭐⭐ = Medio &nbsp;&nbsp; ⭐⭐⭐ = Alto
+    </p>
+  </div>
+
 <form (ngSubmit)="onSubmit()">
   <div class="form-group" *ngFor="let pregunta of preguntas; let i = index">
     <label class="question-label">{{ pregunta.texto }}</label>
