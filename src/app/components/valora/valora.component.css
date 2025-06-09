@@ -1,349 +1,150 @@
-
-
-main {
-    margin-top: 20px; /* Añade espacio entre el header y el contenido principal */
-    line-height: 1.6;
-    background-color: #f5f5f5;
-    color: #333;
+.body {
+    min-height: 100vh; 
+    width: 100%;     
+    margin: 0;       
+    padding: 0;  
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
-    min-height: 100vh;
-    
-}
-
-
-.hero-section {
-    position: relative; /* Habilita el posicionamiento de elementos hijos */
-    width: 100%; /* Asegura que ocupe todo el ancho de la página */
-    height: 100%; /* Asegura que ocupe toda la altura del contenedor */
-    min-height: 100px; /* Establece una altura mínima */
-    background-image:linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/site/valo.png'); /* Agrega la imagen como fondo */
-    background-size:cover; /* La imagen cubre todo el contenedor */
-    background-position: center; /* Centra la imagen */
-    background-repeat: no-repeat; /* Evita que la imagen se repita */
-    margin-top: 2px;
-    border-radius: 10px;
-    
-}
-
-
-
-/* Main Section */
-.test-section {
-    width: 100%;
-    margin-top: 20px;
-    text-align: center;
-    display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-
-
-.test-section h2 {
-    font-size: 1.8rem;
-    margin-bottom: 10px;
-}
-
-.test-section p {
-    font-size: 1rem;
-    margin-bottom: 20px;
-    
-}
-
-
-.hero-container {
-    position: absolute; /* Permite colocar el texto sobre la imagen */
-    top: 50%; /* Centra verticalmente el texto */
-    left: 50%; /* Centra horizontalmente el texto */
-    transform: translate(-50%, -50%); /* Ajusta el centro exacto */
-    color: white; /* Asegura que el texto sea visible sobre la imagen */
-    text-align: center; /* Centra el texto */
-    font-size: 1.0rem; /* Ajusta el tamaño del texto */
-    font-weight: bold; /* Haz el texto más llamativo */
-    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7); /* Sombra para mejorar la visibilidad */
-    width: 80%;
-    
-    
-}
-.hero-container h1{
-    font-size: 35px; /* Ajusta el tamaño del texto */
-    margin-bottom: 20px; /* Añade espacio debajo del encabezado */
-
-}
-.hero-container p{
-    font-size: 20px; /* Ajusta el tamaño del texto */
-    margin-bottom: 20px; /* Añade espacio debajo del encabezado */
-
-}
-
-
-@media (max-width: 768px) {
-    .hero-section {
-        height: 200px; /* Ajusta la altura para pantallas más pequeñas */
-        margin-top: 60px;
-    }
-
-    .hero-container {
-        font-size: 8px !important; /* Reduce el tamaño del texto */
-        width: 90%; /* Asegura que el ancho no exceda el contenedor */
-        overflow-wrap: break-word; /* Permite romper líneas si es necesario */
-        text-align: center; /* Centra el texto */
-        margin: 0 auto; /* Centra horizontalmente el contenedor */
-    }
-
-    .hero-container h1 {
-        font-size: 36px !important; /* Ajusta el tamaño del encabezado h1 */
-    }
-
-    .hero-container p {
-        font-size: 12px !important; /* Ajusta el tamaño de los párrafos */
-        line-height: 1.2; /* Reduce el espaciado entre líneas */
-    }
-}
-
-
-
-@media (max-width: 480px) {
-    .hero-container p {
-        display: none !important; /* Asegura que las etiquetas <p> sean ocultadas */
-    }
-
-    .hero-container h1 {
-        display: block; /* Asegura que los encabezados <h1> sigan visibles */
-    }
-}
-
-
-/* para el 2 fondo */
-
-
-
-
-
-
-/* Test Cards */
-.test-cards {
-    display: flex; /* Cambia grid por flex para alinear elementos */
-    justify-content: center; /* Centra horizontalmente las tarjetas */
-    flex-wrap: wrap; /* Permite que las tarjetas se ajusten en múltiples filas */
-    gap: 20px; /* Espacio entre tarjetas */
-    margin-bottom: 20px;
-}
-
-.card {
-    position: relative; /* Permite posicionar elementos hijos de manera específica */
-    background-color: #0641cc;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.6);
-    padding: 20px;
-    text-align: left;
-    transition: transform 0.3s ease;
-    color: #ffffff;
-    background-size: cover; /* Ajusta la imagen para cubrir toda la tarjeta */
-    background-position: center; /* Centra la imagen en la tarjeta */
-    background-repeat: no-repeat; /* Evita que la imagen se repita */
-    min-height: 250px; /* Altura mínima aumentada */
-    width: 80%;
-    
-    
-}
-
-.card2 {
-    position: relative; /* Permite posicionar elementos hijos de manera específica */
-    background-color: #CFE2FF;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.6);
-    padding: 20px;
-    text-align: left;
-    transition: transform 0.3s ease;
-    color: #000000;
-    background-size: cover; /* Ajusta la imagen para cubrir toda la tarjeta */
-    background-position: center; /* Centra la imagen en la tarjeta */
-    background-repeat: no-repeat; /* Evita que la imagen se repita */
-    min-height: 250px; /* Altura mínima aumentada */
-    width: 80%;
-    
-    
-}
-
-
-
-.opt1 {
-    background-color: #ff4d4d;
-    color: white;
-}
-
-
-.opt2 {
-    background-color: #ff9900;
-    color: white;
-}
-
-
-.opt3 {
-    background-color: #ffcc00;
-    color: black;
-}
-
-
-
-.opt4{
-    background-color: #5cd65c;
-    color: white;
-}
-
-
-
-.opt5 {
-    background-color: #33cc33;
-    color: white;
-}
-
-
-
-
-.card h3, .card p {
-   
-    padding: 10px;
-    border-radius: 5px;
-}
-
-.card:hover {
-    transform: translateY(-5px);
-}
-
-.card h3 {
-    font-size: 1.2rem;
-    margin-bottom: 10px;
-    color: #fff;
-}
-
-.card p {
-    font-size: 0.9rem;
-    margin-bottom: 15px;
-    line-height: 1.4;
-   
-}
-
-/* Buttons */
-.btn {
-    background-color: #001E62;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 1rem;
-    transition: background-color 0.3s ease;
   
+    background-image: url('/site/fondo.svg');
+    background-size:cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
-.card .btn {
- 
-    position: absolute; /* Posiciona el botón en un lugar específico */
-    bottom: 10px; /* Ajusta la distancia desde la parte inferior */
-    right: 20px; /* Ajusta la distancia desde la parte derecha */
-    
+.form-group {
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 12px;
+  margin: 15px auto;
+  max-width: 600px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
-.card .btn:hover {
-    background-color: #FFD700;
+
+.form-group:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.question-label {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 10px;
+  display: block;
+}
+
+.rating-stars {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 10px;
+}
+
+.star {
+  font-size: 3rem;
+  color: #ccc;
+  cursor: pointer;
+  transition: transform 0.2s, color 0.3s;
+}
+
+.star:hover {
+  transform: scale(1.2);
+}
+
+.star.filled {
+  color: #FFD700;
 }
 
 .results-btn {
-    width: 100%;
-    max-width: 200px;
-    margin: 0 auto;
+  background-color: #001E62;
+  color: white;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-top: 20px;
 }
+
 .results-btn:hover {
-    background-color: #FFD700;
+  background-color: #FFD700;
+  color: #000;
 }
 
-/* Responsividad */
-/* Pantallas grandes */
-@media (min-width: 1024px) {
-    .test-cards {
-        grid-template-columns: repeat(auto-fit, minmax(650px, 1fr)); /* Más espacio entre tarjetas */
-    }
-    .card {
-        min-height: 100px; /* Tarjetas más largas en pantallas grandes */
-       
-    }
+.thank-you {
+  text-align: center;
+  margin-top: 30px;
+  color: #f5f8fb;
+  animation: fadeIn 0.6s ease-in-out;
 }
 
-/* Pantallas medianas */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.instructions {
+  width: 100%;
+  height: 170px;
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 10px;
+  padding: 40px 20px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  text-align: center;
+}
+
+
+.instructions h2 {
+  font-size: 1.8rem;
+  margin-bottom: 10px;
+}
+
+.instructions p {
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #333;
+}
 @media (max-width: 768px) {
-    .card {
-        min-height: 110px; /* Ajuste en altura para pantallas medianas */
-    }
+  .form-group {
+    margin: 10px;
+    padding: 15px;
+  }
+
+  .question-label {
+    font-size: 1rem;
+  }
+
+  .star {
+    font-size: 2.4rem;
+  }
+
+  .instructions h2 {
+    font-size: 1.4rem;
+  }
+
+  .instructions p {
+    font-size: 0.95rem;
+  }
 }
 
-/* Pantallas pequeñas */
 @media (max-width: 480px) {
-    .test-section h2 {
-        font-size: 1.5rem;
-    }
-    .card {
-        min-height: 200px; /* Más pequeñas en pantallas pequeñas */
-    }
-    .card h3 {
-        font-size: 1rem;
-    }
-    .card p {
-        font-size: 0.8rem;
-    }
-}
+  .star {
+    font-size: 2rem;
+  }
 
+  .instructions {
+    height: auto;
+    padding: 20px 10px;
+  }
 
-.btn-option {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    background-color: #001E62; /* Azul oscuro */
-    color: white;
-    cursor: pointer;
-    font-size: 14px;
-    transition: background-color 0.3s ease;
-    margin: 0 20px; /* Añade separación horizontal entre los botones */
-}
-
-.btn-option:hover {
-    background-color: #FFD700;
-}
-
-/* Campos de texto */
-.input-field {
+  .results-btn {
     width: 100%;
-    max-width: 500px;
-    padding: 10px;
-    margin-bottom: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 14px;
-    box-sizing: border-box;
-}
-
-/* Responsividad */
-@media (max-width: 768px) {
-    .btn-option {
-        font-size: 12px; /* Reduce el tamaño del texto en pantallas más pequeñas */
-        padding: 8px 16px; /* Ajusta el tamaño del botón */
-        margin: 8px; /* Reduce el espaciado entre botones */
-    }
-}
-
-@media (max-width: 480px) {
-    .btn-option {
-        width: 100%; /* Los botones ocupan todo el ancho disponible */
-        margin: 5px 0; /* Espaciado vertical entre los botones */
-        text-align: center; /* Asegura que el texto esté centrado */
-    }
-    .results-btn {
-        width: 100%;
-        max-width: 150px;
-        margin: 0 auto;
-        text-align: center; /* Asegura que el texto esté centrado */
-    }
+    font-size: 0.95rem;
+  }
 }
