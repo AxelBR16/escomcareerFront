@@ -1,52 +1,27 @@
-<section class="test-section">
-    <section class="hero-section">
-        <div class="hero-container">
-            <h1>Valora el sistema</h1>
-        </div>
-    </section>
-    <br>
-    <p><strong>Queremos conocer tu experiencia con nuestro sistema de orientación 
-        vocacional para seguir mejorando nuestra plataforma. Tus opiniones nos ayudarán a 
-        identificar áreas de oportunidad. Por favor, contesta las siguientes preguntas:</strong></p>
-     <div class="test-cards">
-        <div class="card2">
-            <form action="submit_feedback.html" method="POST" class="feedback-form">
-                <div class="form-group">
-                    <label for="question1">¿Consideras que el contenido del sistema te fue relevante y útil para ayudarte a decidir sobre tu carrera?</label>
-                    <br>                        
-                    <textarea class="input-field" id="question1" name="question1" rows="4" placeholder="Escribe aquí tu respuesta..."></textarea>
-                </div>
-                    <br>
-                <div class="form-group">
-                    <label for="question2">¿Te parecieron útiles los testimonios de otros aspirantes?</label>
-                    <br>
-                    <textarea class="input-field" id="question2" name="question2" rows="4" placeholder="Escribe aquí tu respuesta..."></textarea>
-                </div>
-                    <br>
-                <div class="form-group">
-                    <label for="question3">¿Qué opinas de la calidad de los videos y proyectos mostrados en la página?</label>
-                    <br>
-                    <textarea class="input-field" id="question3" name="question3" rows="4" placeholder="Escribe aquí tu respuesta..."></textarea>
-                </div>
-                    <br>
-                <div class="form-group">
-                    <label for="question4">¿Qué tan satisfecho estás con los resultados y recomendaciones de las pruebas?</label>
-                    <br>
-                    <textarea class="input-field" id="question4" name="question4" rows="4" placeholder="Escribe aquí tu respuesta..."></textarea>
-                </div>
-                    <br>
-                <div class="form-group">
-                    <label for="question5">¿Recomendarías este sistema a otros aspirantes?</label>
-                    <br>
-                    <textarea class="input-field" id="question5" name="question5" rows="4" placeholder="Escribe aquí tu respuesta..."></textarea>
-                </div>
-                    <br>
-                    <br>
-                <button type="submit" class="btn results-btn">Enviar Encuesta</button>
-            </form>
-        </div>
-    </div>
 
+<div class="body">
     <br>
-    <br><br>
-</section>
+<form (ngSubmit)="onSubmit()">
+  <div class="form-group" *ngFor="let pregunta of preguntas; let i = index">
+    <label class="question-label">{{ pregunta.texto }}</label>
+    <div class="rating-stars">
+      <ng-container *ngFor="let star of [1,2,3]">
+        <span
+          class="star"
+          [class.filled]="star <= pregunta.valor"
+          (click)="setValor(i, star)"
+        >&#9733;</span>
+      </ng-container>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <button type="submit" class="btn results-btn">Enviar Encuesta</button>
+  </div>
+
+  <div *ngIf="enviado" class="thank-you">
+    <h3>¡Gracias por tu opinión!</h3>
+    <p>Tu retroalimentación es muy valiosa para nosotros.</p>
+  </div>
+</form>
+</div>
