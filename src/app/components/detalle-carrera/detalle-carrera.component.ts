@@ -26,7 +26,7 @@ export class DetalleCarreraComponent implements OnInit{
     {
       title: 'Sistemas Computacionales',
       description: 'Transforma ideas en tecnología, desarrollando soluciones innovadoras que conectan el mundo digital.',
-      Image: 'site/isc.jpg',
+      Image: 'site/isc.webp',
       planEstudios: [
         { nombre: '1er', titulo: 'Primer semestre', materias: [] },
         { nombre: '2do', titulo: 'Segundo semestre', materias: [] },
@@ -72,7 +72,7 @@ export class DetalleCarreraComponent implements OnInit{
     {
       title: 'Inteligencia Artificial',
       description: 'Crea sistemas inteligentes que aprenden, evolucionan y revolucionan el futuro de la humanidad.',
-      Image: 'site/IA.jpg',
+      Image: 'site/IA.webp',
       planEstudios: [
         { nombre: '1er', titulo: 'Primer semestre', materias: [] },
         { nombre: '2do', titulo: 'Segundo semestre', materias: [] },
@@ -118,7 +118,7 @@ export class DetalleCarreraComponent implements OnInit{
     {
       title: 'Ciencia de Datos',
       description: 'Descubre el poder de los datos para entender patrones, anticipar tendencias y tomar decisiones inteligentes.',
-      Image:'site/CD.jpg',
+      Image:'site/CD.webp',
       planEstudios: [
           { nombre: '1er', titulo: 'Primer semestre', materias: [] },
         { nombre: '2do', titulo: 'Segundo semestre', materias: [] },
