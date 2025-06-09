@@ -64,7 +64,7 @@ export class PreguntasComponent implements OnInit {
   }
 
  async ngOnInit() {
-        this.cargarPreguntas();
+  
   this.cargarEliminadasInv3();
   this.tipo = this.aRouter.snapshot.paramMap.get('tipo');
 
