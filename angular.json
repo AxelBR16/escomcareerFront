@@ -31,9 +31,7 @@
               "src/styles.css",
               "node_modules/bootstrap/dist/css/bootstrap.min.css"
             ],
-            "scripts": [
-              "node_modules/bootstrap/dist/js/bootstrap.min.js"
-            ],
+            "scripts": ["node_modules/bootstrap/dist/js/bootstrap.min.js"],
             "server": "src/main.server.ts",
             "outputMode": "server",
             "ssr": {
@@ -42,12 +40,6 @@
           },
           "configurations": {
             "production": {
-              "optimization": {
-                "scripts": true,
-                "styles": true,
-                "fonts": true
-              },
-              "outputHashing": "all",
               "budgets": [
                 {
                   "type": "initial",
@@ -59,7 +51,8 @@
                   "maximumWarning": "5MB",
                   "maximumError": "6MB"
                 }
-              ]
+              ],
+              "outputHashing": "all"
             },
             "development": {
               "optimization": false,
