@@ -71,7 +71,7 @@ export class PreguntasComponent implements OnInit {
   this.emailUsuario = email!;
   if (!email) {
     console.error('Email no disponible');
-    this.router.navigate(['/login']);
+    // this.router.navigate(['/login']);
     return;
   }
 
