@@ -1,5 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule,ExtraOptions  } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { MateriaService } from '../../services/materia.service';
 import { log } from 'console';
@@ -181,13 +181,63 @@ export class DetalleCarreraComponent implements OnInit{
     if (role === 'ROLE_EGRESADO') {
       this.router.navigate(['/proyectEgresado']);
     } else {
-      this.router.navigate(['/login']);
+        this.router.navigate(['/login']).then(() => {
+      window.scrollTo(0, 0);
+    });
       this.snackBar.open('👋 ¡Hola! Para compartir tus increíbles proyectos, por favor regístrate o inicia sesión. ¡Queremos ver tu talento! 🚀', 'OK', {
         duration: 5000,
         panelClass: ['warning-snackbar']
       });
     }
   }
+
+
+irATrbajo(): void {
+  const role = sessionStorage.getItem('role');
+
+  if (role === 'ROLE_EGRESADO') {
+    this.router.navigate(['/experience']).then(() => {
+      window.scrollTo(0, 0);
+    });
+  } else {
+    this.router.navigate(['/login']).then(() => {
+      window.scrollTo(0, 0);
+    });
+    this.snackBar.open(
+      '👋 ¡Hola! Para compartir información de tu trabajo, por favor regístrate o inicia sesión. ¡Queremos ver tu trayecto! 🚀',
+      'OK',
+      {
+        duration: 5000,
+        panelClass: ['warning-snackbar']
+      }
+    );
+  }
+}
+
+irAExpe(): void {
+  const role = sessionStorage.getItem('role');
+
+  if (role === 'ROLE_EGRESADO') {
+    this.router.navigate(['/experience']).then(() => {
+      window.scrollTo(0, 0);
+    });
+  } else {
+    this.router.navigate(['/login']).then(() => {
+      window.scrollTo(0, 0);
+    });
+    this.snackBar.open(
+      '👋 ¡Hola! Para compartir tus increíbles experiencias, por favor regístrate o inicia sesión. ¡Queremos ver tu trayecto! 🚀',
+      'OK',
+      {
+        duration: 5000,
+        panelClass: ['warning-snackbar']
+      }
+    );
+  }
+}
+
+
+
 
   ngOnInit() {
 

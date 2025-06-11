@@ -33,12 +33,14 @@ export class ExperenceComponent implements OnInit {
   private snackBar = inject(MatSnackBar);
 
   constructor(
-    private experienciaService: ExperienciaService,  private authService: AuthService ) {}
+    private experienciaService: ExperienciaService,  
+    private authService: AuthService 
+  ) {}
 
   ngOnInit() {
-     this.authService.getCurrentUserEmail().then(email => {
-        this.email = email!;
-      });
+    this.authService.getCurrentUserEmail().then(email => {
+      this.email = email!;
+    });
     this.habilidadesFiltradas = this.habilidadCtrl.valueChanges.pipe(
       startWith(''),
       debounceTime(300),
@@ -62,6 +64,7 @@ export class ExperenceComponent implements OnInit {
   }
 
   agregarTestimonio(): void {
+    // Validación de campos vacíos
     if (!this.experiencia || !this.trabajaRelacionada) {
       this.snackBar.open('Por favor completa los campos obligatorios', 'OK', {
         duration: 4000,
@@ -70,6 +73,27 @@ export class ExperenceComponent implements OnInit {
       return;
     }
 
+    // Si trabaja en algo relacionado, valida los campos adicionales
+    if (this.trabajaRelacionada === 'si') {
+      if (!this.puesto || !this.descripcionTrabajo || !this.salario || !this.habilidadesSeleccionadas.length) {
+        this.snackBar.open('Por favor completa todos los campos (Puesto, Descripción, Salario y Habilidades)', 'OK', {
+          duration: 4000,
+          panelClass: ['warning-snackbar']
+        });
+        return;
+      }
+
+      // Validación de salario en rango
+      if (this.salario < 5000 || this.salario > 50000) {
+        this.snackBar.open('El salario debe estar entre 5,000 y 50,000', 'OK', {
+          duration: 4000,
+          panelClass: ['warning-snackbar']
+        });
+        return;
+      }
+    }
+
+    // Guardar experiencia
     const experienciaData = {
       descripcion: this.experiencia,
       correo: this.email
@@ -127,4 +151,7 @@ export class ExperenceComponent implements OnInit {
     this.habilidadesSeleccionadas = [];
     this.habilidadCtrl.setValue('');
   }
+
+
+  
 }

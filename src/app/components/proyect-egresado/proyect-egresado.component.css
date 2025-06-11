@@ -405,3 +405,29 @@
     color: red;
   }
   
+  /* Para las alertas de advertencia */
+.warning-snackbar {
+  background-color: #ff9800;  /* Color de fondo de la alerta */
+  color: white;  /* Color del texto */
+}
+
+
+/* Alerta de éxito */
+.custom-snackbar {
+  background-color: #4caf50;  /* Color de fondo de la alerta */
+  color: white;               /* Color del texto */
+  font-weight: bold;          /* Texto en negrita */
+  text-align: center;         /* Centrar el texto */
+  padding: 10px;              /* Espaciado interno */
+  border-radius: 4px;         /* Bordes redondeados */
+}
+
+/* Alerta de error */
+.custom-snackbar-error {
+  background-color: #f44336;  /* Color de fondo de la alerta */
+  color: white;               /* Color del texto */
+  font-weight: bold;          /* Texto en negrita */
+  text-align: center;         /* Centrar el texto */
+  padding: 10px;              /* Espaciado interno */
+  border-radius: 4px;         /* Bordes redondeados */
+}

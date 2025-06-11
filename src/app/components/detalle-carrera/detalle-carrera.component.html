@@ -155,7 +155,7 @@
     <p>No hay experiencias registradas aún.</p>
   </ng-template>
 
-  <button [routerLink]="['/experience']" class="compartir-btn">¿Estudiaste en esta carrera? ¡Comparte tu historia!</button>
+  <button [routerLink]="['/experience']" class="compartir-btn" (click)="irAExpe()">¿Estudiaste en esta carrera? ¡Comparte tu historia!</button>
 </div>
 
 <!-- SECCION BOLSA DE TRABAJO -->
@@ -188,7 +188,7 @@
     <p>No hay ofertas de trabajo disponibles aún.</p>
   </ng-template>
 
-  <button [routerLink]="['/experience']" class="compartir-btn">¿Ya trabajas? ¡Comparte tu trabajo!</button>
+  <button [routerLink]="['/experience']" class="compartir-btn" (click)="irATrbajo()">¿Ya trabajas? ¡Comparte tu trabajo!</button>
 </div>
 
 
