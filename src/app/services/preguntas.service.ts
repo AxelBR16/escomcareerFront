@@ -34,4 +34,7 @@ export class PreguntasService {
     return this.httpClient.post<Respuesta>(`${environment.apiUrls.auth}/respuestas/guardar`, respuesta);
   }
 
+  enviarMultiplesRespuestas(respuestas: Respuesta[]): Observable<void> {
+    return this.httpClient.post<void>(`${environment.apiUrls.auth}/respuestas/guardar-multiples`, respuestas);
+  }
 }

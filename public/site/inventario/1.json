@@ -1,0 +1,602 @@
+[
+  {
+    "id": "inv1-001",
+    "texto": "Comprender con facilidad cómo se conectan algunos elementos, por ejemplo, las relaciones entre los órganos del cuerpo humano, las relaciones que se dan entre los elementos químicos, etcétera.",
+    "imagen_url": " https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Aptitudes/1.webp"
+  },
+  {
+    "id": "inv1-002",
+    "texto": "Decorar, con pincel fino, pequeñas figuras humanas (pintar la boca, ojos, cejas, etc.).",
+    "imagen_url": " https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Aptitudes/2.webp"
+  },
+  {
+    "id": "inv1-003",
+    "texto": "Ayudar a un especialista en diseño de juegos electrónicos a realizar juegos sencillos que impliquen razonamiento numérico.",
+    "imagen_url": " https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Aptitudes/3.webp"
+  },
+  {
+    "id": "inv1-004",
+    "texto": "Darte cuenta cuándo un conferencista, al estar presentando su tema, lo expone de manera coordinada. ",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Aptitudes/4.webp"
+  },
+  {
+    "id": "inv1-005",
+    "texto": "Dar buenas ideas a un grupo de vendedores (que van casa por casa) acerca de cómo convencer a los clientes para comprar el producto ofrecido. ",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Aptitudes/5.webp"
+  },
+  {
+    "id": "inv1-006",
+    "texto": "Aprender las partes y funciones de un velero, así como su operación y armado.",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Aptitudes/6.webp"
+  },
+  {
+    "id": "inv1-007",
+    "texto": "Escuchar a alguien durante un largo periodo, sin interrumpirle, sin juzgarlo, y aceptarlo como es. ",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Aptitudes/7.webp"
+  },
+  {
+    "id": "inv1-008",
+    "texto": "Distribuir las funciones y responsabilidades a los miembros de un grupo o equipo de trabajo, procurando que todos se sientan lo más conformes con esta distribución. ",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Aptitudes/8.webp"
+  },
+  {
+    "id": "inv1-009",
+    "texto": "Tomar un curso sobre cómo realizar los inventarios de un pequeño almacén, mediante una computadora sencilla, y aprender fácilmente. ",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Aptitudes/9.webp"
+  },
+  {
+    "id": "inv1-010",
+    "texto": "Apreciar las diferencias entre la música clásica, la popular y la moderna. ",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Aptitudes/10.webp"
+  },
+  {
+    "id": "inv1-011",
+    "texto": "Diseñar el logotipo de una empresa.",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Aptitudes/11.webp"
+  },
+  {
+    "id": "inv1-012",
+    "texto": "Armar rompecabezas geométricos (cubo de Rubik, por ejemplo).",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Aptitudes/12.webp"
+  },
+  {
+    "id": "inv1-013",
+    "texto": "Hacer trazos finos en papel, sin perder la línea y sin ayuda de reglas.",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Aptitudes/13.webp"
+  },
+  {
+    "id": "inv1-014",
+    "texto": "Reconocer tus errores cuando discutes con otra persona, aunque ésta no sea de tu total agrado o tenga puntos contrarios a los tuyos.",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Aptitudes/14.webp"
+  },
+  {
+    "id": "inv1-015",
+    "texto": "Diseñar una revista de pasatiempo, con problemas sencillos, con base en relaciones numéricas (aritmética-álgebra).",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Aptitudes/15.webp"
+  },
+  {
+    "id": "inv1-016",
+    "texto": "Explicar fácilmente, al terminar una lectura (sobre cualquier género de novelas), cómo se relacionan los personajes o cómo se desarrolla la trama.",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Aptitudes/16.webp"
+  },
+  {
+    "id": "inv1-017",
+    "texto": "Idear un sistema rápido a un cronista deportivo, para que gráficamente pueda organizar datos deportivos tales como: hits promedios de bateo, bases robadas, home runs, etc., de una temporada. ",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Aptitudes/17.webp"
+  },
+  {
+    "id": "inv1-018",
+    "texto": "Ser presidente de un club social y decirle a cada uno de los miembros de la mesa directiva sus aciertos y, sin dudar, sus errores, de forma precisa.",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Aptitudes/18.webp"
+  },
+  {
+    "id": "inv1-019",
+    "texto": "Aprender las partes y funciones de un planeador, así como su operación y armado. ",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Aptitudes/19.webp"
+  },
+  {
+    "id": "inv1-020",
+    "texto": "Dar buenas sugerencias a un grupo de publicistas sobre cómo presentar un producto en un comercial de TV o de radio.",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Aptitudes/20.webp"
+  },
+  {
+    "id": "inv1-021",
+    "texto": "Entender las nomenclaturas químicas o el funcionamiento estructural de todos los órganos del cuerpo humano.",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Aptitudes/21.webp"
+  },
+  {
+    "id": "inv1-022",
+    "texto": "Diseñar figuras geométricas en tres dimensiones, variando las posiciones y perspectivas. ",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Aptitudes/22.webp"
+  },
+  {
+    "id": "inv1-023",
+    "texto": "Aprender técnicas para realizar pinturas en acuarela y óleo. ",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Aptitudes/23.webp"
+  },
+  {
+    "id": "inv1-024",
+    "texto": "Aprender el manejo de la herramienta propia para modelar y esculpir barro, trabajar vidrio, porcelana, latón y piel, de manera artesanal.",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Aptitudes/24.webp"
+  },
+  {
+    "id": "inv1-025",
+    "texto": "Darte cuenta fácilmente si el profesor omitió un dato o punto necesario para la resolución de un problema durante el examen de matemáticas y saber con precisión lo que faltó.",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Aptitudes/25.webp"
+  },
+  {
+    "id": "inv1-026",
+    "texto": "Idear un sistema para pequeñas tiendas de regalos, en el que puedan llevar un inventario de la existencia de sus productos.",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Aptitudes/26.webp"
+  },
+  {
+    "id": "inv1-027",
+    "texto": "Hacer un buen resumen de cualquier libro o escrito que hayas leído, con toda la información relevante bien organizada. ",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Aptitudes/27.webp"
+  },
+  {
+    "id": "inv1-028",
+    "texto": "Orientarte rápidamente en una gran ciudad. ",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Aptitudes/28.webp"
+  },
+  {
+    "id": "inv1-029",
+    "texto": "Operar y dar mantenimiento a un tractor agrícola, incluyendo sus implementos.",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Aptitudes/29.webp"
+  },
+  {
+    "id": "inv1-030",
+    "texto": "Cumplir, a la perfección, una tarea asignada por tus padres, un profesor o jefe de trabajo. ",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Aptitudes/30.webp"
+  },
+  {
+    "id": "inv1-031",
+    "texto": "Aprender a leer, interpretar y combinar notas musicales. ",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Aptitudes/31.webp"
+  },
+  {
+    "id": "inv1-032",
+    "texto": "Decorar bellamente el aparador de una tienda o un puesto en una feria o verbena. ",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Aptitudes/32.webp"
+  },
+  {
+    "id": "inv1-033",
+    "texto": "Reconocer en una persona que no sea de tu agrado, su fortaleza, sus virtudes y sus aciertos. ",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Aptitudes/33.webp"
+  },
+  {
+    "id": "inv1-034",
+    "texto": "Comentar en un programa televisivo de la universidad, las ventajas y desventajas de las planillas que aspiran a dirigir la sociedad de alumnos, y argumentar a favor de una de ellas.",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Aptitudes/34.webp"
+  },
+  {
+    "id": "inv1-035",
+    "texto": "Sacar astillas de la piel con pinzas para las cejas (en el primer intento). ",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Aptitudes/35.webp"
+  },
+  {
+    "id": "inv1-036",
+    "texto": "Aprender a usar métodos científicos para profundizar en el conocimiento de las relaciones que, por ejemplo, hay entre los seres vivos que integran el ecosistema, los cambios químicos que se dan en la naturaleza, etcétera. ",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Aptitudes/36.webp"
+  },
+  {
+    "id": "inv1-037",
+    "texto": "Entender el punto de vista de un compañero y poder explicar fácilmente todas sus razones para ver las cosas desde esa perspectiva (aunque no te agrade ese punto de vista ni tu compañero). ",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Aptitudes/37.webp"
+  },
+  {
+    "id": "inv1-038",
+    "texto": "Entender fácilmente artículos de revistas que versan sobre investigación en las ciencias naturales, como química, biología, geofísica, etcétera.",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Aptitudes/38.webp"
+  },
+  {
+    "id": "inv1-039",
+    "texto": "Detectar, con facilidad, errores en un plan de trabajo que te pidieron revisar (pueden ser errores en fechas, metas que se proponen, pasos, puntos omitidos, etc.).",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Aptitudes/39.webp"
+  },
+  {
+    "id": "inv1-040",
+    "texto": "Instalar, operar y darle mantenimiento a una computadora casera con sólo estudiar el manual o instructivo de operaciones.",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Aptitudes/40.webp"
+  },
+  {
+    "id": "inv1-041",
+    "texto": "Identificar errores ortográficos, en la organización de los párrafos y errores de redacción de un periódico al momento de estar leyéndolo. ",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Aptitudes/41.webp"
+  },
+  {
+    "id": "inv1-042",
+    "texto": "Darle buenas sugerencias a un banco pequeño acerca de cómo organizar los departamentos de atención al público con el fin de que los clientes no hagan largas filas de espera. ",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Aptitudes/42.webp"
+  },
+  {
+    "id": "inv1-043",
+    "texto": "Darte cuenta cuándo un profesor comete errores al estar explicando al grupo la solución (procedimientos) de un problema de matemáticas. ",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Aptitudes/43.webp"
+  },
+  {
+    "id": "inv1-044",
+    "texto": "Soldar piezas de un aparato electrónico muy pequeñas sin cometer un error al colocarlas y sin tocar otras partes del artefacto. ",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Aptitudes/44.webp"
+  },
+  {
+    "id": "inv1-045",
+    "texto": "Sugerir a alguien que va a construir su casa la forma en que debería ir la distribución de la misma, aprovechando al máximo todos los espacios. ",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Aptitudes/45.webp"
+  },
+  {
+    "id": "inv1-046",
+    "texto": "Trabajar durante las vacaciones en el departamento de un almacén comercial (libros, música, ferretería, etc.) y aumentar en ese periodo las ventas o consumo por los clientes que lo visitan. ",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Aptitudes/46.webp"
+  },
+  {
+    "id": "inv1-047",
+    "texto": "Aprender a ejecutar, con dominio, uno o varios instrumentos musicales.",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Aptitudes/47.webp"
+  },
+  {
+    "id": "inv1-048",
+    "texto": "Recordar, detalladamente, las indicaciones dadas por alguien para llegar a una dirección desconocida.",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Aptitudes/48.webp"
+  },
+  {
+    "id": "inv1-049",
+    "texto": "Aprender a diferenciar lo bello de la pintura de los grandes clásicos, en relación con otras pinturas.",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Aptitudes/49.webp"
+  },
+  {
+    "id": "inv1-050",
+    "texto": "Dar, a una asamblea de padres de familia, un discurso que sea sumamente emotivo y convincente para cambiar ciertas actitudes de ellos.",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Aptitudes/50.webp"
+  },
+  {
+    "id": "inv1-051",
+    "texto": "Explicar de modo lógico y claro en una clase cómo evolucionan y se transforman los seres vivos, de acuerdo con las teorías evolucionistas de Darwin, o explicar en qué consistieron los métodos y descubrimientos de algunos grandes químicos como Pasteur.",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Aptitudes/51.webp"
+  },
+  {
+    "id": "inv1-052",
+    "texto": "Fungir como tercero en un conflicto (sin tomar partido por las personas involucradas) y conciliar a las partes en pugna aunque una de ellas te simpatice mucho. ",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Aptitudes/52.webp"
+  },
+  {
+    "id": "inv1-053",
+    "texto": "Supervisar y corregir la redacción de un discurso que algún compañero tuyo vaya a dirigir a una asamblea.",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Aptitudes/53.webp"
+  },
+  {
+    "id": "inv1-054",
+    "texto": "Aprender el sistema de clasificación que se utiliza para los archivos de la Nación. ",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Aptitudes/54.webp"
+  },
+  {
+    "id": "inv1-055",
+    "texto": "Entender la clase de matemáticas.",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Aptitudes/55.webp"
+  },
+  {
+    "id": "inv1-056",
+    "texto": "Ensartar hilos finos en agujas muy pequeñas, sin que lo intentes más de tres veces. ",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Aptitudes/56.webp"
+  },
+  {
+    "id": "inv1-057",
+    "texto": "Interpretar y aplicar el reglamento a un miembro de una sociedad o de un club de amigos que lo haya infringido (aunque esta aplicación implique la expulsión del grupo de alguien muy amigo tuyo). ",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Aptitudes/57.webp"
+  },
+  {
+    "id": "inv1-058",
+    "texto": "Entender con facilidad un audiovisual que explique cómo están diseñadas las herramientas modernas para usarse, reparar y construir las maquinarias que se emplean en una fábrica. ",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Aptitudes/58.webp"
+  },
+  {
+    "id": "inv1-059",
+    "texto": "Recordar, durante una segunda visita, el lugar de una colonia intrincada, en donde vive alguien conocido. ",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Aptitudes/59.webp"
+  },
+  {
+    "id": "inv1-060",
+    "texto": "Aprender a complementar los distintos instrumentos musicales en la ejecución de una pieza. ",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Aptitudes/60.webp"
+  },
+  {
+    "id": "inv1-061",
+    "texto": "Aprender técnicas para construir maquetas y objetos de cualquier tipo a escala.",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Aptitudes/61.webp"
+  },
+  {
+    "id": "inv1-062",
+    "texto": "Orientarse con la ayuda de mapas en una gran ciudad. ",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Aptitudes/62.webp"
+  },
+  {
+    "id": "inv1-063",
+    "texto": "Entender fácilmente la explicación de un armero sobre cómo funciona cierto tipo de armamento militar, ya sean fusiles, ametralladoras o artillería pesada. ",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Aptitudes/63.webp"
+  },
+  {
+    "id": "inv1-064",
+    "texto": "Prever e identificar las consecuencias para ti y para los demás (de manera detallada y precisa) de las decisiones que tomas. ",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Aptitudes/64.webp"
+  },
+  {
+    "id": "inv1-065",
+    "texto": "Colocar sin errores, con pinzas pequeñas, los engranes de un reloj. ",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Aptitudes/65.webp"
+  },
+  {
+    "id": "inv1-066",
+    "texto": "Explicar una lección de matemáticas a un grupo de compañeros menos aventajados, de manera más sencilla que el profesor. ",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Aptitudes/66.webp"
+  },
+  {
+    "id": "inv1-067",
+    "texto": "Aprender y mejorar el sistema de clasificación y localización de piezas en una refaccionaria. ",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Aptitudes/67.webp"
+  },
+  {
+    "id": "inv1-068",
+    "texto": "Explicar de forma clara y lógica a un grupo de personas, con tus propias palabras y con ejemplos ilustrativos, un pasaje o un capítulo de algún libro que hayas leído. ",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Aptitudes/68.webp"
+  },
+  {
+    "id": "inv1-069",
+    "texto": "Comprender con facilidad cómo una persona cercana a ti ve desde su interior el mundo. Comprender también los sentimientos que tiene y sus esperanzas. ",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Aptitudes/69.webp"
+  },
+  {
+    "id": "inv1-070",
+    "texto": "Aplicar las leyes y teorías de la química o de la biología cuando resolvemos un problema de esa naturaleza. ",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Aptitudes/70.webp"
+  },
+  {
+    "id": "inv1-071",
+    "texto": "Generar argumentos, ante un auditorio, a favor de tu punto de vista o de algún proyecto. ",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Aptitudes/71.webp"
+  },
+  {
+    "id": "inv1-072",
+    "texto": "Aprender a hacer arreglos musicales.",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Aptitudes/72.webp"
+  },
+  {
+    "id": "inv1-073",
+    "texto": "Resolver problemas de matemáticas, seleccionar las fórmulas y procedimientos necesarios de manera precisa y fácil. ",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Aptitudes/73.webp"
+  },
+  {
+    "id": "inv1-074",
+    "texto": "Apretar, con un pequeño desarmador, los tornillos de los anteojos. ",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Aptitudes/74.webp"
+  },
+  {
+    "id": "inv1-075",
+    "texto": "Planear una estrategia para que un grupo de compañeros tuyos tenga éxito en una campaña política o en cualquier actividad. ",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Aptitudes/75.webp"
+  },
+  {
+    "id": "inv1-076",
+    "texto": "Aprender con facilidad a afinar automóviles o a dar mantenimiento y reparación a aparatos caseros como: podadoras de pasto, calentadores de gas, estufas, etcétera. ",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Aptitudes/76.webp"
+  },
+  {
+    "id": "inv1-077",
+    "texto": "Dar ideas al párroco o ministro de tu iglesia acerca de cómo mejorar sus sermones o explicaciones hacia los feligreses. ",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Aptitudes/77.webp"
+  },
+  {
+    "id": "inv1-078",
+    "texto": "Obtener fácilmente conclusiones o una síntesis de algún trabajo que haya encargado el profesor de biología o de química sobre cualquier tema. ",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Aptitudes/78.webp"
+  },
+  {
+    "id": "inv1-079",
+    "texto": "Darte cuenta de los deseos, preocupaciones o sentimientos de alguien, sólo por ver sus gestos y movimientos.",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Aptitudes/79.webp"
+  },
+  {
+    "id": "inv1-080",
+    "texto": "Entender con mucha precisión las instrucciones y las preguntas de un examen. ",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Aptitudes/80.webp"
+  },
+  {
+    "id": "inv1-081",
+    "texto": "Diseñarle a una pequeña ferretería un sistema para localizar rápidamente los productos que el cliente pide. ",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Aptitudes/81.webp"
+  },
+  {
+    "id": "inv1-082",
+    "texto": "Combinar materiales de todo tipo (yeso, madera, pinturas) para hacer objetos de ornato, como floreros, ceniceros, pisapapeles, etcétera.",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Aptitudes/82.webp"
+  },
+  {
+    "id": "inv1-083",
+    "texto": "Aprender a escribir y leer música, y a la vez hacer composiciones musicales.",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Aptitudes/83.webp"
+  },
+  {
+    "id": "inv1-084",
+    "texto": "Distinguir errores en las perspectivas de los dibujos.",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Aptitudes/84.webp"
+  },
+  {
+    "id": "inv1-085",
+    "texto": "Hacerle ver a un grupo que discute cosas que no han considerado o puntos omitidos que puedan influir en sus opiniones sobre lo discutido.",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Aptitudes/85.webp"
+  },
+  {
+    "id": "inv1-086",
+    "texto": "Construir, en un taller de aficionados, artefactos sencillos como un velero, un planeador o un cuatriciclo, siguiendo los planos de una revista.",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Aptitudes/86.webp"
+  },
+  {
+    "id": "inv1-087",
+    "texto": "Lograr entusiasmar a un grupo de trabajo que se encuentra pesimista en cuanto a las metas de trabajo por lograr.",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Aptitudes/87.webp"
+  },
+  {
+    "id": "inv1-088",
+    "texto": "Enhebrar rápidamente un collar de perlas.",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Aptitudes/88.webp"
+  },
+  {
+    "id": "inv1-089",
+    "texto": "Darte cuenta de inmediato de cuál es el error de un compañero que no puede resolver un problema de matemáticas.",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Aptitudes/89.webp"
+  },
+  {
+    "id": "inv1-090",
+    "texto": "Participar con un diseño tuyo, con probabilidades de ganar, en un concurso de la escuela cuyo objetivo o meta sea el de proponer un sistema de clasificación para los expedientes de los estudiantes. ",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Aptitudes/90.webp"
+  },
+  {
+    "id": "inv1-091",
+    "texto": "Darte cuenta de inmediato cuando un profesor te aplicó un examen con errores de redacción en las instrucciones y en las preguntas. ",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Aptitudes/91.webp"
+  },
+  {
+    "id": "inv1-092",
+    "texto": "Predecir la forma en que un conocido tuyo va a actuar, lo que va a decir y a pensar en una situación dada. ",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Aptitudes/92.webp"
+  },
+  {
+    "id": "inv1-093",
+    "texto": "Comprender la relación entre estructuras y funciones de los órganos del cuerpo humano; establecer cómo se relacionan todos los sistemas, o hacer esto mismo con temas de química, como por ejemplo, la tabla periódica. ",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Aptitudes/93.webp"
+  },
+  {
+    "id": "inv1-094",
+    "texto": "Diseñar la decoración de un hogar o una oficina. ",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Aptitudes/94.webp"
+  },
+  {
+    "id": "inv1-095",
+    "texto": "Hacerle a un carpintero, detalladamente (con ángulos, medidas, superficies, etc.), un diseño sobre el tipo de muebles que desees te haga. ",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Aptitudes/95.webp"
+  },
+  {
+    "id": "inv1-096",
+    "texto": "Entender los métodos (cómo hicieron sus hipótesis, cómo relacionaron, cómo comprobaron, cómo aplicaron sus teorías, etc.) por lo que un químico o algún biólogo famoso logra llegar a sus descubrimientos.",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Aptitudes/96.webp"
+  },
+  {
+    "id": "inv1-097",
+    "texto": "Darte cuenta rápidamente cuando alguien está pasando por un mal momento y necesita tu ayuda, sin que te lo diga. ",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Aptitudes/97.webp"
+  },
+  {
+    "id": "inv1-098",
+    "texto": "Escribir un guión teatral o alguna pequeña obra, relacionando y ordenando correctamente los diálogos de los personajes, las escenas, etcétera. ",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Aptitudes/98.webp"
+  },
+  {
+    "id": "inv1-099",
+    "texto": "Mejorar el procedimiento de inscripciones en la escuela, creando uno más rápido, más fácil, práctico y eficiente.",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Aptitudes/99.webp"
+  },
+  {
+    "id": "inv1-100",
+    "texto": "Prestar ayuda al profesor de matemáticas para plantear problemas de repaso referentes a la clase.",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Aptitudes/100.webp"
+  },
+  {
+    "id": "inv1-101",
+    "texto": "Pegar piedras preciosas en un collar, viendo a través de una lupa. ",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Aptitudes/101.webp"
+  },
+  {
+    "id": "inv1-102",
+    "texto": "Hacer que todos los miembros de un grupo de trabajo den lo mejor que tienen, sin sentirse presionados o perseguidos. ",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Aptitudes/102.webp"
+  },
+  {
+    "id": "inv1-103",
+    "texto": "Aprender (fácilmente) en un curso, la reparación de productos electrónicos, mecánicos, etc., y la teoría que los fundamenta. ",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Aptitudes/103.webp"
+  },
+  {
+    "id": "inv1-104",
+    "texto": "Aprender a ser un buen orador mediante un curso rápido y sencillo. ",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Aptitudes/104.webp"
+  },
+  {
+    "id": "inv1-105",
+    "texto": "Darte cuenta cuando alguien tuvo errores en la ejecución de una pieza musical.",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Aptitudes/105.webp"
+  },
+  {
+    "id": "inv1-106",
+    "texto": "Dibujar figuras a detalle (sombreadas, en movimiento, etc.). ",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Aptitudes/106.webp"
+  },
+  {
+    "id": "inv1-107",
+    "texto": "Ejemplificar fácilmente cómo se pueden observar en la vida cotidiana las leyes y principios de la biología o de la química.",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Aptitudes/107.webp"
+  },
+  {
+    "id": "inv1-108",
+    "texto": "Saber identificar el momento oportuno para dar un consejo, empezar una conversación, o hacerle una pregunta a alguien sin que se sienta presionado. ",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Aptitudes/108.webp"
+  },
+  {
+    "id": "inv1-109",
+    "texto": "Dirigir un grupo musical que interprete melodías de moda.",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Aptitudes/109.webp"
+  },
+  {
+    "id": "inv1-110",
+    "texto": "Ordenar fácil y rápidamente rompecabezas escritos, cuyas oraciones, párrafos, títulos o subtítulos, estén todos en desorden. ",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Aptitudes/110.webp"
+  },
+  {
+    "id": "inv1-111",
+    "texto": "Aprender cómo manejar los datos (nóminas, inventarios, egresos, ingresos, etc.), de un corporativo. ",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Aptitudes/111.webp"
+  },
+  {
+    "id": "inv1-112",
+    "texto": "Diseñar guías de examen con problemas y ejercicios de matemáticas para la clase. ",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Aptitudes/112.webp"
+  },
+  {
+    "id": "inv1-113",
+    "texto": "Participar en un grupo musical dedicado a rescatar e interpretar música no comercial. ",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Aptitudes/113.webp"
+  },
+  {
+    "id": "inv1-114",
+    "texto": "Atornillar y desatornillar rápidamente y sin errores un reloj de pulso. ",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Aptitudes/114.webp"
+  },
+  {
+    "id": "inv1-115",
+    "texto": "Identificar las habilidades y fortalezas de los miembros de un grupo para asignarles responsabilidades en una tarea determinada. ",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Aptitudes/115.webp"
+  },
+  {
+    "id": "inv1-116",
+    "texto": "Entender, fácilmente, la explicación de un experto militar sobre la forma en que se combinan la electrónica, la electricidad y la mecánica, en la construcción del armamento militar. ",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Aptitudes/116.webp"
+  },
+  {
+    "id": "inv1-117",
+    "texto": "Preparar y dar un discurso a un auditorio acerca de la necesidad de cuidar la Tierra de forma tal que logres convencer a la gente de lo grave del deterioro ambiental y la urgencia de tomar las medidas necesarias. ",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Aptitudes/117.webp"
+  },
+  {
+    "id": "inv1-118",
+    "texto": "Recordar fácilmente tonadas y letras de las piezas musicales que más te agraden. ",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Aptitudes/118.webp"
+  },
+  {
+    "id": "inv1-119",
+    "texto": "Rediseñar con facilidad los lugares de un estacionamiento de coches de forma tal que haya más cupo y fluidez de automóviles. ",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Aptitudes/119.webp"
+  },
+  {
+    "id": "inv1-120",
+    "texto": "Decorar objetos cerámicos, o de piel, de madera, de barro, etcétera. ",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Aptitudes/120.webp"
+  }
+]
