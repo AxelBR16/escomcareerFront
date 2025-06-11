@@ -66,7 +66,11 @@ export class PreguntasComponent implements OnInit {
   }
 
  async ngOnInit() {
-  
+
+  const hasConnection = await this.checkInternetConnection();
+  if (hasConnection) {
+    await this.sincronizarRespuestasGuardadas(); 
+  }
   this.cargarEliminadasInv3();
   this.tipo = this.aRouter.snapshot.paramMap.get('tipo');
 
@@ -279,15 +283,68 @@ cargarPreguntasDesdeArchivo() {
       }
     );
   }
-next() {
+async checkInternetConnection(): Promise<boolean> {
+  try {
+    // Usar AbortController para timeout
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 5000);
+    
+    const response = await fetch('https://httpbin.org/get', {
+      method: 'HEAD',
+      mode: 'no-cors',
+      cache: 'no-store',
+      signal: controller.signal
+    });
+    
+    clearTimeout(timeoutId);
+    return true;
+  } catch (error) {
+    return false;
+  }
+}
+
+async sincronizarRespuestasGuardadas() {
+  // Verificamos si hay respuestas guardadas en sessionStorage
+  const respuestasGuardadas = JSON.parse(sessionStorage.getItem('respuestas') || '[]');
+  console.log(respuestasGuardadas)
+   try {
+        // Enviar las respuestas guardadas
+        await this.preguntasService.enviarMultiplesRespuestas(respuestasGuardadas);
+      } catch (error) {
+        console.error('Error al enviar la respuesta guardada:', error);
+      }
+ 
+    // Guardamos las respuestas restantes en sessionStorage después de intentar enviarlas
+    sessionStorage.setItem('respuestas', JSON.stringify(respuestasGuardadas));
+  
+}
+
+async next() {
+  await this.sincronizarRespuestasGuardadas();
   if (this.selectedAnswer) {
+    const hasConnection = await this.checkInternetConnection();    
+    if (hasConnection) {
+      this.enviarRespuestas(parseInt(this.selectedAnswer), this.id);
+      await this.sincronizarRespuestasGuardadas();
+    } else{
+      const respuesta: Respuesta = {
+        valor: parseInt(this.selectedAnswer),
+        id_Pregunta: this.id,
+        emailAspirante: this.emailUsuario 
+      };
+      
+      const respuestasGuardadas = JSON.parse(sessionStorage.getItem('respuestas') || '[]');
+      respuestasGuardadas.push(respuesta);      
+      sessionStorage.setItem('respuestas', JSON.stringify(respuestasGuardadas));
+    }
+
+
     if (!this.eliminatedOptionsInv3.includes(this.selectedAnswer)) {
       this.eliminatedOptionsInv3.push(this.selectedAnswer);
     }
     if (this.eliminatedOptionsInv3.length >= 6) {
       this.eliminatedOptionsInv3 = [];
     }
-    this.enviarRespuestas(parseInt(this.selectedAnswer), this.id);
     const currentIdNumber = parseInt(this.id.split('-')[1]);
     if (!isNaN(currentIdNumber)) {
       const nextIdNumber = currentIdNumber + 1;
