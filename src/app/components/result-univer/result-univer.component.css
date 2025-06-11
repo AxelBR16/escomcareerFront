@@ -68,7 +68,7 @@ button {
 }
 
 button:hover {
-    background-color: #002244;
+    background-color: #FFD700;
 }
 
 /* Contenedor de la tabla */
@@ -124,3 +124,58 @@ button:hover {
     font-weight: bold;
   }
   
+
+  /* Contenedor padre específico para centrar el contenido */
+.center-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.instruction-container {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 650px;
+    width: 90%;
+    text-align: center;
+}
+
+.instruction-container h2 {
+    font-size: 1.6rem;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.instruction-container p {
+    font-size: 1rem;
+    color: #555;
+    line-height: 1.6;
+    margin-bottom: 20px;
+    text-align: justify;
+}
+
+.instruction-container .note {
+    background-color: #f0f8ff;
+    color: #333;
+    font-size: 0.9rem;
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 10px;
+    font-style: italic;
+}
+
+/* Estilos para pantallas pequeñas */
+@media (max-width: 600px) {
+    .instruction-container {
+        padding: 15px;
+    }
+    .instruction-container h2 {
+        font-size: 1.4rem;
+    }
+    .instruction-container p {
+        font-size: 0.9rem;
+    }
+}
