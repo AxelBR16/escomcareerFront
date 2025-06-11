@@ -868,3 +868,6 @@ footer {
     font-size: 0.9em;
   }
 }
+  .justificado {
+            text-align: justify;
+        }

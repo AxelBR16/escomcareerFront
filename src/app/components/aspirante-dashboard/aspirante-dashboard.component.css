@@ -195,7 +195,9 @@ footer {
     text-align: center;
   }
 
-
+ .justificado {
+            text-align: justify;
+        }
 
 
   .footer-container {

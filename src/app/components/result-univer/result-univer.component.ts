@@ -62,10 +62,23 @@ export class ResultUniverComponent {
     // Ordenar por escalaId
     const ordenados = filtrados.sort((a, b) => a.escalaId - b.escalaId);
 
+
+    /*          Corregir la funcion ya que se repiten valores de escalaId de tui codigo axel
     const etiquetas = ordenados.map(r => escalaLabels[r.escalaId] || `Escala ${r.escalaId}`);
     const puntajes = ordenados.map(r => r.puntaje);
 
-    return { etiquetas, puntajes };
+    return { etiquetas, puntajes };*/
+
+    
+            //Mi funcion nueva que corrieg el problema de duplicados por el momento pero revisar 
+   // Filtrar duplicados en etiquetas y obtener solo un puntaje por etiqueta
+  const etiquetasUnicas = [...new Set(ordenados.map(r => escalaLabels[r.escalaId] || `Escala ${r.escalaId}`))];
+  // Obtener los puntajes correspondientes a las etiquetas únicas
+  const puntajesUnicos = etiquetasUnicas.map(etiqueta => 
+    ordenados.find(r => escalaLabels[r.escalaId] === etiqueta)?.puntaje || 0
+  );
+  return { etiquetas: etiquetasUnicas, puntajes: puntajesUnicos };
+  
   }
 
 
@@ -104,10 +117,46 @@ export class ResultUniverComponent {
               beginAtZero: true,
               max: 50
             }
-          }
+          },
+          onClick: (event: any) => this.handleChartClick(event) // Agregar el evento de clic
+
         }
       });
     }
+
+    
+// Texto asociado a cada barra
+textosBarra: string[] = [
+  "Preferencia por carreras que impliquen matemáticas y física, tanto puras como aplicadas, enfocadas en el análisis y transformación de fenómenos.",
+  "Interés por carreras que optimizan recursos y gestionan organizaciones, con un enfoque en la planificación, supervisión y dirección de actividades.",
+  "Predilección por carreras que estudian organismos vivos y procesos biológicos, con énfasis en la investigación científica y la ecología.",
+  "Preferencia por carreras que investigan fenómenos y procesos químicos, con enfoque en laboratorio, técnicas y productos químicos, tanto en áreas puras como aplicadas.",
+  "Interés por carreras que estudian y mejoran las relaciones humanas, con un enfoque en el servicio social, la persuasión y las interacciones grupales.",
+  "Preferencia por carreras relacionadas con la cultura, el arte, la filosofía y el análisis crítico de la condición humana."
+];
+
+// Maneja el clic en una barra
+handleChartClick(event: any): void {
+  const activePoints = this.chart.getElementsAtEventForMode(event, 'nearest', { intersect: true }, true);
+  if (activePoints.length > 0) {
+    const index = activePoints[0].index;
+    const label = this.chart.data.labels[index];
+
+    // Obtener el texto asociado a la barra seleccionada
+    const textoBarra = this.textosBarra[index];
+
+    // Mostrar el texto usando SweetAlert2
+    Swal.fire({
+      title: `Información sobre la escala ${label}`,
+      text: textoBarra,
+      icon: 'info'
+    });
+  }
+}
+
+
+
+
 
     // Método que se activa al hacer clic en el botón
     showLoading(): void {

@@ -12,6 +12,25 @@ main {
     min-height: 100vh;
 
 }
+.justificado {
+    text-align: justify;
+}
+
+
+.motivational-phrase {
+    background-color: #eedf11;
+    color: rgb(2, 2, 2);
+    padding: 20px;
+    text-align: center;
+}
+
+.motivational-phrase h2 {
+    margin: 0;
+    font-size: 1.8em;
+}
+
+
+
 
 .hero-section {
     position: relative; /* Habilita el posicionamiento de elementos hijos */
@@ -155,7 +174,7 @@ main {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.25); /* Fondo negro con 50% de opacidad */
+    background: rgba(0, 0, 0, 0.45); /* Fondo negro con 50% de opacidad */
     z-index: 0; /* Coloca la capa encima del video pero debajo del contenido */
 }
 
@@ -252,20 +271,20 @@ main {
     border-radius: 5px;
 }
 
-
-.card h3 {
-    font-size: 1.2rem;
+.card h2 {
+    font-size: 1.rem;
     margin-bottom: 10px;
     color: #fff;
     z-index: 1; /* Asegura que el texto esté sobre el video */
 }
 
 .card p {
-    font-size: 0.9rem;
+    font-size: 1.1rem;
     margin-bottom: 15px;
     line-height: 1.4;
     z-index: 1; /* Asegura que el texto esté sobre el video */
 }
+
 
 /* Buttons */
 .btn {

@@ -8,7 +8,7 @@
    <div class="hero-content">
 
     <div class="hero-text">
-        <h1>¡Bienvenido</h1>
+         <h1>¡Bienvenido, {{ experiencias[0].nombreEgresado }}!</h1>
         <p>Nos gustaría contar con tu ayuda para seguir innovando y mejorando el sistema que guiará a futuras generaciones en la elección de la carrera perfecta en la ESCOM.</p>
         <h3 class="nombre"> Tu participación es clave para construir un futuro brillante.</h3>
     </div>
@@ -36,9 +36,8 @@
       <div [routerLink]="['/proyectEgresado']" class="service-block">
         <img src="site/video.png" alt="fdsf" class="service-icon">
         <h3 class="service-title">Subir videos de proyectos</h3>
-        <p>Aqui podras subir los videos que consiers relevante o quieras presumir
-          para que todos puedan verlos, acerca de tus grandes proyectos.
-        </p>
+        <p class="justificado">Aquí podrás subir los videos que consideres relevantes o quieras compartir, para que todos puedan verlos, 
+          relacionados con tus grandes proyectos.</p>
         <a [routerLink]="['/proyectEgresado']" class="read-more">Acceder</a>
       </div>
 
@@ -46,9 +45,9 @@
       <div [routerLink]="['/experience']" class="service-block">
         <img src="site/voca.png" alt="dsfsdfds" class="service-icon">
         <h3 class="service-title">Cuentanos de tu experiencia en la ESCOM</h3>
-        <p>Podras dar a conocer tus diferentes acerca de tu experiencia en la escuela,
-           como lo que son consejos, tips muchas otras recomendaciones.
-        </p>
+        <p class="justificado">Podrás compartir tus experiencias sobre la escuela, incluyendo consejos, recomendaciones y muchos otros tips que puedan ayudar a otros.
+
+</p>
         <a [routerLink]="['/experience']" class="read-more">Acceder</a>
       </div>
 
@@ -56,8 +55,8 @@
       <div [routerLink]="['/experience']" class="service-block">
         <img src="site/trabajo.png" alt="dsada" class="service-icon">
         <h3 class="service-title">Bolsa de trabajo</h3>
-        <p>Aqui podras visualizar informacion relevante de los puestos que
-            se ofrecen saliendo de la carrera en la cual estuviste.</p>
+        <p class="justificado">Aquí podrás visualizar información relevante sobre los puestos que se ofrecen al 
+          egresar de la carrera en la que estuviste.</p>
             <a [routerLink]="['/experience']" class="read-more">Acceder</a>
       </div>
 
@@ -66,14 +65,13 @@
 
 
     <!-- Frase llamativa -->
-    <div class="motivational-phrase">
-        <h2>Nuestro Objetivo</h2>
-        <br>
-        <p>Desarrollar un sistema web y aplicación móvil que proporcione una orientación personalizada para la
-            elección de carreras en la Escuela Superior de Cómputo (ESCOM), mediante una serie de pruebas
-            interactivas, se evaluarán las aptitudes, preferencias y recursos financieros de cada aspirante para que,
-            en base a los resultados, se ofrezcan recomendaciones de licenciaturas adecuadas.</p>
-      </div>
+<div class="motivational-phrase">
+    <h2>¡Tu experiencia puede cambiar vidas!</h2>
+    <br>
+    <p>Como egresado de la ESCOM, tu ayuda es invaluable para apoyar a futuros estudiantes en su proceso de elección de carrera. Al compartir tu experiencia y conocimiento, podrás 
+      alimentar un sistema web que proporcionará una orientación personalizada basada en pruebas interactivas. Estas evaluarán aptitudes e intereses para 
+      recomendar las mejores opciones de las cerreras en la ESCOM. ¡Haz que tu experiencia inspire a otros y ayúdalos a tomar decisiones informadas sobre su futuro!</p>
+</div>
 
 
   <section class="academic-section">
@@ -86,9 +84,10 @@
     </div>
 
     <div class="text-container">
-        <p class="subtitle">Preparacion continua</p>
+       
         <h2 class="title">Explora todo lo que<br> ESCOMCARRER<br> tiene para ti!!</h2>
-        <p class="description">
+         <p class="subtitle">Lo que puedes hacer </p>
+        <p class="description justificado">
            Ayudanos a que los nuevos Aspirantes Conozcan la escuela y sus diferentes proyectos que se realizan en la institución, ademas de
            poder saber cual es la carrera que les recomendamos y con tus opiniones de los alumnos.
         </p>

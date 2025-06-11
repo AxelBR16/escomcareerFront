@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,  ViewChild } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { PreguntasService } from '../../services/preguntas.service';
@@ -17,7 +17,7 @@ export class PruebasAComponent implements OnInit {
   totalPreguntas: { aptitudes: number, intereses: number } = { aptitudes: 120, intereses: 130 };
   preguntainicial: { aptitudes: string, intereses: string } = { aptitudes: '001', intereses: '001' };
 
-
+@ViewChild('videoElement') videoElement: any;
 
   constructor(private preguntasService: PreguntasService, private router: Router, private respuestaService: RespuestaService, private authService: AuthService) {}
 
@@ -67,5 +67,15 @@ export class PruebasAComponent implements OnInit {
 
   this.router.navigate([ruta]);
 }
+
+
+ngAfterViewInit(): void {
+    const video = this.videoElement.nativeElement;
+    
+    // Aseguramos que el video esté listo para reproducirse
+    video.load();  // Forza la recarga del video
+    video.play();  // Reproduce el video
+  }
+
 
 }

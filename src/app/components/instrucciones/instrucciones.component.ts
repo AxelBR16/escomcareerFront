@@ -35,11 +35,11 @@ export class InstruccionesComponent implements OnInit {
                     de tu carrera es necesario que contestes este inventario de manera honesta, sin menospreciarte o sobreestimarte. Si en alguna actividad no has tenido alguna experiencia,
                     piensa qué tan bien la realizarías si fuera necesario.`,
       instrucciones: [
-        '5. Mucho muy hábil.',
-        '4. Muy hábil.',
-        '3. Medianamente hábil.',
-        '2. Poco hábil.',
-        '1. Nada hábil.'
+        '5 = Mucho muy hábil: Si consideras que eres excelente en esta actividad.',
+        '4 = Muy hábil: Si eres muy bueno, pero no excelente.',
+        '3 = Medianamente hábil: Si puedes hacerlo, pero no te sientes totalmente cómodo.',
+        '2 = Poco hábil: Si tienes dificultades para realizar la actividad.',
+        '1 = Nada hábil: Si no puedes realizar la actividad en absoluto.'
       ],
        descripcion2: `Si en algún momento deseas salir, tus selecciones actuales
          se guardarán para continuar después sin perder lo realizado.`,
@@ -58,10 +58,9 @@ export class InstruccionesComponent implements OnInit {
     },
     'universitario': {
       titulo: 'Inventario de preferencias universitarias',
-      descripcion: `El propósito de este inventario es servir como informador al estudiante preparatoriano que requiere
-                    del servicio de orientación vocacional. A continuación verás una serie de opciones que deberás 
-                    seleccionar una a una, indicando tu preferencia en cada pregunta. Cada vez que selecciones 
-                    una opción, ésta desaparecerá de las opciones disponibles para la siguiente pregunta. Procede de la siguiente manera:`,
+      descripcion: `El propósito de este inventario es servir como informador al aspirante de nivel medio-superior, para definir su area. A continuación verás una serie de opciones que deberás 
+                    seleccionar una a una, indicando tu preferencia en cada actividad. El aspirante debe usar una escala del 1 al 6, donde: 6 representa la actividad de mayor preferencia, 5 la segunda preferencia, y así sucesivamente hasta el 1, que es la de menor preferencia. Por lo que 
+                    en cada grupo de opciones, el aspirante no puede repetir una calificación. Por ejemplo, no puede poner dos veces un 5 o un 4 en el mismo grupo. Procede de la siguiente manera:`,
                     
       instrucciones: [
         '',
