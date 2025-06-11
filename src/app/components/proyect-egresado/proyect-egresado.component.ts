@@ -10,6 +10,9 @@ import Swal from 'sweetalert2';
 import { Materia } from '../../models/materia';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { AuthService } from '../../services/auth.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+
+
 
 @Component({
   selector: 'app-proyect-egresado',
@@ -25,6 +28,7 @@ export class ProyectEgresadoComponent implements OnInit {
     private materiaService: MateriaService, 
     private sanitizer: DomSanitizer,
     private authService: AuthService,
+    private snackBar: MatSnackBar  // Inyección de MatSnackBar
   ) {}
 
   title: string = '';
@@ -75,11 +79,68 @@ export class ProyectEgresadoComponent implements OnInit {
     this.materias = [];
   }
 }
- subirProyecto() {
+
+
+subirProyecto() {
+    // Validación del título
     if (!this.title) {
-      alert('El título es obligatorio');
+      this.snackBar.open('El título es obligatorio', 'OK', {
+        duration: 4000,
+        panelClass: ['warning-snackbar']
+      });
       return;
     }
+
+    // Validación de la descripción
+    if (!this.description) {
+      this.snackBar.open('La descripción es obligatoria', 'OK', {
+        duration: 4000,
+        panelClass: ['warning-snackbar']
+      });
+      return;
+    }
+
+    // Validación de la carrera
+    if (!this.carreraId) {
+      this.snackBar.open('Por favor selecciona una carrera', 'OK', {
+        duration: 4000,
+        panelClass: ['warning-snackbar']
+      });
+      return;
+    }
+
+    // Validación del semestre
+    if (!this.semestre) {
+      this.snackBar.open('Por favor selecciona un semestre', 'OK', {
+        duration: 4000,
+        panelClass: ['warning-snackbar']
+      });
+      return;
+    }
+
+    // Validación de la materia (Unidad de Aprendizaje)
+    if (!this.materiaId) {
+      this.snackBar.open('Por favor selecciona una unidad de aprendizaje', 'OK', {
+        duration: 4000,
+        panelClass: ['warning-snackbar']
+      });
+      return;
+    }
+
+    // Validación de la URL del video
+  const urlPattern = /^(https?:\/\/)(youtu\.be\/[^\s]+|youtube\.com\/(watch\?v=[^\s]+)|vimeo\.com\/[^\s]+|drive\.google\.com\/file\/d\/[^\s]+\/preview)$/;
+
+
+
+    if (!this.urlVideo || !urlPattern.test(this.urlVideo)) {
+      this.snackBar.open('Por favor ingresa una URL válida de video (YouTube, Vimeo, Google Drive)', 'OK', {
+        duration: 4000,
+        panelClass: ['warning-snackbar']
+      });
+      return;
+    }
+
+    // Si todas las validaciones pasan, creamos el nuevo proyecto
     const nuevoProyecto: proyecto = {
       nombre: this.title,
       descripcion: this.description,
@@ -89,14 +150,15 @@ export class ProyectEgresadoComponent implements OnInit {
       materiaId: this.materiaId,
       egresadoEmail: this.email
     };
-   this.proyectoService.guardarProyecto(nuevoProyecto).subscribe(
+
+    this.proyectoService.guardarProyecto(nuevoProyecto).subscribe(
       (response: any) => {
         Swal.fire({
           icon: 'success',
           title: 'Registro exitoso',
-          text:  'Registro exitoso',
-                 confirmButtonText: 'Aceptar'
-          });
+          text: 'El proyecto se ha subido correctamente.',
+          confirmButtonText: 'Aceptar'
+        });
         this.limpiarFormulario();
       },
       (error) => {
@@ -106,10 +168,14 @@ export class ProyectEgresadoComponent implements OnInit {
           text: error.error?.message || 'Ocurrió un error desconocido.',
           confirmButtonText: 'Aceptar'
         });
-
       }
     );
   }
+
+
+
+
+
   limpiarFormulario() {
     this.title = '';
     this.description = '';

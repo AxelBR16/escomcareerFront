@@ -185,3 +185,21 @@ input[type="number"]:focus {
   outline: none;
   box-shadow: 0 0 5px rgba(0, 180, 216, 0.7);
 }
+
+/* Para las alertas de advertencia */
+.warning-snackbar {
+  background-color: #ff9800;  /* Color de fondo de la alerta */
+  color: white;  /* Color del texto */
+}
+
+/* Para las alertas de éxito */
+.custom-snackbar {
+  background-color: #4caf50;  /* Color de fondo de la alerta */
+  color: white;  /* Color del texto */
+}
+
+/* Para las alertas de error */
+.custom-snackbar-error {
+  background-color: #f44336;  /* Color de fondo de la alerta */
+  color: white;  /* Color del texto */
+}
