@@ -91,6 +91,27 @@ export class LoginComponent implements OnInit {
     this.validatePassword();
     this.validateEmail();
 
+
+
+      // Validación del nombre (sin números ni caracteres especiales)
+  const namePattern = /^[A-Za-z]+$/;
+  if (!namePattern.test(this.firstName)) {
+    this.snackBar.open('El nombre no puede contener números ni caracteres especiales', 'OK', {
+      duration: 4000,
+      panelClass: ['warning-snackbar']
+    });
+    return;
+  }
+
+  // Validación del apellido (sin números ni caracteres especiales)
+  if (!namePattern.test(this.lastName)) {
+    this.snackBar.open('El apellido no puede contener números ni caracteres especiales', 'OK', {
+      duration: 4000,
+      panelClass: ['warning-snackbar']
+    });
+    return;
+  }
+
     if (this.firstName && this.lastName && this.email && this.password) {
       this.loader.mostrarCargando('Verificando credenciales...');
       const signUpData: SignUpAspirante = {
@@ -138,6 +159,27 @@ export class LoginComponent implements OnInit {
   // Manejador del formulario de inicio de sesión
   onLoginSubmit(event: Event): void {
     event.preventDefault();
+
+
+     // Validación de correo
+    if (!this.emailPattern.test(this.loginEmail)) {
+      this.snackBar.open('Por favor ingresa un correo válido.', 'OK', {
+        duration: 4000,
+        panelClass: ['warning-snackbar']
+      });
+      return;
+    }
+
+    // Validación de contraseña
+    if (!this.passwordPattern.test(this.loginPassword)) {
+      this.snackBar.open('La contraseña debe tener al menos una mayúscula, un número y un carácter especial.', 'OK', {
+        duration: 4000,
+        panelClass: ['warning-snackbar']
+      });
+      return;
+    }
+
+
     if (this.loginEmail && this.loginPassword) {
       const signInData: SignIn = {
         email: this.loginEmail,
@@ -191,5 +233,8 @@ export class LoginComponent implements OnInit {
   togglePasswordVisibility() {
     this.isPasswordVisible = !this.isPasswordVisible;
   }
+
+
+  
 
 }

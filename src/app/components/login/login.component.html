@@ -10,7 +10,7 @@
   <h1>Crea tu cuenta</h1>
 
   <input 
-    required 
+   required 
     maxlength="30" 
     type="text" 
     id="firstName" 
@@ -18,13 +18,16 @@
     [(ngModel)]="firstName" 
     #firstNameField="ngModel" 
     placeholder="Nombre" 
+    [pattern]="'^[A-Za-z]+$'"  
+ 
   />
   <span *ngIf="firstNameField.invalid && firstNameField.touched" class="error-message">
     <span *ngIf="firstNameField.errors?.['required']">El nombre es obligatorio.</span>
+    <span *ngIf="firstNameField.errors?.['pattern']">El nombre no puede contener números ni caracteres especiales.</span>
   </span>
 
   <input 
-    required 
+     required 
     maxlength="30" 
     type="text" 
     id="lastName" 
@@ -32,9 +35,11 @@
     [(ngModel)]="lastName" 
     #lastNameField="ngModel" 
     placeholder="Apellidos" 
+    [pattern]="'^[A-Za-z]+$'" 
   />
-  <span *ngIf="lastNameField.invalid && lastNameField.touched" class="error-message">
+ <span *ngIf="lastNameField.invalid && lastNameField.touched" class="error-message">
     <span *ngIf="lastNameField.errors?.['required']">El apellido es obligatorio.</span>
+    <span *ngIf="lastNameField.errors?.['pattern']">El apellido no puede contener números ni caracteres especiales.</span>
   </span>
 
   <input 
@@ -100,35 +105,43 @@
           <h1>Inicia sesión</h1>
 
           <input 
-          id="email" 
-          name="email" type="email" 
-          [(ngModel)]="loginEmail" 
-          placeholder="Email"
-           #emailField="ngModel"
-          required [pattern]="emailPattern">
-  
+        id="email" 
+      name="email" 
+      type="email" 
+      [(ngModel)]="loginEmail" 
+      placeholder="Email"
+      #emailField="ngModel"
+      required 
+      [pattern]="emailPattern">
+    <span *ngIf="emailField.invalid && emailField.touched" class="error-message">
+      <span *ngIf="emailField.errors?.['required']">El correo es obligatorio.</span>
+      <span *ngIf="emailField.errors?.['email']">El correo debe tener un formato válido.</span>
+      <span *ngIf="emailField.errors?.['pattern']">El correo debe tener una extensión válida.</span>
+    </span>
 
 
  <div class="password-container">
-          <input id="password" 
-          name="password" 
-            [type]="isPasswordVisible ? 'text' : 'password'" 
-          [(ngModel)]="loginPassword" 
-          placeholder="Password" 
-           
-          required
-          [pattern]="passwordPattern" 
-  />
-
-  <!-- Ícono de ojo dentro del input -->
-  <span *ngIf="isPasswordVisible" class="eye-icon" (click)="togglePasswordVisibility()">👀</span>
-  <span *ngIf="!isPasswordVisible" class="eye-icon" (click)="togglePasswordVisibility()">👁️‍🗨️</span>
-</div>
- <span *ngIf="passwordField.invalid && passwordField.touched" class="error-message">
+          <input 
+           id="password" 
+        name="password" 
+        [type]="isPasswordVisible ? 'text' : 'password'" 
+        [(ngModel)]="loginPassword" 
+        placeholder="Password" 
+        required
+        [pattern]="passwordPattern">
+      
+      <!-- Ícono de ojo dentro del input -->
+      <span *ngIf="isPasswordVisible" class="eye-icon" (click)="togglePasswordVisibility()">👀</span>
+      <span *ngIf="!isPasswordVisible" class="eye-icon" (click)="togglePasswordVisibility()">👁️‍🗨️</span>
+    </div>
+    
+    <!-- Mensajes de error para contraseña -->
+    <span *ngIf="passwordField.invalid && passwordField.touched" class="error-message">
       <span *ngIf="passwordField.errors?.['required']">La contraseña es obligatoria.</span>
       <span *ngIf="passwordField.errors?.['minlength']">La contraseña debe tener al menos 8 caracteres.</span>
       <span *ngIf="passwordField.errors?.['pattern']">La contraseña debe contener al menos una mayúscula, un número y un carácter especial.</span>
     </span>
+
 
 
           
