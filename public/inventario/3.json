@@ -1,0 +1,302 @@
+[
+  {
+    "id": "inv3-001",
+    "texto": "Resolver operaciones matemáticas.",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Preferencias/1.webp"
+  },
+  {
+    "id": "inv3-002",
+    "texto": "Ser asistente por temporadas de un investigador que trabaje en programas de investigación aplicada a la genética en seres vivos.",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Preferencias/2.webp"
+  },
+  {
+    "id": "inv3-003",
+    "texto": "Conocer los compuestos químicos de las sustancias.",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Preferencias/3.webp"
+  },
+  {
+    "id": "inv3-004",
+    "texto": "Hacer inventarios de lo que hay en un almacén.",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Preferencias/4.webp"
+  },
+  {
+    "id": "inv3-005",
+    "texto": "Ayudar a un grupo de campesinos a organizarse.",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Preferencias/5.webp"
+  },
+  {
+    "id": "inv3-006",
+    "texto": "Participar en un jurado que calificará un concurso teatral, en cuanto a escenografía, coreografía y guion de la obra.",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Preferencias/6.webp"
+  },
+  {
+    "id": "inv3-007",
+    "texto": "Trabajar en un centro dedicado a la producción de los modelos matemáticos y físicos para mejorar los productos en la industria",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Preferencias/7.webp"
+  },
+  {
+    "id": "inv3-008",
+    "texto": "Participar en una operación médica.",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Preferencias/8.webp"
+  },
+  {
+    "id": "inv3-009",
+    "texto": "Manejar instrumentos y aparatos para elaborar productos químicos.",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Preferencias/9.webp"
+  },
+  {
+    "id": "inv3-010",
+    "texto": "Organizar los detalles de venta al público en un almacén.",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Preferencias/10.webp"
+  },
+  {
+    "id": "inv3-011",
+    "texto": "Ayudar en la rehabilitación de los presos.",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Preferencias/11.webp"
+  },
+  {
+    "id": "inv3-012",
+    "texto": "Diseñar la escenografía de un programa televisivo.",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Preferencias/12.webp"
+  },
+  {
+    "id": "inv3-013",
+    "texto": "Aplicar los principios y leyes de la física.",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Preferencias/13.webp"
+  },
+  {
+    "id": "inv3-014",
+    "texto": "Conocer a fondo los problemas ecológicos (ecosistema).",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Preferencias/14.webp"
+  },
+  {
+    "id": "inv3-015",
+    "texto": "Hacer análisis químicos del agua (su potabilidad).",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Preferencias/15.webp"
+  },
+  {
+    "id": "inv3-016",
+    "texto": "Determinar la relación entre inversión y utilidad de una empresa.",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Preferencias/16.webp"
+  },
+  {
+    "id": "inv3-017",
+    "texto": "Conocer las causas que intervienen en la desintegración familiar.",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Preferencias/17.webp"
+  },
+  {
+    "id": "inv3-018",
+    "texto": "Manejar con habilidad las cámaras de fotografía y de cine.",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Preferencias/18.webp"
+  },
+  {
+    "id": "inv3-019",
+    "texto": "Calcular fuerzas y resultantes físicas.",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Preferencias/19.webp"
+  },
+  {
+    "id": "inv3-020",
+    "texto": "Aplicar los principios de la cadena alimentaria entre las especies, para su conservación.",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Preferencias/20.webp"
+  },
+  {
+    "id": "inv3-021",
+    "texto": "Estudiar a fondo los efectos de la quimioterapia en el hombre.",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Preferencias/21.webp"
+  },
+  {
+    "id": "inv3-022",
+    "texto": "Determinar las funciones de los empleados en una empresa.",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Preferencias/22.webp"
+  },
+  {
+    "id": "inv3-023",
+    "texto": "Hacer programas para educación de los huérfanos de la casa-hogar.",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Preferencias/23.webp"
+  },
+  {
+    "id": "inv3-024",
+    "texto": "Conocer cómo eran nuestros antepasados a través de las pinturas, esculturas y danzas que nos legaron.",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Preferencias/24.webp"
+  },
+  {
+    "id": "inv3-025",
+    "texto": "Calcular matemáticamente, a través de una computadora, la probabilidad de éxito en un proyecto cualquiera.",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Preferencias/25.webp"
+  },
+  {
+    "id": "inv3-026",
+    "texto": "Conocer cómo funciona la reproducción bacteriana.",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Preferencias/26.webp"
+  },
+  {
+    "id": "inv3-027",
+    "texto": "Ser hábil para obtener nuevos compuestos químicos.",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Preferencias/27.webp"
+  },
+  {
+    "id": "inv3-028",
+    "texto": "Determinar los elementos sociales que estimulan los procesos económicos inflacionarios.",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Preferencias/28.webp"
+  },
+  {
+    "id": "inv3-029",
+    "texto": "Investigar las costumbres de vida entre las clases sociales y sus diferencias.",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Preferencias/29.webp"
+  },
+  {
+    "id": "inv3-030",
+    "texto": "Producir y dirigir audiovisuales, teatro y películas.",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Preferencias/30.webp"
+  },
+  {
+    "id": "inv3-031",
+    "texto": "Usar modelos matemáticos y físicos para realizar un trabajo.",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Preferencias/31.webp"
+  },
+  {
+    "id": "inv3-032",
+    "texto": "Conocer la estructura y funciones de la anatomía animal o humana.",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Preferencias/32.webp"
+  },
+  {
+    "id": "inv3-033",
+    "texto": "Hacer experimentos en el laboratorio de química.",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Preferencias/33.webp"
+  },
+  {
+    "id": "inv3-034",
+    "texto": "Llevar el inventario de productos que tiene una bodega, a través de un programa computacional.",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Preferencias/34.webp"
+  },
+  {
+    "id": "inv3-035",
+    "texto": "Participar en campañas de educación y concientización política.",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Preferencias/35.webp"
+  },
+  {
+    "id": "inv3-036",
+    "texto": "Idear nuevas técnicas de pintura, escultura y grabado.",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Preferencias/36.webp"
+  },
+  {
+    "id": "inv3-037",
+    "texto": "Diseñar fórmulas matemáticas y físicas, aplicables a una labor cualquiera.",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Preferencias/37.webp"
+  },
+  {
+    "id": "inv3-038",
+    "texto": "Conocer las causas del suicidio colectivo en algunas especies.",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Preferencias/38.webp"
+  },
+  {
+    "id": "inv3-039",
+    "texto": "Analizar los elementos químicos de algunas sustancias.",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Preferencias/39.webp"
+  },
+  {
+    "id": "inv3-040",
+    "texto": "Organizar y dirigir una empresa turística.",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Preferencias/40.webp"
+  },
+  {
+    "id": "inv3-041",
+    "texto": "Ayudar a una persona que pasa por momentos difíciles.",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Preferencias/41.webp"
+  },
+  {
+    "id": "inv3-042",
+    "texto": "Investigar por qué y para qué existe el hombre.",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Preferencias/42.webp"
+  },
+  {
+    "id": "inv3-043",
+    "texto": "Calcular áreas, perímetros y volumen (pueden ser calderas, hornos metalúrgicos, construcciones, etc.).",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Preferencias/43.webp"
+  },
+  {
+    "id": "inv3-044",
+    "texto": "Conocer las causas de la extinción de algunos organismos vivos y cómo evitarla.",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Preferencias/44.webp"
+  },
+  {
+    "id": "inv3-045",
+    "texto": "Determinar, mediante el análisis químico, la presencia de alguna enfermedad.",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Preferencias/45.webp"
+  },
+  {
+    "id": "inv3-046",
+    "texto": "Hacer las declaraciones fiscales a una pequeña cámara de comerciantes.",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Preferencias/46.webp"
+  },
+  {
+    "id": "inv3-047",
+    "texto": "Conocer las causas, consecuencias y soluciones del divorcio.",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Preferencias/47.webp"
+  },
+  {
+    "id": "inv3-048",
+    "texto": "Saber cuáles son las diferencias y semejanzas entre la música, las artesanías y las danzas características de los distintos grupos culturales.",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Preferencias/48.webp"
+  },
+  {
+    "id": "inv3-049",
+    "texto": "Probar nuevos programas computacionales para realizar operaciones numéricas.",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Preferencias/49.webp"
+  },
+  {
+    "id": "inv3-050",
+    "texto": "Conocer técnicas de mejoramiento de semillas y ganado.",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Preferencias/50.webp"
+  },
+  {
+    "id": "inv3-051",
+    "texto": "Manejar los productos químicos adecuados para la conservación de alimentos.",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Preferencias/51.webp"
+  },
+  {
+    "id": "inv3-052",
+    "texto": "Tener un despacho para asesorar empresas en el mejoramiento de su administración y organización.",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Preferencias/52.webp"
+  },
+  {
+    "id": "inv3-053",
+    "texto": "Participar en programas educativos que ayuden a evitar el alcoholismo y la drogadicción.",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Preferencias/53.webp"
+  },
+  {
+    "id": "inv3-054",
+    "texto": "Conocer la vida religiosa y artística de las tribus indígenas de nuestro país.",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Preferencias/54.webp"
+  },
+  {
+    "id": "inv3-055",
+    "texto": "Explicar matemática y físicamente los probables resultados de un diseño cualquiera.",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Preferencias/55.webp"
+  },
+  {
+    "id": "inv3-056",
+    "texto": "Conocer técnicas de siembra y recolección de frutas.",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Preferencias/56.webp"
+  },
+  {
+    "id": "inv3-057",
+    "texto": "Observar y conocer cómo actúan los reactivos químicos.",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Preferencias/57.webp"
+  },
+  {
+    "id": "inv3-058",
+    "texto": "Vigilar los rendimientos económicos de una empresa.",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Preferencias/58.webp"
+  },
+  {
+    "id": "inv3-059",
+    "texto": "Conocer el comportamiento humano y las causas que lo motivan.",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Preferencias/59.webp"
+  },
+  {
+    "id": "inv3-060",
+    "texto": "Seleccionar la música más adecuada para una película.",
+    "imagen_url": "https://s3-escomcareer-img.s3.us-east-1.amazonaws.com/Images/Inv.+Preferencias/60.webp"
+  }
+]

@@ -13,6 +13,7 @@ import { RespuestaService } from '../../services/respuesta.service';
 import { ResultadoService } from '../../services/resultado.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AuthService } from '../../services/auth.service';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-preguntas',
@@ -58,13 +59,18 @@ export class PreguntasComponent implements OnInit {
     private router: Router,
     private respuestaService: RespuestaService,
     private resultadoService: ResultadoService,
-    private authService: AuthService
+    private authService: AuthService,
+    private http: HttpClient
   ) {
     this.id = this.aRouter.snapshot.paramMap.get('id') || '1';
   }
 
  async ngOnInit() {
-  
+
+  const hasConnection = await this.checkInternetConnection();
+  if (hasConnection) {
+    await this.sincronizarRespuestasGuardadas(); 
+  }
   this.cargarEliminadasInv3();
   this.tipo = this.aRouter.snapshot.paramMap.get('tipo');
 
@@ -72,7 +78,6 @@ export class PreguntasComponent implements OnInit {
   this.emailUsuario = email!;
   if (!email) {
     console.error('Email no disponible');
-    // this.router.navigate(['/login']);
     return;
   }
 
@@ -144,28 +149,61 @@ async obtenerPreguntaMaximaPermitida(): Promise<string> {
     this.pregunta = preguntaEncontrada;
   }
 
-  cargarPreguntas() {
-    const preguntasGuardadas = localStorage.getItem('preguntas');
-    if (preguntasGuardadas) {
-      this.getPreguntaDesdeStorage();
-    } else {
-      this.preguntasService.getPreguntas(this.inventario).subscribe(
-        (preguntas: Pregunta[]) => {
-          localStorage.setItem(`preguntas_${this.inventario}`, JSON.stringify(preguntas));
-          this.getPreguntaDesdeStorage();
-        },
-        (error) => {
-          Swal.fire({
-            icon: 'error',
-            title: 'Error al cargar las preguntas',
-            text: error.error?.message || 'Ocurrió un error desconocido.',
-            confirmButtonText: 'Aceptar'
-          });
-          this.router.navigate(['/pruebasA']);
-        }
-      );
-    }
+cargarPreguntas() {
+  const preguntasGuardadas = localStorage.getItem(`preguntas_${this.inventario}`);
+  
+  if (preguntasGuardadas) {
+    this.getPreguntaDesdeStorage();
+  } else {
+    this.preguntasService.getPreguntas(this.inventario).subscribe(
+      (preguntas: Pregunta[]) => {
+        localStorage.setItem(`preguntas_${this.inventario}`, JSON.stringify(preguntas));
+        this.getPreguntaDesdeStorage();
+      },
+      (error) => {
+        this.cargarPreguntasDesdeArchivo();
+      }
+    );
   }
+}
+
+cargarPreguntasDesdeArchivo() {
+  let archivo = '';
+
+  // Determina el archivo JSON según el inventario
+  switch (this.inventario) {
+    case 1:
+      archivo = 'inventario/1.json';
+      break;
+    case 2:
+      archivo = 'inventario/2.json';
+      break;
+    case 3:
+      archivo = 'inventario/3.json';
+      break;
+    default:
+      archivo = 'inventario/1.json'; // Valor por defecto en caso de que no sea válido
+      break;
+  }
+
+  // Ahora cargamos el archivo correspondiente desde el directorio de assets
+  this.http.get<Pregunta[]>(`./${archivo}`).subscribe(
+    (preguntas: Pregunta[]) => {
+      // Guardamos las preguntas en localStorage para futuros usos
+      localStorage.setItem(`preguntas_${this.inventario}`, JSON.stringify(preguntas));
+      this.getPreguntaDesdeStorage();
+    },
+    (error) => {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error al cargar las preguntas',
+        text: error.error?.message || 'Ocurrió un error desconocido.',
+        confirmButtonText: 'Aceptar'
+      });
+      this.router.navigate(['/error']);
+    }
+  );
+}
 
   cargarRespuestasAPI() {
     const respuestasGuardadas = sessionStorage.getItem(`respuestasUsuario_${this.inventario}`);
@@ -245,15 +283,68 @@ async obtenerPreguntaMaximaPermitida(): Promise<string> {
       }
     );
   }
-next() {
+async checkInternetConnection(): Promise<boolean> {
+  try {
+    // Usar AbortController para timeout
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 5000);
+    
+    const response = await fetch('https://httpbin.org/get', {
+      method: 'HEAD',
+      mode: 'no-cors',
+      cache: 'no-store',
+      signal: controller.signal
+    });
+    
+    clearTimeout(timeoutId);
+    return true;
+  } catch (error) {
+    return false;
+  }
+}
+
+async sincronizarRespuestasGuardadas() {
+  // Verificamos si hay respuestas guardadas en sessionStorage
+  const respuestasGuardadas = JSON.parse(sessionStorage.getItem('respuestas') || '[]');
+  console.log(respuestasGuardadas)
+   try {
+        // Enviar las respuestas guardadas
+        await this.preguntasService.enviarMultiplesRespuestas(respuestasGuardadas);
+      } catch (error) {
+        console.error('Error al enviar la respuesta guardada:', error);
+      }
+ 
+    // Guardamos las respuestas restantes en sessionStorage después de intentar enviarlas
+    sessionStorage.setItem('respuestas', JSON.stringify(respuestasGuardadas));
+  
+}
+
+async next() {
+  await this.sincronizarRespuestasGuardadas();
   if (this.selectedAnswer) {
+    const hasConnection = await this.checkInternetConnection();    
+    if (hasConnection) {
+      this.enviarRespuestas(parseInt(this.selectedAnswer), this.id);
+      await this.sincronizarRespuestasGuardadas();
+    } else{
+      const respuesta: Respuesta = {
+        valor: parseInt(this.selectedAnswer),
+        id_Pregunta: this.id,
+        emailAspirante: this.emailUsuario 
+      };
+      
+      const respuestasGuardadas = JSON.parse(sessionStorage.getItem('respuestas') || '[]');
+      respuestasGuardadas.push(respuesta);      
+      sessionStorage.setItem('respuestas', JSON.stringify(respuestasGuardadas));
+    }
+
+
     if (!this.eliminatedOptionsInv3.includes(this.selectedAnswer)) {
       this.eliminatedOptionsInv3.push(this.selectedAnswer);
     }
     if (this.eliminatedOptionsInv3.length >= 6) {
       this.eliminatedOptionsInv3 = [];
     }
-    this.enviarRespuestas(parseInt(this.selectedAnswer), this.id);
     const currentIdNumber = parseInt(this.id.split('-')[1]);
     if (!isNaN(currentIdNumber)) {
       const nextIdNumber = currentIdNumber + 1;
