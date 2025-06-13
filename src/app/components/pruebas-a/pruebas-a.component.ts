@@ -27,8 +27,19 @@ export class PruebasAComponent implements OnInit {
       });
     }
 
-  verificarCuestionarios(email: string) {
-    ['inv1', 'inv2'].forEach((inv, index) => {
+verificarCuestionarios(email: string) {
+  ['inv1', 'inv2'].forEach((inv, index) => {
+    const lastQuestionId = localStorage.getItem(`${inv}_preguntainicial`);
+    if (lastQuestionId) {
+      const questionNumber = parseInt(lastQuestionId);
+      if (!isNaN(questionNumber)) {
+        const tipo = index === 0 ? 'aptitudes' : 'intereses';
+        this.pruebasCompletadas[tipo] = true;
+        this.calcularProgreso(questionNumber, tipo);
+      } else {
+        console.error(`Error al extraer el número de la pregunta desde el ID para ${inv}`);
+      }
+    } else {
       this.preguntasService.obtenerRespuestasMasAlta(email!, inv).subscribe(
         (respuestaMasAlta) => {
           if (respuestaMasAlta) {
@@ -39,8 +50,10 @@ export class PruebasAComponent implements OnInit {
         },
         (error) => console.error(`Error al obtener la respuesta más alta para ${inv}:`, error)
       );
-    });
-  }
+    }
+  });
+}
+
 
   calcularProgreso(id: any, tipo: 'aptitudes' | 'intereses') {
     const total = tipo === 'aptitudes' ? this.totalPreguntas.aptitudes : this.totalPreguntas.intereses;
