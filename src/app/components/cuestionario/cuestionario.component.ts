@@ -34,13 +34,9 @@ export class CuestionarioComponent implements OnInit{
     }
 
 verificarCuestionario(email: string) {
-  // Primero, verifica si la variable existe en localStorage
   const lastQuestionId = localStorage.getItem(`preguntainicial_inv3`);
   if (lastQuestionId) {
-    // Si existe, extrae el número de la pregunta del formato 'inv3-006'
     const questionNumber = parseInt(lastQuestionId);
-
-    // Calcula el progreso usando el número de la pregunta
     if (!isNaN(questionNumber)) {
       this.pruebasPreferenciasCompletadas = true;
       this.calcularProgreso(questionNumber);
@@ -48,7 +44,6 @@ verificarCuestionario(email: string) {
       console.error('Error al extraer el número de la pregunta desde el ID');
     }
   } else {
-    // Si no existe, obtener la respuesta más alta de la API
     this.preguntasService.obtenerRespuestasMasAlta(email!, 'inv3').subscribe(
       (respuestaMasAlta) => {
         if (respuestaMasAlta) {
