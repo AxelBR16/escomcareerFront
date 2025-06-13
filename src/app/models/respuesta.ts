@@ -1,5 +1,5 @@
 export interface Respuesta {
      valor: Number,
-     id_Pregunta: String,
+     id_Pregunta: string,
      emailAspirante?: String
 }

@@ -1,5 +1,5 @@
 import { Component, inject, OnInit} from '@angular/core';
-import { Router, RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { PreguntasService } from '../../services/preguntas.service';
 import { RespuestaService } from '../../services/respuesta.service';
@@ -20,8 +20,11 @@ export class CuestionarioComponent implements OnInit{
   progreso: number = 0;
   totalPreguntas: number = 60;
   preguntainicial: string = '001';
+  id: string;
 
-  constructor(private preguntasService: PreguntasService, private router: Router, private respuestaService: RespuestaService, private authService: AuthService) {}
+  constructor(private aRouter: ActivatedRoute,private preguntasService: PreguntasService, private router: Router, private respuestaService: RespuestaService, private authService: AuthService) {
+     this.id = this.aRouter.snapshot.paramMap.get('id') || '1';
+  }
 
   ngOnInit(): void {
     this.authService.getCurrentUserEmail().then(email => {
@@ -30,17 +33,33 @@ export class CuestionarioComponent implements OnInit{
       });
     }
 
-    verificarCuestionario(email: string) {
-       this.preguntasService.obtenerRespuestasMasAlta(email!, 'inv3').subscribe(
-        (respuestaMasAlta) => {
-          if (respuestaMasAlta) {
-            this.pruebasPreferenciasCompletadas = true;
-            this.calcularProgreso(respuestaMasAlta);
-          }
-        },
-(error) => console.error(`Error al obtener la respuesta más alta para inv2:`, error.error?.message || error.message)
-      );
+verificarCuestionario(email: string) {
+  // Primero, verifica si la variable existe en localStorage
+  const lastQuestionId = localStorage.getItem(`preguntainicial_inv3`);
+  if (lastQuestionId) {
+    // Si existe, extrae el número de la pregunta del formato 'inv3-006'
+    const questionNumber = parseInt(lastQuestionId);
+
+    // Calcula el progreso usando el número de la pregunta
+    if (!isNaN(questionNumber)) {
+      this.pruebasPreferenciasCompletadas = true;
+      this.calcularProgreso(questionNumber);
+    } else {
+      console.error('Error al extraer el número de la pregunta desde el ID');
+    }
+  } else {
+    // Si no existe, obtener la respuesta más alta de la API
+    this.preguntasService.obtenerRespuestasMasAlta(email!, 'inv3').subscribe(
+      (respuestaMasAlta) => {
+        if (respuestaMasAlta) {
+          this.pruebasPreferenciasCompletadas = true;
+          this.calcularProgreso(respuestaMasAlta);
+        }
+      },
+      (error) => console.error(`Error al obtener la respuesta más alta para inv3:`, error.error?.message || error.message)
+    );
   }
+}
 
   calcularProgreso(id: any) {
     this.progreso = (id / this.totalPreguntas) * 100;

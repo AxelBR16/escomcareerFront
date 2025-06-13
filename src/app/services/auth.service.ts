@@ -1,5 +1,5 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { environment } from '../environments/environment';
 import { SignIn } from '../models/sign-in';
 import { BehaviorSubject, Observable } from 'rxjs';
@@ -13,6 +13,10 @@ import { Platform } from '@ionic/angular';
 
 // Importar para móvil
 import { Preferences } from '@capacitor/preferences';
+import Swal from 'sweetalert2';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
+
 
 @Injectable({
   providedIn: 'root'
@@ -23,10 +27,13 @@ export class AuthService {
   private token: string | null = null;
   private userRoleSubject = new BehaviorSubject<string | null>(null);
   private isNativePlatform: boolean = false;
+  private snackBar = inject(MatSnackBar);
+
 
   constructor(
     private httpClient: HttpClient,
-    private platform: Platform
+    private platform: Platform,
+    private router: Router
   ) {
     this.isNativePlatform = this.platform.is('capacitor');
     this.initializeAuth();
@@ -61,6 +68,24 @@ export class AuthService {
 
   // MÉTODOS DE ALMACENAMIENTO UNIVERSAL
   // ===================================
+  async removePreguntaInicialInv(): Promise<void> {
+    try {
+      localStorage.removeItem('preguntainicial_inv3');
+      localStorage.removeItem('eliminatedOptionsInv3');
+      localStorage.removeItem('preguntainicial_inv2');
+      localStorage.removeItem('eliminatedOptionsInv2');
+      localStorage.removeItem('preguntainicial_inv1');
+      localStorage.removeItem('eliminatedOptionsInv1');
+      sessionStorage.removeItem('respuestasUsuario_inv3');
+      sessionStorage.removeItem('respuestasUsuario_inv1');
+      sessionStorage.removeItem('respuestasUsuario_inv2');
+      sessionStorage.removeItem('respuestas_inv1');
+      sessionStorage.removeItem('respuestas_inv2');
+      sessionStorage.removeItem('respuestas_inv3');  
+    } catch (error) {
+      console.error('❌ Error al eliminar preguntainicial_inv3 de localStorage:', error);
+    }
+  }
 
   private async setStoredValue(key: string, value: string): Promise<void> {
     try {
@@ -167,7 +192,8 @@ export class AuthService {
         this.removeStoredValue('role'),
         this.removeStoredValue('email'),
         this.removeStoredValue('respuestasUsuario'),
-        this.removeStoredValue('loginTimestamp')
+        this.removeStoredValue('loginTimestamp'),
+        this.removePreguntaInicialInv()
       ]);
       
       // Resetear estado interno
@@ -330,31 +356,56 @@ export class AuthService {
       return this.httpClient.post<any>(`${environment.apiUrls.auth}/auth/sign-up`, registerData);
   }
 
-  async signOut(accessToken?: string): Promise<Observable<any>> {
-    try {
-      // Si no se proporciona token, obtenerlo del almacenamiento
-      const token = accessToken || await this.getCurrentToken();
-      
-      if (token) {
-        const headers = new HttpHeaders().set('Authorization', token);
-        const signOutRequest = this.httpClient.post(`${environment.apiUrls.auth}/auth/sign-out`, null, { headers });
-        
-        // Limpiar sesión local independientemente de la respuesta del servidor
-        await this.clearUserSession();
-        
-        return signOutRequest;
-      } else {
-        // Si no hay token, solo limpiar sesión local
-        await this.clearUserSession();
-        return throwError(() => new Error('No hay token de acceso'));
+async signOut(accessToken?: string): Promise<void> {
+    const pendingInventories: string[] = [];
+    const inventoryNames: string[] = [
+      'Inventario de autoevaluación de aptitudes',
+      'Inventario de autoevaluación de intereses',
+      'Inventario de preferencias universitarias'
+    ];
+
+    for (let i = 1; i <= 3; i++) { // Asumimos que hay un máximo de 10 inventarios
+      const key = `respuestas_inv${i}`;
+      const value = sessionStorage.getItem(key);
+      if (value) {
+        pendingInventories.push(inventoryNames[i - 1]);
       }
-    } catch (error) {
-      console.error('❌ Error en signOut:', error);
-      // Limpiar sesión local aunque haya error
-      await this.clearUserSession();
-      return throwError(() => error);
     }
-  }
+
+    // Si hay inventarios pendientes, mostrar un SweetAlert
+    if (pendingInventories.length > 0) {
+      const result = await Swal.fire({
+        title: 'Cambios pendientes',
+        text: `Hay respuestas pendientes que no se han sincronizado. ¿Quieres sincronizarlas ahora o salir y eliminar los cambios?\n\nInventarios pendientes:\n${pendingInventories.join('\n')}`,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Sincronizar ahora',
+        cancelButtonText: 'Eliminar cambios',
+      });
+      
+      if (!result.isConfirmed) {
+        await this.clearUserSession();
+        await this.removePreguntaInicialInv();
+        this.router.navigate(['/login']);
+      } else {
+        if (navigator.onLine) {
+          this.router.navigate(['/cuestionario']);
+          const inventariosPendientes = pendingInventories.join(', '); // Unir los inventarios pendientes en un solo string
+          this.snackBar.open(`Falta sincronizar las respuestas de: ${inventariosPendientes}`, 'OK', {
+            duration: 5000,
+            panelClass: ['warning-snackbar']
+          });
+        } else {
+          await Swal.fire({
+            title: 'No estás conectado a internet',
+            text: 'Por favor, conéctate para sincronizar los cambios.',
+            icon: 'error',
+            confirmButtonText: 'Cerrar',
+          });
+        }
+      }
+    }
+}
 
   forgotPassword(emailData: string): Observable<any> {
     const body = { email: emailData };

@@ -50,7 +50,6 @@ export class PreguntasComponent implements OnInit {
   emailUsuario: string = '';
   private snackBar = inject(MatSnackBar);
 
-
   constructor(
     private preguntasService: PreguntasService,
     private loader: LoaderService,
@@ -65,64 +64,67 @@ export class PreguntasComponent implements OnInit {
     this.id = this.aRouter.snapshot.paramMap.get('id') || '1';
   }
 
- async ngOnInit() {
+  async ngOnInit() {
+    // Verificar respuestas pendientes al iniciar
+    this.verificarRespuestasPendientes();
 
-  const hasConnection = await this.checkInternetConnection();
-  if (hasConnection) {
-    await this.sincronizarRespuestasGuardadas(); 
-  }
-  this.cargarEliminadasInv3();
-  this.tipo = this.aRouter.snapshot.paramMap.get('tipo');
+    const hasConnection = await this.checkInternetConnection();
+    if (hasConnection) {
+      await this.sincronizarRespuestasGuardadas(); 
+    }
+    
+    this.cargarEliminadasInv3();
+    this.tipo = this.aRouter.snapshot.paramMap.get('tipo');
 
-  const email = await this.authService.getCurrentUserEmail();
-  this.emailUsuario = email!;
-  if (!email) {
-    console.error('Email no disponible');
-    return;
-  }
-
-  this.storageKey = `respuestas_${this.tipo}_${email}`;
-
-  this.aRouter.paramMap.subscribe(params => {
-    this.id = params.get('id')!;
-    this.parteIzquierda = this.id.split('-')[0];
-
-    if (!this.puedeNavegarAPregunta(this.id)) {
-      const maxPermitida = this.obtenerPreguntaMaximaPermitida();
-      this.router.navigate([`${this.tipo}/preguntas/${maxPermitida}`]);
+    const email = await this.authService.getCurrentUserEmail();
+    this.emailUsuario = email!;
+    if (!email) {
+      console.error('Email no disponible');
       return;
     }
 
-    if (this.id) {
-      this.determinarTotalPreguntas();
-      this.cargarPreguntas();
-      this.cargarRespuestasAPI();
+    this.storageKey = `respuestas_${this.tipo}_${email}`;
+
+    this.aRouter.paramMap.subscribe(params => {
+      this.id = params.get('id')!;
+      this.parteIzquierda = this.id.split('-')[0];
+
+      if (!this.puedeNavegarAPregunta(this.id)) {
+        const maxPermitida = this.obtenerPreguntaMaximaPermitida();
+        this.router.navigate([`${this.tipo}/preguntas/${maxPermitida}`]);
+        return;
+      }
+
+      if (this.id) {
+        this.determinarTotalPreguntas();
+        this.cargarPreguntas();
+        this.cargarRespuestasAPI();
+      }
+    });
+  }
+
+  async puedeNavegarAPregunta(idPregunta: string): Promise<boolean> {
+    const numeroPregunta = parseInt(idPregunta.split('-')[1]);
+    const maxPermitida = await this.obtenerPreguntaMaximaPermitida();
+    const maxNumero = parseInt(maxPermitida.split('-')[1]);
+    if(numeroPregunta <= maxNumero){
+      this.Nav = false;
     }
-  });
-}
-
-
-async puedeNavegarAPregunta(idPregunta: string): Promise<boolean> {
-  const numeroPregunta = parseInt(idPregunta.split('-')[1]);
-  const maxPermitida = await this.obtenerPreguntaMaximaPermitida();
-  const maxNumero = parseInt(maxPermitida.split('-')[1]);
-  if(numeroPregunta <= maxNumero){
-    this.Nav = false;
+    return numeroPregunta <= maxNumero;
   }
-  return numeroPregunta <= maxNumero;
-}
 
-async obtenerPreguntaMaximaPermitida(): Promise<string> {
-  const inventario = this.id.split('-')[0];
-  try {
-    const maxRespondida = await this.preguntasService.obtenerRespuestasMasAlta(this.emailUsuario, inventario).toPromise();
-    const siguiente = maxRespondida ? maxRespondida + 1 : 1;
-    return `${inventario}-${String(siguiente).padStart(3, '0')}`;
-  } catch (error) {
-    console.error('Error al obtener la respuesta más alta:', error);
-    return `${inventario}-001`;
+  async obtenerPreguntaMaximaPermitida(): Promise<string> {
+    const inventario = this.id.split('-')[0];
+    try {
+      const maxRespondida = await this.preguntasService.obtenerRespuestasMasAlta(this.emailUsuario, inventario).toPromise();
+      const siguiente = maxRespondida ? maxRespondida + 1 : 1;
+      return `${inventario}-${String(siguiente).padStart(3, '0')}`;
+    } catch (error) {
+      console.error('Error al obtener la respuesta más alta:', error);
+      return `${inventario}-001`;
+    }
   }
-}
+
   determinarTotalPreguntas() {
     if (this.id.startsWith('inv1')) {
       this.totalQuestions = 120;
@@ -149,61 +151,58 @@ async obtenerPreguntaMaximaPermitida(): Promise<string> {
     this.pregunta = preguntaEncontrada;
   }
 
-cargarPreguntas() {
-  const preguntasGuardadas = localStorage.getItem(`preguntas_${this.inventario}`);
-  
-  if (preguntasGuardadas) {
-    this.getPreguntaDesdeStorage();
-  } else {
-    this.preguntasService.getPreguntas(this.inventario).subscribe(
+  cargarPreguntas() {
+    const preguntasGuardadas = localStorage.getItem(`preguntas_${this.inventario}`);
+    
+    if (preguntasGuardadas) {
+      this.getPreguntaDesdeStorage();
+    } else {
+      this.preguntasService.getPreguntas(this.inventario).subscribe(
+        (preguntas: Pregunta[]) => {
+          localStorage.setItem(`preguntas_${this.inventario}`, JSON.stringify(preguntas));
+          this.getPreguntaDesdeStorage();
+        },
+        (error) => {
+          this.cargarPreguntasDesdeArchivo();
+        }
+      );
+    }
+  }
+
+  cargarPreguntasDesdeArchivo() {
+    let archivo = '';
+
+    switch (this.inventario) {
+      case 1:
+        archivo = 'inventario/1.json';
+        break;
+      case 2:
+        archivo = 'inventario/2.json';
+        break;
+      case 3:
+        archivo = 'inventario/3.json';
+        break;
+      default:
+        archivo = 'inventario/1.json';
+        break;
+    }
+
+    this.http.get<Pregunta[]>(`./${archivo}`).subscribe(
       (preguntas: Pregunta[]) => {
         localStorage.setItem(`preguntas_${this.inventario}`, JSON.stringify(preguntas));
         this.getPreguntaDesdeStorage();
       },
       (error) => {
-        this.cargarPreguntasDesdeArchivo();
+        Swal.fire({
+          icon: 'error',
+          title: 'Error al cargar las preguntas',
+          text: error.error?.message || 'Ocurrió un error desconocido.',
+          confirmButtonText: 'Aceptar'
+        });
+        this.router.navigate(['/error']);
       }
     );
   }
-}
-
-cargarPreguntasDesdeArchivo() {
-  let archivo = '';
-
-  // Determina el archivo JSON según el inventario
-  switch (this.inventario) {
-    case 1:
-      archivo = 'inventario/1.json';
-      break;
-    case 2:
-      archivo = 'inventario/2.json';
-      break;
-    case 3:
-      archivo = 'inventario/3.json';
-      break;
-    default:
-      archivo = 'inventario/1.json'; // Valor por defecto en caso de que no sea válido
-      break;
-  }
-
-  // Ahora cargamos el archivo correspondiente desde el directorio de assets
-  this.http.get<Pregunta[]>(`./${archivo}`).subscribe(
-    (preguntas: Pregunta[]) => {
-      // Guardamos las preguntas en localStorage para futuros usos
-      localStorage.setItem(`preguntas_${this.inventario}`, JSON.stringify(preguntas));
-      this.getPreguntaDesdeStorage();
-    },
-    (error) => {
-      Swal.fire({
-        icon: 'error',
-        title: 'Error al cargar las preguntas',
-        text: error.error?.message || 'Ocurrió un error desconocido.',
-        confirmButtonText: 'Aceptar'
-      });
-      this.router.navigate(['/error']);
-    }
-  );
-}
 
   cargarRespuestasAPI() {
     const respuestasGuardadas = sessionStorage.getItem(`respuestasUsuario_${this.inventario}`);
@@ -250,15 +249,13 @@ cargarPreguntasDesdeArchivo() {
     return respuestasJSON ? JSON.parse(respuestasJSON) : {};
   }
 
- guardarRespuesta() {
-  if (this.selectedAnswer) {
-    this.respuestasUsuario[this.id] = parseInt(this.selectedAnswer);
-    sessionStorage.setItem(`respuestasUsuario_${this.parteIzquierda}`, JSON.stringify(this.respuestasUsuario));
-    this.isAnswered = true;
+  guardarRespuesta() {
+    if (this.selectedAnswer) {
+      this.respuestasUsuario[this.id] = parseInt(this.selectedAnswer);
+      sessionStorage.setItem(`respuestasUsuario_${this.parteIzquierda}`, JSON.stringify(this.respuestasUsuario));
+      this.isAnswered = true;
+    }
   }
-}
-
-
 
   onOptionChange(event: Event): void {
     this.selectedAnswer = (event.target as HTMLInputElement).value;
@@ -272,121 +269,249 @@ cargarPreguntasDesdeArchivo() {
     };
     this.preguntasService.saveRespuesta(respuesta).subscribe(
       (response: any) => {
-
+        // Respuesta enviada exitosamente
       },
       (error) => {
         this.snackBar.open(`Error al guardar la respuesta`, 'OK', {
-            duration: 6000,
-            panelClass: ['custom-snackbar-error']
-          });
+          duration: 6000,
+          panelClass: ['custom-snackbar-error']
+        });
+        // Si falla, guardar en sessionStorage
+        this.guardarRespuestaLocal(respuesta);
         this.prev();
       }
     );
   }
-async checkInternetConnection(): Promise<boolean> {
-  try {
-    // Usar AbortController para timeout
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 5000);
-    
-    const response = await fetch('https://httpbin.org/get', {
-      method: 'HEAD',
-      mode: 'no-cors',
-      cache: 'no-store',
-      signal: controller.signal
-    });
-    
-    clearTimeout(timeoutId);
-    return true;
-  } catch (error) {
-    return false;
+
+  async checkInternetConnection(): Promise<boolean> {
+    try {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 5000);
+      
+      const response = await fetch('https://httpbin.org/get', {
+        method: 'HEAD',
+        mode: 'no-cors',
+        cache: 'no-store',
+        signal: controller.signal
+      });
+      
+      clearTimeout(timeoutId);
+      return true;
+    } catch (error) {
+      return false;
+    }
   }
-}
 
-async sincronizarRespuestasGuardadas() {
-  // Verificamos si hay respuestas guardadas en sessionStorage
-  const respuestasGuardadas = JSON.parse(sessionStorage.getItem('respuestas') || '[]');
-  console.log(respuestasGuardadas)
-   try {
-        // Enviar las respuestas guardadas
-        await this.preguntasService.enviarMultiplesRespuestas(respuestasGuardadas);
-      } catch (error) {
-        console.error('Error al enviar la respuesta guardada:', error);
-      }
- 
-    // Guardamos las respuestas restantes en sessionStorage después de intentar enviarlas
-    sessionStorage.setItem('respuestas', JSON.stringify(respuestasGuardadas));
-  
-}
+  // MÉTODO CORREGIDO - Sincronización individual de respuestas
+  sincronizarRespuestasGuardadas() {
+    const respuestasGuardadas = JSON.parse(sessionStorage.getItem(`respuestas_${this.parteIzquierda}`) || '[]');
+    
+    // Si no hay respuestas guardadas, no hacer nada
+    if (respuestasGuardadas.length === 0) {
+      return;
+    }
+    
+    this.loader.mostrarCargando('Sincronizando respuestas guardadas...');
+    
+    // Contador para trackear respuestas procesadas
+    let respuestasProcesadas = 0;
+    let respuestasExitosas = 0;
+    const totalRespuestas = respuestasGuardadas.length;
+    const respuestasExitosasIds: string[] = []; // Para trackear cuáles se enviaron
+    
+    // Procesar cada respuesta individualmente
+    respuestasGuardadas.forEach((respuesta: Respuesta, index: number) => {
+      this.preguntasService.saveRespuesta(respuesta).subscribe({
+        next: (res) => {
+          respuestasExitosas++;
+          respuestasProcesadas++;
+          respuestasExitosasIds.push(respuesta.id_Pregunta);
+          
+          // Verificar si todas las respuestas han sido procesadas
+          if (respuestasProcesadas === totalRespuestas) {
+            this.finalizarSincronizacion(respuestasGuardadas, respuestasExitosasIds, respuestasExitosas, totalRespuestas);
+          }
+        },
+        error: (err) => {
+          respuestasProcesadas++;
+          console.error('Error al sincronizar respuesta:', err);
+          
+          // Verificar si todas las respuestas han sido procesadas
+          if (respuestasProcesadas === totalRespuestas) {
+            this.finalizarSincronizacion(respuestasGuardadas, respuestasExitosasIds, respuestasExitosas, totalRespuestas);
+          }
+        }
+      });
+    });
+  }
 
-async next() {
-  await this.sincronizarRespuestasGuardadas();
-  if (this.selectedAnswer) {
-    const hasConnection = await this.checkInternetConnection();    
-    if (hasConnection) {
-      this.enviarRespuestas(parseInt(this.selectedAnswer), this.id);
-      await this.sincronizarRespuestasGuardadas();
-    } else{
-      const respuesta: Respuesta = {
+  // Método auxiliar para finalizar la sincronización
+  finalizarSincronizacion(todasLasRespuestas: Respuesta[], exitosas: string[], respuestasExitosas: number, totalRespuestas: number) {
+    this.loader.ocultarCargando();
+    
+    // Filtrar solo las respuestas que NO se sincronizaron
+    const respuestasPendientes = todasLasRespuestas.filter(
+      r => !exitosas.includes(r.id_Pregunta)
+    );
+    
+    // Actualizar sessionStorage solo con las pendientes
+    if (respuestasPendientes.length === 0) {
+      sessionStorage.removeItem(`respuestas_${this.parteIzquierda}`);
+      this.snackBar.open(`✅ ${respuestasExitosas} respuestas sincronizadas correctamente`, 'OK', {
+        duration: 5000,
+        panelClass: ['custom-snackbar']
+      });
+    } else {
+      sessionStorage.setItem(`respuestas_${this.parteIzquierda}`, JSON.stringify(respuestasPendientes));
+      this.snackBar.open(`⚠️ ${respuestasExitosas}/${totalRespuestas} respuestas sincronizadas`, 'OK', {
+        duration: 5000,
+        panelClass: ['custom-snackbar']
+      });
+    }
+  }
+
+  // MÉTODO CORREGIDO - Next con nueva lógica
+  async next() {
+    if (this.selectedAnswer) {
+      this.guardarRespuesta();
+      const hasConnection = await this.checkInternetConnection();
+      
+      // Crear la respuesta actual
+      const respuestaActual: Respuesta = {
         valor: parseInt(this.selectedAnswer),
         id_Pregunta: this.id,
-        emailAspirante: this.emailUsuario 
+        emailAspirante: this.emailUsuario
       };
       
-      const respuestasGuardadas = JSON.parse(sessionStorage.getItem('respuestas') || '[]');
-      respuestasGuardadas.push(respuesta);      
-      sessionStorage.setItem('respuestas', JSON.stringify(respuestasGuardadas));
-    }
-
-
-    if (!this.eliminatedOptionsInv3.includes(this.selectedAnswer)) {
-      this.eliminatedOptionsInv3.push(this.selectedAnswer);
-    }
-    if (this.eliminatedOptionsInv3.length >= 6) {
-      this.eliminatedOptionsInv3 = [];
-    }
-    const currentIdNumber = parseInt(this.id.split('-')[1]);
-    if (!isNaN(currentIdNumber)) {
-      const nextIdNumber = currentIdNumber + 1;
-      if (nextIdNumber <= this.totalQuestions) {
-        this.selectedAnswer = null;
-        this.isAnswered = false;
-
-        this.router.navigate([
-          `${this.tipo}/preguntas/${this.id.split('-')[0]}-${nextIdNumber.toString().padStart(3, '0')}`
-        ]);
+      if (hasConnection) {
+        // Con conexión: enviar respuesta actual y sincronizar pendientes
+        
+        // 1. Enviar respuesta actual
+        this.preguntasService.saveRespuesta(respuestaActual).subscribe({
+          next: (res) => {
+            console.log('Respuesta actual enviada correctamente');
+          },
+          error: (err) => {
+            console.error('Error al enviar respuesta actual:', err);
+            // Si falla, guardar en sessionStorage
+            this.guardarRespuestaLocal(respuestaActual);
+          }
+        });
+        
+        // 2. Sincronizar respuestas pendientes
+        this.sincronizarRespuestasGuardadas();
+        
       } else {
-        this.cargarRespuestasAPI();
-        this.eliminatedOptionsInv3 = [];
-        this.mostrarDialogoFinal();
+        this.guardarRespuestaLocal(respuestaActual);  
       }
+
+      // Lógica de eliminación de opciones (inv3)
+      if (!this.eliminatedOptionsInv3.includes(this.selectedAnswer)) {
+        this.eliminatedOptionsInv3.push(this.selectedAnswer);
+      }
+      if (this.eliminatedOptionsInv3.length >= 6) {
+        this.eliminatedOptionsInv3 = [];
+      }
+      
+      // Navegación a siguiente pregunta
+      const currentIdNumber = parseInt(this.id.split('-')[1]);
+      if (!isNaN(currentIdNumber)) {
+        const nextIdNumber = currentIdNumber + 1;
+        if (nextIdNumber <= this.totalQuestions) {
+          localStorage.setItem(`preguntainicial_${this.parteIzquierda}`, currentIdNumber.toString()); 
+          this.selectedAnswer = null;
+          this.isAnswered = false;
+
+          this.router.navigate([
+            `${this.tipo}/preguntas/${this.id.split('-')[0]}-${nextIdNumber.toString().padStart(3, '0')}`
+          ]);
+        } else {
+          this.cargarRespuestasAPI();
+          this.eliminatedOptionsInv3 = [];
+          this.mostrarDialogoFinal();
+        }
+      }
+    } else {
+      Swal.fire({
+        title: 'Atención',
+        text: 'Selecciona una respuesta antes de continuar.',
+        icon: 'warning',
+        confirmButtonText: 'Entendido',
+        confirmButtonColor: '#007bff'
+      });
     }
+  }
+
+ guardarRespuestaLocal(respuesta: Respuesta) {
+  const respuestasGuardadas = JSON.parse(sessionStorage.getItem(`respuestas_${this.parteIzquierda}`) || '[]');
+  
+  // Buscar si ya existe una respuesta con el mismo id_Pregunta
+  const respuestaExistente = respuestasGuardadas.find((r: Respuesta) => r.id_Pregunta === respuesta.id_Pregunta);
+  
+  if (respuestaExistente) {
+    // Si existe, solo actualizamos el valor
+    respuestaExistente.valor = respuesta.valor;
   } else {
-    Swal.fire({
-      title: 'Atención',
-      text: 'Selecciona una respuesta antes de continuar.',
-      icon: 'warning',
-      confirmButtonText: 'Entendido',
-      confirmButtonColor: '#007bff'
-    });
+    // Si no existe, añadimos la nueva respuesta
+    respuestasGuardadas.push(respuesta);
   }
+  
+  // Guardamos nuevamente en sessionStorage
+  sessionStorage.setItem(`respuestas_${this.parteIzquierda}`, JSON.stringify(respuestasGuardadas));
 }
-
-
- prev() {
-  const currentIdNumber = parseInt(this.id.split('-')[1]);
-  if (!isNaN(currentIdNumber) && currentIdNumber > 1) {
-
-    this.router.navigate([
-      `${this.tipo}/preguntas/${this.id.split('-')[0]}-${(currentIdNumber - 1)
-        .toString()
-        .padStart(3, '0')}`
-    ]);
-
+  // Método para verificar respuestas pendientes al cargar la aplicación
+  verificarRespuestasPendientes() {
+    const respuestasGuardadas = JSON.parse(sessionStorage.getItem(`respuestas_${this.parteIzquierda}`) || '[]');
+    
+    if (respuestasGuardadas.length > 0) {
+      // Mostrar notificación de respuestas pendientes
+      const snackBarRef = this.snackBar.open(
+        `📱 Tienes ${respuestasGuardadas.length} respuestas pendientes de sincronizar`, 
+        'SINCRONIZAR AHORA', 
+        {
+          duration: 15000,
+          panelClass: ['custom-snackbar']
+        }
+      );
+      
+      snackBarRef.onAction().subscribe(() => {
+        this.forzarSincronizacion();
+      });
+    }
   }
-}
 
+  // Método para forzar sincronización manual
+  async forzarSincronizacion() {
+    const hasConnection = await this.checkInternetConnection();
+    
+    if (hasConnection) {
+      this.sincronizarRespuestasGuardadas();
+    } else {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Sin conexión',
+        text: 'No hay conexión a internet para sincronizar las respuestas.',
+        confirmButtonText: 'Entendido'
+      });
+    }
+  }
 
+  // Método para obtener el número de respuestas pendientes
+  getRespuestasPendientesCount(): number {
+    const respuestasGuardadas = JSON.parse(sessionStorage.getItem(`respuestas_${this.parteIzquierda}`) || '[]');
+    return respuestasGuardadas.length;
+  }
+
+  prev() {
+    const currentIdNumber = parseInt(this.id.split('-')[1]);
+    if (!isNaN(currentIdNumber) && currentIdNumber > 1) {
+      this.router.navigate([
+        `${this.tipo}/preguntas/${this.id.split('-')[0]}-${(currentIdNumber - 1)
+          .toString()
+          .padStart(3, '0')}`
+      ]);
+    }
+  }
 
   mostrarDialogoFinal() {
     Swal.fire({
@@ -420,8 +545,6 @@ async next() {
             confirmButtonText: 'Entendido'
           });
         }
-      } else {
-
       }
     });
   }
@@ -449,70 +572,65 @@ async next() {
             text: res,
             confirmButtonText: 'Aceptar'
           }).then(() => {
-           switch (this.parteIzquierda) {
-            case "inv1":
-              this.router.navigate(['/result-aptitudes']);
-              break;
-            case "inv3":
-              this.router.navigate(['/result-uni']);
-              break;
-            default:
-              this.router.navigate(['/result-intereses']);
-              break;
-          }
-
+            switch (this.parteIzquierda) {
+              case "inv1":
+                this.router.navigate(['/result-aptitudes']);
+                break;
+              case "inv3":
+                this.router.navigate(['/result-uni']);
+                break;
+              default:
+                this.router.navigate(['/result-intereses']);
+                break;
+            }
+          });
+        },
+        error: (err) => {
+          this.loader.ocultarCargando();
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: err.error.message || 'No se pudo calcular el resultado',
+            confirmButtonText: 'Aceptar'
+          });
+        }
       });
-      },
-      error: (err) => {
-        this.loader.ocultarCargando();
-        Swal.fire({
-          icon: 'error',
-          title: 'Error',
-          text: err.error.message || 'No se pudo calcular el resultado',
-          confirmButtonText: 'Aceptar'
-        });
-      }
-    });
     }
     return respuestasCompletas;
   }
 
-onOptionChange1(event: any) {
-   this.selectedAnswer = event.target.value;
-}
+  onOptionChange1(event: any) {
+    this.selectedAnswer = event.target.value;
+  }
 
-checkResetInv3() {
-  if (this.eliminatedOptionsInv3.length >= this.TOTAL_OPCIONES_INV3) {
-    this.eliminatedOptionsInv3 = [];
+  checkResetInv3() {
+    if (this.eliminatedOptionsInv3.length >= this.TOTAL_OPCIONES_INV3) {
+      this.eliminatedOptionsInv3 = [];
+      this.selectedAnswer = '';
+      localStorage.removeItem('eliminatedOptionsInv3');
+    }
+  }
+
+  onOptionChangeInv3(event: any) {
+    this.selectedAnswer = event.target.value;
+  }
+
+  salir() {
+    if (this.parteIzquierda === 'inv3') {
+      localStorage.setItem('eliminatedOptionsInv3', JSON.stringify(this.eliminatedOptionsInv3));
+    }
+    this.router.navigate(['/cuestionario']);
+    console.log('Saliendo del inventario', this.parteIzquierda);
+  }
+
+  cargarEliminadasInv3() {
+    const eliminadas = localStorage.getItem('eliminatedOptionsInv3');
+    this.eliminatedOptionsInv3 = eliminadas ? JSON.parse(eliminadas) : [];
+  }
+
+  cargarInv3() {
+    this.parteIzquierda = 'inv3';
+    this.cargarEliminadasInv3();
     this.selectedAnswer = '';
-    localStorage.removeItem('eliminatedOptionsInv3');
   }
-}
-
-
-
-onOptionChangeInv3(event: any) {
-  this.selectedAnswer = event.target.value;
-}
-
-
-
-salir() {
-  if (this.parteIzquierda === 'inv3') {
-    localStorage.setItem('eliminatedOptionsInv3', JSON.stringify(this.eliminatedOptionsInv3));
-  }
-  this.router.navigate(['/cuestionario']);
-  console.log('Saliendo del inventario', this.parteIzquierda);
-}
-
-cargarEliminadasInv3() {
-  const eliminadas = localStorage.getItem('eliminatedOptionsInv3');
-  this.eliminatedOptionsInv3 = eliminadas ? JSON.parse(eliminadas) : [];
-}
-
-cargarInv3() {
-  this.parteIzquierda = 'inv3';
-  this.cargarEliminadasInv3();
-  this.selectedAnswer = '';
-}
 }
