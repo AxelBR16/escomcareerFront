@@ -87,7 +87,7 @@ export class AuthService {
     }
   }
 
-  private async setStoredValue(key: string, value: string): Promise<void> {
+   async setStoredValue(key: string, value: string): Promise<void> {
     try {
       if (this.isMobile()) {
         // ALMACENAMIENTO MÓVIL - Capacitor Preferences
@@ -107,7 +107,7 @@ export class AuthService {
     }
   }
 
-  private async getStoredValue(key: string): Promise<string | null> {
+   async getStoredValue(key: string): Promise<string | null> {
     try {
       if (this.isMobile()) {
         // OBTENER DE MÓVIL - Capacitor Preferences
@@ -193,6 +193,9 @@ export class AuthService {
         this.removeStoredValue('email'),
         this.removeStoredValue('respuestasUsuario'),
         this.removeStoredValue('loginTimestamp'),
+        this.removeStoredValue('respuestas_inv1'),
+        this.removeStoredValue('respuestas_inv2'),
+        this.removeStoredValue('respuestas_inv3'),
         this.removePreguntaInicialInv()
       ]);
       

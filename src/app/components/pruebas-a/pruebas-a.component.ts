@@ -28,7 +28,6 @@ export class PruebasAComponent implements OnInit {
     }
 
   verificarCuestionarios(email: string) {
-    
     ['inv1', 'inv2'].forEach((inv, index) => {
       this.preguntasService.obtenerRespuestasMasAlta(email!, inv).subscribe(
         (respuestaMasAlta) => {
