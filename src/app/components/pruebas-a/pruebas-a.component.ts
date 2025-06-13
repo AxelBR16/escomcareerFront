@@ -63,14 +63,18 @@ verificarCuestionarios(email: string) {
 
   }
 
-  redirigir(tipo: 'aptitudes' | 'intereses') {
+ redirigir(tipo: 'aptitudes' | 'intereses') {
   if (tipo === 'aptitudes' && this.progreso.aptitudes === 100) {
-    this.router.navigate(['/result-aptitudes']);
+    this.router.navigate(['/result-aptitudes']).then(() => {
+      window.scrollTo(0, 0); // Esto hace scroll hacia arriba
+    });
     return;
   }
 
-   if (tipo === 'intereses' && this.progreso.intereses === 100) {
-    this.router.navigate(['/result-intereses']);
+  if (tipo === 'intereses' && this.progreso.intereses === 100) {
+    this.router.navigate(['/result-intereses']).then(() => {
+      window.scrollTo(0, 0); // Esto hace scroll hacia arriba
+    });
     return;
   }
 
@@ -78,7 +82,9 @@ verificarCuestionarios(email: string) {
     ? `/${tipo}/preguntas/${tipo === 'aptitudes' ? 'inv1' : 'inv2'}-${this.preguntainicial[tipo]}`
     : `/instrucciones/${tipo}`;
 
-  this.router.navigate([ruta]);
+  this.router.navigate([ruta]).then(() => {
+    window.scrollTo(0, 0); // Esto hace scroll hacia arriba
+  });
 }
 
 

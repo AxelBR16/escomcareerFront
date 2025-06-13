@@ -62,14 +62,23 @@ verificarCuestionario(email: string) {
   }
 
 
-  redirigir() {
-     if (this.progreso === 100) {
-    this.router.navigate(['/result-uni']);
+ redirigir() {
+  if (this.progreso === 100) {
+    this.router.navigate(['/result-uni']).then(() => {
+      window.scrollTo(0, 0); // Esto hace scroll hacia arriba
+    });
     return;
-    }
-    const ruta = this.pruebasPreferenciasCompletadas ? `/universitario/preguntas/inv3-${this.preguntainicial}` : '/instrucciones/universitario';
-    this.router.navigate([ruta]);
   }
+  
+  const ruta = this.pruebasPreferenciasCompletadas 
+    ? `/universitario/preguntas/inv3-${this.preguntainicial}` 
+    : '/instrucciones/universitario';
+  
+  this.router.navigate([ruta]).then(() => {
+    window.scrollTo(0, 0); // Esto hace scroll hacia arriba
+  });
+}
+
 
   mostrarAlertaAntesDeSeguir() {
   const puntajeCompleto = this.progreso === 100;

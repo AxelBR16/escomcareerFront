@@ -48,7 +48,29 @@ export class LoginComponent implements OnInit {
   emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   loading=false;
 
-  ngOnInit(): void {
+   async ngOnInit() {
+    // Verificar si el usuario ya está logueado
+    const isLoggedIn = await this.authService.isLoggedIn();
+
+    // Si ya está logueado, obtener el rol y redirigir a la página correspondiente
+    if (isLoggedIn) {
+      try {
+        const userRole = await this.authService.getCurrentUserRole();
+
+        // Redirigir según el rol
+        if (userRole === 'ROLE_ASPIRANTE') {
+          this.router.navigate(['/aspirante-dashboard']); // Redirige al dashboard de aspirante
+        } else if (userRole === 'ROLE_EGRESADO') {
+          this.router.navigate(['/egresado-dashboard']); // Redirige al dashboard de egresado
+        } else {
+          // Si el rol no es válido, redirige a la página principal o login
+          this.router.navigate(['/inicio']);
+        }
+      } catch (error) {
+        console.error('Error al obtener el rol del usuario:', error);
+        this.router.navigate(['/login']);
+      }
+    }
   }
 
   // Valida la contraseña en tiempo real
