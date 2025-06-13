@@ -9,7 +9,7 @@ import { ApiService } from '../../services/api.service';
 import { AuthService } from '../../services/auth.service';
 import { LoaderService } from '../../services/loader.service';
 import { Router } from '@angular/router';
-
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-logine',
@@ -49,6 +49,9 @@ export class LogineComponent {
   emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   
 
+  /** Valida el campo de carrera al ser tocado **/// Expresión regular para validar solo letras
+  namePattern = /^[A-Za-zÑñÁáÉéÍíÓóÚúÜü]+$/;
+
    /** Valida la contraseña en tiempo real **/
   validatePassword(): void {
     if (!this.passwordPattern.test(this.password)) {
@@ -80,7 +83,10 @@ export class LogineComponent {
     "3": "Ingeniería en Inteligencia Artificial",
   };
 
-  constructor(private apiService: ApiService,  private authService: AuthService,private loader: LoaderService,private router: Router ) {}
+  constructor(private apiService: ApiService,  
+    private authService: AuthService,
+    private snackBar: MatSnackBar,
+    private loader: LoaderService,private router: Router ) {}
 
   goNext(event: Event) {
     event.preventDefault(); // Evita la recarga de la página
@@ -97,6 +103,28 @@ export class LogineComponent {
 
 
  validateStep1(): boolean {
+
+    // Validamos los campos del formulario  // Expresión regular para validar solo letras
+    const namePattern = /^[A-Za-zÑñÁáÉéÍíÓóÚúÜü]+$/;
+
+    // Validación del nombre
+    if (!namePattern.test(this.firstName)) {
+      this.snackBar.open('El nombre no puede contener números ni caracteres especiales.', 'OK', {
+        duration: 4000,
+        panelClass: ['warning-snackbar']
+      });
+      return false;  // Si el nombre no es válido, no avanzamos
+    }
+
+    // Validación del apellido
+    if (!namePattern.test(this.lastName)) {
+      this.snackBar.open('El apellido no puede contener números ni caracteres especiales.', 'OK', {
+        duration: 4000,
+        panelClass: ['warning-snackbar']
+      });
+      return false;  // Si el apellido no es válido, no avanzamos
+    }
+
     this.validatePassword();
     this.validateEmail();
 
@@ -367,7 +395,7 @@ verifyQrLink(qrLink: string) {
         this.loader.ocultarCargando();
         console.error("❌ Error en el registro:", error);
          Swal.fire('Error', `No se pudo registrar la cuenta: ${error.message}`, 'error').then(() => {
-        this.router.navigate(['/login']);  // Redirige al login en caso de error
+        this.router.navigate(['/logine']);  // Redirige al login en caso de error
       });
       }
     });
@@ -384,15 +412,38 @@ verifyQrLink(qrLink: string) {
 
 
 
-  // Método para guardar los cambios
+ // Método para guardar los cambios
   saveData(): void {
-    if (this.isValid()) {
-      this.isEditing = false; // Desactivar modo de edición
-      // Aquí puedes agregar la lógica para guardar los cambios
-      console.log('Datos guardados', { firstName: this.firstName, lastName: this.lastName, email: this.email });
-    } else {
-      Swal.fire('Error', 'Por favor, completa todos los campos correctamente.', 'error');
+    // Validar el nombre y apellido
+    if (!this.namePattern.test(this.firstName)) {
+      this.snackBar.open('El nombre no puede contener números ni caracteres especiales.', 'OK', {
+        duration: 4000,
+        panelClass: ['warning-snackbar']
+      });
+      return;
     }
+
+    if (!this.namePattern.test(this.lastName)) {
+      this.snackBar.open('El apellido no puede contener números ni caracteres especiales.', 'OK', {
+        duration: 4000,
+        panelClass: ['warning-snackbar']
+      });
+      return;
+    }
+
+     // Validar el correo
+    if (!this.emailPattern.test(this.email)) {
+      this.snackBar.open('El correo debe tener un formato válido.', 'OK', {
+        duration: 4000,
+        panelClass: ['warning-snackbar']
+      });
+      return;
+    }
+
+
+    // Aquí puedes agregar la lógica para guardar los datos
+    console.log('Datos guardados', { firstName: this.firstName, lastName: this.lastName, email: this.email });
+    this.isEditing = false; // Desactivar modo de edición
   }
 
  

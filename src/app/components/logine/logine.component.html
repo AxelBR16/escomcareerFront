@@ -22,16 +22,36 @@
               <h1>Crea tu cuenta</h1>
 
               <!-- Nombre -->
-              <input type="text" name="firstName" [(ngModel)]="firstName" maxlength="30" placeholder="Nombres" #firstNameField="ngModel" required>
+              <input 
+               type="text" 
+                name="firstName" 
+                [(ngModel)]="firstName" 
+                maxlength="30" 
+                placeholder="Nombres" 
+                #firstNameField="ngModel" 
+                required
+                [pattern]="'^[A-Za-zÑñÁáÉéÍíÓóÚúÜü]+$'" 
+              />
               <span *ngIf="firstNameField.invalid && firstNameField.touched" class="error-message">
-                El nombre es obligatorio.
+                <span *ngIf="firstNameField.errors?.['required']">El nombre es obligatorio.</span>
+                <span *ngIf="firstNameField.errors?.['pattern']">El nombre no puede contener números ni caracteres especiales.</span>
               </span>
 
               <!-- Apellido -->
-              <input type="text" name="lastName" [(ngModel)]="lastName" maxlength="30" placeholder="Apellidos" #lastNameField="ngModel" required>
-              <span *ngIf="lastNameField.invalid && lastNameField.touched" class="error-message">
-                El apellido es obligatorio.
-              </span>
+              <input 
+             type="text" 
+              name="lastName" 
+              [(ngModel)]="lastName" 
+              maxlength="30" 
+              placeholder="Apellidos" 
+              #lastNameField="ngModel" 
+              required
+              [pattern]="'^[A-Za-zÑñÁáÉéÍíÓóÚúÜü]+$'" 
+            />
+            <span *ngIf="lastNameField.invalid && lastNameField.touched" class="error-message">
+              <span *ngIf="lastNameField.errors?.['required']">El apellido es obligatorio.</span>
+              <span *ngIf="lastNameField.errors?.['pattern']">El apellido no puede contener números ni caracteres especiales.</span>
+            </span>
               <!-- Carrera -->
               <div class="form-group">
                 <label for="carrera" [ngClass]="{'error-label': carreraTouched && !carrera}">
@@ -146,50 +166,74 @@
 
 
 
-        <!-- Paso 3 - Mostrar los datos ingresados -->
-        <div id="step3" *ngIf="currentStep === 3" class="step active">
-          <h1>Cuenta Creada</h1>
-          <p>Revisa los datos que ingresaste:</p>
+                <!-- Tercer paso - Mostrar los datos ingresados -->
+          <div id="step3" *ngIf="currentStep === 3" class="step active">
+            <h1>Cuenta Creada</h1>
+            <p>Revisa los datos que ingresaste:</p>
 
-          <div class="user-data">
-            <!-- Nombres -->
-            <div class="user-data-item">
-              <strong>Nombres:</strong>
-              <span *ngIf="!isEditing">{{ firstName || 'No ingresado' }}</span>
-              <input *ngIf="isEditing" type="text" [(ngModel)]="firstName" placeholder="Ingresa tu nombre">
-            </div>
+            <div class="user-data">
+              <!-- Nombres -->
+              <div class="user-data-item">
+                <strong>Nombres:</strong>
+                <span *ngIf="!isEditing">{{ firstName || 'No ingresado' }}</span>
+                <input *ngIf="isEditing" 
+                  type="text" 
+                  [(ngModel)]="firstName" 
+                  placeholder="Ingresa tu nombre" 
+                  [pattern]="'^[A-Za-zÑñÁáÉéÍíÓóÚúÜü]+$'" 
+                />
+                <span *ngIf="isEditing && !namePattern.test(firstName)" class="error-message">
+                  El nombre no puede contener números ni caracteres especiales.
+                </span>
+              </div>
 
-            <!-- Apellidos -->
-            <div class="user-data-item">
-              <strong>Apellidos:</strong>
-              <span *ngIf="!isEditing">{{ lastName || 'No ingresado' }}</span>
-              <input *ngIf="isEditing" type="text" [(ngModel)]="lastName" placeholder="Ingresa tu apellido">
-            </div>
+              <!-- Apellidos -->
+              <div class="user-data-item">
+                <strong>Apellidos:</strong>
+                <span *ngIf="!isEditing">{{ lastName || 'No ingresado' }}</span>
+                <input *ngIf="isEditing" 
+                  type="text" 
+                  [(ngModel)]="lastName" 
+                  placeholder="Ingresa tu apellido" 
+                  [pattern]="'^[A-Za-zÑñÁáÉéÍíÓóÚúÜü]+$'" 
+                />
+                <span *ngIf="isEditing && !namePattern.test(lastName)" class="error-message">
+                  El apellido no puede contener números ni caracteres especiales.
+                </span>
+              </div>
 
-            <!-- Carrera (No editable) -->
-            <div class="user-data-item">
-              <strong>Carrera:</strong>
-              <span *ngIf="carrera === '1'">Ingeniería en Sistemas Computacionales</span>
-              <span *ngIf="carrera === '2'">Licenciatura en Ciencia de Datos</span>
-              <span *ngIf="carrera === '3'">Ingeniería en Inteligencia Artificial</span>
-              <span *ngIf="!carrera">No ingresada</span>
-            </div>
+              <!-- Carrera (No editable) -->
+              <div class="user-data-item">
+                <strong>Carrera:</strong>
+                <span *ngIf="carrera === '1'">Ingeniería en Sistemas Computacionales</span>
+                <span *ngIf="carrera === '2'">Licenciatura en Ciencia de Datos</span>
+                <span *ngIf="carrera === '3'">Ingeniería en Inteligencia Artificial</span>
+                <span *ngIf="!carrera">No ingresada</span>
+              </div>
 
             <!-- Email -->
-            <div class="user-data-item">
-              <strong>Email:</strong>
-              <span *ngIf="!isEditing">{{ email || 'No ingresado' }}</span>
-              <input *ngIf="isEditing" type="email" [(ngModel)]="email" placeholder="Ingresa tu email">
+              <div class="user-data-item">
+                <strong>Email:</strong>
+                <span *ngIf="!isEditing">{{ email || 'No ingresado' }}</span>
+                <input *ngIf="isEditing" 
+                  type="email" 
+                  [(ngModel)]="email" 
+                  placeholder="Ingresa tu email" 
+                  [pattern]="emailPattern"
+                />
+                <span *ngIf="isEditing && !emailPattern.test(email)" class="error-message">
+                  El correo debe tener un formato válido.
+                </span>
+              </div>
+
+            <div class="btn-wrapper">
+              <button *ngIf="!isEditing" (click)="toggleEdit()">Editar</button>
+              <button *ngIf="isEditing" (click)="saveData()">Guardar</button>
+              <button (click)="finalizeAccount()">Finalizar</button>
             </div>
+            <button (click)="goToStep(2)">Regresar</button>
           </div>
 
-          <div class="btn-wrapper">
-            <button *ngIf="!isEditing" (click)="toggleEdit()">Editar</button>
-            <button *ngIf="isEditing" (click)="toggleEdit()">Guardar</button>
-            <button (click)="finalizeAccount()">Finalizar</button>
-          </div>
-           <button (click)="goToStep(2)">Regresar</button>
-        </div>
 
 
   </div>
