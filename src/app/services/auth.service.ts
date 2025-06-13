@@ -126,7 +126,7 @@ export class AuthService {
     }
   }
 
-  private async removeStoredValue(key: string): Promise<void> {
+  async removeStoredValue(key: string): Promise<void> {
     try {
       if (this.isMobile()) {
         // ELIMINAR DE MÓVIL - Capacitor Preferences

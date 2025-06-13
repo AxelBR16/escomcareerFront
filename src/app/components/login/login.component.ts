@@ -194,8 +194,6 @@ export class LoginComponent implements OnInit {
           });
           this.loading = false;
           this.authService.storeUserSession(this.loginEmail, response.token, response.role);
-
-          console.log(sessionStorage.getItem('role'))
           if (response.role === 'ROLE_ADMIN') {
             this.router.navigate(['/admin-dashboard']);
           } else if (response.role === 'ROLE_EGRESADO') {

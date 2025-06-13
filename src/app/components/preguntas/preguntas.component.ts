@@ -306,6 +306,7 @@ export class PreguntasComponent implements OnInit {
   async sincronizarRespuestasGuardadas() {
     const storedValue = await this.authService.getStoredValue(`respuestas_${this.parteIzquierda}`);
     const respuestasGuardadas = storedValue ? JSON.parse(storedValue) : [];
+    console.log(JSON.stringify(respuestasGuardadas, null, 2));
     
     // Si no hay respuestas guardadas, no hacer nada
     if (respuestasGuardadas.length === 0) {
@@ -322,13 +323,13 @@ export class PreguntasComponent implements OnInit {
     
     // Procesar cada respuesta individualmente
     respuestasGuardadas.forEach((respuesta: Respuesta, index: number) => {
+      console.log(`respuestas ${respuesta}`)
       this.preguntasService.saveRespuesta(respuesta).subscribe({
         next: (res) => {
           respuestasExitosas++;
           respuestasProcesadas++;
           respuestasExitosasIds.push(respuesta.id_Pregunta);
           
-          // Verificar si todas las respuestas han sido procesadas
           if (respuestasProcesadas === totalRespuestas) {
             this.finalizarSincronizacion(respuestasGuardadas, respuestasExitosasIds, respuestasExitosas, totalRespuestas);
           }
@@ -346,8 +347,8 @@ export class PreguntasComponent implements OnInit {
     });
   }
 
-  // Método auxiliar para finalizar la sincronización
- async finalizarSincronizacion(todasLasRespuestas: Respuesta[], exitosas: string[], respuestasExitosas: number, totalRespuestas: number) {
+  // Método auxiliar para finalizar la sincronización - CORREGIDO
+  async finalizarSincronizacion(todasLasRespuestas: Respuesta[], exitosas: string[], respuestasExitosas: number, totalRespuestas: number) {
     this.loader.ocultarCargando();
     
     // Filtrar solo las respuestas que NO se sincronizaron
@@ -355,14 +356,16 @@ export class PreguntasComponent implements OnInit {
       r => !exitosas.includes(r.id_Pregunta)
     );
     
-    // Actualizar sessionStorage solo con las pendientes
+    // CORRECCIÓN: Usar AuthService en lugar de sessionStorage directamente
     if (respuestasPendientes.length === 0) {
-      sessionStorage.removeItem(`respuestas_${this.parteIzquierda}`);
+      // Todas las respuestas se sincronizaron, eliminar del almacenamiento
+      await this.authService.removeStoredValue(`respuestas_${this.parteIzquierda}`);
       this.snackBar.open(`✅ ${respuestasExitosas} respuestas sincronizadas correctamente`, 'OK', {
         duration: 5000,
         panelClass: ['custom-snackbar']
       });
     } else {
+      // Actualizar almacenamiento solo con las respuestas que no se pudieron sincronizar
       await this.authService.setStoredValue(`respuestas_${this.parteIzquierda}`, JSON.stringify(respuestasPendientes));
       this.snackBar.open(`⚠️ ${respuestasExitosas}/${totalRespuestas} respuestas sincronizadas`, 'OK', {
         duration: 5000,
@@ -443,26 +446,27 @@ export class PreguntasComponent implements OnInit {
     }
   }
 
-async guardarRespuestaLocal(respuesta: Respuesta) {
-  const storedValue = await this.authService.getStoredValue(`respuestas_${this.parteIzquierda}`);
-  const respuestasGuardadas = storedValue ? JSON.parse(storedValue) : [];
-  // Buscar si ya existe una respuesta con el mismo id_Pregunta
-  const respuestaExistente = respuestasGuardadas.find((r: Respuesta) => r.id_Pregunta === respuesta.id_Pregunta);
-  
-  if (respuestaExistente) {
-    // Si existe, solo actualizamos el valor
-    respuestaExistente.valor = respuesta.valor;
-  } else {
-    // Si no existe, añadimos la nueva respuesta
-    respuestasGuardadas.push(respuesta);
-  }
-  await this.authService.setStoredValue(`respuestas_${this.parteIzquierda}`, JSON.stringify(respuestasGuardadas));
-}
-  // Método para verificar respuestas pendientes al cargar la aplicación
-  async verificarRespuestasPendientes() {
-      const storedValue = await this.authService.getStoredValue(`respuestas_${this.parteIzquierda}`);
-      const respuestasGuardadas = storedValue ? JSON.parse(storedValue) : [];
+  async guardarRespuestaLocal(respuesta: Respuesta) {
+    const storedValue = await this.authService.getStoredValue(`respuestas_${this.parteIzquierda}`);
+    const respuestasGuardadas = storedValue ? JSON.parse(storedValue) : [];
     
+    // Buscar si ya existe una respuesta con el mismo id_Pregunta
+    const respuestaExistente = respuestasGuardadas.find((r: Respuesta) => r.id_Pregunta === respuesta.id_Pregunta);
+    
+    if (respuestaExistente) {
+      respuestaExistente.valor = respuesta.valor;
+    } else {
+      respuestasGuardadas.push(respuesta);
+    }
+    
+    await this.authService.setStoredValue(`respuestas_${this.parteIzquierda}`, JSON.stringify(respuestasGuardadas));
+  }
+
+  // MÉTODO CORREGIDO - verificarRespuestasPendientes
+  async verificarRespuestasPendientes() {
+    const storedValue = await this.authService.getStoredValue(`respuestas_${this.parteIzquierda}`);
+    const respuestasGuardadas = storedValue ? JSON.parse(storedValue) : [];
+  
     if (respuestasGuardadas.length > 0) {
       // Mostrar notificación de respuestas pendientes
       const snackBarRef = this.snackBar.open(
@@ -473,7 +477,6 @@ async guardarRespuestaLocal(respuesta: Respuesta) {
           panelClass: ['custom-snackbar']
         }
       );
-      
       snackBarRef.onAction().subscribe(() => {
         this.forzarSincronizacion();
       });
@@ -496,8 +499,8 @@ async guardarRespuestaLocal(respuesta: Respuesta) {
     }
   }
 
-  // Método para obtener el número de respuestas pendientes
-  async  getRespuestasPendientesCount(): Promise<number> {
+  // MÉTODO CORREGIDO - getRespuestasPendientesCount
+  async getRespuestasPendientesCount(): Promise<number> {
     const storedValue = await this.authService.getStoredValue(`respuestas_${this.parteIzquierda}`);
     const respuestasGuardadas = storedValue ? JSON.parse(storedValue) : [];
     return respuestasGuardadas.length;
