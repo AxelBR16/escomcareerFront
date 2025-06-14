@@ -411,3 +411,10 @@ main {
         text-align: center; /* Asegura que el texto esté centrado */
     }
 }
+
+.warning-snackbar {
+  background-color: #43e050; /* Amarillo de advertencia */
+  color: #000;  /* Texto en negro */
+  font-weight: bold; /* Puedes darle un estilo adicional */
+}
+

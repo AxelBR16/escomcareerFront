@@ -12,6 +12,21 @@ export class ResultadoService {
 
   constructor(private httpClient: HttpClient) { }
 
+//borrar si no se usa 
+ private resultados: { etiquetas: string[], puntajes: number[] } = { etiquetas: [], puntajes: [] };
+
+  // Método para guardar los resultados
+  setResultados(etiquetas: string[], puntajes: number[]): void {
+    this.resultados = { etiquetas, puntajes };
+  }
+
+  // Método para obtener los resultados
+  getResultados() {
+    return this.resultados;
+  }
+
+
+
   calcularResultado(inventario: string, email: string): Observable<any> {
      return this.httpClient.get(`${environment.apiUrls.auth}/resultados/calcular-resultados/${inventario}`, {
     params: { email },

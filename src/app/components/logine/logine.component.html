@@ -30,7 +30,7 @@
                 placeholder="Nombres" 
                 #firstNameField="ngModel" 
                 required
-                [pattern]="'^[A-Za-zÑñÁáÉéÍíÓóÚúÜü]+$'" 
+                  [pattern]="'^[A-Za-z]+( [A-Za-z]+)*$'" 
               />
               <span *ngIf="firstNameField.invalid && firstNameField.touched" class="error-message">
                 <span *ngIf="firstNameField.errors?.['required']">El nombre es obligatorio.</span>
@@ -46,11 +46,11 @@
               placeholder="Apellidos" 
               #lastNameField="ngModel" 
               required
-              [pattern]="'^[A-Za-zÑñÁáÉéÍíÓóÚúÜü]+$'" 
+              [pattern]="'^[A-Za-z]+( [A-Za-z]+)*$'"
             />
             <span *ngIf="lastNameField.invalid && lastNameField.touched" class="error-message">
               <span *ngIf="lastNameField.errors?.['required']">El apellido es obligatorio.</span>
-              <span *ngIf="lastNameField.errors?.['pattern']">El apellido no puede contener números ni caracteres especiales.</span>
+              <span *ngIf="lastNameField.errors?.['pattern']">El apellido no puede contener números ni caracteres especiales solo acentos.</span>
             </span>
               <!-- Carrera -->
               <div class="form-group">
@@ -113,7 +113,7 @@
                   </ul>
                 </div>
               <!-- Botón de Registro -->
-              <button class="btn" type="submit" [disabled]="firstNameField.invalid || lastNameField.invalid || carreraField.invalid || emailField.invalid || passwordField.invalid">Registrar</button>
+              <button class="btn" type="submit" [disabled]="firstNameField.invalid  || carreraField.invalid || emailField.invalid || passwordField.invalid">Registrar</button>
             </form>
 
             <div class="btn-wrapper">
@@ -180,7 +180,7 @@
                   type="text" 
                   [(ngModel)]="firstName" 
                   placeholder="Ingresa tu nombre" 
-                  [pattern]="'^[A-Za-zÑñÁáÉéÍíÓóÚúÜü]+$'" 
+                 [pattern]="'^[A-Za-z]+( [A-Za-z]+)*$'" 
                 />
                 <span *ngIf="isEditing && !namePattern.test(firstName)" class="error-message">
                   El nombre no puede contener números ni caracteres especiales.
@@ -195,10 +195,10 @@
                   type="text" 
                   [(ngModel)]="lastName" 
                   placeholder="Ingresa tu apellido" 
-                  [pattern]="'^[A-Za-zÑñÁáÉéÍíÓóÚúÜü]+$'" 
+                  [pattern]="'^[A-Za-z]+( [A-Za-z]+)*$'"
                 />
                 <span *ngIf="isEditing && !namePattern.test(lastName)" class="error-message">
-                  El apellido no puede contener números ni caracteres especiales.
+                  El apellido no puede contener números ni caracteres especiales solo acentos.
                 </span>
               </div>
 

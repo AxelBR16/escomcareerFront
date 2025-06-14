@@ -208,20 +208,19 @@ handleChartClick(event: any): void {
       }
     });
   } else {
-    Swal.fire({
-      title: 'Acceso denegado',
-      html: 'Tu puntaje en Fisicomatemáticas no está entre los 3 más altos, por lo que no puedes acceder a los siguientes cuestionarios.',
-      icon: 'error',
-      confirmButtonText: 'Aceptar',
-      allowOutsideClick: false,
-      allowEscapeKey: false,
-      customClass: { popup: 'swal2-popup-custom' }
-    });
-  }
-}
-
-
-
+          Swal.fire({
+            title: 'Lo sentimos',
+            html: 'TTu puntaje en Fisicomatemáticas no está entre los 3 más altos. Puedes pasar a las siguientes pruebas, solo que no serán tan precisas.',
+            icon: 'error',
+            confirmButtonText: 'Aceptar',
+            allowOutsideClick: false,
+            allowEscapeKey: false,
+            customClass: { popup: 'swal2-popup-custom' }
+          }).then(() => {
+          this.router.navigate(['/pruebasA']); // Redirige a 'pruebasA' después de la advertencia
+        });
+        }
+      }
 
   }
 

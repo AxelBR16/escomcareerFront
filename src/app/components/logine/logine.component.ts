@@ -50,7 +50,7 @@ export class LogineComponent {
   
 
   /** Valida el campo de carrera al ser tocado **/// Expresión regular para validar solo letras
-  namePattern = /^[A-Za-zÑñÁáÉéÍíÓóÚúÜü]+$/;
+  namePattern = /^[A-Za-záéíóúÁÉÍÓÚ]+( [A-Za-záéíóúÁÉÍÓÚ]+)*$/;
 
    /** Valida la contraseña en tiempo real **/
   validatePassword(): void {
@@ -105,7 +105,7 @@ export class LogineComponent {
  validateStep1(): boolean {
 
     // Validamos los campos del formulario  // Expresión regular para validar solo letras
-    const namePattern = /^[A-Za-zÑñÁáÉéÍíÓóÚúÜü]+$/;
+    const namePattern = /^[A-Za-záéíóúÁÉÍÓÚ]+( [A-Za-záéíóúÁÉÍÓÚ]+)*$/;
 
     // Validación del nombre
     if (!namePattern.test(this.firstName)) {
@@ -197,6 +197,9 @@ async validateStep2() {
     Swal.close();
   }
 }
+
+
+
 
 
 
@@ -415,6 +418,7 @@ verifyQrLink(qrLink: string) {
  // Método para guardar los cambios
   saveData(): void {
     // Validar el nombre y apellido
+    
     if (!this.namePattern.test(this.firstName)) {
       this.snackBar.open('El nombre no puede contener números ni caracteres especiales.', 'OK', {
         duration: 4000,
