@@ -43,7 +43,7 @@ export class LoginComponent implements OnInit {
 
   // Expresión regular para validar la contraseña (mínimo 8 caracteres, 1 mayúscula, 1 número y 1 caracter especial)
   passwordPattern = /^(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
-
+     namePattern = /^[A-Za-záéíóúÁÉÍÓÚ]+( [A-Za-záéíóúÁÉÍÓÚ]+)*$/;
   // Expresión regular para validar el email
   emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   loading=false;
@@ -116,7 +116,9 @@ export class LoginComponent implements OnInit {
 
 
       // Validación del nombre (sin números ni caracteres especiales)
-  const namePattern = /^[A-Za-z]+$/;
+  const namePattern = /^[A-Za-záéíóúÁÉÍÓÚ]+( [A-Za-záéíóúÁÉÍÓÚ]+)*$/;
+
+
   if (!namePattern.test(this.firstName)) {
     this.snackBar.open('El nombre no puede contener números ni caracteres especiales', 'OK', {
       duration: 4000,
@@ -132,6 +134,25 @@ export class LoginComponent implements OnInit {
       panelClass: ['warning-snackbar']
     });
     return;
+  }
+
+ // Validación de correo electrónico antes de enviar
+  if (!this.emailPattern.test(this.email)) {
+    this.snackBar.open('Por favor, ingresa un correo electrónico válido.', 'OK', {
+      duration: 4000,
+      panelClass: ['warning-snackbar']
+    });
+    return;  // No continuar si el correo no es válido
+  }
+
+  
+  // Validación de la contraseña antes de continuar
+  if (!this.passwordPattern.test(this.password)) {
+    this.snackBar.open('La contraseña debe contener al menos una mayúscula, un número y un carácter especial.', 'OK', {
+      duration: 4000,
+      panelClass: ['warning-snackbar']
+    });
+    return;  // No continuar si la contraseña no es válida
   }
 
     if (this.firstName && this.lastName && this.email && this.password) {

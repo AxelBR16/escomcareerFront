@@ -12,18 +12,18 @@
   <input 
    required 
     maxlength="30" 
-    type="text" 
+    type="text"
     id="firstName" 
     name="firstName" 
     [(ngModel)]="firstName" 
     #firstNameField="ngModel" 
     placeholder="Nombre" 
-    [pattern]="'^[A-Za-z]+$'"  
+    [pattern]="'^[A-Za-záéíóúÁÉÍÓÚ]+( [A-Za-záéíóúÁÉÍÓÚ]+)*$'"
  
   />
   <span *ngIf="firstNameField.invalid && firstNameField.touched" class="error-message">
     <span *ngIf="firstNameField.errors?.['required']">El nombre es obligatorio.</span>
-    <span *ngIf="firstNameField.errors?.['pattern']">El nombre no puede contener números ni caracteres especiales.</span>
+    <span *ngIf="firstNameField.errors?.['pattern']">El nombre no puede contener números ni caracteres especiales solo acentos.</span>
   </span>
 
   <input 
@@ -35,11 +35,11 @@
     [(ngModel)]="lastName" 
     #lastNameField="ngModel" 
     placeholder="Apellidos" 
-    [pattern]="'^[A-Za-z]+$'" 
+    [pattern]="'^[A-Za-záéíóúÁÉÍÓÚ]+( [A-Za-záéíóúÁÉÍÓÚ]+)*$'"
   />
  <span *ngIf="lastNameField.invalid && lastNameField.touched" class="error-message">
     <span *ngIf="lastNameField.errors?.['required']">El apellido es obligatorio.</span>
-    <span *ngIf="lastNameField.errors?.['pattern']">El apellido no puede contener números ni caracteres especiales.</span>
+    <span *ngIf="lastNameField.errors?.['pattern']">El apellido no puede contener números ni caracteres especiales solo acentos.</span>
   </span>
 
   <input 
