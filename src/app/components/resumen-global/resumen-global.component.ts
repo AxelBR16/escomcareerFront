@@ -131,4 +131,8 @@ export class ResumenGlobalComponent implements AfterViewInit {
       });
     }
   }
+
+
+  
+
 }
