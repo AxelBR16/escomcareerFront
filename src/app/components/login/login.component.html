@@ -113,11 +113,11 @@
       #emailField="ngModel"
       required 
       [pattern]="emailPattern">
-    <span *ngIf="emailField.invalid && emailField.touched" class="error-message">
+   <!-- <span *ngIf="emailField.invalid && emailField.touched" class="error-message">
       <span *ngIf="emailField.errors?.['required']">El correo es obligatorio.</span>
       <span *ngIf="emailField.errors?.['email']">El correo debe tener un formato válido.</span>
       <span *ngIf="emailField.errors?.['pattern']">El correo debe tener una extensión válida.</span>
-    </span>
+    </span>-->
 
 
  <div class="password-container">
@@ -135,12 +135,12 @@
       <span *ngIf="!isPasswordVisible" class="eye-icon" (click)="togglePasswordVisibility()">👁️‍🗨️</span>
     </div>
     
-    <!-- Mensajes de error para contraseña -->
+    <!-- Mensajes de error para contraseña
     <span *ngIf="passwordField.invalid && passwordField.touched" class="error-message">
       <span *ngIf="passwordField.errors?.['required']">La contraseña es obligatoria.</span>
       <span *ngIf="passwordField.errors?.['minlength']">La contraseña debe tener al menos 8 caracteres.</span>
       <span *ngIf="passwordField.errors?.['pattern']">La contraseña debe contener al menos una mayúscula, un número y un carácter especial.</span>
-    </span>
+    </span>-->
 
 
 
