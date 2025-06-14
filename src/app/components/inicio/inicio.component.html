@@ -201,7 +201,7 @@
   </section>
 
  <section>
-  <!-- Sección de testimonios -->
+  <!-- Sección de testimonios 
 <br>
 <div *ngIf="selectedSection === 'Experiencias'" class="experiencias-container">
   <h2 class="tituloP">🎤 Experiencias de Estudiantes y Egresados</h2>
@@ -215,10 +215,10 @@
       <div class="experiencia-content">
         <p class="comentario">{{ experiencia.descripcion }}</p>
       </div>
-      <p class="status">{{ experiencia.fecha }}</p> <!-- Fecha a la derecha -->
+      <p class="status">{{ experiencia.fecha }}</p> 
     </div>
 
-    <!-- Controles de paginación -->
+
     <div class="pagination-controls">
       <button (click)="changePage(currentPage - 1)" [disabled]="currentPage === 1">Anterior</button>
       <span>Página {{ currentPage }} de {{ totalPages }}</span>
@@ -229,7 +229,59 @@
   <ng-template #noExperiences>
     <p>No hay experiencias registradas aún.</p>
   </ng-template>
+</div>  -->
+
+<div class="carousel-container" (mouseenter)="onMouseEnter()" (mouseleave)="onMouseLeave()" *ngIf="retroalimentaciones.length > 0">
+  <h2 class="carousel-title">Valoraciones de Usuarios</h2>
+
+  <div class="carousel-wrapper">
+    <div class="carousel-track" [style.transform]="getTrackTransform()">
+      <div class="user-rating-card" *ngFor="let user of retroalimentaciones">
+        <div class="user-info">
+          <div class="user-avatar">{{ getInitial(user.nombreAspirante + ' ' + user.apellidoAspirante) }}</div>
+          <div class="user-details">
+            <h4>{{ user.nombreAspirante }} {{ user.apellidoAspirante }}</h4>
+            <div class="user-date">{{ user.fecha }}</div>
+          </div>
+        </div>
+        <div class="ratings-grid">
+          <div class="rating-item" *ngFor="let entry of getRatingEntries(user)">
+              <div class="rating-label">{{ getLabelName(entry[0]) }}</div>
+              <div class="stars-container">
+                <svg 
+                  class="star" 
+                  [class.filled]="star" 
+                  [class.empty]="!star"
+                  *ngFor="let star of createStarsArray(entry[1])" 
+                  fill="currentColor" 
+                  viewBox="0 0 24 24">
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                </svg>
+              </div>
+              <div class="rating-value">{{entry[1]}}/{{maxStars}}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="carousel-controls">
+    <button class="carousel-btn" [disabled]="!canGoPrev()" (click)="prevSlide()">‹</button>
+    <div class="carousel-indicators">
+      <div 
+        class="indicator" 
+        [class.active]="i === currentSlide"
+        *ngFor="let i of getIndicatorsArray()" 
+        (click)="goToSlide(i)"></div>
+    </div>
+    <button class="carousel-btn" [disabled]="!canGoNext()" (click)="nextSlide()">›</button>
+  </div>
+
+  <div class="carousel-info">
+    <span>{{currentSlide + 1}}</span> de <span>{{totalSlides}}</span>
+  </div>
 </div>
+
 
  </section>
 

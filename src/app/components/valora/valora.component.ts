@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { RetroalimentacionService } from '../../services/retroalimentacion.service';
+import { AuthService } from '../../services/auth.service';
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-valora',
   imports: [FormsModule, CommonModule],
@@ -9,24 +12,67 @@ import { CommonModule } from '@angular/common';
 })
 export class ValoraComponent {
 
-enviado = false;
- preguntas = [
-    { texto: '¿Cómo calificarías tu experiencia general con el sistema?', valor: 0 },
-    { texto: '¿Qué tan útil fue la recomendación de carrera que te proporcionó el sistema para tu decisión final?', valor: 0 },
-    { texto: '¿Qué te parecieron las experiencias y proyectos mostrados en la página?', valor: 0 },
-    { texto: '¿Recomendarías este sistema a otros aspirantes?', valor: 0 }
-  ];
+  constructor(
+    private retroalimentacionService: RetroalimentacionService,
+    private authService: AuthService,) {}
+
+
+  emailUsuario: string = '';
+
+  enviado = false;
+  preguntas = [
+      { texto: '¿Cómo calificarías tu experiencia general con el sistema?', valor: 0 },
+      { texto: '¿Qué tan útil fue la recomendación de carrera que te proporcionó el sistema para tu decisión final?', valor: 0 },
+      { texto: '¿Qué te parecieron las experiencias y proyectos mostrados en la página?', valor: 0 },
+      { texto: '¿Recomendarías este sistema a otros aspirantes?', valor: 0 }
+    ];
+
+
+    async ngOnInit() {
+       const email = await this.authService.getCurrentUserEmail();
+        this.emailUsuario = email!;
+    }
 
   setValor(index: number, value: number): void {
     this.preguntas[index].valor = value;
   }
 
   onSubmit(): void {
-    const respuestas = this.preguntas.map(p => ({ pregunta: p.texto, calificacion: p.valor }));
-    console.log('Respuestas enviadas:', respuestas);
-    this.enviado = true;
+      const respuestas = {
+        general: this.preguntas[0].valor,
+        experiencias: this.preguntas[1].valor,
+        recomendacion: this.preguntas[2].valor,
+        sistema: this.preguntas[3].valor
+      };     
+      
+      this.retroalimentacionService.saveRetroalimentacion(this.emailUsuario , respuestas).subscribe({
+      next: (response) => {
+        Swal.fire({
+          icon: 'success',
+          title: '¡Gracias por tu retroalimentación!',
+          text: 'Tu respuesta ha sido enviada exitosamente.',
+          confirmButtonText: 'Aceptar'
+        });
+        this.enviado = true;
+      },
+      error: (error) => {
+      if (error.status === 409) {        
+        Swal.fire({
+          icon: 'error',
+          title: '¡Oops!',
+          text: 'Parece que ya has enviado tu retroalimentación. ¡Gracias por tu participación!',
+          confirmButtonText: 'Aceptar'
+        });
+      }else {
+         Swal.fire({
+            icon: 'error',
+            title: 'Ocurrió un error',
+            text: 'Hubo un problema al guardar tu retroalimentación.',
+            confirmButtonText: 'Aceptar'
+          });
+      }
+    }
+    });
 
-    // Aquí puedes integrar un servicio HTTP para enviar al backend
   }
-
 }

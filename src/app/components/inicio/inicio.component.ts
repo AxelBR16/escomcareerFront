@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { Router, RouterModule, NavigationEnd } from '@angular/router';
 import { CommonModule, NgClass } from '@angular/common';
 import { Testimonio } from '../../models/testimonio.model';
@@ -6,6 +6,9 @@ import { TestimonioService } from '../../services/testimonio.service';
 import { Experiencia } from '../../models/experiencia';
 import { ExperienciaService } from '../../services/experiencia.service';
 import { ActivatedRoute } from '@angular/router';
+import { RetroalimentacionService } from '../../services/retroalimentacion.service';
+import { isPlatformBrowser } from '@angular/common';
+
 
 @Component({
   selector: 'app-inicio',
@@ -21,15 +24,31 @@ export class InicioComponent implements OnInit {
   carreraId = 1;
   isTextVisible: boolean = false;
   selectedSection: string = 'Experiencias'; // Agregar propiedad selectedSection
-currentSlideIndex: number = 0; // Índice del carrusel
+  currentSlideIndex: number = 0; // Índice del carrusel
   interval: any;
- experienciasAleatorias = [];
+  experienciasAleatorias = [];
   currentIndex = 0;
+  retroalimentaciones: any[] = [];  // Variable para almacenar las retroalimentaciones
+  maxStars = 3;
+slidesPerView = 1;
+totalSlides = 0;
+currentSlide = 0;
+autoPlayInterval: any;
+
+labelNames: any = {
+  general: 'General',
+  experiencias: 'Experiencias',
+  recomendacion: 'Recomendación',
+  sistema: 'Sistema'
+};
+
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private experienciaService: ExperienciaService
+    private experienciaService: ExperienciaService,
+    private retroalimentacionService: RetroalimentacionService,
+    @Inject(PLATFORM_ID) private platformId: Object
   ) {
     // Inicializamos el valor de `carreraId` usando la ruta.
     this.carreraId = parseInt(this.route.snapshot.paramMap.get('id') || '1');
@@ -38,10 +57,21 @@ currentSlideIndex: number = 0; // Índice del carrusel
   ngOnInit(): void {
     // Cargar las experiencias cuando el componente se inicializa.
     this.loadExperiences();
-   
+    this.getAllRetroalimentaciones()
 
-    
+      if (isPlatformBrowser(this.platformId)) {
+    this.updateResponsive();
+    window.addEventListener('resize', () => {
+      this.updateResponsive();
+      this.calculateTotalSlides();
+    });
   }
+  }
+
+  ngOnDestroy() {
+  this.stopAutoPlay();
+}
+
 
   // Método que alterna la visibilidad del texto
   toggleTextVisibility(): void {
@@ -106,6 +136,100 @@ currentSlideIndex: number = 0; // Índice del carrusel
   get totalPages() {
     return Math.ceil(this.experiencias.length / this.itemsPerPage);
   }
+
+  getAllRetroalimentaciones(): void {
+      this.retroalimentacionService.getAllRetroalimentaciones().subscribe(
+        (data) => {
+          this.retroalimentaciones = data;  // Almacena los datos obtenidos en la variable
+        },
+        (error) => {
+        }
+      );
+    }
+
+    updateResponsive() {
+  this.slidesPerView = window.innerWidth > 768 ? 3 : 1;
+}
+
+calculateTotalSlides() {
+  this.totalSlides = Math.ceil(this.retroalimentaciones.length / this.slidesPerView);
+}
+
+createStarsArray(rating: number): boolean[] {
+  return Array(this.maxStars).fill(false).map((_, index) => index < rating);
+}
+
+getRatingEntries(user: any): [string, number][] {
+  return Object.entries(user)
+    .filter(([key]) =>
+      ['general', 'experiencias', 'recomendacion', 'sistema'].includes(key)
+    )
+    .map(([key, value]) => [key, value as number]);
+}
+
+
+
+getLabelName(key: string): string {
+  return this.labelNames[key as keyof typeof this.labelNames] || key;
+}
+
+getTrackTransform(): string {
+  const cardWidth = 320;
+  const offset = this.currentSlide * cardWidth * this.slidesPerView;
+  return `translateX(-${offset}px)`;
+}
+
+nextSlide() {
+  if (this.currentSlide < this.totalSlides - 1) {
+    this.currentSlide++;
+  }
+}
+
+prevSlide() {
+  if (this.currentSlide > 0) {
+    this.currentSlide--;
+  }
+}
+
+goToSlide(index: number) {
+  this.currentSlide = index;
+}
+
+canGoPrev(): boolean {
+  return this.currentSlide > 0;
+}
+
+canGoNext(): boolean {
+  return this.currentSlide < this.totalSlides - 1;
+}
+
+getIndicatorsArray(): number[] {
+  return Array(this.totalSlides).fill(0).map((_, i) => i);
+}
+
+startAutoPlay() {
+  this.autoPlayInterval = setInterval(() => {
+    if (this.canGoNext()) {
+      this.nextSlide();
+    } else {
+      this.currentSlide = 0;
+    }
+  }, 5000);
+}
+
+stopAutoPlay() {
+  if (this.autoPlayInterval) {
+    clearInterval(this.autoPlayInterval);
+  }
+}
+
+onMouseEnter() {
+  this.stopAutoPlay();
+}
+
+onMouseLeave() {
+  this.startAutoPlay();
+}
 
 
 
