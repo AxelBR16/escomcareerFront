@@ -249,13 +249,32 @@ export class PreguntasComponent implements OnInit {
     return respuestasJSON ? JSON.parse(respuestasJSON) : {};
   }
 
-  guardarRespuesta() {
-    if (this.selectedAnswer) {
-      this.respuestasUsuario[this.id] = parseInt(this.selectedAnswer);
+
+  //Funcion AGREGADA PARA GUARDAR RESPUESTA ELIMNAR SI A NO FUNCIONA EL SISTEMA 
+ guardarRespuesta() {
+  if (this.selectedAnswer) {
+    // Convertir selectedAnswer a un número
+    const respuesta = parseInt(this.selectedAnswer);
+
+    // Verificar si la conversión fue exitosa
+    if (isNaN(respuesta)) {
+      console.error('Respuesta inválida:', this.selectedAnswer);
+      return;  // Si la respuesta no es válida, no la guardamos
+    }
+
+    // Guardar la respuesta en respuestasUsuario
+    this.respuestasUsuario[this.id] = respuesta;
+
+    try {
+      // Almacenar las respuestas en sessionStorage (o localStorage si necesitas persistencia más allá de la sesión)
       sessionStorage.setItem(`respuestasUsuario_${this.parteIzquierda}`, JSON.stringify(this.respuestasUsuario));
       this.isAnswered = true;
+    } catch (error) {
+      console.error('Error al guardar la respuesta en sessionStorage:', error);
     }
   }
+}
+
 
   onOptionChange(event: Event): void {
     this.selectedAnswer = (event.target as HTMLInputElement).value;
@@ -377,6 +396,7 @@ export class PreguntasComponent implements OnInit {
   // MÉTODO CORREGIDO - Next con nueva lógica
   async next() {
     if (this.selectedAnswer) {
+
       this.guardarRespuesta();
       const hasConnection = await this.checkInternetConnection();
       

@@ -1,192 +1,227 @@
-/* General Styles */
-body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #f9f9f9;
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
 
-/* Body Styling */
 .body {
-  background-color: #ffffff;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  margin: 30px auto;
-  padding: 20px;
-  max-width: 1100px;
-  width: 90%;
-  text-align: center;
-}
-
-/* Center the chart container */
-.chart-container {
-  margin-top: 30px;
+  font-family: Arial, sans-serif;
+  background-color: #f1f1f1;
   display: flex;
-  justify-content: center;  /* Horizontally center the chart */
-  align-items: center;      /* Vertically center the chart */
-  min-height: 400px;        /* Ensure there's enough space for the chart */
+  justify-content: center;
+  align-items: center;
+
 }
 
-/* Ensure the canvas scales properly within the container */
-canvas {
-  width: 100%;
-  max-width: 800px; /* Set max-width for the chart */
-  height: auto;
-}
-
-/* Table for Aptitude Scores */
-.escala-container {
-  margin-top: 40px;
-  background-color: #ffffff;
-  padding: 20px;
+.services {
+  background-color: #fff;
+  padding: 30px;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.escala-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 20px;
-}
-
-.escala-table th,
-.escala-table td {
-  padding: 12px;
+  width: 80%;
+  max-width: 1200px;
   text-align: center;
-  border: 1px solid #ddd;
+}
+
+h1 {
+  margin-bottom: 20px;
+  font-size: 32px;
+  color: #2c2c2c;
+}
+
+.service-cards {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.card {
+  background-color: #001E62;
+  color: white;
+  border-radius: 10px;
+  padding: 20px;
+  width: 48%;  /* Mantengo el 48% para que haya dos por fila */
+  text-align: left;  /* Alineamos el texto a la izquierda */
+}
+
+.card-content {
+  display: flex;
+  justify-content: space-between;  /* Esto permite que el texto esté a la izquierda y la imagen a la derecha */
+  align-items: center;
+}
+
+.icon {
+  margin-left: 15px;  /* Espacio entre la imagen y el texto */
+}
+
+.icon img {
+  width: 60px;
+  height: 60px;
+}
+
+.content h3 {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+.content h2 {
+  font-size: 25px;
+  margin-bottom: 10px;
+}
+
+.content a {
+  color: #e7d31b;
+  text-decoration: none;
   font-size: 16px;
 }
 
-.escala-table th {
-  background-color: #3498db;
-  color: white;
-}
-
-.escala-table td {
-  background-color: #f9f9f9;
-}
-
-.escala-table tr:hover {
-  background-color: #f1f1f1;
-}
-
-/* Button Styling */
-.btn-container {
-  text-align: center;
+.cta {
   margin-top: 30px;
 }
 
-.btn {
-  background-color: #3498db;
+.cta p {
+  font-size: 22px;
+  color: #2c2c2c;
+}
+
+.cta a {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 10px 20px;
+  background-color: #857f49;
   color: white;
-  padding: 15px 30px;
-  font-size: 18px;
   text-decoration: none;
   border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  display: inline-block;
-}
-
-.btn:hover {
-  background-color: #2980b9;
-}
-
-.btn.neon {
-  background: linear-gradient(45deg, #ff6ec7, #ff9a8b);
-  box-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
-}
-
-.btn.neon:hover {
-  background: linear-gradient(45deg, #ff9a8b, #ff6ec7);
-  box-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
-}
-
-/* Launch Container */
-/* Launch Container */
-.launch-container {
-  margin-top: 50px;
-  display: flex;
-  justify-content: space-between;  /* Aligns content to the left and right */
-  align-items: center;
-  background-color: #ffffff;
-  padding: 40px;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  gap: 20px;  /* Space between the text and the graph */
-}
-
-.launch-content {
-  display: flex;
-  flex-direction: row;  /* Row layout to have text on the left and image on the right */
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-}
-
-.launch-text {
-  width: 50%;
-  text-align: left;  /* Align text to the left */
-}
-
-.launch-text h1 {
-  font-size: 28px;
-  color: #3498db;
-}
-
-.launch-text h2 {
-  font-size: 24px;
-  color: #2c3e50;
-}
-
-.launch-text p {
   font-size: 16px;
-  color: #7f8c8d;
 }
 
-.launch-image {
-  width: 50%;
-  display: flex;
-  justify-content: center;  /* Centers the graph horizontally */
-  align-items: center;
-}
 
-canvas {
-
-  height: 100px;
-  max-width: 500px;  /* Adjust the max-width to make the chart smaller */
-  border-radius: 10px;
-}
-
-/* Responsive Design */
+/* Estilos responsive */
 @media (max-width: 768px) {
-  .body {
-    width: 95%;
+  .service-cards {
+    justify-content: center;
   }
 
-  .launch-container {
-    flex-direction: column;  /* Stack the content vertically on smaller screens */
-    padding: 20px;
+  .card {
+    width: 100%;  /* En pantallas pequeñas, las tarjetas ocupan el 100% de la fila */
+    margin-bottom: 20px;
   }
 
-  .btn {
-    font-size: 16px;
-    padding: 12px 20px;
+  h1 {
+    font-size: 28px;
   }
 }
 
 @media (max-width: 480px) {
-  .escala-table th, .escala-table td {
+  .cta p {
+    font-size: 20px;
+  }
+
+  .cta a {
     font-size: 14px;
+    padding: 8px 16px;
+  }
+}
+
+
+/* modelos  */
+
+.Modelos {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+
+.left-side, .right-side {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Asegura que el contenido en el lado izquierdo se centre */
+  text-align: center;
+  width: 100%;
+  max-width: 600px; /* Máximo ancho para el contenedor de la izquierda */
+    border-radius: 10px;
+}
+
+.left-side {
+  color: white;
+  background: linear-gradient(135deg, #2d3b4c, #1a242f); /* Color de fondo para el lado izquierdo */
+}
+
+.left-side h1 {
+  color: white;
+ 
+}
+
+
+.right-side {
+  background-color: #e0e0e0;  /* Color de fondo para el lado derecho */
+}
+
+/* Puedes agregar más estilos según tus necesidades, como añadir gráficos, imágenes, etc. */
+
+/* Media query para pantallas más pequeñas */
+@media (max-width: 768px) {
+  .Modelos {
+    flex-direction: column;  /* Las secciones se apilan verticalmente en pantallas pequeñas */
+  }
+
+  .left-side, .right-side {
+    width: 100%;  /* En pantallas pequeñas, ambos lados ocuparán todo el ancho */
+    padding: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .Modelos {
     padding: 10px;
   }
 
-  .btn {
-    font-size: 14px;
-    padding: 10px 15px;
+  .left-side, .right-side {
+    padding: 5px;
   }
 }
+
+
+
+/*Gráficos y tablas*/
+.chart-container {
+  position: relative;
+  width: 300px; /* Ajusta el tamaño del gráfico según tus necesidades */
+  height: 300px; /* Ajusta el tamaño del gráfico según tus necesidades */
+  display: flex;
+  justify-content: center;
+  align-items: center; /* Centra el canvas dentro del contenedor */
+  margin-bottom: 20px; /* Separación con el texto debajo */
+}
+
+canvas {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.chart-info {
+  margin-top: 20px;
+}
+
+.chart-info p {
+  font-size: 18px;
+  margin: 5px 0;
+}
+
+/* Buttons */
+.btn {
+    background-color: #001E62;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+
+}
+ .btn:hover {
+    background-color: #FFD700;
+}
+
+
+
 /* Disclaimer container */
 .disclaimer-container {
   margin-top: 30px;

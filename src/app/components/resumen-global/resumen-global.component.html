@@ -1,66 +1,134 @@
-<!-- Sección de Resultados de Aptitudes -->
 <div class="body">
-  <h2>Resultados de Inventario de Autoevaluación de Aptitudes</h2>
-  <div class="chart-container">
-    <canvas id="aptitudesChart"></canvas>
-  </div>
-</div>
-
-<!-- Escalas de acuerdo a tu puntaje -->
-<div class="escala-container">
-  <h2>Escalas de acuerdo a tu puntaje</h2>
-
-  <table class="escala-table">
-    <thead>
-      <tr>
-        <th>Puntaje</th>
-        <th>Significado</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>0 - 10</td>
-        <td>Habilidad baja</td>
-      </tr>
-      <tr>
-        <td>11 - 20</td>
-        <td>Habilidad media-baja</td>
-      </tr>
-      <tr>
-        <td>21 - 30</td>
-        <td>Habilidad media</td>
-      </tr>
-      <tr>
-        <td>31 - 40</td>
-        <td>Habilidad alta</td>
-      </tr>
-      <tr>
-        <td>41 - 50</td>
-        <td>Habilidad muy alta</td>
-      </tr>
-    </tbody>
-  </table>
-</div>
-
-
-
-<!-- Sección de Recomendación basada en IA -->
-<section class="launch-container">
-  <div class="launch-content">
-    <div class="launch-text">
-      <h1>La recomendación basada en IA:</h1>
-      <h2>{{ porcentaje }}% de similitud con {{ carreraSugerida }}</h2>
-      <p>"Basado en tus aptitudes, la IA sugiere {{ carreraSugerida }} con un {{ porcentaje }}% de similitud"</p>
-      <a [routerLink]="['/pruebasA']" class="btn">Regresar</a>
-    </div>
+  <br>
+  <section class="services">
+    <h1>Resultados generales </h1>
+    <h2>Top 3 de tus resultados </h2>
     <br>
-    <div class="launch-image">
-      <!-- Canvas donde se renderizará la gráfica de pastel -->
-      <canvas id="pieChart"></canvas>
+    <div class="service-cards">
+      <!-- Card 1 -->
+      <div class="card">
+        <div class="card-content">
+          <div class="content">
+            <h2>Preferencias universitarias</h2>
+            <a [routerLink]="['/result-uni']">Inventario</a>
+          </div>
+          <div class="icon">
+            <img src="site/carrerasuni.png" alt="SEO">
+          </div>
+        </div>
+      </div>
+     
+
+    <div class="card">
+  <div class="card-content">
+    <div class="content">
+  <h2>Top 3 Áreas Más Altas</h2>
+  <ul>
+    <li *ngFor="let area of top3Areas">
+      {{ area.area }} - {{ area.puntaje }}%
+    </li>
+  </ul>
+</div>
+
+    <div class="icon">
+      <img src="https://via.placeholder.com/60" alt="SEO">
     </div>
   </div>
-</section>
+</div>
 
+
+
+
+
+
+      <!-- Card 2 -->
+      <div class="card">
+        <div class="card-content">
+          <div class="content">
+            <h2>Autoevaluación de aptitudes</h2>
+            <a [routerLink]="['/result-aptitudes']">Inventario</a>
+          </div>
+          <div class="icon">
+            <img src="site/aptitud.png" alt="Social Media">
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-content">
+          <div class="content">
+            <ul>
+              <li>Publicidad de pago por clic</li>
+              <li>Campañas PPC efectivas</li>
+              <li>Gestión de anuncios</li>
+            </ul>
+          </div>
+          <div class="icon">
+            <img src="https://via.placeholder.com/60" alt="Email">
+          </div>
+        </div>
+      </div>
+      <!-- Card 3 -->
+        <div class="card">
+        <div class="card-content">
+          <div class="content">
+            <h2>Interes ocupacionales</h2>
+            <a [routerLink]="['/result-intereses']">Inventario</a>
+          </div>
+          <div class="icon">
+            <img src="https://cdn-icons-png.flaticon.com/512/833/833472.png" alt="Email">
+          </div>
+        </div>
+      </div>
+            <div class="card">
+        <div class="card-content">
+          <div class="content">
+             <ul>
+              <li>Publicidad de pago por clic</li>
+              <li>Campañas PPC efectivas</li>
+              <li>Gestión de anuncios</li>
+            </ul>
+          </div>
+          <div class="icon">
+            <img src="https://via.placeholder.com/60" alt="Email">
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="cta">
+     <h1>Resultados de los modelos de IA en cada inventario </h1>
+    </div>
+
+    
+
+     <div class="Modelos">
+         <div class="left-side">
+              <br>
+          <h1>Autoevaluación de aptitudes</h1>
+              <!-- Aquí puedes agregar el contenido o gráficos que quieras en el lado izquierdo -->
+              <div class="chart-container">
+                <!-- El canvas para mostrar el gráfico de torta -->
+                <canvas id="pieChart"></canvas>
+              </div>
+              
+              <!-- Aquí va la instrucción debajo de la gráfica -->
+              <div class="chart-info">
+                <p>{{ carreraSugerida }}</p>
+                <p>{{ porcentaje }}% de probabilidad con base en tus aptitudes</p>
+              </div>
+            </div>
+        
+
+            
+            
+            
+            <div class="right-side">
+              <!-- Aquí puedes agregar gráficos o contenido para el lado derecho -->
+               <h1>Interes ocupacionales</h1>
+            </div>
+      </div>
+
+<br>
 <!-- Leyenda de advertencia sobre la recomendación -->
 <div class="disclaimer-container">
   <p class="disclaimer-text">
@@ -68,3 +136,9 @@
   </p>
 </div>
 <br>
+  <button class="btn results-btn" [routerLink]="['/pruebasA']">Regresar</button>
+  </section>
+
+
+  <br>
+</div>

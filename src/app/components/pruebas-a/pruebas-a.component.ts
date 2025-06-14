@@ -1,9 +1,10 @@
-import { Component, OnInit,  ViewChild } from '@angular/core';
+import { Component, OnInit,  ViewChild,inject } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { PreguntasService } from '../../services/preguntas.service';
 import { RespuestaService } from '../../services/respuesta.service';
 import { AuthService } from '../../services/auth.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-pruebas-a',
@@ -12,6 +13,7 @@ import { AuthService } from '../../services/auth.service';
   styleUrl: './pruebas-a.component.css'
 })
 export class PruebasAComponent implements OnInit {
+  private snackBar = inject(MatSnackBar);
   pruebasCompletadas: { aptitudes: boolean, intereses: boolean } = { aptitudes: false, intereses: false };
   progreso: { aptitudes: number, intereses: number } = { aptitudes: 0, intereses: 0 };
   totalPreguntas: { aptitudes: number, intereses: number } = { aptitudes: 120, intereses: 130 };
@@ -96,5 +98,23 @@ ngAfterViewInit(): void {
     video.play();  // Reproduce el video
   }
 
+
+  irAresu(): void {
+  // Navegar a la ruta '/login'
+  this.router.navigate(['/resumenglobal']).then(() => {
+    // Desplazar la página a la parte superior
+    window.scrollTo(0, 0);
+  });
+
+  // Mostrar el mensaje con SnackBar
+  this.snackBar.open(
+    '👋 ¡Hola! Bienvenido! Revisa tu resumen de resultados, toma tu mejor decisión 🚀',
+    'OK',
+    {
+      duration: 5000,  // Duración de la alerta (5000 ms = 5 segundos)
+      panelClass: ['custom-snackbar']  // Puedes agregar una clase para personalizar el estilo de la alerta
+    }
+  );
+}
 
 }

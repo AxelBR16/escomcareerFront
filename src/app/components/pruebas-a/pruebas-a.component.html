@@ -70,9 +70,10 @@
   <div class="btn-container">
     <a [routerLink]="['/cuestionario']"><button class="btn results-btn">Regresar</button></a>
     <!-- Aquí se bloquea el botón 'Resumen' hasta que ambas pruebas estén completas -->
-    <a [routerLink]="['/resumenglobal']">
-      <button class="btn results-btn" [disabled]="progreso.aptitudes < 100 || progreso.intereses < 100">Resumen</button>
-    </a>
+    
+    <!--  <button class="btn results-btn" [disabled]="progreso.aptitudes < 100 || progreso.intereses < 100">Resumen</button>-->
+     <button class="btn results-btn" (click)="irAresu()">Resumen</button>
+    
   </div>
 
   <br>
