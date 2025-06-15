@@ -215,19 +215,33 @@
               </div>
 
               <div class="proyecto-footer">
-                <div class="feedbackpro">
-                  <ion-icon
-                    name="thumbs-up-outline"
-                    (click)="votarproyecto(proyecto.id, 'like')"
-                    [ngClass]="{'like-active': proyecto.voto === 'like'}">
-                  </ion-icon>
+                <div class="feedbackpro" *ngIf="usuarioAutenticado">
+                  <div class="feedback-item">
+                    <ion-icon
+                      name="thumbs-up-outline"
+                      [class.disabled]="proyecto.yaVoto"
+                      (click)="!proyecto.yaVoto && votarproyecto(proyecto.id, 'like')"
+                      [ngClass]="{
+                        'like-active': proyecto.voto === 'like',
+                        'disabled': proyecto.yaVoto
+                      }">
+                    </ion-icon>
+                    <span>{{ proyecto.likes }}</span>
+                  </div>
 
-                  <ion-icon
-                    name="thumbs-down-outline"
-                    (click)="votarproyecto(proyecto.id, 'dislike')"
-                    [ngClass]="{'dislike-active': proyecto.voto === 'dislike'}">
-                  </ion-icon>
-                </div>
+                  <div class="feedback-item">
+                    <ion-icon
+                      name="thumbs-down-outline"
+                      [class.disabled]="proyecto.yaVoto"
+                      (click)="!proyecto.yaVoto && votarproyecto(proyecto.id, 'dislike')"
+                      [ngClass]="{
+                        'dislike-active': proyecto.voto === 'dislike',
+                        'disabled': proyecto.yaVoto
+                      }">
+                    </ion-icon>
+                    <span>{{ proyecto.dislikes }}</span>
+                  </div>
+              </div>
                 <p class="autor">
                   <span class="nombrejob">{{ proyecto.autor }}</span>
                   <span class="fecha-badge">📅 {{ proyecto.status }}</span>

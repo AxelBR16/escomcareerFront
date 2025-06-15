@@ -7,6 +7,20 @@
     padding: 10px;
   }
 
+  .feedbackpro .feedback-item ion-icon.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
+.feedbackpro .feedback-item ion-icon.like-active {
+  color: #3880ff; /* Color azul para like activo */
+}
+
+.feedbackpro .feedback-item ion-icon.dislike-active {
+  color: #eb445a; /* Color rojo para dislike activo */
+}
+
   .hero {
     width: 100%;
     height: 60vh;

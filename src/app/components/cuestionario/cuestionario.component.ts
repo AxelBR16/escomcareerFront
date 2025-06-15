@@ -18,7 +18,7 @@ export class CuestionarioComponent implements OnInit{
   private snackBar = inject(MatSnackBar);
   pruebasPreferenciasCompletadas: boolean = false;
   progreso: number = 0;
-  totalPreguntas: number = 60;
+  totalPreguntas: number = 59;
   preguntainicial: string = '001';
   id: string;
 
@@ -63,7 +63,7 @@ verificarCuestionario(email: string) {
 
 
  redirigir() {
-  if (this.progreso === 100) {
+  if (this.progreso >= 100) {
     this.router.navigate(['/result-uni']).then(() => {
       window.scrollTo(0, 0); // Esto hace scroll hacia arriba
     });
@@ -81,7 +81,7 @@ verificarCuestionario(email: string) {
 
 
   mostrarAlertaAntesDeSeguir() {
-  const puntajeCompleto = this.progreso === 100;
+  const puntajeCompleto = this.progreso >= 100;
 
   if (!puntajeCompleto) {
   this.snackBar.open('⚠️ No has terminado tu inventario. 📋 Debes completarlo al 100% para poder continuar. 🔒', 'OK', {
