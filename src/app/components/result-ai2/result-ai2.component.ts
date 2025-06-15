@@ -14,21 +14,20 @@ import Swal from 'sweetalert2';
 })
 export class ResultAI2Component implements AfterViewInit {
 
-  // Carreras disponibles (según el modelo de intereses)
   carreras: string[] = [
     'Ingeniería en Sistemas Computacionales',
     'Licenciatura en Ciencia de Datos',
     'Ingeniería en Inteligencia Artificial'
   ];
 
-  carreraSugerida: string = '';  // Carrera sugerida por el modelo
-  porcentaje: number = 0;  // Probabilidad de la carrera sugerida
+  carreraSugerida: string = ''; 
+  porcentaje: number = 0;  
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: any,
     private router: Router,
-    private cdRef: ChangeDetectorRef,  // Inyectamos ChangeDetectorRef
-    private resultadoService: ResultadoService  // Inyectamos el ResultadoService
+    private cdRef: ChangeDetectorRef,  
+    private resultadoService: ResultadoService 
   ) {}
 
  ngAfterViewInit(): void {
