@@ -139,6 +139,7 @@ labelNames: any = {
   getAllRetroalimentaciones(): void {
   this.retroalimentacionService.getAllRetroalimentaciones().subscribe(
     (data) => {
+      this.retroalimentaciones.length = 0;
       this.retroalimentaciones = data;
       this.calculateTotalSlides(); // <- Aquí también
     },
