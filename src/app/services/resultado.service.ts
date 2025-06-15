@@ -43,4 +43,11 @@ export class ResultadoService {
   obtenerSimilitudes(email: string): Observable<{ carrera: string, porcentaje: number }[]> {
     return this.httpClient.get<{ carrera: string, porcentaje: number }[]>(`${environment.apiUrls.auth}/similitudes?email=${email}`);
   }
+
+  
+  // Función para enviar las características a Lambda y obtener la predicción
+  enviarCaracteristicasALambda(puntajes: number[]): Observable<any> {
+    // Llama al endpoint de Lambda que hace la predicción
+    return this.httpClient.post('https://tu-api-lambda-endpoint/intereses', { features: puntajes });
+  }
 }
