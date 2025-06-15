@@ -18,6 +18,6 @@ export class ModelService {
   }
 
     predictCareerIntereses(features: number[]): Observable<PredictionResponse> {
-    return this.http.post<PredictionResponse>(`${environment.apiUrls.modelIA}/aptitudes`, { features });
+    return this.http.post<PredictionResponse>(`${environment.apiUrls.modelIA}/intereses`, { features });
   }
 }

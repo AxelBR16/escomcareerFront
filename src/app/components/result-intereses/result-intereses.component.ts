@@ -5,21 +5,32 @@ import { CommonModule } from '@angular/common';
 import { isPlatformBrowser } from '@angular/common';
 import Chart from 'chart.js/auto';
 import annotationPlugin from 'chartjs-plugin-annotation';
+import Swal from 'sweetalert2';
 import { ResultadoService } from '../../services/resultado.service';
 import { ResultadoResumenDTO } from '../../models/ResultadoResumenDTO';
-import Swal from 'sweetalert2';
+import { HttpClientModule } from '@angular/common/http';
+import { ModelService } from '../../services/model.service';
+import { LoaderService } from '../../services/loader.service';
+import { PredictionResponse } from '../../models/PredictionResponse';
 import { AuthService } from '../../services/auth.service';
+
+Chart.register(annotationPlugin);
 
 @Component({
   selector: 'app-result-intereses',
   imports: [CommonModule, RouterModule],
   templateUrl: './result-intereses.component.html',
-  styleUrl: './result-intereses.component.css'
+  standalone: true,
+  styleUrl: './result-intereses.component.css',
+  providers: [ResultadoService]
 })
 export class ResultInteresesComponent {
   private chart: any;
 
-  constructor(@Inject(PLATFORM_ID) private platformId: any, private router: Router,private resultadoService: ResultadoService,  private authService: AuthService) {}
+  constructor(@Inject(PLATFORM_ID) private platformId: any, private router: Router,private resultadoService: ResultadoService,  
+  private modelService: ModelService,
+  private loaderService: LoaderService,
+  private authService: AuthService) {}
 
  async ngAfterViewInit(): Promise<void> {
    await new Promise(resolve => setTimeout(resolve, 500));
@@ -72,7 +83,7 @@ export class ResultInteresesComponent {
       }
 
 initChart(etiquetas: string[], puntajes: number[]): void {
-    const canvas = document.getElementById('aptitudesChart') as HTMLCanvasElement;
+    const canvas = document.getElementById('interesesChart') as HTMLCanvasElement;
 
     if (!canvas) {
       console.error('No se encontró el canvas en el DOM.');
@@ -105,31 +116,84 @@ initChart(etiquetas: string[], puntajes: number[]): void {
             beginAtZero: true,
             max: 50
           }
-        }
+        },
+         onClick: (event: any) => this.handleChartClick(event) // Agregar el evento de clic
       }
     });
   }
 
 
+  textosBarra: string[] = [
+  "Esta habilidad se refiere a la capacidad de aplicar el pensamiento de manera amplia, especialmente en el ámbito científico. Implica la habilidad para observar, inferir, entender relaciones sistemáticas, plantear hipótesis, construir predicciones y comprender relaciones complejas de manera eficiente. Las personas con esta aptitud son aptas para ocupaciones en áreas como química, medicina y biología.",
+  "Esta habilidad se refiere a la capacidad de realizar movimientos manuales precisos, coordinados entre manos y ojos. Implica la destreza para ejecutar tareas que requieren movimientos finos, como el trazo de líneas delicadas o el manejo de herramientas pequeñas. Se desarrolla cuando un individuo puede trabajar de manera precisa con mínima error. Ocupaciones que requieren esta habilidad incluyen joyería, reparaciones electrónicas, y cirugía.",
+  "Esta habilidad involucra el conocimiento y uso adecuado de fórmulas numéricas y el lenguaje simbólico en operaciones que requieren números. Las personas con esta habilidad pueden resolver problemas numéricos eficientemente, traducir situaciones a un lenguaje numérico y formular problemas de este tipo. Además, pueden enseñar la disciplina de manera clara. Las ocupaciones relacionadas incluyen áreas como ingeniería, matemáticas, estadísticas y contabilidad.",
+  "La aptitud verbal se caracteriza por el manejo eficiente de representaciones semánticas, como la construcción mental de un discurso o la lectura. Las personas con esta habilidad pueden reconocer ideas principales, coordinar párrafos, obtener mensajes con facilidad y desarrollar textos de manera coherente. Las ocupaciones relacionadas incluyen derecho, filosofía, relaciones públicas, sociología y trabajo social.",
+  "La aptitud persuasiva se refiere a la capacidad de formular argumentos para apoyar un punto de vista y persuadir a otros a cambiar sus actitudes. Además, involucra la habilidad para argumentar desde puntos de vista contrarios. Las personas con esta habilidad pueden apelar a los sentimientos y razones convincentes, y formular razonamientos de manera rápida y efectiva. Las ocupaciones relacionadas incluyen ventas, psicología, relaciones públicas, derecho, mercadotecnia y relaciones internacionales.",
+  "Esta habilidad implica el uso eficiente de herramientas y la capacidad para representar espacialmente cómo se transmite el movimiento entre las partes de un artefacto. También incluye la capacidad para entender cómo se transforma la energía en dispositivos mecánicos o eléctricos. Las personas con esta habilidad pueden identificar disfunciones en artefactos y hacer predicciones sobre su funcionamiento. Las ocupaciones relacionadas incluyen ingeniería, mecánica, automotriz y electrónica.",
+  "La aptitud social se refiere a la capacidad de comprender el mundo desde la perspectiva de otras personas, interpretando temores, sentimientos y expectativas. Un indicador de esta habilidad es la capacidad de escuchar empáticamente, es decir, sin juzgar y comprendiendo realmente al otro. Las ocupaciones relacionadas incluyen psicología, trabajo social, terapia familiar, y sacerdocio.",
+  "La aptitud directiva se refiere a la capacidad de un sujeto para liderar grupos laborales y cumplir con responsabilidades. Las personas con esta habilidad pueden formular juicios, evaluar logros de trabajo, interpretar reglamentos y tomar decisiones justas. Además, tienen la capacidad de liderar grupos y gestionar eficientemente la ejecución de tareas. Las ocupaciones relacionadas incluyen administración, supervisión de equipos y liderazgo en organizaciones.",
+  "La aptitud organizacional se refiere a la capacidad para manejar información usando sistemas de cómputo, establecer variables, tabular y representar datos complejos. Implica también diseñar modelos y procedimientos para la localización rápida de objetos (como inventarios). Las personas con esta habilidad se destacan en técnicas formales de organización. Las ocupaciones relacionadas incluyen archivistas, licenciados en computación e informática, y roles en administración.",
+  "La aptitud musical se manifiesta cuando un individuo tiene una destacada memoria auditiva y la capacidad para reconocer diferencias y semejanzas de tonos. También incluye la habilidad para combinar tonos en ejecución musical con acordes y melodías. Las personas con esta aptitud son capaces de asociar notas significativas y crear composiciones armoniosas.",
+  "Esta habilidad se refiere al uso y aplicación armónica de colores, la expresión de formas en tres dimensiones y el manejo de herramientas para estas labores. Implica también el manejo de transformaciones visuales y plásticas de diversos materiales, así como la interpretación y diseño de planos y bosquejos. Las ocupaciones relacionadas incluyen decoradores de interiores, artesanos, arquitectos y diseñadores gráficos.",
+  "La aptitud espacial se caracteriza por la capacidad para manejar representaciones y orientarse en el espacio. Implica memoria visual y habilidad para localizar puntos en mapas, así como para imaginar objetos en tres dimensiones. Las personas con esta habilidad también pueden optimizar el acomodo de objetos o diseñar con representaciones tridimensionales detalladas. Las ocupaciones relacionadas incluyen diseñadores industriales, arquitectos, ingenieros civiles y topógrafos.",
+  "La aptitud espacial se caracteriza por la capacidad para manejar representaciones y orientarse en el espacio. Implica memoria visual y habilidad para localizar puntos en mapas, así como para imaginar objetos en tres dimensiones. Las personas con esta habilidad también pueden optimizar el acomodo de objetos o diseñar con representaciones tridimensionales detalladas. Las ocupaciones relacionadas incluyen diseñadores industriales, arquitectos, ingenieros civiles y topógrafos."
+];
 
-    // Método que se activa al hacer clic en el botón
-    showLoading(): void {
-      // Muestra la alerta de SweetAlert2
-      Swal.fire({
-        title: 'Cargando...',
-        text: 'Analizando resultados similares en el sistema de recomendación...',
-        icon: 'info',
-        allowOutsideClick: false, // Evita que el usuario cierre la alerta
-        showConfirmButton: false, // No mostrar el botón de confirmación
-        willOpen: () => {
-          Swal.showLoading(); // Muestra el spinner de carga
-        }
-      });
 
-      // Simula una espera de 2 segundos antes de redirigir
-      setTimeout(() => {
-        this.router.navigate(['/resultAI2']); // Redirige a la página de resultados
-        Swal.close(); // Cierra la alerta de carga
-      }, 4000); // El tiempo de espera puede ajustarse
+// Maneja el clic en una barra
+handleChartClick(event: any): void {
+  const activePoints = this.chart.getElementsAtEventForMode(event, 'nearest', { intersect: true }, true);
+  if (activePoints.length > 0) {
+    const index = activePoints[0].index;
+    const label = this.chart.data.labels[index];
+
+    // Obtener el texto asociado a la barra seleccionada
+    const textoBarra = this.textosBarra[index];
+
+    // Mostrar el texto usando SweetAlert2
+    Swal.fire({
+      title: `Información sobre la escala ${label}`,
+      text: textoBarra,
+      icon: 'info'
+    });
+  }
+}
+  
+
+    calcularIA() {
+      // Si ya hay una predicción guardada, redirige directamente al resultado
+      const prediccionGuardada = sessionStorage.getItem('prediccionIA-intereses');
+      if (prediccionGuardada) {
+        this.router.navigate(['/resultAI2']);
+        return;
+      }
+      const datosGuardados = sessionStorage.getItem('puntajes');
+      if (datosGuardados) {
+        const datos = JSON.parse(datosGuardados);
+
+        this.loaderService.mostrarCargando('Calculando resultados, por favor espera...');
+
+       
+
+        this.modelService.predictCareerIntereses(datos.puntajes).subscribe({
+          next: (response: PredictionResponse) => {
+            sessionStorage.setItem('prediccionIA-intereses', JSON.stringify(response));
+            this.loaderService.ocultarCargando();
+            this.router.navigate(['/resultAI2']);
+          },
+          error: (err) => {
+            console.error('Error al obtener predicción:', err);
+            this.loaderService.ocultarCargando();
+            alert('Ocurrió un error al calcular la predicción.');
+          }
+        });
+      } else {
+        alert('No se encontraron los puntajes guardados.');
+      }
     }
 }
+
+
+
+
+
