@@ -79,6 +79,16 @@ export class ResultInteresesComponent {
         const etiquetas = ordenados.map(r => escalaLabels[r.escalaId] || `Escala ${r.escalaId}`);
         const puntajes = ordenados.map(r => r.puntaje);
 
+          // ✅ Guardar Top 3 de intereses
+        const top3 = etiquetas.map((et, index) => ({
+          escala: et,
+          puntaje: puntajes[index]
+        }))
+        .sort((a, b) => b.puntaje - a.puntaje)
+        .slice(0, 3);
+
+        sessionStorage.setItem('top3Intereses', JSON.stringify(top3));
+
         return { etiquetas, puntajes };
       }
 
