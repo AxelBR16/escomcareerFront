@@ -78,9 +78,21 @@ export class ResultUniverComponent {
   const puntajesUnicos = etiquetasUnicas.map(etiqueta => 
     ordenados.find(r => escalaLabels[r.escalaId] === etiqueta)?.puntaje || 0
   );
-  return { etiquetas: etiquetasUnicas, puntajes: puntajesUnicos };
+
+
   
-  }
+  // ✅ Calcular el Top 3 y guardarlo en sessionStorage
+  const top3 = etiquetasUnicas.map((et, index) => ({
+    escala: et,
+    puntaje: puntajesUnicos[index]
+  }))
+  .sort((a, b) => b.puntaje - a.puntaje)
+  .slice(0, 3);
+
+  sessionStorage.setItem('top3PreferenciasUniversitarias', JSON.stringify(top3));
+
+  return { etiquetas: etiquetasUnicas, puntajes: puntajesUnicos };
+}
 
 
      initChart(etiquetas: string[], puntajes: number[]): void {

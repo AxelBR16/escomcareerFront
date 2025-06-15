@@ -5,12 +5,12 @@
     <h2>Top 3 de tus resultados </h2>
     <br>
     <div class="service-cards">
-      <!-- Card 1 -->
+      <!-- Card 1 preferefencias  -->
       <div class="card">
         <div class="card-content">
           <div class="content">
             <h2>Preferencias universitarias</h2>
-            <a [routerLink]="['/result-uni']">Inventario</a>
+            <a class="btn-pill" [routerLink]="['/result-uni']">Inventario</a>
           </div>
           <div class="icon">
             <img src="site/carrerasuni.png" alt="SEO">
@@ -29,16 +29,16 @@
     </li>
   </ul>-->
   <h3>Áreas más altas</h3>
-   <ul>
-              <li>Fisicomatemáticas</li>
-              <li>Sociales</li>
-              <li>Humanidades</li>
-            </ul>
+    <ul>
+    <li *ngFor="let pref of top3PreferenciasUniversitarias">
+      {{ pref.escala }} - {{ pref.puntaje }} puntos
+    </li>
+  </ul>
 
 </div>
 
     <div class="icon">
-      <img src="https://via.placeholder.com/60" alt="SEO">
+      <img src="site/trofeo.webp" alt="SEO">
     </div>
   </div>
 </div>
@@ -48,12 +48,12 @@
 
 
 
-      <!-- Card 2 -->
+      <!-- Card 2 aptitudes  -->
       <div class="card">
         <div class="card-content">
           <div class="content">
             <h2>Autoevaluación de aptitudes</h2>
-            <a [routerLink]="['/result-aptitudes']">Inventario</a>
+             <a class="btn-pill" [routerLink]="['/result-aptitudes']">Inventario</a>
           </div>
           <div class="icon">
             <img src="site/aptitud.png" alt="Social Media">
@@ -64,14 +64,14 @@
         <div class="card-content">
           <div class="content">
               <h3>Áreas más altas</h3>
-            <ul>
-              <li>Coordinación </li>
-              <li>Numerica</li>
-              <li>Mecanica</li>
-            </ul>
+           <ul>
+            <li *ngFor="let apt of top3Aptitudes">
+              {{ apt.escala }} - {{ apt.puntaje }} puntos
+            </li>
+          </ul>
           </div>
           <div class="icon">
-            <img src="https://via.placeholder.com/60" alt="Email">
+            <img src="site/trofeo2.webp" alt="Email">
           </div>
         </div>
       </div>
@@ -80,7 +80,7 @@
         <div class="card-content">
           <div class="content">
             <h2>Interes ocupacionales</h2>
-            <a [routerLink]="['/result-intereses']">Inventario</a>
+            <a class="btn-pill" [routerLink]="['/result-intereses']">Inventario</a>
           </div>
           <div class="icon">
             <img src="https://cdn-icons-png.flaticon.com/512/833/833472.png" alt="Email">
@@ -91,14 +91,14 @@
         <div class="card-content">
           <div class="content">
               <h3>Áreas más altas</h3>
-             <ul>
-              <li>Calculo</li>
-              <li>Organización</li>
-              <li>Contabilidad</li>
+            <ul>
+              <li *ngFor="let interes of top3Intereses">
+                {{ interes.escala }} - {{ interes.puntaje }} puntos
+              </li>
             </ul>
           </div>
           <div class="icon">
-            <img src="https://via.placeholder.com/60" alt="Email">
+            <img src="site/trofeo3.webp" alt="Email">
           </div>
         </div>
       </div>
@@ -132,8 +132,16 @@
 
         
             <div class="right-side">
-             
-               <h1>Interes ocupacionales</h1>
+              <br>
+                <h1>Interes ocupacionales</h1>
+           <div class="chart-container">
+  <canvas id="pieChartIntereses"></canvas>
+</div>
+<div class="chart-info">
+  <p>{{ carreraSugeridaIntereses }}</p>
+  <p>{{ porcentajeIntereses }}% de probabilidad con base en tus intereses</p>
+</div>
+
                   
             </div>
       </div>
