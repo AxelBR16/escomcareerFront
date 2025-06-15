@@ -117,8 +117,8 @@ labelNames: any = {
   
 
 
-  currentPage = 1;  // Página actual
-  itemsPerPage = 3; // Experiencias por página
+  currentPage = 1; 
+  itemsPerPage = 2; 
 
   get paginatedExperiences() {
     const startIndex = (this.currentPage - 1) * this.itemsPerPage;

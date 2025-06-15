@@ -12,4 +12,5 @@ export interface proyecto {
   nombreEgresado?: string;
   apellidoEgresado?: string;
   nombreMateria?: string;
+  voto?: 'like' | 'dislike' | null;
 }

@@ -17,9 +17,10 @@ import { AuthService } from '../../services/auth.service';
   templateUrl: './result-univer.component.html',
   styleUrl: './result-univer.component.css'
 })
+
 export class ResultUniverComponent {
   private chart: any;
-   etiquetas: string[] = [];
+  etiquetas: string[] = [];
   puntajes: number[] = [];
 
   constructor(@Inject(PLATFORM_ID) private platformId: any, private router: Router,private resultadoService: ResultadoService, private authService: AuthService) {}
@@ -210,14 +211,14 @@ handleChartClick(event: any): void {
   } else {
           Swal.fire({
             title: 'Lo sentimos',
-            html: 'TTu puntaje en Fisicomatemáticas no está entre los 3 más altos. Puedes pasar a las siguientes pruebas, solo que no serán tan precisas.',
+            html: 'Tu puntaje en Fisicomatemáticas no está entre los 3 más altos. Puedes pasar a las siguientes pruebas, solo que no serán tan precisas.',
             icon: 'error',
             confirmButtonText: 'Aceptar',
             allowOutsideClick: false,
             allowEscapeKey: false,
             customClass: { popup: 'swal2-popup-custom' }
           }).then(() => {
-          this.router.navigate(['/pruebasA']); // Redirige a 'pruebasA' después de la advertencia
+          this.router.navigate(['/pruebasA']); 
         });
         }
       }

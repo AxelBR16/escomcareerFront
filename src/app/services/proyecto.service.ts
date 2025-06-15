@@ -43,4 +43,7 @@ export class ProyectoService {
     return this.http.put<void>(`${environment.apiUrls.auth}/proyectos/rechazar/${id}`, null);
   }
 
+  votarProyecto(id: number, tipo: 'like' | 'dislike'): Observable<proyecto> {
+    return this.http.post<proyecto>(`${environment.apiUrls.auth}/proyectos/${id}/votar?tipo=${tipo}`, {});
+  }
 }

@@ -127,13 +127,13 @@ export class PreguntasComponent implements OnInit {
 
   determinarTotalPreguntas() {
     if (this.id.startsWith('inv1')) {
-      this.totalQuestions = 120;
+      this.totalQuestions = 119;
       this.inventario = 1;
     } else if (this.id.startsWith('inv2')) {
-      this.totalQuestions = 130;
+      this.totalQuestions = 129;
       this.inventario = 2;
     } else if (this.id.startsWith('inv3')) {
-      this.totalQuestions = 60;
+      this.totalQuestions = 59;
       this.inventario = 3;
     }
   }
