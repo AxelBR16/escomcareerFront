@@ -81,7 +81,16 @@ export class AuthService {
       sessionStorage.removeItem('respuestasUsuario_inv2');
       sessionStorage.removeItem('respuestas_inv1');
       sessionStorage.removeItem('respuestas_inv2');
-      sessionStorage.removeItem('respuestas_inv3');  
+      sessionStorage.removeItem('respuestas_inv3'); 
+      sessionStorage.removeItem('top3Aptitudes');
+      sessionStorage.removeItem('top3Intereses');  
+      sessionStorage.removeItem('prediccionIA'); 
+      sessionStorage.removeItem('puntajes'); 
+      sessionStorage.removeItem('puntajes_inte'); 
+      sessionStorage.removeItem('puntajes_inte'); 
+      sessionStorage.removeItem('prediccionIA-intereses'); 
+      sessionStorage.removeItem('top3PreferenciasUniversitarias'); 
+
     } catch (error) {
       console.error('❌ Error al eliminar preguntainicial_inv3 de localStorage:', error);
     }
