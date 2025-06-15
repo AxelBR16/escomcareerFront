@@ -3,6 +3,6 @@ export const environment = {
   apiUrls: {
     /*auth: 'http://localhost:8080'*/
     auth: 'https://escomcareer.site',
-    modelIA: 'https://3gcsxigrl3.execute-api.us-east-2.amazonaws.com/dev'
+    modelIA: 'https://yapmoj8h02.execute-api.mx-central-1.amazonaws.com/dev'
   }
 };
