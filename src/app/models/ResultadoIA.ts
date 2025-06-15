@@ -1,5 +1,6 @@
 export interface ResultadoIA {
-  aspirante: { id: number };
-  carrera: { id: number };
+  email?: string;
+  carreraId: number;
+  inventarioId: number;
   puntaje: number;
 }
