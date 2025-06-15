@@ -3,6 +3,7 @@ import { ProyectoService } from '../../services/proyecto.service';
 import { proyecto } from '../../models/proyecto';
 import { CommonModule } from '@angular/common';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-adminvideos',
@@ -14,19 +15,26 @@ export class AdminvideosComponent implements OnInit{
 
   private snackBar = inject(MatSnackBar);
   proyectos: proyecto[] = [];
+  videoEmbedUrls: { [key: number]: SafeResourceUrl | null } = {};
 
-  constructor(private proyectoService: ProyectoService) { }
+  constructor(private proyectoService: ProyectoService, private sanitizer: DomSanitizer) { }
 
   ngOnInit(): void {
     this.cargarProyectos();
   }
 
   cargarProyectos(): void {
-    this.proyectoService.obtenerProyectosSinAprobar().subscribe(
-      data => this.proyectos = data,
-      error => console.error('Error al cargar proyectos', error)
-    );
-  }
+  this.proyectoService.obtenerProyectosSinAprobar().subscribe(
+    data => {
+      this.proyectos = data;
+      this.proyectos.forEach(p => {
+        this.videoEmbedUrls[p.id!] = this.getVideoEmbedUrl(p.url);
+      });
+    },
+    error => console.error('Error al cargar proyectos', error)
+  );
+}
+
 
  aprobar(id?: number) {
   if (id === undefined) return;
@@ -43,6 +51,23 @@ export class AdminvideosComponent implements OnInit{
     });
   });
 }
+
+getVideoEmbedUrl(url: string): SafeResourceUrl | null {
+  if (!url) return null;
+
+  const youtubeMatch = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^\s&]+)/);
+  if (youtubeMatch && youtubeMatch[1]) {
+    return this.sanitizer.bypassSecurityTrustResourceUrl(`https://www.youtube.com/embed/${youtubeMatch[1]}`);
+  }
+
+  const driveMatch = url.match(/drive\.google\.com\/file\/d\/([^\/]+)/);
+  if (driveMatch && driveMatch[1]) {
+    return this.sanitizer.bypassSecurityTrustResourceUrl(`https://drive.google.com/file/d/${driveMatch[1]}/preview`);
+  }
+
+  return null;
+}
+
 
 
 
