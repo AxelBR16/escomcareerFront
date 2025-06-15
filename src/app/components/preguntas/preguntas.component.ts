@@ -127,13 +127,13 @@ export class PreguntasComponent implements OnInit {
 
   determinarTotalPreguntas() {
     if (this.id.startsWith('inv1')) {
-      this.totalQuestions = 120;
+      this.totalQuestions = 119;
       this.inventario = 1;
     } else if (this.id.startsWith('inv2')) {
-      this.totalQuestions = 130;
+      this.totalQuestions = 129;
       this.inventario = 2;
     } else if (this.id.startsWith('inv3')) {
-      this.totalQuestions = 60;
+      this.totalQuestions = 59;
       this.inventario = 3;
     }
   }
@@ -145,7 +145,7 @@ export class PreguntasComponent implements OnInit {
       this.determinarTotalPreguntas();
       preguntaEncontrada.imagen_url = this.sanitizer.bypassSecurityTrustUrl(preguntaEncontrada.imagen_url);
       let maxPregunta = parseInt(this.id.split('-')[1]);
-      this.progress = (maxPregunta / this.totalQuestions) * 100;
+      this.progress = (maxPregunta / (this.totalQuestions+2)) * 100;
       this.cargarRespuestaGuardada(this.id);
     }
     this.pregunta = preguntaEncontrada;
@@ -441,7 +441,7 @@ export class PreguntasComponent implements OnInit {
       const currentIdNumber = parseInt(this.id.split('-')[1]);
       if (!isNaN(currentIdNumber)) {
         const nextIdNumber = currentIdNumber + 1;
-        if (nextIdNumber <= this.totalQuestions) {
+        if (nextIdNumber <= (this.totalQuestions+1)) {
           localStorage.setItem(`preguntainicial_${this.parteIzquierda}`, currentIdNumber.toString()); 
           this.selectedAnswer = null;
           this.isAnswered = false;

@@ -10,6 +10,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Experiencia } from '../../models/experiencia';
 import { ExperienciaService } from '../../services/experiencia.service';
 import { JobOffer } from '../../models/jobOffer';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-detalle-carrera',
@@ -169,8 +170,17 @@ export class DetalleCarreraComponent implements OnInit{
   bolsaTrabajo: any[] = [];
   proyectos: any[] = [];
   id: string;
+  usuarioAutenticado = false;
 
-  constructor(private route: ActivatedRoute, private router: Router, private materiaService: MateriaService, private proyectoService: ProyectoService, private sanitizer: DomSanitizer, private experienciaService: ExperienciaService) {
+
+  constructor(private route: ActivatedRoute, 
+    private router: Router, 
+    private materiaService: MateriaService, 
+    private proyectoService: ProyectoService, 
+    private sanitizer: DomSanitizer, 
+    private experienciaService: ExperienciaService,
+    private authService: AuthService
+  ) {
     this.id = this.route.snapshot.paramMap.get('id') || '1';
   }
 
@@ -239,7 +249,9 @@ irAExpe(): void {
 
 
 
-  ngOnInit() {
+  async ngOnInit() {
+
+     this.usuarioAutenticado = await this.authService.isLoggedIn();
 
     this.route.params.subscribe(params => {
       const index = +params['id'];
@@ -382,12 +394,24 @@ loadProjects() {
     });
   }
 
-  votarproyecto(id: number, tipo: 'like' | 'dislike') {
-    const proyecto = this.proyectos.find(proj => proj.id === id);
-    if (proyecto) {
-      proyecto.voto = proyecto.voto === tipo ? null : tipo;
+  votarproyecto(id: number, tipo: 'like' | 'dislike'): void {
+  const proyecto = this.proyectos.find(p => p.id === id);
+  if (!proyecto || proyecto.yaVoto) return; // Bloquear si ya votó
+    
+  this.proyectoService.votarProyecto(id, tipo).subscribe(
+    actualizado => {
+      proyecto.likes = actualizado.likes;
+      proyecto.dislikes = actualizado.dislikes;
+      proyecto.voto = tipo;
+      proyecto.yaVoto = true; // Marcar como ya votado
+    },
+    error => {
+      console.error('Error al votar:', error);
     }
-  }
+  );
+}
+
+
   getVideoEmbedUrl(url: string): SafeResourceUrl | null {
     if (!url) return null;
 

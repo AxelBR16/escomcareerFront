@@ -231,6 +231,7 @@ export class LoginComponent implements OnInit {
       this.loading = true;
       this.authService.login(signInData).subscribe({
         next: (response) => {
+          sessionStorage.setItem('email',signInData.email)
           this.snackBar.open('✅ ¡Sesión iniciada con éxito! Disfruta tu experiencia. 🚀', 'OK', {
             duration: 9000,
             panelClass: ['custom-snackbar']

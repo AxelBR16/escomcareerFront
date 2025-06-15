@@ -12,6 +12,8 @@ import { ModelService } from '../../services/model.service';
 import { LoaderService } from '../../services/loader.service';
 import { PredictionResponse } from '../../models/PredictionResponse';
 import { AuthService } from '../../services/auth.service';
+import { ResultadoIA } from '../../models/ResultadoIA';
+import { ResultadoIAService } from '../../services/resultado-ia.service';
 
 Chart.register(annotationPlugin);
 
@@ -29,14 +31,18 @@ export class ResultAptitudesComponent implements AfterViewInit {
   constructor(@Inject(PLATFORM_ID) private platformId: any, private router: Router,private resultadoService: ResultadoService,
   private modelService: ModelService,
   private loaderService: LoaderService,
-  private authService: AuthService
+  private authService: AuthService,
+  private resultadoIAService: ResultadoIAService
   ) {}
+
+  emailUsuario: string = '';
 
  async ngAfterViewInit(): Promise<void> {
   await new Promise(resolve => setTimeout(resolve, 500));
 
   try {
     const emailU = await this.authService.getCurrentUserEmail();
+    this.emailUsuario = emailU!;
     if (emailU) {
       this.resultadoService.obtenerResumenPorCorreo(emailU).subscribe({
         next: (res) => {
@@ -55,6 +61,8 @@ export class ResultAptitudesComponent implements AfterViewInit {
     Swal.fire('Error', 'No se pudieron cargar los resultados', 'error');
   }
 }
+
+
 
 
    ordenarPorEscala(resultados: ResultadoResumenDTO[]): { etiquetas: string[], puntajes: number[] } {
@@ -175,7 +183,6 @@ handleChartClick(event: any): void {
 
 
 calcularIA() {
-  // Si ya hay una predicción guardada, redirige directamente al resultado
   const prediccionGuardada = sessionStorage.getItem('prediccionIA');
   if (prediccionGuardada) {
     this.router.navigate(['/resultAI']);
@@ -189,6 +196,27 @@ calcularIA() {
 
     this.modelService.predictCareer(datos.puntajes).subscribe({
       next: (response: PredictionResponse) => {
+        const idMap: { [key: string]: number } = {
+            '0': 1,
+            '2': 2,
+            '1': 3
+          };
+          const prediccion = response.probabilidades;
+        Object.entries(prediccion).forEach(([carreraId, puntaje]) => {
+          const mappedId = idMap[carreraId];
+          const resultado: ResultadoIA = {
+            email: this.emailUsuario ?? undefined,
+            carreraId: mappedId,
+            inventarioId: 1,
+            puntaje: Number(puntaje),
+          };
+
+          this.resultadoIAService.guardarResultado(resultado).subscribe({
+            next: (res) => console.log('Resultado guardado:', res),
+            error: (err) => console.error('Error al guardar resultado:', err)
+          });
+        });
+
         sessionStorage.setItem('prediccionIA', JSON.stringify(response));
         this.loaderService.ocultarCargando();
         this.router.navigate(['/resultAI']);

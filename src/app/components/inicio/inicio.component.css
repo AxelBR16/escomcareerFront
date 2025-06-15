@@ -894,7 +894,7 @@ footer {
 
 .carousel-container {
   background-color: #f8f9fa;
-  padding: 5px;
+padding: 0;
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   overflow: hidden;
@@ -913,27 +913,89 @@ footer {
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow: hidden;
+  width: 100%;
+  max-width: 100%; /* Ancho máximo del carrusel */
+  position: center;
 }
+
+
 
 .carousel-track {
   display: flex;
   transition: transform 0.3s ease;
+  width: max-content;
+background: #f8f9fa ;
+padding-right: 100px; /* Espacio después de la última tarjeta */
+  padding-left: 0px; /* Asegúrate de no tener padding innecesario */
+  margin-left: -200px; /* ← Solo si el margin lateral de tarjetas lo causa */
+  
 }
+
+
 
 .user-rating-card {
   background-color: #ffffff;
   border-radius: 8px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-  margin: 0 15px;
+  margin: 20px 15px; /* ← ahora tiene margen arriba/abajo también */
   padding: 20px;
   width: 300px;
   text-align: center;
   transition: transform 0.3s ease;
+  flex-shrink: 0;
 }
 
-.user-rating-card:hover {
-  transform: scale(1.05);
+
+@media (max-width: 1024px) {
+  .user-rating-card {
+    width: 260px;
+    margin: 20px 10px;
+  }
+
+  .carousel-track {
+    margin-left: -150px;
+    padding-right: 60px;
+  }
 }
+
+@media (max-width: 768px) {
+  .user-rating-card {
+    width: 230px;
+    margin: 20px 8px;
+  }
+
+  .carousel-track {
+    margin-left: -100px;
+    padding-right: 40px;
+  }
+
+  .carousel-title {
+    font-size: 1.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .user-rating-card {
+   width: 90vw;  /* Usamos porcentaje del ancho de pantalla */
+    margin: 20px 5px;
+  }
+
+  .carousel-track {
+    margin-left: -60px;
+    padding-right: 20px;
+  }
+
+  .carousel-title {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+  }
+
+  .carousel-container {
+    padding: 10px;
+  }
+}
+
 
 .user-info {
   display: flex;
@@ -1078,5 +1140,65 @@ footer {
   }
   .carousel-info {
     font-size: 0.8rem;
+  }
+}
+
+
+/* Contenedor completo de indicadores + info */
+.carousel-indicators-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+  gap: 8px;
+}
+
+/* Indicadores redondos y animados */
+.carousel-indicators {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+}
+
+.indicator {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: #d1d1d1;
+  cursor: pointer;
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.indicator:hover {
+  transform: scale(1.2);
+}
+
+.indicator.active {
+  background-color: #4e73df;
+  box-shadow: 0 0 8px rgba(78, 115, 223, 0.6);
+}
+
+/* Info de slide actual */
+.carousel-info {
+  font-size: 0.95rem;
+  color: #444;
+}
+
+/* Responsive ajustes */
+@media (max-width: 768px) {
+  .carousel-info {
+    font-size: 0.85rem;
+  }
+
+  .indicator {
+    width: 10px;
+    height: 10px;
+  }
+}
+
+@media (max-width: 768px) {
+  .user-rating-card {
+    width: 240px;
   }
 }

@@ -261,26 +261,36 @@
               <div class="rating-value">{{entry[1]}}/{{maxStars}}</div>
           </div>
         </div>
+    
       </div>
+      <br>
     </div>
   </div>
 
   <div class="carousel-controls">
-    <button class="carousel-btn" [disabled]="!canGoPrev()" (click)="prevSlide()">‹</button>
-    <div class="carousel-indicators">
-      <div 
-        class="indicator" 
-        [class.active]="i === currentSlide"
-        *ngFor="let i of getIndicatorsArray()" 
-        (click)="goToSlide(i)"></div>
+  <button class="carousel-btn" [disabled]="!canGoPrev()" (click)="prevSlide()">‹</button>
+  <button class="carousel-btn" [disabled]="!canGoNext()" (click)="nextSlide()">›</button>
+</div>
+
+<!-- Baja los indicadores aquí -->
+<!-- Indicadores del carrusel -->
+<div class="carousel-indicators-wrapper">
+  <div class="carousel-indicators">
+    <div 
+      class="indicator" 
+      [class.active]="i === currentSlide"
+      *ngFor="let i of getIndicatorsArray()" 
+      (click)="goToSlide(i)">
     </div>
-    <button class="carousel-btn" [disabled]="!canGoNext()" (click)="nextSlide()">›</button>
   </div>
 
   <div class="carousel-info">
-    <span>{{currentSlide + 1}}</span> de <span>{{totalSlides}}</span>
+    <span>{{ currentSlide + 1 }}</span> de <span>{{ totalSlides }}</span>
   </div>
 </div>
+<br>
+</div>
+<br>
  </section>
 
 

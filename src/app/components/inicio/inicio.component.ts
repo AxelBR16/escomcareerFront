@@ -58,12 +58,13 @@ labelNames: any = {
     // Cargar las experiencias cuando el componente se inicializa.
     this.loadExperiences();
     this.getAllRetroalimentaciones()
-
-      if (isPlatformBrowser(this.platformId)) {
+    
+    if (isPlatformBrowser(this.platformId)) {
     this.updateResponsive();
     window.addEventListener('resize', () => {
       this.updateResponsive();
       this.calculateTotalSlides();
+      
     });
   }
   }
@@ -117,8 +118,8 @@ labelNames: any = {
   
 
 
-  currentPage = 1;  // Página actual
-  itemsPerPage = 3; // Experiencias por página
+  currentPage = 1; 
+  itemsPerPage = 2; 
 
   get paginatedExperiences() {
     const startIndex = (this.currentPage - 1) * this.itemsPerPage;
@@ -136,22 +137,41 @@ labelNames: any = {
   }
 
   getAllRetroalimentaciones(): void {
-      this.retroalimentacionService.getAllRetroalimentaciones().subscribe(
-        (data) => {
-          this.retroalimentaciones = data;  
-        },
-        (error) => {
-        }
-      );
+  this.retroalimentacionService.getAllRetroalimentaciones().subscribe(
+    (data) => {
+      this.retroalimentaciones = data;
+      this.calculateTotalSlides(); // <- Aquí también
+    },
+    (error) => {
+      console.error('Error cargando retroalimentaciones', error);
     }
-
-    updateResponsive() {
-  this.slidesPerView = window.innerWidth > 768 ? 3 : 1;
+  );
 }
+
+
+   updateResponsive() {
+  const width = window.innerWidth;
+
+  if (width > 1024) {
+    this.slidesPerView = 3;
+  } else if (width > 768) {
+    this.slidesPerView = 2;
+  } else {
+    this.slidesPerView = 1;
+  }
+
+  this.calculateTotalSlides(); // <-- importante recalcular aquí
+}
+
 
 calculateTotalSlides() {
-  this.totalSlides = Math.ceil(this.retroalimentaciones.length / this.slidesPerView);
+  if (this.retroalimentaciones.length === 0) {
+    this.totalSlides = 0;
+  } else {
+    this.totalSlides = Math.ceil(this.retroalimentaciones.length / this.slidesPerView);
+  }
 }
+
 
 createStarsArray(rating: number): boolean[] {
   return Array(this.maxStars).fill(false).map((_, index) => index < rating);
@@ -170,10 +190,29 @@ getLabelName(key: string): string {
 }
 
 getTrackTransform(): string {
-  const cardWidth = 320;
-  const offset = this.currentSlide * cardWidth * this.slidesPerView;
-  return `translateX(-${offset}px)`;
+  const cardWidth = 300;
+  const margin = 30;
+  const totalOffset = this.currentSlide * (cardWidth + margin);
+
+  if (!isPlatformBrowser(this.platformId)) {
+    return 'translateX(0px)'; // fallback seguro en SSR
+  }
+
+  if (this.slidesPerView === 1) {
+    return `translateX(-${totalOffset}px)`;
+  }
+
+  const visibleWidth = this.slidesPerView * (cardWidth + margin);
+  const extraSpace = Math.max(0, (window.innerWidth - visibleWidth) / 2);
+
+  return `translateX(calc(-${totalOffset}px + ${extraSpace}px))`;
 }
+
+
+
+
+
+
 
 nextSlide() {
   if (this.currentSlide < this.totalSlides - 1) {
