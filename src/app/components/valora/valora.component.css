@@ -148,3 +148,10 @@
     font-size: 0.95rem;
   }
 }
+
+/* En valora.component.css */
+.snackbar-warning {
+  background-color: yellow; /* Cambia el color a amarillo */
+  color: black; /* Cambia el color del texto si es necesario */
+}
+

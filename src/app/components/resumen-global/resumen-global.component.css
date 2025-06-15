@@ -150,7 +150,13 @@ h1 {
 
 
 .right-side {
-  background-color: #e0e0e0;  /* Color de fondo para el lado derecho */
+   color: white;
+  background: linear-gradient(135deg, #2d3b4c, #1a242f); 
+}
+
+.right-side h1 {
+   color: white;
+  
 }
 
 /* Puedes agregar más estilos según tus necesidades, como añadir gráficos, imágenes, etc. */

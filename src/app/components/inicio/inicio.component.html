@@ -185,16 +185,16 @@
 
       <!-- Bloque 2:isai -->
       <div class="team-block">
-        <img src="site/usu.jpg" alt="Aquila Lobas" class="team-icon">
+        <img src="site/isai.webp" alt="Aquila Lobas" class="team-icon">
         <h3 class="team-title ">Jaciel Isai Hernández Ramírez</h3>
         <p class="justificado">Especialista en desarrollo de interfaces de usuario (UI) y experiencias interactivas para aplicaciones web, con enfoque en la creación de diseños responsivos y accesibles que optimicen la interacción y usabilidad en diversos dispositivos.</p>
       </div>
 
       <!-- Bloque 3: O -->
       <div class="team-block">
-        <img src="site/usu.jpg" alt="Otario Bu" class="team-icon">
-        <h3 class="team-title">Yael</h3>
-        <p>Especialista en aplicaciones móviles.</p>
+        <img src="site/yael1.webp" alt="Otario Bu" class="team-icon">
+        <h3 class="team-title">Yael Tonatiuh Escalona Bastida</h3>
+        <p>Especialista en aplicaciones móviles, responsable del diseño, desarrollo y mantenimeinto de la aplicación para dispositivos móviles para teléfonos inteligentes</p>
       </div>
 
     </div>
@@ -230,10 +230,10 @@
     <p>No hay experiencias registradas aún.</p>
   </ng-template>
 </div>  -->
-
+<br>
 <div class="carousel-container" (mouseenter)="onMouseEnter()" (mouseleave)="onMouseLeave()" *ngIf="retroalimentaciones.length > 0">
-  <h2 class="carousel-title">Valoraciones de Usuarios</h2>
-
+  <h1 class="carousel-title">Valoraciones de Usuarios</h1>
+  <br>
   <div class="carousel-wrapper">
     <div class="carousel-track" [style.transform]="getTrackTransform()">
       <div class="user-rating-card" *ngFor="let user of retroalimentaciones">
