@@ -55,9 +55,10 @@ labelNames: any = {
   }
 
   ngOnInit(): void {
+    this.getAllRetroalimentaciones();
     // Cargar las experiencias cuando el componente se inicializa.
     this.loadExperiences();
-    this.getAllRetroalimentaciones()
+    this.getAllRetroalimentaciones();
     
     if (isPlatformBrowser(this.platformId)) {
     this.updateResponsive();
@@ -139,7 +140,6 @@ labelNames: any = {
   getAllRetroalimentaciones(): void {
   this.retroalimentacionService.getAllRetroalimentaciones().subscribe(
     (data) => {
-      this.retroalimentaciones.length = 0;
       this.retroalimentaciones = data;
       this.calculateTotalSlides(); 
     },
