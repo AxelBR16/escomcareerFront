@@ -1,37 +1,48 @@
 <section class="hero-section">
-    <div class="hero-container">
-        <h1>Gestión de Proyectos</h1>
-        <p>Aquí puedes revisar y gestionar los videos de los proyectos realizados por los estudiantes.</p>
-    </div>
+  <div class="hero-container">
+    <h1>Gestión de Proyectos</h1>
+    <p>Aquí puedes revisar y gestionar los videos de los proyectos realizados por los estudiantes.</p>
+  </div>
 </section>
 
 <br>
 <div class="video-approval-container">
-   <h2>Lista de Proyectos</h2>
+  <h2>Lista de Proyectos</h2>
 
-   <ul *ngIf="proyectos.length > 0; else sinProyectos" class="proyectos-lista">
-     <li *ngFor="let proyecto of proyectos" class="proyecto-item">
-       <div class="info-proyecto">
-         <h3>{{ proyecto.nombre }}</h3>
-         <p>{{ proyecto.descripcion }}</p>
-         <p style="color: white;" class="fecha-badge">📅 {{ proyecto.fecha }}</p>
-         <a *ngIf="proyecto.url?.startsWith('http')" [href]="proyecto.url" target="_blank" class="link-proyecto">
-           Ver proyecto
-         </a>
-         <span *ngIf="!proyecto.url?.startsWith('http')" class="no-url">No hay URL válida</span>
-       </div>
+  <ul *ngIf="proyectos.length > 0; else sinProyectos" class="proyectos-lista">
+    <li *ngFor="let proyecto of proyectos" class="proyecto-item">
+      <div class="info-proyecto">
+        <h3>{{ proyecto.nombre }}</h3>
+        <p>{{ proyecto.descripcion }}</p>
+        <p style="color: white;" class="fecha-badge">📅 {{ proyecto.fecha }}</p>
 
-       <div class="acciones">
-         <button *ngIf="proyecto.id !== undefined" (click)="aprobar(proyecto.id)">Aprobar</button>
-         <button *ngIf="proyecto.id !== undefined" (click)="rechazar(proyecto.id)">Rechazar</button>
-       </div>
-     </li>
-   </ul>
+        <!-- Mostrar el iframe si hay URL válida embebida -->
+        <div *ngIf="proyecto.id !== undefined && videoEmbedUrls[proyecto.id]; else sinVideo" class="video-preview">
+  <iframe
+    [src]="videoEmbedUrls[proyecto.id!]"
+    width="320"
+    height="180"
+    frameborder="0"
+    allowfullscreen>
+  </iframe>
+</div>
 
-   <ng-template #sinProyectos>
-     <p>No hay proyectos pendientes por aprobar.</p>
-     <br>
-     <br>
-     <br>
-   </ng-template>
+
+        <!-- Fallback si no hay URL válida -->
+        <ng-template #sinVideo>
+          <span class="no-url">No hay URL válida</span>
+        </ng-template>
+      </div>
+
+      <div class="acciones">
+        <button *ngIf="proyecto.id !== undefined" (click)="aprobar(proyecto.id)">Aprobar</button>
+        <button *ngIf="proyecto.id !== undefined" (click)="rechazar(proyecto.id)">Rechazar</button>
+      </div>
+    </li>
+  </ul>
+
+  <ng-template #sinProyectos>
+    <p>No hay proyectos pendientes por aprobar.</p>
+    <br><br><br>
+  </ng-template>
 </div>
