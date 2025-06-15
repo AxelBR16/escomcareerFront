@@ -141,7 +141,7 @@ labelNames: any = {
     (data) => {
       this.retroalimentaciones.length = 0;
       this.retroalimentaciones = data;
-      this.calculateTotalSlides(); // <- Aquí también
+      this.calculateTotalSlides(); 
     },
     (error) => {
       console.error('Error cargando retroalimentaciones', error);
