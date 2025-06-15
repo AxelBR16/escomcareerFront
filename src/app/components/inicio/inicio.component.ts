@@ -125,14 +125,12 @@ labelNames: any = {
     return this.experiencias.slice(startIndex, startIndex + this.itemsPerPage);
   }
 
-  // Cambiar la página
   changePage(page: number) {
     if (page > 0 && page <= this.totalPages) {
       this.currentPage = page;
     }
   }
 
-  // Obtener el total de páginas
   get totalPages() {
     return Math.ceil(this.experiencias.length / this.itemsPerPage);
   }
@@ -140,7 +138,7 @@ labelNames: any = {
   getAllRetroalimentaciones(): void {
       this.retroalimentacionService.getAllRetroalimentaciones().subscribe(
         (data) => {
-          this.retroalimentaciones = data;  // Almacena los datos obtenidos en la variable
+          this.retroalimentaciones = data;  
         },
         (error) => {
         }
@@ -166,8 +164,6 @@ getRatingEntries(user: any): [string, number][] {
     )
     .map(([key, value]) => [key, value as number]);
 }
-
-
 
 getLabelName(key: string): string {
   return this.labelNames[key as keyof typeof this.labelNames] || key;
